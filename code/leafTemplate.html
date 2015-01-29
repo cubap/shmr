@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+  		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+		<style>
+			.leafTemplate{
+				position: relative;
+			}
+			.versoCanvas{
+				position: relative;
+				border: 2px solid blue;
+				display: inline-block;
+			}
+			.rectoCanvas{
+				position: relative;
+				border: 2px solid red;
+				display: inline-block;
+			}
+			.rectoImg{
+				position: relative;
+				display: none;
+			}
+			.versoImg{
+				position: relative;
+				display: none;
+			}
+			.addImgBtn{
+				border: 1px solid black;
+				height: 50px;
+				width: 50px;
+				font-size: 14pt;
+			}
+			.knownInformation{
+				position: relative;
+				display: none;
+			}
+			.uploadness{
+				display: none;
+				position: relative;
+			}
+		</style>
+	</head>
+	<body>
+	<div class="leafTemplate">
+		<p>
+			If you have an image to upload, do so here.  You can either paste in the direct image URI of its location, upload the file to us, or skip this step entirely if you do not have an image.
+		</p>
+		<div class="versoCanvas">
+			<div class="addImgBtn">+</div>
+			<div class="uploadness">
+				<textarea rv="verso" class="canvasImageSource"></textarea>
+            	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
+			</div>
+			<img class="versoImg" src=""/>
+		</div>
+		<div class="rectoCanvas">
+			<div class="addImgBtn">+</div>
+			<div class="uploadness">
+				<textarea rv="recto" class="canvasImageSource"></textarea>
+            	<input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+			</div>
+			<img class="rectoImg" src="" />
+		</div>
+		<div class="knownInformation">
+
+		</div>
+	</div>
+	</body>
+</html>
+<script>
+$(function(){
+     $('.canvasImageFile').on("change", function(event){
+        //start spinny?
+        var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
+        var selectedFile = event.target.files[0];
+        var reader = new FileReader();
+        var result = $('#transcriptionText')
+        reader.onload = function(event){
+	        var fileContent = event.target.result;
+	        var fileParse = "";
+	        //Need to find the image source and populate it to the <img> object src
+	        console.log(fileContent);
+	        var fileLines = fileContent.split('\n');
+	        $.each(fileLines,function(){
+	            console.log(this);
+	            fileParse += this+'\n';
+	        })
+	        $("textarea[rv='"+rv+"']").html("Image Uploaded").attr("disabled", "disabled");
+	        // stop spinny?
+        };
+        reader.readAsText(selectedFile);
+        });
+    });
+        
+</script>

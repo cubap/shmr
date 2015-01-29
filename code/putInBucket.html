@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8">
+	  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+	  <title>Bucket Example</title>
+	  <style>
+	  .test{
+
+	  }
+	    input[type="button"]{
+	    	padding:5px;
+	    	background-color: white;
+	    	border: 1px solid black;
+	    	cursor: pointer;
+	    	font-family: "Comic Sans MS", cursive, sans-serif;
+	    }
+	    input[type="button"]:hover{
+	    	box-shadow: 0px 0px 13px 1px;
+	    }
+	  	.mainBlock{
+			position: relative;
+			box-shadow: 0px 0px 13px 3px;
+			margin: 10%;
+			padding: 10px;
+			text-align: center;
+			background-color: #545454;
+			z-index: 2;
+/*			width:80%;
+*/	  	}
+	  	.intro{
+	  		display: block;
+	  	}
+	  	.start{
+			display: none;
+	  	}
+	  	.info{
+	  		display: none;
+	  	}
+	  	.contentFormEntry{
+
+	  	}
+	  	.formLabel{
+
+	  	}
+	  	#contextForm{
+	  		display: none;
+	  		position: relative;
+	  	}
+	  	#carrierForm{
+	  		display: none;
+	  		position: relative;
+	  	}
+	  	#contentForm{
+	  		display: none;
+	  		position: relative;
+	  	}
+	  	#beginLeafCreation{
+
+	  	}
+	  	p{
+	  		font-size: 10pt;
+	  		color: black;
+	  		margin: 15px 0px;
+	  		color: white;
+	  		font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+	  	}
+	  	.label{
+	  		display: inline-block;
+	  		margin-right: 10px;
+	  	}
+	  	.sbsSquare{
+	  		width: 33%;
+	  		border: 1px solid black;
+	  		display: inline-table;
+	  		height: 300px;
+	  		padding-top:50px;
+	  		margin-bottom: 15px;
+	  	}
+	  	.sbsSquare p:first-letter{
+               text-transform: uppercase;
+        }
+        .sbsSquare p {
+	        font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+			letter-spacing:0.1em;
+			text-align:center;
+			text-transform: lowercase;
+			line-height: 145%;
+			font-size: 14pt;
+			font-variant: small-caps;
+        	padding: 0px 10px;
+	  	}
+	  	.sbsSqaure h2{
+	  		font-size: 16pt;
+        	font-family:Georgia,serif;
+			color:#4E443C;
+			font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+	  	}
+	  	body{
+	  		z-index: 1;
+	  		background-image: url("../m2/images/BrokenBook01.jpg");
+	  		background-repeat: repeat;
+	  	}
+	  	.hoverBlue:hover{
+	  		box-shadow: 0px 0px 13px 3px blue;
+	  	}
+	  	.hoverGreen:hover{
+	  		box-shadow: 0px 0px 13px 3px green;
+	  	}
+	  	.hoverRed:hover{
+	  		box-shadow: 0px 0px 13px 3px red;
+	  	}
+	  	ul{
+	  		margin: 10px 0px;
+	  	}
+	  	li{
+	  		list-style-type: none;
+	  	}
+	  	#contextForm{
+	  		border: 2px solid green;
+	  	}
+	  	#contentForm{
+	  		border: 2px solid blue;
+	  	}
+	  	#carrierForm{
+	  		border: 2px solid red;
+	  	}
+	  	.infoPart{
+	  		margin: 10px 0px;
+	  	}
+	  	#previousOwners{
+	  		width: 300px;
+	  	}
+	  	.formLabel{
+	  		font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+			letter-spacing:0.1em;
+			text-align:center;
+			text-transform: lowercase;
+			line-height: 145%;
+			font-size: 12pt;
+			font-variant: small-caps;
+        	padding: 0px 10px;
+	  	}
+	  	.imageAdditionArea{
+	  		position: relative;
+	  		display: none;
+	  	}
+	  </style>
+	</head>
+	<body>
+		<div class="mainBlock intro">
+			<p>
+				Here you can create a leaf to place into the bucket.   Click below to begin preparing the leaf.
+			</p>
+			
+			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
+		</div>
+		<div class="mainBlock start">
+			<p>
+				We need some basic information about your leaf.  Put a check mark next to the type of information you know about the leaf below.  Once you have selected
+				the pieces you have information on, click "Enter Information".  You must select at least one.
+			</p>
+			<div class="sbsSquare hoverGreen">
+				<h2 class="label" >Context</h4><input type="checkbox" name="contextInfo"/>
+				<p> Check this if you know something about the previous owners or history of the leaf. </p>
+			</div>
+			<div class="sbsSquare hoverBlue">
+				<h2 class="label">Content</h4><input type="checkbox" name="contentInfo"/>
+				<p> Check this if you know information about the text on this leaf. </p>
+			</div>
+			<div class="sbsSquare hoverRed">
+				<h2 class="label">Carrier</h4><input type="checkbox" name="carrierInfo"/>
+				<p> Check this if you know something about the physical properties of the leaf. </p>
+			</div>
+			<input type="button" id="start" onclick="submitStart();" value="Enter Data"/>
+		</div>
+
+		<div class="mainBlock imageAdditionArea">
+			<div class="leaf"></div>
+		</div>
+
+		<div class="mainBlock info">
+
+			<div class="infoPart">
+				<p>
+					If you have an image for you leaf, paste the URI for where it is located into the box.  Fill out what fields you can below.  Once you are finished, click "submit leaf" 
+				</p>
+				<span class="formLabel">Enter Image URI: </span> <input type="text" id="imageForLeaf" />
+				<p>OR</p>
+				<span class="formLabel">Enter Image URI: </span> File upload here
+			</div>
+
+			<div id="contextForm" class="infoPart">
+				<p> Please give an answer for at least one of the questions about context information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+				<ul>
+					<li><span class="formLabel">If you can, type in the previous owners separating them with a colon (:) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
+					<li><span class="formLabel">Other: </span> <input type="text" class="contextFormEntry" id="otherContext"/></li>
+				</ul>
+			</div>
+
+			<div id="carrierForm" class="infoPart">
+				<p> Please give an answer for at least one of the questions about carrier information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+				<ul>
+					<li><span class="formLabel">Type in information about the binding: </span> <input type="text" class="contextFormEntry" id="binding"/></li>
+					<li><span class="formLabel">Other: </span> <input type="text" class="carrierFormEntry" id="otherCarrier"/></li>
+				</ul>
+			</div>
+
+			<div id="contentForm" class="infoPart">
+				<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+				<ul>
+					<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+					<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+					<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+					<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+					<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
+					<li><span class="formLabel">Other: </span> <input type="text" class="contentFormEntry" id="otherContent"/></li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+
+	function submitIntro(){
+		$(".intro").hide("blind", "300ms", function(){$(".imageAdditionArea").show("explode", "500ms");});
+	}
+
+	function submitStart(){
+		if($("input[name='contextInfo'").prop("checked") == false && $("input[name='carrierInfo'").prop("checked") == false && $("input[name='contentInfo'").prop("checked") == false ){
+			alert("You must check at least one box (content, context or carrier.)");
+		}
+		else{
+			$(".start").hide("blind", "300ms", function(){
+				$(".info").show("explode", "500ms", function(){
+					if($("input[name='contextInfo'").prop("checked") == true){
+						$('#contextForm').show("puff", "300ms");
+					}
+					if($("input[name='contentInfo'").prop("checked") == true){
+						$('#contentForm').show("puff", "300ms");
+					}
+					if($("input[name='carrierInfo'").prop("checked") == true){
+						$('#carrierForm').show("puff", "300ms");
+					}
+				});
+			});
+		}
+		
+	}
+	$(function(){
+		$(".leaf").load("../m2/leafTemplate.html"); 
+	});
+	
+
+
+	
+</script>
