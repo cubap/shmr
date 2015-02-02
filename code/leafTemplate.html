@@ -2,19 +2,24 @@
 	<head>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
   		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+		
 		<style>
 			.leafTemplate{
 				position: relative;
 			}
 			.versoCanvas{
 				position: relative;
-				border: 2px solid blue;
-				display: inline-block;
+				display: inline-table;
+				width: 48%;
+				text-align:center;
+				border: 2px solid black;
 			}
 			.rectoCanvas{
 				position: relative;
-				border: 2px solid red;
-				display: inline-block;
+				display: inline-table;
+				width:48%;
+				text-align: center;
+				border: 2px solid black;
 			}
 			.rectoImg{
 				position: relative;
@@ -26,9 +31,13 @@
 			}
 			.addImgBtn{
 				border: 1px solid black;
-				height: 50px;
-				width: 50px;
+				height: 100px;
+				width: 100px;
 				font-size: 14pt;
+				text-align: center;
+				margin: 0 auto;
+				line-height: 100px;
+				position: relative;
 			}
 			.knownInformation{
 				position: relative;
@@ -37,6 +46,23 @@
 			.uploadness{
 				display: none;
 				position: relative;
+				border: 1px solid black;
+				margin: 0px 2px auto;
+				padding : 5px;
+			}
+			.uploadness textarea{
+				display: inline-table;
+			}
+			.uploadness input{
+				display: inline-table;
+			}
+			img{
+				height:300px;
+				width: auto;
+				position: relative;
+			}
+			.imgCatalogueInfo{
+				display: none;
 			}
 		</style>
 	</head>
@@ -46,50 +72,59 @@
 			If you have an image to upload, do so here.  You can either paste in the direct image URI of its location, upload the file to us, or skip this step entirely if you do not have an image.
 		</p>
 		<div class="versoCanvas">
-			<div class="addImgBtn">+</div>
+			<p>This is considered one side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later.</p>
+			<div class="addImgBtn" onclick="showImageAddition('verso');">Add Image</div>
 			<div class="uploadness">
-				<textarea rv="verso" class="canvasImageSource"></textarea>
+				Enter Image Uri:&nbsp;&nbsp;<textarea rv="verso" class="canvasImageSource"></textarea><br>
+				OR<br>
             	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
 			</div>
-			<img class="versoImg" src=""/>
+			<img class="versoImg" src=""/><br>
+			<input type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" onclick="enterCatalogueInfo('verso');"/>
 		</div>
 		<div class="rectoCanvas">
-			<div class="addImgBtn">+</div>
+			<p>This is considered one side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
+			<div class="addImgBtn" onclick="showImageAddition('recto');">Add Image</div>
 			<div class="uploadness">
-				<textarea rv="recto" class="canvasImageSource"></textarea>
+				Enter Image URI: &nbsp;&nbsp;<textarea rv="recto" class="canvasImageSource"></textarea><br>
+				OR<br>
             	<input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
 			</div>
-			<img class="rectoImg" src="" />
-		</div>
-		<div class="knownInformation">
-
-		</div>
+			<img class="rectoImg" src="" /><br>
+			<input type="button" rv="recto" value="Enter Addition Information" class="imgCatalogueInfo" onclick="enterCatalogueInfo('recto');"/>
+		</div><br>
+		<input type="button" onclick="enterCatalogueInfo('leaf');" value="Enter Information That Pertains To The Leaf As A Whole"/>
 	</div>
 	</body>
 </html>
 <script>
+
+function showImageAddition(which){
+	$("."+which+"Canvas").find(".addImgBtn").hide();
+	$("."+which+"Canvas").find(".uploadness").show("explode", "500ms");
+}
+
 $(function(){
-     $('.canvasImageFile').on("change", function(event){
+		     
+		$('.canvasImageFile').on("change", function(event){
         //start spinny?
         var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
-        var selectedFile = event.target.files[0];
-        var reader = new FileReader();
-        var result = $('#transcriptionText')
-        reader.onload = function(event){
-	        var fileContent = event.target.result;
-	        var fileParse = "";
-	        //Need to find the image source and populate it to the <img> object src
-	        console.log(fileContent);
-	        var fileLines = fileContent.split('\n');
-	        $.each(fileLines,function(){
-	            console.log(this);
-	            fileParse += this+'\n';
-	        })
-	        $("textarea[rv='"+rv+"']").html("Image Uploaded").attr("disabled", "disabled");
-	        // stop spinny?
-        };
-        reader.readAsText(selectedFile);
-        });
+        var files = !!this.files ? this.files : [];
+
+        if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
+ 
+        if (/^image/.test( files[0].type)){ // only image file
+        	var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
+            var reader = new FileReader(); // instance of the FileReader
+            reader.readAsDataURL(files[0]); // read the local file
+            reader.onloadend = function(){ // set image data as background of div
+                $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+            };
+       
+        }
     });
+ });
         
 </script>

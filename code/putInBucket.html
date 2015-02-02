@@ -4,6 +4,11 @@
 	  <meta charset="utf-8">
 	  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+    <!--
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	-->
 	  <title>Bucket Example</title>
 	  <style>
 	  .test{
@@ -22,13 +27,15 @@
 	  	.mainBlock{
 			position: relative;
 			box-shadow: 0px 0px 13px 3px;
-			margin: 10%;
+			margin: 0% 0px 0px 10%;
 			padding: 10px;
 			text-align: center;
 			background-color: #545454;
 			z-index: 2;
-/*			width:80%;
-*/	  	}
+			left: 13%;
+			width: 73%;
+			height: auto;
+	  	}
 	  	.intro{
 	  		display: block;
 	  	}
@@ -45,16 +52,16 @@
 
 	  	}
 	  	#contextForm{
-	  		display: none;
 	  		position: relative;
+	  		height: auto;
 	  	}
 	  	#carrierForm{
-	  		display: none;
 	  		position: relative;
+	  		height: auto;
 	  	}
 	  	#contentForm{
-	  		display: none;
 	  		position: relative;
+	  		height: auto;
 	  	}
 	  	#beginLeafCreation{
 
@@ -71,7 +78,7 @@
 	  		margin-right: 10px;
 	  	}
 	  	.sbsSquare{
-	  		width: 33%;
+	  		width: 32%;
 	  		border: 1px solid black;
 	  		display: inline-table;
 	  		height: 300px;
@@ -126,6 +133,18 @@
 	  	#carrierForm{
 	  		border: 2px solid red;
 	  	}
+	  	#contextHeader{
+	  		border: 1px solid green;
+	  		color: green;
+	  	}
+	  	#contentHeader{
+	  		color: blue;
+	  		border: 1px solid blue;
+	  	}
+	  	#carrierHeader{
+	  		color: red;
+	  		border: 1px solid red;
+	  	}
 	  	.infoPart{
 	  		margin: 10px 0px;
 	  	}
@@ -142,10 +161,73 @@
 			font-variant: small-caps;
         	padding: 0px 10px;
 	  	}
-	  	.imageAdditionArea{
+	  	.imgAdditionArea{
 	  		position: relative;
 	  		display: none;
 	  	}
+	  	.previewImg{
+	  		height: 200px;
+	  		width: auto;
+	  		position: relative;
+	  	}
+
+	  	.start .previewImg, .info .previewImg{
+	  		margin-bottom:20px;
+	  	}
+
+	  	#sideBarInfo{
+			position: fixed;
+			left: 0px;
+			top:15px;
+			height:90%;
+			overflow-y: auto;
+			padding: 5px;
+			width: 20%;
+			background-color: #545454;
+			padding: 10px;
+			box-shadow: 0px 0px 13px 3px;
+			z-index: 2;
+			}
+
+			#whatPiece{
+				position: relative;
+			}
+
+			#folioSide1{
+				position: relative;
+				display: block;
+				height: 50px;
+				width: 40px;
+				border: 3px solid black;
+			}
+
+			#folioSide2{
+				position: relative;
+				display: block;
+				height: 50px;
+				width: 40px;
+				border: 3px solid black;
+			}
+
+			#addedInformation{
+				border: 2px solid white;
+				position: relative;
+				min-height:50px;
+				width: 100%;
+			}
+
+			#formAccordion{
+				position: relative;
+				height: 90%;
+			}
+
+			.ui-accordion-content{
+				height: 1px;
+				padding: 5px 0px;
+			}
+			.ui-accordion-header{
+				padding: 5px 0px;
+			}
 	  </style>
 	</head>
 	<body>
@@ -156,11 +238,17 @@
 			
 			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
 		</div>
-		<div class="mainBlock start">
+
+		<div class="mainBlock imgAdditionArea">
+			<div class="leaf"></div>
+		</div>
+
+		<!-- <div class="mainBlock start">
 			<p>
-				We need some basic information about your leaf.  Put a check mark next to the type of information you know about the leaf below.  Once you have selected
+				You chose to give us some information about your submission.  Put a check mark next to the type of information you know about the leaf below.  Once you have selected
 				the pieces you have information on, click "Enter Information".  You must select at least one.
 			</p>
+			<img class="imgPreview" src="" rv="" /><br>
 			<div class="sbsSquare hoverGreen">
 				<h2 class="label" >Context</h4><input type="checkbox" name="contextInfo"/>
 				<p> Check this if you know something about the previous owners or history of the leaf. </p>
@@ -174,85 +262,189 @@
 				<p> Check this if you know something about the physical properties of the leaf. </p>
 			</div>
 			<input type="button" id="start" onclick="submitStart();" value="Enter Data"/>
+			<input type="button" onclick="returnToImages();" value="Return To Images"/>
+		</div> -->
+
+
+		<div class="mainBlock start">
+			<!-- <img class="imgPreview" src="" /><br>
+ -->
+ 			<input type="hidden" id="catalogueInfoFor" value="" />
+ 			<p>Here is where you can enter addition information about the object.  <u style="color: green;">Context</u> is about where the leaf or page has been, who has owned it, etc.  <u style="color: red;">Carrier</u> information is physical information about the leaf or page itself, such as number of lines, dimensions, etc.  <u style="color: blue;">Content</u> is about the written text on the leaf or page such as the language it is in or a transcription of the text.  Click below to expand and enter information about the fields you have information on.  </p>
+			<div id="formAccordion">
+				<h3 id="contextHeader">Context</h3>
+				<div id="contextForm" >
+					<p> Please give an answer for at least one of the questions about context information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">If you can, type in the previous owners separating them with a colon (:) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
+						<li><span class="formLabel">Other: </span> <input type="text" class="contextFormEntry" id="otherContext"/></li>
+					</ul>
+				</div>
+				<h3 id="carrierHeader">Carrier</h3>
+				<div id="carrierForm">
+					<p> Please give an answer for at least one of the questions about carrier information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">Type in information about the binding: </span> <input type="text" class="contextFormEntry" id="binding"/></li>
+						<li><span class="formLabel">Other: </span> <input type="text" class="carrierFormEntry" id="otherCarrier"/></li>
+					</ul>
+				</div>
+				<h3 id="contentHeader">Content</h3>
+				<div id="contentForm">
+					<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+						<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" class="contentFormEntry" /> </li>
+						<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
+						<li><span class="formLabel">Other: </span> <input type="text" class="contentFormEntry" id="otherContent"/></li>
+					</ul>
+				</div>
+			</div>
+			<input type="button" onclick="saveFolio();" value="Save Folio"/>
+ 	        <input type="button" onclick="cancelFolio();" value="Return To Images"/>
 		</div>
 
-		<div class="mainBlock imageAdditionArea">
-			<div class="leaf"></div>
-		</div>
-
-		<div class="mainBlock info">
-
-			<div class="infoPart">
-				<p>
-					If you have an image for you leaf, paste the URI for where it is located into the box.  Fill out what fields you can below.  Once you are finished, click "submit leaf" 
-				</p>
-				<span class="formLabel">Enter Image URI: </span> <input type="text" id="imageForLeaf" />
-				<p>OR</p>
-				<span class="formLabel">Enter Image URI: </span> File upload here
+		<div id="sideBarInfo">
+			<p>This area will tell you what piece of the leaf you are currently working on.  There are only three options: side alpha, side beta and the leaf as a whole.  You may not know which is recto or verso, so we just call them alpha and beta.  Information you have submitted will also be placed here so you can see your progress.  </p>
+			<div id="whatPiece">
+				<div id="folioSide1">Side Alpha</div>
+				<div id="folioSide2">Side Beta</div>
 			</div>
-
-			<div id="contextForm" class="infoPart">
-				<p> Please give an answer for at least one of the questions about context information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+			<div id="addedInformation">
 				<ul>
-					<li><span class="formLabel">If you can, type in the previous owners separating them with a colon (:) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
-					<li><span class="formLabel">Other: </span> <input type="text" class="contextFormEntry" id="otherContext"/></li>
-				</ul>
-			</div>
-
-			<div id="carrierForm" class="infoPart">
-				<p> Please give an answer for at least one of the questions about carrier information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
-				<ul>
-					<li><span class="formLabel">Type in information about the binding: </span> <input type="text" class="contextFormEntry" id="binding"/></li>
-					<li><span class="formLabel">Other: </span> <input type="text" class="carrierFormEntry" id="otherCarrier"/></li>
-				</ul>
-			</div>
-
-			<div id="contentForm" class="infoPart">
-				<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
-				<ul>
-					<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
-					<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
-					<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
-					<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
-					<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
-					<li><span class="formLabel">Other: </span> <input type="text" class="contentFormEntry" id="otherContent"/></li>
 				</ul>
 			</div>
 		</div>
 	</body>
 </html>
 <script>
+	
+	function resloveImageURI(rv){
+		var uri = $("."+rv+"Canvas").find(".uploadness").find('textarea').val();
+	    $.ajax({
+	        url: uri,
+	        success: function(imageData){
+	            console.log(imageData);
+	        },
+	        error: function(jqXHR,error, errorThrown) {  
+	            if(jqXHR.status && jqXHR.status==400){
+	                 alert(jqXHR.responseText); 
+	            }
+	            else{
+	                alert("Something went wrong");
+	            }
+	        }
+	    });
+	}
+	
+	function saveFolio(){
+		//Get data from forms and save
+		$(".start").hide("blind", "300ms", function(){
+			$(".imgAdditionArea").show("explode", "500ms");
+			$("#catalogueInfoFor").val(''); 
+			$("#folioSide2").css("border", "3px solid black");
+			$("#folioSide1").css("border", "3px solid black");
+
+		});
+
+	}
+
+	function cancelFolio(){
+		//Don't get data and return to image page
+		$(".start").hide("blind", "300ms", function(){
+			$(".imgAdditionArea").show("explode", "500ms");
+			$("#catalogueInfoFor").val(''); 
+			$("#folioSide2").css("border", "3px solid black");
+			$("#folioSide1").css("border", "3px solid black");
+		});
+	}
 
 	function submitIntro(){
-		$(".intro").hide("blind", "300ms", function(){$(".imageAdditionArea").show("explode", "500ms");});
+		$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
 	}
 
-	function submitStart(){
-		if($("input[name='contextInfo'").prop("checked") == false && $("input[name='carrierInfo'").prop("checked") == false && $("input[name='contentInfo'").prop("checked") == false ){
-			alert("You must check at least one box (content, context or carrier.)");
-		}
-		else{
-			$(".start").hide("blind", "300ms", function(){
-				$(".info").show("explode", "500ms", function(){
-					if($("input[name='contextInfo'").prop("checked") == true){
-						$('#contextForm').show("puff", "300ms");
-					}
-					if($("input[name='contentInfo'").prop("checked") == true){
-						$('#contentForm').show("puff", "300ms");
-					}
-					if($("input[name='carrierInfo'").prop("checked") == true){
-						$('#carrierForm').show("puff", "300ms");
-					}
-				});
+	function enterCatalogueInfo(canvas){
+		var previewImgSrc = $("."+canvas+"Img").attr("src");
+		$(".imgPreview").attr("src",previewImgSrc);
+		$(".imgAdditionArea").hide("blind", "300ms", function(){
+				$(".start").show("explode", "500ms");
+				if(canvas === 'recto'){
+					$("#folioSide2").css("border", "3px solid yellow");
+					$("#folioSide1").css("border", "3px solid black");
+					$("#catalogueInfoFor").val('recto'); //beta
+				}
+				else if (canvas === 'verso'){
+					$("#folioSide1").css("border", "3px solid yellow");
+					$("#folioSide2").css("border", "3px solid black");
+					$("#catalogueInfoFor").val('verso'); //alpha
+				}
+				else{
+					$("#folioSide2").css("border", "3px solid yellow");
+					$("#folioSide1").css("border", "3px solid yellow");
+					$("#catalogueInfoFor").val('leaf'); //zeta
+				}
+				// $("#start").attr("onclick", "submitStart('"+canvas+"');");
 			});
-		}
-		
 	}
+
+	// function submitStart(canvas){
+	// 	if($("input[name='contextInfo'").prop("checked") == false && $("input[name='carrierInfo'").prop("checked") == false && $("input[name='contentInfo'").prop("checked") == false ){
+	// 		alert("You must check at least one box (content, context or carrier.)");
+	// 	}
+	// 	else{
+	// 		$(".start").hide("blind", "300ms", function(){
+	// 			$(".info").show("explode", "500ms", function(){
+	// 				if($("input[name='contextInfo'").prop("checked") == true){
+	// 					$('#contextForm').show("puff", "300ms");
+	// 				}
+	// 				if($("input[name='contentInfo'").prop("checked") == true){
+	// 					$('#contentForm').show("puff", "300ms");
+	// 				}
+	// 				if($("input[name='carrierInfo'").prop("checked") == true){
+	// 					$('#carrierForm').show("puff", "300ms");
+	// 				}
+	// 			});
+	// 		});
+	// 	}
+		
+	// }
+
+	function returnToOptions(){
+		$(".info").hide("blind", "300ms", function(){$(".start").show("explode", "500ms");})
+		$("#contentForm").hide();
+		$("#carrierForm").hide();
+		$("#contextForm").hide();
+	}
+
+	function returnToImages(){
+		$(".start").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+		$("#catalogueInfoFor").val(''); 
+		$("#folio2").css("border", "3px solid black");
+		$("#folio1").css("border", "3px solid black");
+	}
+
 	$(function(){
 		$(".leaf").load("../m2/leafTemplate.html"); 
+		$("#formAccordion").accordion({
+			collapsible: true,
+			heightStyle: "content"
+		});
+
+		/*
+			When the use adds an image, can we view that image in a mirador viewer?  Mirador wants to be created using manifests that are coded in at the start, so dynamic content will
+		 	never get the chance to be seen in a m2 viewer (i think)
+		*/
+
+		// Mirador({
+	 //        "id": "previewViewer",
+	 //        "currentWorkspaceType": "singleObject",
+	 //        "mainMenuSettings" : {"show": true, "buttons" : {"bookmark" : true, "layout" : true}},
+	 //        'showAddFrsomURLBox' : false,
+	 //        "data": [
+	 //        { "manifestUri": "http://dms-data.stanford.edu/data/manifests/RomanCoins/bb853kn3021/manifest.json", "location": "Stanford University"} // Roman coins
+	 //        ]
+		// });
 	});
-	
-
-
-	
+		
 </script>
