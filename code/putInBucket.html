@@ -11,9 +11,6 @@
 	-->
 	  <title>Bucket Example</title>
 	  <style>
-	  .test{
-
-	  }
 	    input[type="button"]{
 	    	padding:5px;
 	    	background-color: white;
@@ -44,27 +41,6 @@
 	  	}
 	  	.info{
 	  		display: none;
-	  	}
-	  	.contentFormEntry{
-
-	  	}
-	  	.formLabel{
-
-	  	}
-	  	#contextForm{
-	  		position: relative;
-	  		height: auto;
-	  	}
-	  	#carrierForm{
-	  		position: relative;
-	  		height: auto;
-	  	}
-	  	#contentForm{
-	  		position: relative;
-	  		height: auto;
-	  	}
-	  	#beginLeafCreation{
-
 	  	}
 	  	p{
 	  		font-size: 10pt;
@@ -125,25 +101,60 @@
 	  		list-style-type: none;
 	  	}
 	  	#contextForm{
-	  		border: 2px solid green;
+	  		border-bottom: 2px solid green;
+	  		border-right: 2px solid green;
+	  		border-left: 2px solid green;
+	  		position: relative;
+	  		height: auto;
 	  	}
 	  	#contentForm{
-	  		border: 2px solid blue;
+	  		border-bottom: 2px solid blue;
+	  		border-right: 2px solid blue;
+	  		border-left: 2px solid blue;
+	  		position: relative;
+	  		height: auto;
 	  	}
 	  	#carrierForm{
-	  		border: 2px solid red;
+	  		border-bottom: 2px solid red;
+	  		border-right: 2px solid red;
+	  		border-left: 2px solid red;
+	  		position: relative;
+	  		height: auto;
+	  	}
+	  	#notesForm{
+	  		border-bottom: 2px solid yellow;
+	  		border-right: 2px solid yellow;
+	  		border-left: 2px solid yellow;
+	  		position: relative;
+	  		height: auto;
 	  	}
 	  	#contextHeader{
-	  		border: 1px solid green;
 	  		color: green;
+	  		border-top: 1px solid green;
+	  		border-right: 1px solid green;
+	  		border-left: 1px solid green;
+	  		cursor: pointer;
 	  	}
 	  	#contentHeader{
 	  		color: blue;
-	  		border: 1px solid blue;
+	  		border-top: 1px solid blue;
+	  		border-right: 1px solid blue;
+	  		border-left: 1px solid blue;
+	  		cursor: pointer;
 	  	}
 	  	#carrierHeader{
 	  		color: red;
-	  		border: 1px solid red;
+	  		border-top: 1px solid red;
+	  		border-right: 1px solid red;
+	  		border-left: 1px solid red;
+	  		cursor: pointer;
+	  	}
+	  	#notesHeader{
+	  		color: yellow;
+	  		border-top: 1px solid yellow;
+	  		border-right: 1px solid yellow;
+	  		border-left: 1px solid yellow;
+	  		cursor: pointer;
 	  	}
 	  	.infoPart{
 	  		margin: 10px 0px;
@@ -187,53 +198,95 @@
 			padding: 10px;
 			box-shadow: 0px 0px 13px 3px;
 			z-index: 2;
-			}
+		}
 
-			#whatPiece{
-				position: relative;
-			}
+		#whatPiece{
+			position: relative;
+		}
 
-			#folioSide1{
-				position: relative;
-				display: block;
-				height: 50px;
-				width: 40px;
-				border: 3px solid black;
-			}
+		#folioSide1{
+			position: relative;
+			display: block;
+			height: 50px;
+			width: 40px;
+			border: 3px solid black;
+		}
 
-			#folioSide2{
-				position: relative;
-				display: block;
-				height: 50px;
-				width: 40px;
-				border: 3px solid black;
-			}
+		#folioSide2{
+			position: relative;
+			display: block;
+			height: 50px;
+			width: 40px;
+			border: 3px solid black;
+		}
 
-			#addedInformation{
-				border: 2px solid white;
-				position: relative;
-				min-height:50px;
-				width: 100%;
-			}
+		#addedInformation{
+			border: 2px solid white;
+			position: relative;
+			min-height:50px;
+			width: 100%;
+		}
 
-			#formAccordion{
-				position: relative;
-				height: 90%;
-			}
+		#formAccordion{
+			position: relative;
+			height: 90%;
+			border:2px solid black;
+			padding-bottom: 10px;
+		}
 
-			.ui-accordion-content{
-				height: 1px;
-				padding: 5px 0px;
-			}
-			.ui-accordion-header{
-				padding: 5px 0px;
-			}
+		#contentList{
+			position: relative;
+			border: 1px solid blue;
+		}
+		#contextList{
+			position: relative;
+			border: 1px solid green;
+		}
+		#carrierList{
+			position: relative;
+			border: 1px solid red;
+		}
+		#addedNotes{
+			position: relative;
+			border: 1px solid yellow;
+		}		
+
+		.ui-accordion-content{
+			height: 1px;
+			padding: 5px 0px;
+		}
+		.ui-accordion-header{
+			padding: 5px 0px;
+		}
+
+		*:focus{
+			outline: none;
+		}
+
+		.ui-state-active{
+			outline: none;
+		}
+
+		#serverLogin{
+			position: relative;
+			border: 1px solid black;
+		}
+
+		#serverLoginFrame{
+			position: relative;
+		}
+		
 	  </style>
 	</head>
 	<body>
 		<div class="mainBlock intro">
 			<p>
-				Here you can create a leaf to place into the bucket.   Click below to begin preparing the leaf.
+				Here you can create a leaf to place into the bucket.   Login below to begin making a leaf.
+				<div id="serverLogin">
+					<iframe id="serverLoginFrame" src="http://localhost/image_console.php" WIDTH=650 HEIGHT=400 >
+							TEST TEST TEST
+					</iframe>
+				</div>
 			</p>
 			
 			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
@@ -267,44 +320,57 @@
 
 
 		<div class="mainBlock start">
-			<!-- <img class="imgPreview" src="" /><br>
- -->
+			<!-- <img class="imgPreview" src="" /><br>-->
  			<input type="hidden" id="catalogueInfoFor" value="" />
- 			<p>Here is where you can enter addition information about the object.  <u style="color: green;">Context</u> is about where the leaf or page has been, who has owned it, etc.  <u style="color: red;">Carrier</u> information is physical information about the leaf or page itself, such as number of lines, dimensions, etc.  <u style="color: blue;">Content</u> is about the written text on the leaf or page such as the language it is in or a transcription of the text.  Click below to expand and enter information about the fields you have information on.  </p>
+ 			<p>Here is where you can enter addition information about the object.  Click below to expand and enter information about the fields you have information on.  <u style="color: blue;">Content</u> is about the written text on the leaf or page such as the language it is in or a transcription of the text.  <u style="color: green;">Context</u> is about where the leaf or page has been, who has owned it, etc.  <u style="color: red;">Carrier</u> information is physical information about the leaf or page itself, such as number of lines, dimensions, etc. </p>
 			<div id="formAccordion">
+				<h3 id="contentHeader">Content</h3>
+				<div id="contentForm">
+					<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+						<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" id="contentLanguage" class="contentFormEntry" /> </li>
+						<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" id="contentFormat" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" id="contentNumLines" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">If you know what this text is describing, type that here (ex. Feast of Saints):  </span> <input type="text" id="contentDescription" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
+						<li><span class="formLabel">Other: </span> <textarea class="contentFormEntry" id="contentOther"></textarea></li>
+					</ul>
+				</div>
 				<h3 id="contextHeader">Context</h3>
-				<div id="contextForm" >
+				<div id="contextForm">
 					<p> Please give an answer for at least one of the questions about context information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
 					<ul>
 						<li><span class="formLabel">If you can, type in the previous owners separating them with a colon (:) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
-						<li><span class="formLabel">Other: </span> <input type="text" class="contextFormEntry" id="otherContext"/></li>
+						<li><span class="formLabel">If this folio is part of a specific section, enter the name for that section here: </span> <input type="text" class="contextFormEntry" id="contextSection"/></li>
+						<li><span class="formLabel">If this folio is was sold at auction type that here: </span> <textarea class="contextFormEntry" id="contextAuction"/></textarea></li>
+						<li><span class="formLabel">Type the folio identifier here: </span> <input type="text" class="contextFormEntry" id="contextFolioID"/></li>
+						<li><span class="formLabel">Type the date the folio was acquired here: </span> <input type="text" class="contextFormEntry" id="contextDateAcquired"/></li>
+						<li><span class="formLabel">Other: </span> <textarea class="contextFormEntry" id="contextOther"></textarea></li>
 					</ul>
 				</div>
 				<h3 id="carrierHeader">Carrier</h3>
 				<div id="carrierForm">
 					<p> Please give an answer for at least one of the questions about carrier information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
 					<ul>
-						<li><span class="formLabel">Type in information about the binding: </span> <input type="text" class="contextFormEntry" id="binding"/></li>
-						<li><span class="formLabel">Other: </span> <input type="text" class="carrierFormEntry" id="otherCarrier"/></li>
+						<li><span class="formLabel">Type in whether this entry is recto or verso: </span> <input type="text" class="carrierFormEntry" id="carrierRV"/></li>
+						<li><span class="formLabel">Enter the page number: </span> <input type="text" class="carrierFormEntry" id="carrierPageNum"/></li>
+						<li><span class="formLabel">Type in information about the binding: </span> <input type="text" class="carrierFormEntry" id="carrierBinding"/></li>
+						<li><span class="formLabel">Type in the format for this image (whether it is part of a single leaf or bifolium, etc.): </span> <input type="text" class="carrierFormEntry" id="carrierFormat"/></li>
+						<li><span class="formLabel">Are there any notable decorations/illustrations/initials?  If so, describe them here: </span> <input type="text" class="carrierFormEntry" id="carrierIllustrations"/></li>
+						<li><span class="formLabel">If applicable, type in the artist(s) of the decorations/illustrations/initials : </span> <textarea class="carrierFormEntry" id="carrierArtists"></textarea></li>
+						<li><span class="formLabel">Other: </span> <textarea type="text" class="carrierFormEntry" id="carrierOther"></textarea></li>
 					</ul>
 				</div>
-				<h3 id="contentHeader">Content</h3>
-				<div id="contentForm">
-					<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
-					<ul>
-						<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
-						<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" class="contentFormEntry" /> </li>
-						<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" class="contentFormEntry"/> </li>
-						<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" class="contentFormEntry"/> </li>
-						<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
-						<li><span class="formLabel">Other: </span> <input type="text" class="contentFormEntry" id="otherContent"/></li>
-					</ul>
+				<h3 id="notesHeader">Additional Notes</h3>
+				<div id="notesForm">
+					<p> If there are addition notes you would like to have stored with this folio, type that here</p>
+					<textarea class="notesFormEntry" id="notes"></textarea>
 				</div>
 			</div>
 			<input type="button" onclick="saveFolio();" value="Save Folio"/>
  	        <input type="button" onclick="cancelFolio();" value="Return To Images"/>
 		</div>
-
 		<div id="sideBarInfo">
 			<p>This area will tell you what piece of the leaf you are currently working on.  There are only three options: side alpha, side beta and the leaf as a whole.  You may not know which is recto or verso, so we just call them alpha and beta.  Information you have submitted will also be placed here so you can see your progress.  </p>
 			<div id="whatPiece">
@@ -312,13 +378,404 @@
 				<div id="folioSide2">Side Beta</div>
 			</div>
 			<div id="addedInformation">
-				<ul>
+				<ul id="contentList">
 				</ul>
+				<ul id="contextList">
+				</ul>
+				<ul id="carrierList">
+				</ul>
+				<div id="addedNotes"></iv>
 			</div>
 		</div>
 	</body>
 </html>
 <script>
+
+	function saveFolio(folioID, leafID){
+
+		/*
+		The decision needs to be made for what is metadata, what is an annotation and what is a range.  For annotations, do they go onto a range or onto a canvas?  For things that become new ranges, we have to create new range objects.
+		*/
+		
+		$(".contentFormEntry").each(function(){
+			console.log("Content Entry");
+			var addedInfoList = $("#contentList");
+			var entryID = $(this).attr("id");
+			var entryValue = $(this).val();
+			var canvasURI = "";
+			var newAnnoUIR = "";
+			if(entryValue !== "" && entryValue !== null ){
+				switch(entryID){
+					case "contentAuthor":
+						addedInfoList.append("<li><span class='formLabel'>Text Author(s): </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+
+						break;
+					case "contentLanguage":
+						addedInfoList.append("<li><span class='formLabel'>Text Language: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contentFormat":
+						addedInfoList.append("<li><span class='formLabel'>Text Format: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contentNumLines":
+						addedInfoList.append("<li><span class='formLabel'>Number of Lines: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contentDescription":
+						addedInfoList.append("<li><span class='formLabel'>Text Description: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contentOther":
+						addedInfoList.append("<li><span class='formLabel'>Other Text Information: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contentTranscription":
+						//addedInfoList.append("<li><span class='formLabel'>Text Author(s):</span>"+entryValue+"</li>");
+						break;
+					default:
+				}
+			}
+
+		});
+
+		$(".contextFormEntry").each(function(){
+			console.log("Context Entry");
+			var addedInfoList = $("#contextList");
+			var entryID = $(this).attr("id");
+			var entryValue = $(this).val();
+			if(entryValue !== "" && entryValue !== null ){
+				switch(entryID){
+					case "previousOwners":
+						addedInfoList.append("<li><span class='formLabel'>Previous Owner(s): </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contextSection":
+						addedInfoList.append("<li><span class='formLabel'>Section: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contextFormat":
+						addedInfoList.append("<li><span class='formLabel'>Context Format: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contextAuction":
+						addedInfoList.append("<li><span class='formLabel'>Recent Auctions: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contextFolioID":
+						addedInfoList.append("<li><span class='formLabel'>Folio ID: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contextDateAcquired":
+						addedInfoList.append("<li><span class='formLabel'>Date Acquired: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "contextOther":
+						addedInfoList.append("<li><span class='formLabel'>Other Context Information: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					default:
+
+				}	
+			}		
+		});
+
+		$(".carrierFormEntry").each(function(){
+			console.log("Carrier Entry");
+			var addedInfoList = $("#carrierList");
+			var entryID = $(this).attr("id");
+			var entryValue = $(this).val();
+			if(entryValue !== "" && entryValue !== null ){
+				switch(entryID){
+					case "carrierRV":
+						addedInfoList.append("<li><span class='formLabel'>Recto or Verso: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "carrierPageNum":
+						addedInfoList.append("<li><span class='formLabel'>Page Number: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "carrierFormat":
+						addedInfoList.append("<li><span class='formLabel'>Carrier Format: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "carrierBinding":
+						addedInfoList.append("<li><span class='formLabel'>Binding Information: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "carrierIllustrations":
+						addedInfoList.append("<li><span class='formLabel'>Decoration/Illustrations: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "carrierArtists":
+						addedInfoList.append("<li><span class='formLabel'>Carrier Artist(s): </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					case "carrierOther":
+						addedInfoList.append("<li><span class='formLabel'>Other Carrier Information: </span>"+entryValue+"</li>");
+						var annotationObject = {
+							"@id" : newAnnoURI,
+					        "@type" : "oa:Annotation",
+					        "motivation" : "sc:painting",
+					        "label" : "",
+					        "resource" : {
+					          "@type" : "cnt:ContentAsText",
+					          "cnt:chars" : entryValue;
+        					},
+        					"on" : canvasURI;
+    					};
+    					saveAnnotationTo(canvasURI, annotationObject);
+						break;
+					default:
+
+				}	
+			}	
+		});
+
+		//$("#notes").val();
+		// var annotationObject = {
+		// 	"@id" : newAnnoURI,
+	 //        "@type" : "oa:Annotation",
+	 //        "motivation" : "sc:painting",
+	 //        "label" : "",
+	 //        "resource" : {
+	 //          "@type" : "cnt:ContentAsText",
+	 //          "cnt:chars" : entryValue;
+		// 	},
+		// 	"on" : canvasURI;
+		// };
+		// saveAnnotationTo(canvasURI, annotationObject);
+
+		$(".start").hide("blind", "300ms", function(){
+			$(".imgAdditionArea").show("explode", "500ms");
+			$("#catalogueInfoFor").val(''); 
+			$("#folioSide2").css("border", "3px solid black");
+			$("#folioSide1").css("border", "3px solid black");
+		});
+
+	}
+
+	function saveAnnotationTo(objectID, annoObject){
+		//objectID can be the ID of a canvas or the ID of a range.  If it is information that seems like it is a range, check that the range does not alredy exist.  If it doesn't, create a new one and save the annotation to the new one. 
+		console.log(annoObject);
+
+	}
+
+	function createNewRange(newRangeObject){
+		//create a new range, given that some new information organizes canvases into a new range.
+		console.log(newRangeObject);
+
+	}
 	
 	function resloveImageURI(rv){
 		var uri = $("."+rv+"Canvas").find(".uploadness").find('textarea').val();
@@ -328,26 +785,9 @@
 	            console.log(imageData);
 	        },
 	        error: function(jqXHR,error, errorThrown) {  
-	            if(jqXHR.status && jqXHR.status==400){
-	                 alert(jqXHR.responseText); 
-	            }
-	            else{
-	                alert("Something went wrong");
-	            }
+	            alert("Image could not be resolved.  Issue: " +  jqXHR.status + " - " +jqXHR.response);
 	        }
 	    });
-	}
-	
-	function saveFolio(){
-		//Get data from forms and save
-		$(".start").hide("blind", "300ms", function(){
-			$(".imgAdditionArea").show("explode", "500ms");
-			$("#catalogueInfoFor").val(''); 
-			$("#folioSide2").css("border", "3px solid black");
-			$("#folioSide1").css("border", "3px solid black");
-
-		});
-
 	}
 
 	function cancelFolio(){
@@ -362,6 +802,7 @@
 
 	function submitIntro(){
 		$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need. 
 	}
 
 	function enterCatalogueInfo(canvas){
