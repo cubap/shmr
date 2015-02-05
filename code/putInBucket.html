@@ -391,6 +391,54 @@
 </html>
 <script>
 
+//Here we have the "binder" to add our pieces into.  Notice that right now I have defined an anchor object and the master sequence range.
+var testManifest = {
+	  "@context" : "http://www.shared-canvas.org/ns/context.json",
+	  "@id" : "",
+	  "@type" : "sc:Manifest",
+	  "label" : "Llang Binder",
+	  "sequences" : [{
+	  	"@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
+	    "@type" : "sc:Sequence",
+	    "label" : "Llangantock Bucket",
+	    "canvases" : [ 
+	    //This will be the anchor object, but how do we define it as such
+	     {
+	        "@id" : "http://www.example.org/iiif/LlangBrev/anchor",
+	        "@type" : "sc:Canvas",
+	        "label" : "Llang_001",
+	        "height" : 1000,
+	        "width" : 667,
+	        "resources" : [ 
+	          {
+	          "@type" : "oa:Annotation",
+	          "motivation" : "sc:painting",
+	          "resource" : {
+	            "@id" : "http://www.example.org/iiif/LlangBrev/image_001",
+	            "@type" : "dctypes:Image",
+	            "format" : "image/jpeg",
+	            "height" : 2365,
+	            "width" : 1579
+	          },
+	          "on" : "http://www.example.org/iiif/LlangBrev/canvas/anchor"
+        	}
+        	]
+      	 }
+    	 ]
+	   }], 
+	  "structures" : [
+	  	{
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/master",
+	      "@type":"sc:Range",
+	      "label":"Llangantock Breviary Page Order",
+	      "ranges" : [
+	          //add leaf ranges here in order
+	      ],
+	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		}
+	  ]
+}
+
 	function saveFolio(folioID, leafID){
 
 		/*
