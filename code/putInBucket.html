@@ -398,12 +398,11 @@
 		*/
 		
 		$(".contentFormEntry").each(function(){
-			console.log("Content Entry");
 			var addedInfoList = $("#contentList");
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			var canvasURI = "";
-			var newAnnoUIR = "";
+			var newAnnoURI = "";
 			if(entryValue !== "" && entryValue !== null ){
 				switch(entryID){
 					case "contentAuthor":
@@ -415,9 +414,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 
@@ -431,9 +430,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -446,9 +445,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -461,9 +460,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -476,9 +475,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -491,9 +490,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -507,10 +506,11 @@
 		});
 
 		$(".contextFormEntry").each(function(){
-			console.log("Context Entry");
 			var addedInfoList = $("#contextList");
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
+			var canvasURI = "";
+			var newAnnoURI = "";
 			if(entryValue !== "" && entryValue !== null ){
 				switch(entryID){
 					case "previousOwners":
@@ -522,9 +522,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -537,9 +537,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -552,9 +552,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -567,9 +567,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -582,9 +582,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -597,9 +597,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -612,9 +612,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -625,10 +625,11 @@
 		});
 
 		$(".carrierFormEntry").each(function(){
-			console.log("Carrier Entry");
 			var addedInfoList = $("#carrierList");
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
+			var canvasURI = "";
+			var newAnnoURI = "";
 			if(entryValue !== "" && entryValue !== null ){
 				switch(entryID){
 					case "carrierRV":
@@ -640,9 +641,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -655,9 +656,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -670,9 +671,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -685,9 +686,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -700,9 +701,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -715,9 +716,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -730,9 +731,9 @@
 					        "label" : "",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue;
+					          "cnt:chars" : entryValue
         					},
-        					"on" : canvasURI;
+        					"on" : canvasURI
     					};
     					saveAnnotationTo(canvasURI, annotationObject);
 						break;
@@ -750,9 +751,9 @@
 	 //        "label" : "",
 	 //        "resource" : {
 	 //          "@type" : "cnt:ContentAsText",
-	 //          "cnt:chars" : entryValue;
+	 //          "cnt:chars" : entryValue
 		// 	},
-		// 	"on" : canvasURI;
+		// 	"on" : canvasURI
 		// };
 		// saveAnnotationTo(canvasURI, annotationObject);
 
