@@ -282,12 +282,15 @@
 		<div class="mainBlock intro">
 			<p>
 				Here you can create a leaf to place into the bucket.   Login below to begin making a leaf.
-				<div id="serverLogin">
-					<iframe id="serverLoginFrame" src="http://localhost/image_console.php" WIDTH=650 HEIGHT=400 >
-							TEST TEST TEST
-					</iframe>
-				</div>
+				
 			</p>
+
+			<!-- TESTED. SUCCESSFUL.  
+			<div id="serverLogin">
+				<iframe id="serverLoginFrame" src="http://localhost/image_console.php" WIDTH=650 HEIGHT=400 >
+						TEST TEST TEST
+				</iframe>
+			</div> -->
 			
 			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
 		</div>
@@ -392,6 +395,8 @@
 <script>
 
 //Here we have the "binder" to add our pieces into.  Notice that right now I have defined an anchor object and the master sequence range.
+var leafRangeID = 2;
+var canvasID = 2;
 var testManifest = {
 	  "@context" : "http://www.shared-canvas.org/ns/context.json",
 	  "@id" : "",
@@ -466,7 +471,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 
 						break;
 					case "contentLanguage":
@@ -482,7 +487,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contentFormat":
 						addedInfoList.append("<li><span class='formLabel'>Text Format: </span>"+entryValue+"</li>");
@@ -497,7 +502,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contentNumLines":
 						addedInfoList.append("<li><span class='formLabel'>Number of Lines: </span>"+entryValue+"</li>");
@@ -512,7 +517,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contentDescription":
 						addedInfoList.append("<li><span class='formLabel'>Text Description: </span>"+entryValue+"</li>");
@@ -527,7 +532,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contentOther":
 						addedInfoList.append("<li><span class='formLabel'>Other Text Information: </span>"+entryValue+"</li>");
@@ -542,7 +547,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contentTranscription":
 						//addedInfoList.append("<li><span class='formLabel'>Text Author(s):</span>"+entryValue+"</li>");
@@ -574,7 +579,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contextSection":
 						addedInfoList.append("<li><span class='formLabel'>Section: </span>"+entryValue+"</li>");
@@ -589,7 +594,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contextFormat":
 						addedInfoList.append("<li><span class='formLabel'>Context Format: </span>"+entryValue+"</li>");
@@ -604,7 +609,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contextAuction":
 						addedInfoList.append("<li><span class='formLabel'>Recent Auctions: </span>"+entryValue+"</li>");
@@ -619,7 +624,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contextFolioID":
 						addedInfoList.append("<li><span class='formLabel'>Folio ID: </span>"+entryValue+"</li>");
@@ -634,7 +639,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contextDateAcquired":
 						addedInfoList.append("<li><span class='formLabel'>Date Acquired: </span>"+entryValue+"</li>");
@@ -649,7 +654,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "contextOther":
 						addedInfoList.append("<li><span class='formLabel'>Other Context Information: </span>"+entryValue+"</li>");
@@ -664,7 +669,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					default:
 
@@ -693,7 +698,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "carrierPageNum":
 						addedInfoList.append("<li><span class='formLabel'>Page Number: </span>"+entryValue+"</li>");
@@ -708,7 +713,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "carrierFormat":
 						addedInfoList.append("<li><span class='formLabel'>Carrier Format: </span>"+entryValue+"</li>");
@@ -723,7 +728,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "carrierBinding":
 						addedInfoList.append("<li><span class='formLabel'>Binding Information: </span>"+entryValue+"</li>");
@@ -738,7 +743,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "carrierIllustrations":
 						addedInfoList.append("<li><span class='formLabel'>Decoration/Illustrations: </span>"+entryValue+"</li>");
@@ -753,7 +758,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "carrierArtists":
 						addedInfoList.append("<li><span class='formLabel'>Carrier Artist(s): </span>"+entryValue+"</li>");
@@ -768,7 +773,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					case "carrierOther":
 						addedInfoList.append("<li><span class='formLabel'>Other Carrier Information: </span>"+entryValue+"</li>");
@@ -783,7 +788,7 @@ var testManifest = {
         					},
         					"on" : canvasURI
     					};
-    					saveAnnotationTo(canvasURI, annotationObject);
+    					saveAnnotationTo(canvasURI, annotationObject, "anno");
 						break;
 					default:
 
@@ -814,14 +819,34 @@ var testManifest = {
 
 	}
 
-	function saveAnnotationTo(objectID, annoObject){
+	function saveAnnotationTo(annoObject, which){
 		//objectID can be the ID of a canvas or the ID of a range.  If it is information that seems like it is a range, check that the range does not alredy exist.  If it doesn't, create a new one and save the annotation to the new one. 
+		var objectID = $("#catalogueInfoFor").val();
+		if(which === "anno"){
+			testManifest.sequences[0].canvases.each(function(){
+				if (this["@id"] === objectID){
+					this.resources.append(annoObject);
+				}
+			})
+		}
+		else if (which === "range"){
+			testManifest.structures.each(function(){
+				if (this["@id"] === objectID){
+					this.resources.append(annoObject);
+				}
+			})
+		}
+		else{
+
+		}
 		console.log(annoObject);
+
 
 	}
 
 	function createNewRange(newRangeObject){
-		//create a new range, given that some new information organizes canvases into a new range.
+		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
+		testManifest.structures.push(newRangeObject);
 		console.log(newRangeObject);
 
 	}
@@ -851,10 +876,46 @@ var testManifest = {
 
 	function submitIntro(){
 		$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
-		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need. 
+		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
+		canvasID += 1;
+		var newCanvas1 = {
+	        "@id" : "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID,
+	        "@type" : "sc:Canvas",
+	        "label" : "Llang_"+canvasID,
+	        "height" : 1000,
+	        "width" : 667,
+	        "resources" : [ 
+        	]
+      	 }
+      	 $("input[rv='verso']").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
+      	 canvasID += 1;
+      	 var newCanvas2 = {
+	        "@id" : "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID,
+	        "@type" : "sc:Canvas",
+	        "label" : "Llang_"+canvasID,
+	        "height" : 1000,
+	        "width" : 667,
+	        "resources" : [ 
+        	]
+      	 }
+      	 $("input[rv='recto']").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
+      	 leafRange += 1;
+		 var leafRange = {
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/"+leafRangeID,
+	      "@type":"sc:Range",
+	      "label":"Llangantock Breviary Page_"+leafRangeID,
+	      "canvases" : [
+	          newCanvas1["@id"],
+	          newCanvas2["@id"]
+	      ],
+	      "resources" : [],
+	      "ranges" : [],
+	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		}
+		createNewRange(leafRange);
 	}
 
-	function enterCatalogueInfo(canvas){
+	function enterCatalogueInfo(canvasID, canvas){
 		var previewImgSrc = $("."+canvas+"Img").attr("src");
 		$(".imgPreview").attr("src",previewImgSrc);
 		$(".imgAdditionArea").hide("blind", "300ms", function(){
@@ -862,12 +923,12 @@ var testManifest = {
 				if(canvas === 'recto'){
 					$("#folioSide2").css("border", "3px solid yellow");
 					$("#folioSide1").css("border", "3px solid black");
-					$("#catalogueInfoFor").val('recto'); //beta
+					$("#catalogueInfoFor").val(canvasID); //beta
 				}
 				else if (canvas === 'verso'){
 					$("#folioSide1").css("border", "3px solid yellow");
 					$("#folioSide2").css("border", "3px solid black");
-					$("#catalogueInfoFor").val('verso'); //alpha
+					$("#catalogueInfoFor").val(canvasID); //alpha
 				}
 				else{
 					$("#folioSide2").css("border", "3px solid yellow");
