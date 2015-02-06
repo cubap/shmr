@@ -109,7 +109,6 @@ $(function(){
         //start spinny?
         var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
         var files = !!this.files ? this.files : [];
-        console.log($(this).parent().parent());
         var canvasURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvas");
         if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
  

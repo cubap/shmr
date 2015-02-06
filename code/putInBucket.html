@@ -550,7 +550,6 @@ var testManifest = {
 					default:
 				}
 			}
-
 		});
 
 		$(".contextFormEntry").each(function(){
@@ -636,7 +635,6 @@ var testManifest = {
 						}
 						break;
 					case "contextAuction":
-
 						addedInfoList.append("<li><span class='formLabel'>Recent Auctions: </span>"+entryValue+"</li>");
 						var annotationObject = {
 							"@id" : newAnnoURI,
@@ -697,7 +695,6 @@ var testManifest = {
     					saveAnnotationTo(annotationObject, "anno");
 						break;
 					default:
-
 				}	
 			}		
 		});
@@ -841,18 +838,20 @@ var testManifest = {
 		});
 
 		var canvasNotes = $("#notes").val();
+		var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+		var canvasURI = $("#catalogueInfoFor").val();
 		var annotationObject = {
 			"@id" : newAnnoURI,
 	        "@type" : "oa:Annotation",
 	        "motivation" : "sc:painting",
-	        "label" : "",
+	        "label" : "Additional Notes",
 	        "resource" : {
 	          "@type" : "cnt:ContentAsText",
 	          "cnt:chars" : canvasNotes
 			},
 			"on" : canvasURI
 		};
-		saveAnnotationTo(canvasURI, annotationObject);
+		saveAnnotationTo(annotationObject, "anno");
 
 		$(".start").hide("blind", "300ms", function(){
 			$(".imgAdditionArea").show("explode", "500ms");
@@ -881,7 +880,7 @@ var testManifest = {
 				}
 			})
 		}
-		else{ //img
+		else{ 
 
 		}
 
@@ -891,7 +890,6 @@ var testManifest = {
 		rangeID += 1;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
-
 	}
 
 	function updateRange(rangeID, leaf){
@@ -1005,7 +1003,6 @@ var testManifest = {
 			// $("#start").attr("onclick", "submitStart('"+canvas+"');");
 		});
 	}
-
 
 	function returnToOptions(){
 		$(".info").hide("blind", "300ms", function(){$(".start").show("explode", "500ms");})
