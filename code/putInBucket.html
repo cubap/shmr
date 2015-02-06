@@ -181,11 +181,9 @@
 	  		width: auto;
 	  		position: relative;
 	  	}
-
 	  	.start .previewImg, .info .previewImg{
 	  		margin-bottom:20px;
 	  	}
-
 	  	#sideBarInfo{
 			position: fixed;
 			left: 0px;
@@ -199,11 +197,9 @@
 			box-shadow: 0px 0px 13px 3px;
 			z-index: 2;
 		}
-
 		#whatPiece{
 			position: relative;
 		}
-
 		#folioSide1{
 			position: relative;
 			display: block;
@@ -211,7 +207,6 @@
 			width: 40px;
 			border: 3px solid black;
 		}
-
 		#folioSide2{
 			position: relative;
 			display: block;
@@ -219,21 +214,18 @@
 			width: 40px;
 			border: 3px solid black;
 		}
-
 		#addedInformation{
 			border: 2px solid white;
 			position: relative;
 			min-height:50px;
 			width: 100%;
 		}
-
 		#formAccordion{
 			position: relative;
 			height: 90%;
 			border:2px solid black;
 			padding-bottom: 10px;
 		}
-
 		#contentList{
 			position: relative;
 			border: 1px solid blue;
@@ -250,7 +242,6 @@
 			position: relative;
 			border: 1px solid yellow;
 		}		
-
 		.ui-accordion-content{
 			height: 1px;
 			padding: 5px 0px;
@@ -258,24 +249,19 @@
 		.ui-accordion-header{
 			padding: 5px 0px;
 		}
-
 		*:focus{
 			outline: none;
 		}
-
 		.ui-state-active{
 			outline: none;
 		}
-
 		#serverLogin{
 			position: relative;
 			border: 1px solid black;
 		}
-
 		#serverLoginFrame{
 			position: relative;
 		}
-		
 	  </style>
 	</head>
 	<body>
@@ -375,6 +361,7 @@
 var rangeID = 1;
 var canvasID = 1;
 var annoID = 1;
+var imageID = 1;
 var currentLeaf = "";
 var testManifest = {
 	  "@context" : "http://www.shared-canvas.org/ns/context.json",
@@ -571,7 +558,8 @@ var testManifest = {
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			var canvasURI = "";
-			var newAnnoURI = "";
+			var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+			var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
 			if(entryValue !== "" && entryValue !== undefined ){
 				switch(entryID){
 					case "previousOwners":
@@ -744,7 +732,6 @@ var testManifest = {
 						//we have the current leaf ID up top to have for API.
 						if(masterRange.canvases[entryValue - 1] === undefined || masterRange.canvases[entryValue - 1] === {}){
 							//This slot is not occupied.  Add the leaf object without worry
-							console.log(masterRange);
 							//Check every spot before it.  If it is empty, place an empty object so that the index up to this point can be defined.  If it isn't empty, then the index is intact for this part so ignore it.
 							for(var i=0; i<entryValue-1; i++){
 								if(masterRange.canvases[i] === undefined){
@@ -754,7 +741,7 @@ var testManifest = {
 							masterRange.canvases[entryValue - 1] = currentLeafObject;
 						}
 						else{
-							//We have created a conflict.  How will we handle this?
+							//We have created a conflict.  I am trying to place a leaf in the master range at a location tht already has a leaf.  How will we handle this?
 							alert("CONFLICT.  WE NEED TO FIGURE THIS PART OUT.")
 						}
 						break;
@@ -853,19 +840,19 @@ var testManifest = {
 			}	
 		});
 
-		//$("#notes").val();
-		// var annotationObject = {
-		// 	"@id" : newAnnoURI,
-	 //        "@type" : "oa:Annotation",
-	 //        "motivation" : "sc:painting",
-	 //        "label" : "",
-	 //        "resource" : {
-	 //          "@type" : "cnt:ContentAsText",
-	 //          "cnt:chars" : entryValue
-		// 	},
-		// 	"on" : canvasURI
-		// };
-		// saveAnnotationTo(canvasURI, annotationObject);
+		var canvasNotes = $("#notes").val();
+		var annotationObject = {
+			"@id" : newAnnoURI,
+	        "@type" : "oa:Annotation",
+	        "motivation" : "sc:painting",
+	        "label" : "",
+	        "resource" : {
+	          "@type" : "cnt:ContentAsText",
+	          "cnt:chars" : canvasNotes
+			},
+			"on" : canvasURI
+		};
+		saveAnnotationTo(canvasURI, annotationObject);
 
 		$(".start").hide("blind", "300ms", function(){
 			$(".imgAdditionArea").show("explode", "500ms");
@@ -894,7 +881,7 @@ var testManifest = {
 				}
 			})
 		}
-		else{
+		else{ //img
 
 		}
 
@@ -963,6 +950,7 @@ var testManifest = {
         	]
       	 }
       	 $("input[rv='verso']").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
+      	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas1);
       	 canvasID += 1;
       	 var newCanvas2 = {
@@ -975,6 +963,7 @@ var testManifest = {
         	]
       	 }
       	 $("input[rv='recto']").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
+      	 $("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas2);
       	 leafRange += 1;
 		 var leafRange = {

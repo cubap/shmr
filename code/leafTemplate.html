@@ -80,7 +80,7 @@
             	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
 			</div>
 			<img class="versoImg" src=""/><br>
-			<input type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" onclick="enterCatalogueInfo('verso');"/>
+			<input type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" canvas="" onclick="enterCatalogueInfo('verso');"/>
 		</div>
 		<div class="rectoCanvas">
 			<p>This is considered one side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
@@ -91,7 +91,7 @@
             	<input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
 			</div>
 			<img class="rectoImg" src="" /><br>
-			<input type="button" rv="recto" value="Enter Addition Information" class="imgCatalogueInfo" onclick="enterCatalogueInfo('recto');"/>
+			<input type="button" rv="recto" canvas="" value="Enter Addition Information" class="imgCatalogueInfo" onclick="enterCatalogueInfo('recto');"/>
 		</div><br>
 		<input type="button" onclick="enterCatalogueInfo('leaf');" value="Enter Information That Pertains To The Leaf As A Whole"/>
 	</div>
@@ -105,12 +105,12 @@ function showImageAddition(which){
 }
 
 $(function(){
-		     
 		$('.canvasImageFile').on("change", function(event){
         //start spinny?
         var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
         var files = !!this.files ? this.files : [];
-
+        console.log($(this).parent().parent());
+        var canvasURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvas");
         if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
  
         if (/^image/.test( files[0].type)){ // only image file
@@ -121,6 +121,24 @@ $(function(){
                 $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
                 $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
                 $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
+                var annotationObject = {
+					"@id" : newAnnoURI,
+			        "@type" : "oa:Annotation",
+			        "motivation" : "sc:painting",
+			        "label" : "Canvas Image",
+			        "resource" : {
+				        "@id" : newImageURI,
+				        "@type" : "dctypes:Image",
+				        "format" : "image/jpeg",
+				        "height" : 2365,
+				        "width" : 1579
+					},
+					"on" : canvasURI
+				};
+				$("#catalogueInfoFor").val(canvasURI);
+                saveAnnotationTo(annotationObject, "anno")
             };
        
         }
