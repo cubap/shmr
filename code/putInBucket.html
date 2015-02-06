@@ -299,29 +299,6 @@
 			<div class="leaf"></div>
 		</div>
 
-		<!-- <div class="mainBlock start">
-			<p>
-				You chose to give us some information about your submission.  Put a check mark next to the type of information you know about the leaf below.  Once you have selected
-				the pieces you have information on, click "Enter Information".  You must select at least one.
-			</p>
-			<img class="imgPreview" src="" rv="" /><br>
-			<div class="sbsSquare hoverGreen">
-				<h2 class="label" >Context</h4><input type="checkbox" name="contextInfo"/>
-				<p> Check this if you know something about the previous owners or history of the leaf. </p>
-			</div>
-			<div class="sbsSquare hoverBlue">
-				<h2 class="label">Content</h4><input type="checkbox" name="contentInfo"/>
-				<p> Check this if you know information about the text on this leaf. </p>
-			</div>
-			<div class="sbsSquare hoverRed">
-				<h2 class="label">Carrier</h4><input type="checkbox" name="carrierInfo"/>
-				<p> Check this if you know something about the physical properties of the leaf. </p>
-			</div>
-			<input type="button" id="start" onclick="submitStart();" value="Enter Data"/>
-			<input type="button" onclick="returnToImages();" value="Return To Images"/>
-		</div> -->
-
-
 		<div class="mainBlock start">
 			<!-- <img class="imgPreview" src="" /><br>-->
  			<input type="hidden" id="catalogueInfoFor" value="" />
@@ -395,8 +372,10 @@
 <script>
 
 //Here we have the "binder" to add our pieces into.  Notice that right now I have defined an anchor object and the master sequence range.
-var leafRangeID = 2;
-var canvasID = 2;
+var rangeID = 1;
+var canvasID = 1;
+var annoID = 1;
+var currentLeaf = "";
 var testManifest = {
 	  "@context" : "http://www.shared-canvas.org/ns/context.json",
 	  "@id" : "",
@@ -439,24 +418,35 @@ var testManifest = {
 	      "ranges" : [
 	          //add leaf ranges here in order
 	      ],
+	      "canvases" :[],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 		}
 	  ]
 }
 
-	function saveFolio(folioID, leafID){
+	function saveFolio(currentLeafID){
 
 		/*
 		The decision needs to be made for what is metadata, what is an annotation and what is a range.  For annotations, do they go onto a range or onto a canvas?  For things that become new ranges, we have to create new range objects.
+
+		We need to also account for checking for already existing fields when we go into update for ranges.
 		*/
+		var currentLeafObject = {};
+		$.each(testManifest.structures, function(){
+			if ($(this)["@id"] === currentLeafID){
+				currentLeafObject = $(this);
+				return false;
+			}
+		});
 		
 		$(".contentFormEntry").each(function(){
 			var addedInfoList = $("#contentList");
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			var canvasURI = "";
-			var newAnnoURI = "";
-			if(entryValue !== "" && entryValue !== null ){
+			var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+			var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+			if(entryValue !== "" && entryValue !== undefined ){
 				switch(entryID){
 					case "contentAuthor":
 						addedInfoList.append("<li><span class='formLabel'>Text Author(s): </span>"+entryValue+"</li>");
@@ -464,7 +454,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Text Authors",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -472,7 +462,6 @@ var testManifest = {
         					"on" : canvasURI
     					};
     					saveAnnotationTo(annotationObject, "anno");
-
 						break;
 					case "contentLanguage":
 						addedInfoList.append("<li><span class='formLabel'>Text Language: </span>"+entryValue+"</li>");
@@ -480,7 +469,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Text Language",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -490,19 +479,37 @@ var testManifest = {
     					saveAnnotationTo(annotationObject, "anno");
 						break;
 					case "contentFormat":
+					/*
+					If we only expect a couple, maybe force those here.  Otherwise, whenever they submit a format, they are adding a range unless that range already exists.
+					For existing ranges, if this range wants it can be defined 'within' a range instead of as a range on its own or as an annotation to the range 
+					*/
 						addedInfoList.append("<li><span class='formLabel'>Text Format: </span>"+entryValue+"</li>");
-						var annotationObject = {
-							"@id" : newAnnoURI,
-					        "@type" : "oa:Annotation",
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						var leafToAdd = "";
+						var rangeObject = {
+							"@id" : newRangeURI,
+					        "@type" : "sc:Range",
 					        "motivation" : "sc:painting",
-					        "label" : "",
-					        "resource" : {
-					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue
-        					},
-        					"on" : canvasURI
+					        "label" : entryValue,
+					        "canvases": [],
+					        "ranges" : [currentLeaf]
     					};
-    					saveAnnotationTo(annotationObject, "anno");
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								leafToAdd = currentLeaf;
+								updateRange(rangeToUpdate, currentLeaf);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
 						break;
 					case "contentNumLines":
 						addedInfoList.append("<li><span class='formLabel'>Number of Lines: </span>"+entryValue+"</li>");
@@ -510,7 +517,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "# of lines",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -520,12 +527,13 @@ var testManifest = {
     					saveAnnotationTo(annotationObject, "anno");
 						break;
 					case "contentDescription":
+					//This could be a range
 						addedInfoList.append("<li><span class='formLabel'>Text Description: </span>"+entryValue+"</li>");
 						var annotationObject = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Text Description",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -540,7 +548,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Other Text Info",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -564,7 +572,7 @@ var testManifest = {
 			var entryValue = $(this).val();
 			var canvasURI = "";
 			var newAnnoURI = "";
-			if(entryValue !== "" && entryValue !== null ){
+			if(entryValue !== "" && entryValue !== undefined ){
 				switch(entryID){
 					case "previousOwners":
 						addedInfoList.append("<li><span class='formLabel'>Previous Owner(s): </span>"+entryValue+"</li>");
@@ -572,7 +580,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Previous Owners",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -583,41 +591,70 @@ var testManifest = {
 						break;
 					case "contextSection":
 						addedInfoList.append("<li><span class='formLabel'>Section: </span>"+entryValue+"</li>");
-						var annotationObject = {
-							"@id" : newAnnoURI,
-					        "@type" : "oa:Annotation",
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						var leafToAdd = "";
+						var rangeObject = {
+							"@id" : newRangeURI,
+					        "@type" : "sc:Range",
 					        "motivation" : "sc:painting",
-					        "label" : "",
-					        "resource" : {
-					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue
-        					},
-        					"on" : canvasURI
+					        "label" : entryValue,
+					        "canvases": [],
+					        "ranges" : [currentLeaf],
     					};
-    					saveAnnotationTo(annotationObject, "anno");
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								leafToAdd = currentLeaf;
+								updateRange(rangeToUpdate, leafToAdd);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
 						break;
 					case "contextFormat":
 						addedInfoList.append("<li><span class='formLabel'>Context Format: </span>"+entryValue+"</li>");
-						var annotationObject = {
-							"@id" : newAnnoURI,
-					        "@type" : "oa:Annotation",
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						var leafToAdd = "";
+						var rangeObject = {
+							"@id" : newRangeURI,
+					        "@type" : "sc:Range",
 					        "motivation" : "sc:painting",
-					        "label" : "",
-					        "resource" : {
-					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue
-        					},
-        					"on" : canvasURI
+					        "label" : entryValue,
+					        "canvases": [],
+					        "ranges" : [currentLeaf]
     					};
-    					saveAnnotationTo(annotationObject, "anno");
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								leafToAdd = currentLeaf;
+								updateRange(rangeToUpdate, currentLeaf);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
 						break;
 					case "contextAuction":
+
 						addedInfoList.append("<li><span class='formLabel'>Recent Auctions: </span>"+entryValue+"</li>");
 						var annotationObject = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Recent Auctions",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -632,7 +669,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Folio ID",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -647,7 +684,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Date Acquired",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -662,7 +699,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "Context Other",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -683,7 +720,7 @@ var testManifest = {
 			var entryValue = $(this).val();
 			var canvasURI = "";
 			var newAnnoURI = "";
-			if(entryValue !== "" && entryValue !== null ){
+			if(entryValue !== "" && entryValue !== undefined ){
 				switch(entryID){
 					case "carrierRV":
 						addedInfoList.append("<li><span class='formLabel'>Recto or Verso: </span>"+entryValue+"</li>");
@@ -691,7 +728,7 @@ var testManifest = {
 							"@id" : newAnnoURI,
 					        "@type" : "oa:Annotation",
 					        "motivation" : "sc:painting",
-					        "label" : "",
+					        "label" : "recto_verso",
 					        "resource" : {
 					          "@type" : "cnt:ContentAsText",
 					          "cnt:chars" : entryValue
@@ -701,34 +738,54 @@ var testManifest = {
     					saveAnnotationTo(annotationObject, "anno");
 						break;
 					case "carrierPageNum":
+					//This one is special because it tries to place the leaf directly into the master range.  I think we should add it into the master range when this is defined AND attach this information as an annotation.
 						addedInfoList.append("<li><span class='formLabel'>Page Number: </span>"+entryValue+"</li>");
-						var annotationObject = {
-							"@id" : newAnnoURI,
-					        "@type" : "oa:Annotation",
-					        "motivation" : "sc:painting",
-					        "label" : "",
-					        "resource" : {
-					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue
-        					},
-        					"on" : canvasURI
-    					};
-    					saveAnnotationTo(annotationObject, "anno");
+						var masterRange = testManifest.structures[0];
+						//we have the current leaf ID up top to have for API.
+						if(masterRange.canvases[entryValue - 1] === undefined || masterRange.canvases[entryValue - 1] === {}){
+							//This slot is not occupied.  Add the leaf object without worry
+							console.log(masterRange);
+							//Check every spot before it.  If it is empty, place an empty object so that the index up to this point can be defined.  If it isn't empty, then the index is intact for this part so ignore it.
+							for(var i=0; i<entryValue-1; i++){
+								if(masterRange.canvases[i] === undefined){
+									masterRange.cavases[i] = {};
+								}
+							}
+							masterRange.canvases[entryValue - 1] = currentLeafObject;
+						}
+						else{
+							//We have created a conflict.  How will we handle this?
+							alert("CONFLICT.  WE NEED TO FIGURE THIS PART OUT.")
+						}
 						break;
 					case "carrierFormat":
 						addedInfoList.append("<li><span class='formLabel'>Carrier Format: </span>"+entryValue+"</li>");
-						var annotationObject = {
-							"@id" : newAnnoURI,
-					        "@type" : "oa:Annotation",
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						var leafToAdd = "";
+						var rangeObject = {
+							"@id" : newRangeURI,
+					        "@type" : "sc:Range",
 					        "motivation" : "sc:painting",
-					        "label" : "",
-					        "resource" : {
-					          "@type" : "cnt:ContentAsText",
-					          "cnt:chars" : entryValue
-        					},
-        					"on" : canvasURI
+					        "label" : entryValue,
+					        "canvases": [],
+					        "ranges" : [currentLeaf]
     					};
-    					saveAnnotationTo(annotationObject, "anno");
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								leafToAdd = currentLeaf;
+								updateRange(rangeToUpdate, leafToAdd);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
 						break;
 					case "carrierBinding":
 						addedInfoList.append("<li><span class='formLabel'>Binding Information: </span>"+entryValue+"</li>");
@@ -821,6 +878,7 @@ var testManifest = {
 
 	function saveAnnotationTo(annoObject, which){
 		//objectID can be the ID of a canvas or the ID of a range.  If it is information that seems like it is a range, check that the range does not alredy exist.  If it doesn't, create a new one and save the annotation to the new one. 
+		annoID += 1;
 		var objectID = $("#catalogueInfoFor").val();
 		if(which === "anno"){
 			$.each(testManifest.sequences[0].canvases,function(){
@@ -839,15 +897,33 @@ var testManifest = {
 		else{
 
 		}
-		console.log(annoObject);
-
 
 	}
 
 	function createNewRange(newRangeObject){
+		rangeID += 1;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
 
+	}
+
+	function updateRange(rangeID, leaf){
+		console.log("Updating range "+rangeID+" with leaf "+leaf);
+		var currentRange = {};
+		var index = 0;
+		$.each(testManifest.structures, function(){
+			if(this["@id"] === rangeID){
+				if(!$.inArray(leaf, $(this).ranges)){
+					console.log("pushing leaf to range")
+					this.ranges.push(leaf);
+				}
+				else{
+					console.log('LEAF already in range.')
+				}
+				return false;
+			}
+			index++;
+		});
 	}
 	
 	function resloveImageURI(rv){
@@ -902,9 +978,9 @@ var testManifest = {
       	 testManifest.sequences[0].canvases.push(newCanvas2);
       	 leafRange += 1;
 		 var leafRange = {
- 		  "@id":"http://www.example.org/iiif/LlangBrev/range/"+leafRangeID,
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/"+rangeID,
 	      "@type":"sc:Range",
-	      "label":"Llangantock Breviary Page_"+leafRangeID,
+	      "label":"Llangantock Breviary Page_"+rangeID ,
 	      "canvases" : [
 	          newCanvas1["@id"],
 	          newCanvas2["@id"]
@@ -913,6 +989,7 @@ var testManifest = {
 	      "ranges" : [],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 		}
+		currentLeaf = leafRange["@id"];
 		createNewRange(leafRange);
 	}
 
@@ -920,47 +997,26 @@ var testManifest = {
 		var previewImgSrc = $("."+canvas+"Img").attr("src");
 		$(".imgPreview").attr("src",previewImgSrc);
 		$(".imgAdditionArea").hide("blind", "300ms", function(){
-				$(".start").show("explode", "500ms");
-				if(canvas === 'recto'){
-					$("#folioSide2").css("border", "3px solid yellow");
-					$("#folioSide1").css("border", "3px solid black");
-					$("#catalogueInfoFor").val(canvasID); //beta
-				}
-				else if (canvas === 'verso'){
-					$("#folioSide1").css("border", "3px solid yellow");
-					$("#folioSide2").css("border", "3px solid black");
-					$("#catalogueInfoFor").val(canvasID); //alpha
-				}
-				else{
-					$("#folioSide2").css("border", "3px solid yellow");
-					$("#folioSide1").css("border", "3px solid yellow");
-					$("#catalogueInfoFor").val('leaf'); //zeta
-				}
-				// $("#start").attr("onclick", "submitStart('"+canvas+"');");
-			});
+			$(".start").show("explode", "500ms");
+			if(canvas === 'recto'){
+				$("#folioSide2").css("border", "3px solid yellow");
+				$("#folioSide1").css("border", "3px solid black");
+				$("#catalogueInfoFor").val(canvasID); //beta
+			}
+			else if (canvas === 'verso'){
+				$("#folioSide1").css("border", "3px solid yellow");
+				$("#folioSide2").css("border", "3px solid black");
+				$("#catalogueInfoFor").val(canvasID); //alpha
+			}
+			else{
+				$("#folioSide2").css("border", "3px solid yellow");
+				$("#folioSide1").css("border", "3px solid yellow");
+				$("#catalogueInfoFor").val('leaf'); //zeta
+			}
+			// $("#start").attr("onclick", "submitStart('"+canvas+"');");
+		});
 	}
 
-	// function submitStart(canvas){
-	// 	if($("input[name='contextInfo'").prop("checked") == false && $("input[name='carrierInfo'").prop("checked") == false && $("input[name='contentInfo'").prop("checked") == false ){
-	// 		alert("You must check at least one box (content, context or carrier.)");
-	// 	}
-	// 	else{
-	// 		$(".start").hide("blind", "300ms", function(){
-	// 			$(".info").show("explode", "500ms", function(){
-	// 				if($("input[name='contextInfo'").prop("checked") == true){
-	// 					$('#contextForm').show("puff", "300ms");
-	// 				}
-	// 				if($("input[name='contentInfo'").prop("checked") == true){
-	// 					$('#contentForm').show("puff", "300ms");
-	// 				}
-	// 				if($("input[name='carrierInfo'").prop("checked") == true){
-	// 					$('#carrierForm').show("puff", "300ms");
-	// 				}
-	// 			});
-	// 		});
-	// 	}
-		
-	// }
 
 	function returnToOptions(){
 		$(".info").hide("blind", "300ms", function(){$(".start").show("explode", "500ms");})
