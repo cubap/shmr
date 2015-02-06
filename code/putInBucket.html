@@ -727,15 +727,15 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Page Number: </span>"+entryValue+"</li>");
 						var masterRange = testManifest.structures[0];
 						//we have the current leaf ID up top to have for API.
-						if(masterRange.canvases[entryValue - 1] === undefined || masterRange.canvases[entryValue - 1] === {}){
+						if(masterRange.ranges[entryValue - 1] === undefined || masterRange.ranges[entryValue - 1] === {}){
 							//This slot is not occupied.  Add the leaf object without worry
 							//Check every spot before it.  If it is empty, place an empty object so that the index up to this point can be defined.  If it isn't empty, then the index is intact for this part so ignore it.
 							for(var i=0; i<entryValue-1; i++){
-								if(masterRange.canvases[i] === undefined){
-									masterRange.cavases[i] = {};
+								if(masterRange.ranges[i] === undefined){
+									masterRange.ranges[i] = {};
 								}
 							}
-							masterRange.canvases[entryValue - 1] = currentLeafObject;
+							masterRange.ranges[entryValue - 1] = currentLeafObject;
 						}
 						else{
 							//We have created a conflict.  I am trying to place a leaf in the master range at a location tht already has a leaf.  How will we handle this?
