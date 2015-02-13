@@ -441,6 +441,7 @@ var testManifest = {
 	      "resources" : [],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 		},
+		
 		{
  		  "@id":"http://www.example.org/iiif/LlangBrev/range/anchor",
 	      "@type":"sc:Range",
@@ -461,7 +462,7 @@ var testManifest = {
 	function saveFolio(){
 		var currentLeafObject = {};
 		var otherInfo = {};
-		var uriToSave = $("#catalogueInfoFor").val() //alpha, beta, or leaf URI
+		var uriToSave = $("#catalogueInfoFor").val() //alpha URI, beta URI, or leaf URI
 		var canvasURI = uriToSave;
 		var annoOrRange = "anno";
 		$.each(testManifest.structures, function(){
@@ -471,10 +472,9 @@ var testManifest = {
 				return false;
 			}
 		});
-		var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-		var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+		
 		var annotationObject = {
-			"@id" : newAnnoURI,
+			"@id" : "",
 	        "@type" : "oa:Annotation",
 	        "motivation" : "sc:painting",
 	        "label" : "Text Description",
@@ -485,7 +485,7 @@ var testManifest = {
 			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
 		};
 		var rangeObject = { //this will only be saved 
-			"@id" : newRangeURI,
+			"@id" : "",
 	        "@type" : "sc:Range",
 	        "motivation" : "sc:painting",
 	        "label" : "",
@@ -503,7 +503,11 @@ var testManifest = {
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			if(entryValue !== "" && entryValue !== undefined ){
+				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+				annotationObject["@id"] = newAnnoUri;
 				annotationObject.resource["cnt:chars"] = entryValue;
+				rangeObject["@id"] = newRangeURI;
 				rangeObject.label = entryValue;
 				switch(entryID){
 					case "contentAuthor":
@@ -562,7 +566,11 @@ var testManifest = {
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			if(entryValue !== "" && entryValue !== undefined ){
+				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+				annotationObject["@id"] = newAnnoUri;
 				annotationObject.resource["cnt:chars"] = entryValue;
+				rangeObject["@id"] = newRangeURI;
 				rangeObject.label = entryValue;
 				switch(entryID){
 					case "previousOwners":
@@ -637,7 +645,11 @@ var testManifest = {
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			if(entryValue !== "" && entryValue !== undefined ){
+				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+				annotationObject["@id"] = newAnnoUri;
 				annotationObject.resource["cnt:chars"] = entryValue;
+				rangeObject["@id"] = newRangeURI;
 				rangeObject.label = entryValue;
 				switch(entryID){
 					case "carrierRV":
