@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8">
+	  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+    <!--
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	-->
+	  <title>Bucket Example</title>
+	  <style>
+	    input[type="button"]{
+	    	padding:5px;
+	    	background-color: white;
+	    	border: 1px solid black;
+	    	cursor: pointer;
+	    	font-family: "Comic Sans MS", cursive, sans-serif;
+	    }
+	    input[type="button"]:hover{
+	    	box-shadow: 0px 0px 13px 1px;
+	    }
+	  	.mainBlock{
+			position: relative;
+			box-shadow: 0px 0px 13px 3px;
+			margin: 0% 0px 0px 10%;
+			padding: 10px;
+			text-align: center;
+			background-color: #545454;
+			z-index: 2;
+			left: 13%;
+			width: 73%;
+			height: auto;
+	  	}
+	  	.intro{
+	  		display: block;
+	  	}
+	  	.start{
+			display: none;
+	  	}
+	  	.info{
+	  		display: none;
+	  	}
+	  	p{
+	  		font-size: 10pt;
+	  		color: black;
+	  		margin: 15px 0px;
+	  		color: white;
+	  		font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+	  	}
+	  	.label{
+	  		display: inline-block;
+	  		margin-right: 10px;
+	  	}
+	  	.sbsSquare{
+	  		width: 32%;
+	  		border: 1px solid black;
+	  		display: inline-table;
+	  		height: 300px;
+	  		padding-top:50px;
+	  		margin-bottom: 15px;
+	  	}
+	  	.sbsSquare p:first-letter{
+               text-transform: uppercase;
+        }
+        .sbsSquare p {
+	        font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+			letter-spacing:0.1em;
+			text-align:center;
+			text-transform: lowercase;
+			line-height: 145%;
+			font-size: 14pt;
+			font-variant: small-caps;
+        	padding: 0px 10px;
+	  	}
+	  	.sbsSqaure h2{
+	  		font-size: 16pt;
+        	font-family:Georgia,serif;
+			color:#4E443C;
+			font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+	  	}
+	  	body{
+	  		z-index: 1;
+	  		background-image: url("../m2/images/BrokenBook01.jpg");
+	  		background-repeat: repeat;
+	  	}
+	  	.hoverBlue:hover{
+	  		box-shadow: 0px 0px 13px 3px blue;
+	  	}
+	  	.hoverGreen:hover{
+	  		box-shadow: 0px 0px 13px 3px green;
+	  	}
+	  	.hoverRed:hover{
+	  		box-shadow: 0px 0px 13px 3px red;
+	  	}
+	  	ul{
+	  		margin: 10px 0px;
+	  	}
+	  	li{
+	  		list-style-type: none;
+	  	}
+	  	#contextForm{
+	  		border-bottom: 2px solid green;
+	  		border-right: 2px solid green;
+	  		border-left: 2px solid green;
+	  		position: relative;
+	  		height: auto;
+	  	}
+	  	#contentForm{
+	  		border-bottom: 2px solid blue;
+	  		border-right: 2px solid blue;
+	  		border-left: 2px solid blue;
+	  		position: relative;
+	  		height: auto;
+	  	}
+	  	#carrierForm{
+	  		border-bottom: 2px solid red;
+	  		border-right: 2px solid red;
+	  		border-left: 2px solid red;
+	  		position: relative;
+	  		height: auto;
+	  	}
+	  	#notesForm{
+	  		border-bottom: 2px solid yellow;
+	  		border-right: 2px solid yellow;
+	  		border-left: 2px solid yellow;
+	  		position: relative;
+	  		height: auto;
+	  	}
+	  	#contextHeader{
+	  		color: green;
+	  		border-top: 1px solid green;
+	  		border-right: 1px solid green;
+	  		border-left: 1px solid green;
+	  		cursor: pointer;
+	  	}
+	  	#contentHeader{
+	  		color: blue;
+	  		border-top: 1px solid blue;
+	  		border-right: 1px solid blue;
+	  		border-left: 1px solid blue;
+	  		cursor: pointer;
+	  	}
+	  	#carrierHeader{
+	  		color: red;
+	  		border-top: 1px solid red;
+	  		border-right: 1px solid red;
+	  		border-left: 1px solid red;
+	  		cursor: pointer;
+	  	}
+	  	#notesHeader{
+	  		color: yellow;
+	  		border-top: 1px solid yellow;
+	  		border-right: 1px solid yellow;
+	  		border-left: 1px solid yellow;
+	  		cursor: pointer;
+	  	}
+	  	.infoPart{
+	  		margin: 10px 0px;
+	  	}
+	  	#previousOwners{
+	  		width: 300px;
+	  	}
+	  	.formLabel{
+	  		font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+			letter-spacing:0.1em;
+			text-align:center;
+			text-transform: lowercase;
+			line-height: 145%;
+			font-size: 12pt;
+			font-variant: small-caps;
+        	padding: 0px 10px;
+	  	}
+	  	.imgAdditionArea{
+	  		position: relative;
+	  		display: none;
+	  	}
+	  	.previewImg{
+	  		height: 200px;
+	  		width: auto;
+	  		position: relative;
+	  	}
+	  	.start .previewImg, .info .previewImg{
+	  		margin-bottom:20px;
+	  	}
+	  	#sideBarInfo{
+			position: fixed;
+			left: 0px;
+			top:15px;
+			height:90%;
+			overflow-y: auto;
+			padding: 5px;
+			width: 20%;
+			background-color: #545454;
+			padding: 10px;
+			box-shadow: 0px 0px 13px 3px;
+			z-index: 2;
+		}
+		#whatPiece{
+			position: relative;
+			margin-bottom: 35px;
+		}
+		#folioSide1{
+			position: relative;
+			display: inline-table;
+			height: 150px;
+			width: 120px;
+			margin-right:25px;
+			border: 3px solid black;
+		}
+		#folioSide2{
+			position: relative;
+			display: inline-table;
+			height: 150px;
+			width: 120px;
+			border: 3px solid black;
+		}
+		.addedInformation{
+			border: 2px solid white;
+			position: relative;
+			min-height:50px;
+			width: 100%;
+			display: none;
+		}
+		#formAccordion{
+			position: relative;
+			height: 90%;
+			border:2px solid black;
+			padding-bottom: 10px;
+		}
+		.contentList{
+			position: relative;
+			border: 1px solid blue;
+			padding-left: 0px;
+		}
+		.contextList{
+			position: relative;
+			border: 1px solid green;
+			padding-left: 0px;
+		}
+		.carrierList{
+			position: relative;
+			border: 1px solid red;
+			padding-left: 0px;
+		}
+		.addedNotes{
+			position: relative;
+			border: 1px solid yellow;
+		}		
+		.ui-accordion-content{
+			height: 1px;
+			padding: 5px 0px;
+		}
+		.ui-accordion-header{
+			padding: 5px 0px;
+		}
+		*:focus{
+			outline: none;
+		}
+		.ui-state-active{
+			outline: none;
+		}
+		#serverLogin{
+			position: relative;
+			border: 1px solid black;
+		}
+		#serverLoginFrame{
+			position: relative;
+		}
+		.selectedFolio{
+			border: 3px solid yellow !important;
+		}
+	  </style>
+	</head>
+	<body>
+		<div class="mainBlock intro">
+			<p>
+				Here you can create a leaf to place into the bucket.   Login below to begin making a leaf.
+				
+			</p>
+
+			<!-- TESTED. SUCCESSFUL.  
+			<div id="serverLogin">
+				<iframe id="serverLoginFrame" src="http://localhost/image_console.php" WIDTH=650 HEIGHT=400 >
+						TEST TEST TEST
+				</iframe>
+			</div> -->
+			
+			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
+		</div>
+
+		<div class="mainBlock imgAdditionArea">
+			<div class="leaf"></div>
+		</div>
+
+		<div class="mainBlock start">
+			<!-- <img class="imgPreview" src="" /><br>-->
+ 			<input type="hidden" id="catalogueInfoFor" value="" />
+ 			<p>Here is where you can enter addition information about the object.  Click below to expand and enter information about the fields you have information on.  <u style="color: blue;">Content</u> is about the written text on the leaf or page such as the language it is in or a transcription of the text.  <u style="color: green;">Context</u> is about where the leaf or page has been, who has owned it, etc.  <u style="color: red;">Carrier</u> information is physical information about the leaf or page itself, such as number of lines, dimensions, etc. </p>
+			<div id="formAccordion">
+				<h3 id="contentHeader">Content</h3>
+				<div id="contentForm">
+					<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+						<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" id="contentLanguage" class="contentFormEntry" /> </li>
+						<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" id="contentFormat" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" id="contentNumLines" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">If you know what this text is describing, type that here (ex. Feast of Saints):  </span> <input type="text" id="contentDescription" class="contentFormEntry"/> </li>
+						<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
+						<li><span class="formLabel">Other: </span> <textarea class="contentFormEntry" id="contentOther"></textarea></li>
+					</ul>
+				</div>
+				<h3 id="contextHeader">Context</h3>
+				<div id="contextForm">
+					<p> Please give an answer for at least one of the questions about context information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">If you can, type in the previous owners separating them with a colon (:) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
+						<li><span class="formLabel">If this folio is part of a specific section, enter the name for that section here: </span> <input type="text" class="contextFormEntry" id="contextSection"/></li>
+						<li><span class="formLabel">If this folio is was sold at auction type that here: </span> <textarea class="contextFormEntry" id="contextAuction"/></textarea></li>
+						<li><span class="formLabel">Type the folio identifier here: </span> <input type="text" class="contextFormEntry" id="contextFolioID"/></li>
+						<li><span class="formLabel">Type the date the folio was acquired here: </span> <input type="text" class="contextFormEntry" id="contextDateAcquired"/></li>
+						<li><span class="formLabel">Other: </span> <textarea class="contextFormEntry" id="contextOther"></textarea></li>
+					</ul>
+				</div>
+				<h3 id="carrierHeader">Carrier</h3>
+				<div id="carrierForm">
+					<p> Please give an answer for at least one of the questions about carrier information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<ul>
+						<li><span class="formLabel">Type in whether this entry is recto or verso: </span> <input type="text" class="carrierFormEntry" id="carrierRV"/></li>
+						<li><span class="formLabel">Enter the page number: </span> <input type="text" class="carrierFormEntry" id="carrierPageNum"/></li>
+						<li><span class="formLabel">Type in information about the binding: </span> <input type="text" class="carrierFormEntry" id="carrierBinding"/></li>
+						<li><span class="formLabel">Type in the format for this image (whether it is part of a single leaf or bifolium, etc.): </span> <input type="text" class="carrierFormEntry" id="carrierFormat"/></li>
+						<li><span class="formLabel">Are there any notable decorations/illustrations/initials?  If so, describe them here: </span> <input type="text" class="carrierFormEntry" id="carrierIllustrations"/></li>
+						<li><span class="formLabel">If applicable, type in the artist(s) of the decorations/illustrations/initials : </span> <textarea class="carrierFormEntry" id="carrierArtists"></textarea></li>
+						<li><span class="formLabel">Other: </span> <textarea type="text" class="carrierFormEntry" id="carrierOther"></textarea></li>
+					</ul>
+				</div>
+				<h3 id="notesHeader">Additional Notes</h3>
+				<div id="notesForm">
+					<p> If there are addition notes you would like to have stored with this folio, type that here</p>
+					<textarea class="notesFormEntry" id="notes"></textarea>
+				</div>
+			</div>
+			<input type="button" onclick="saveFolio();" value="Save Folio"/>
+ 	        <input type="button" onclick="cancelFolio();" value="Return To Images"/>
+		</div>
+		<div id="sideBarInfo">
+			<p>This area will tell you what piece of the leaf you are currently working on.  There are only three options: side alpha, side beta and the leaf as a whole.  You may not know which is recto or verso, so we just call them alpha and beta.  Information you have submitted will also be placed here so you can see your progress.  </p>
+			<div id="whatPiece">
+				<div id="folioSide1">Side Alpha</div>
+				<div id="folioSide2">Side Beta</div>
+			</div>
+			<div id="alphaInformation" class="addedInformation">
+				<h3>Alpha</h3>
+				<ul class="contentList">
+				</ul>
+				<ul class="contextList">
+				</ul>
+				<ul class="carrierList">
+				</ul>
+				<div class="addedNotes"></div>
+			</div>
+			<div id="betaInformation" class="addedInformation">
+				<h3>Beta</h3>
+				<ul class="contentList">
+				</ul>
+				<ul class="contextList">
+				</ul>
+				<ul class="carrierList">
+				</ul>
+				<div class="addedNotes"></div>
+			</div>
+			<div id="zetaInformation" class="addedInformation">
+				<h3>Zeta</h3>
+				<ul class="contentList">
+				</ul>
+				<ul class="contextList">
+				</ul>
+				<ul class="carrierList">
+				</ul>
+				<div class="addedNotes"></div>
+			</div>
+		</div>
+	</body>
+</html>
+<script>
+
+//Here we have the "binder" to add our pieces into.  Notice that right now I have defined an anchor object and the master sequence range.
+var rangeID = 1;
+var canvasID = 1;
+var annoID = 1;
+var imageID = 1;
+var currentLeaf = "";
+var alpha, beta, zeta = false;
+//Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
+var testManifest = {
+	  "@context" : "http://www.shared-canvas.org/ns/context.json",
+	  "@id" : "",
+	  "@type" : "sc:Manifest",
+	  "label" : "Llang Binder",
+	  "sequences" : [{
+	  	"@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
+	    "@type" : "sc:Sequence",
+	    "label" : "Llangantock Bucket",
+	    "canvases" : [ 
+	    //This will be the anchor canvas in the anchor range
+	     {
+	        "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor",
+	        "@type" : "sc:Canvas",
+	        "label" : "Llang_001",
+	        "height" : 1000,
+	        "width" : 667,
+	        "resources" : [ 
+	             {
+		          "@type" : "oa:Annotation",
+		          "motivation" : "sc:painting",
+		          "resource" : {
+		            "@id" : "http://www.example.org/iiif/LlangBrev/image_001",
+		            "@type" : "dctypes:Image",
+		            "format" : "image/jpeg",
+		            "height" : 2365,
+		            "width" : 1579
+		          },
+		          "on" : "http://www.example.org/iiif/LlangBrev/canvas/anchor"
+	        	}
+        	]
+      	 }
+    	 ]
+	   }], 
+	  "structures" : [
+	  	{
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/master",
+	      "@type":"sc:Range",
+	      "label":"Llangantock Breviary Page Order",
+	      "ranges" : [
+	          //add leaf ranges here in order for page order
+	      ],
+	      "canvases" :[],
+	      "resources" : [],
+	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		},
+		,
+		{
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/anchor",
+	      "@type":"sc:Range",
+	      "label":"Llangantock Breviary Anchor",
+	      "ranges" : [
+	      ],
+	      "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1_anchor"],
+	      "resources" : [],
+	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		}
+	  ]
+}
+
+/*
+	When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range. Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that. It also keeps content, context and carrier information separate from each other so we can track them as such.  
+*/
+
+	function saveFolio(){
+		var currentLeafObject = {};
+		var otherInfo = {};
+		var uriToSave = $("#catalogueInfoFor").val() //alpha, beta, or leaf URI
+		var canvasURI = uriToSave;
+		var annoOrRange = "anno";
+		$.each(testManifest.structures, function(){
+			if ($(this)["@id"] === uriToSave){
+				currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
+				annoOrRange = "range"; //the uriToSave is that of a leaf, so annotations will now be saved to a leaf range instead of a canvas.
+				return false;
+			}
+		});
+		var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+		var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+		var annotationObject = {
+			"@id" : newAnnoURI,
+	        "@type" : "oa:Annotation",
+	        "motivation" : "sc:painting",
+	        "label" : "Text Description",
+	        "resource" : {
+	          "@type" : "cnt:ContentAsText",
+	          "cnt:chars" :""
+			},
+			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+		};
+		var rangeObject = { //this will only be saved 
+			"@id" : newRangeURI,
+	        "@type" : "sc:Range",
+	        "motivation" : "sc:painting",
+	        "label" : "",
+	        "canvases": [],
+	        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+	        "resources" : [],
+	        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		};
+		//Go through each content piece, grab its value and if applicable make it an annotation or a range.
+		$(".contentFormEntry").each(function(){
+			var addedInfoList = {};
+			if(zeta){ addedInfoList = $("#zetaInformation").find(".contentList"); }
+			else if(alpha){ addedInfoList = $("#alphaInformation").find(".contentList"); }
+			else if(beta){ addedInfoList = $("#betaInformation").find(".contentList"); }
+			var entryID = $(this).attr("id");
+			var entryValue = $(this).val();
+			if(entryValue !== "" && entryValue !== undefined ){
+				annotationObject.resource["cnt:chars"] = entryValue;
+				rangeObject.label = entryValue;
+				switch(entryID){
+					case "contentAuthor":
+						addedInfoList.append("<li><span class='formLabel'>Text Author(s): </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contentLanguage":
+						addedInfoList.append("<li><span class='formLabel'>Text Language: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contentFormat":
+						addedInfoList.append("<li><span class='formLabel'>Text Format: </span>"+entryValue+"</li>");
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								updateRange(rangeToUpdate, currentLeaf);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
+						break;
+					case "contentNumLines":
+						addedInfoList.append("<li><span class='formLabel'>Number of Lines: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contentDescription":
+						//This could be a range
+						addedInfoList.append("<li><span class='formLabel'>Text Description: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contentOther":
+						addedInfoList.append("<li><span class='formLabel'>Other Text Information: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contentTranscription":
+						//addedInfoList.append("<li><span class='formLabel'>Text Author(s):</span>"+entryValue+"</li>");
+						break;
+					default:
+				}
+			}
+		});
+
+		$(".contextFormEntry").each(function(){
+			var addedInfoList = {};
+			if(zeta){ addedInfoList = $("#zetaInformation").find(".contextList"); }
+			else if(alpha){ addedInfoList = $("#alphaInformation").find(".contextList"); }
+			else if(beta){ addedInfoList = $("#betaInformation").find(".contextList"); }
+			var entryID = $(this).attr("id");
+			var entryValue = $(this).val();
+			if(entryValue !== "" && entryValue !== undefined ){
+				annotationObject.resource["cnt:chars"] = entryValue;
+				rangeObject.label = entryValue;
+				switch(entryID){
+					case "previousOwners":
+						addedInfoList.append("<li><span class='formLabel'>Previous Owner(s): </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contextSection":
+						addedInfoList.append("<li><span class='formLabel'>Section: </span>"+entryValue+"</li>");
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						var leafToAdd = "";
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								updateRange(rangeToUpdate, currentLeaf);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
+						break;
+					case "contextFormat":
+						addedInfoList.append("<li><span class='formLabel'>Context Format: </span>"+entryValue+"</li>");
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								updateRange(rangeToUpdate, currentLeaf);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
+						break;
+					case "contextAuction":
+						addedInfoList.append("<li><span class='formLabel'>Recent Auctions: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contextFolioID":
+						addedInfoList.append("<li><span class='formLabel'>Folio ID: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contextDateAcquired":
+						addedInfoList.append("<li><span class='formLabel'>Date Acquired: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "contextOther":
+						addedInfoList.append("<li><span class='formLabel'>Other Context Information: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					default:
+				}	
+			}		
+		});
+
+		$(".carrierFormEntry").each(function(){
+			var addedInfoList = {};
+			if(zeta){ addedInfoList = $("#zetaInformation").find(".carrierList"); }
+			else if(alpha){ addedInfoList = $("#alphaInformation").find(".carrierList"); }
+			else if(beta){ addedInfoList = $("#betaInformation").find(".carrierList"); }
+			var entryID = $(this).attr("id");
+			var entryValue = $(this).val();
+			if(entryValue !== "" && entryValue !== undefined ){
+				annotationObject.resource["cnt:chars"] = entryValue;
+				rangeObject.label = entryValue;
+				switch(entryID){
+					case "carrierRV":
+						addedInfoList.append("<li><span class='formLabel'>Recto or Verso: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "carrierPageNum":
+					//This one is special because it tries to place the leaf directly into the master range.  I think we should add it into the master range when this is defined AND attach this information as an annotation.
+						addedInfoList.append("<li><span class='formLabel'>Page Number: </span>"+entryValue+"</li>");
+						var masterRange = testManifest.structures[0];
+						//we have the current leaf ID up top to have for API.
+						if(masterRange.ranges[entryValue - 1] === undefined || masterRange.ranges[entryValue - 1] === {}){
+							//This slot is not occupied.  Add the leaf object without worry
+							//Check every spot before it.  If it is empty, place an empty object so that the index up to this point can be defined.  If it isn't empty, then the index is intact for this part so ignore it.
+							for(var i=0; i<entryValue-1; i++){
+								if(masterRange.ranges[i] === undefined){
+									masterRange.ranges[i] = {};
+								}
+							}
+							masterRange.ranges[entryValue - 1] = currentLeafObject;
+						}
+						else{
+							//We have created a conflict.  I am trying to place a leaf in the master range at a location tht already has a leaf.  How will we handle this?
+							alert("CONFLICT.  WE NEED TO FIGURE THIS PART OUT.")
+						}
+						break;
+					case "carrierFormat":
+						addedInfoList.append("<li><span class='formLabel'>Carrier Format: </span>"+entryValue+"</li>");
+						var updateOrNew = "";
+						var rangeToUpdate = "";
+						var leafToAdd = "";
+						for(var i=1; i<testManifest.structures.length; i++){
+							if (testManifest.structures[i].label === entryValue){
+								updateOrNew = "update";
+								rangeToUpdate = testManifest.structures[i]["@id"];
+								updateRange(rangeToUpdate, currentLeaf);
+								return false;
+							}
+							else{
+								updateOrNew = "new";
+							}
+						}
+						if(updateOrNew === "new"){
+							createNewRange(rangeObject);
+						}
+						break;
+					case "carrierBinding":
+						addedInfoList.append("<li><span class='formLabel'>Binding Information: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "carrierIllustrations":
+						addedInfoList.append("<li><span class='formLabel'>Decoration/Illustrations: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "carrierArtists":
+						addedInfoList.append("<li><span class='formLabel'>Carrier Artist(s): </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					case "carrierOther":
+						addedInfoList.append("<li><span class='formLabel'>Other Carrier Information: </span>"+entryValue+"</li>");
+    					saveAnnotationTo(annotationObject);
+						break;
+					default:
+
+				}	
+			}	
+		});
+
+		//Grab the additional notes field and save it as an annotation
+		var otherInfoList = {};
+		if(zeta){otherInfoList = $("#zetaInformation").find(".addedNotes"); }
+		else if(alpha){otherInfoList = $("#alphaInformation").find(".addedNotes"); }
+		else if(beta){otherInfoList = $("#betaInformation").find(".addedNotes"); }
+		var canvasNotes = $("#notes").val();
+		if(canvasNotes !== ""){
+			var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+			var canvasURI = $("#catalogueInfoFor").val();
+			otherInfoList.append("<li><span class='formLabel'>Addition Notes: </span>"+canvasNotes+"</li>");
+			var annoObject = {
+				"@id" : newAnnoURI,
+		        "@type" : "oa:Annotation",
+		        "motivation" : "sc:painting",
+		        "label" : "Additional Notes",
+		        "resource" : {
+		          "@type" : "cnt:ContentAsText",
+		          "cnt:chars" : canvasNotes
+				},
+				"on" : canvasURI
+			};
+			saveAnnotationTo(annoObject);
+		}
+
+		$(".start").hide("blind", "300ms", function(){
+			$(".imgAdditionArea").show("explode", "500ms");
+			$("#catalogueInfoFor").val(''); 
+			$("#folioSide2").removeClass("selectedFolio");
+			$("#folioSide1").removeClass("selectedFolio");
+		});
+
+		//since we are saving and going back to choosing what to give additional information to, all the possible choices are set to false to be chosen from again. 
+		alpha = beta = zeta = false;
+
+	}
+
+	/*
+		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range. 
+	*/
+
+	function saveAnnotationTo(annoObject){
+		annoID += 1;
+		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
+		if(zeta){ //we are saving to a leaf range, so we have to go through STRUCTURES and find it.  You can also check if objectID contains "/range"
+			$.each(testManifest.structures, function(){
+				if (this["@id"] === objectID){ //Then this is our structure
+					this.resources.push(annoObject); //push the annotation object to its resources.
+				}
+			});
+		}
+		else{ // we are saving to a canvas so we have to go through the SEQUENCE and find it.  You can also check if objectID contains "/canvas"
+			$.each(testManifest.sequences[0].canvases, function(){
+				if (this["@id"] === objectID){ //this is our canvas object
+					this.resources.push(annoObject); //push the annotation to the canvas object.
+				}
+			})
+		}
+	}
+
+	/*
+		Add the range object to the structures array in the manifest object. 
+	*/
+	function createNewRange(newRangeObject){
+		rangeID += 1;
+		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
+		testManifest.structures.push(newRangeObject);
+	}
+	/*
+		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
+	*/
+	function updateRange(rangeID, leaf){
+		console.log("Updating range "+rangeID+" with leaf "+leaf);
+		var currentRange = {};
+		$.each(testManifest.structures, function(){
+			if(this["@id"] === rangeID){
+				if(!$.inArray(leaf, $(this).ranges)){
+					console.log("pushing leaf to range")
+					this.ranges.push(leaf);
+
+				}
+				else{
+					console.log('LEAF already in range.')
+				}
+				return false;
+			}
+		});
+	}
+	
+	function resloveImageURI(rv){
+		var uri = $("."+rv+"Canvas").find(".uploadness").find('textarea').val();
+	    $.ajax({
+	        url: uri,
+	        success: function(imageData){
+	            console.log(imageData);
+	        },
+	        error: function(jqXHR,error, errorThrown) {  
+	            alert("Image could not be resolved.  Issue: " +  jqXHR.status + " - " +jqXHR.response);
+	        }
+	    });
+	}
+
+	/*
+		Dont save the fields and return to the image options.  
+	*/
+
+	function cancelFolio(){
+		//Don't get data and return to image page
+		$(".start").hide("blind", "300ms", function(){
+			$(".imgAdditionArea").show("explode", "500ms");
+			$("#catalogueInfoFor").val(''); 
+			$("#folioSide2").removeClass("selectedFolio");
+			$("#folioSide1").removeClass("selectedFolio");
+			alpha = beta = zeta = false;
+		});
+	}
+
+	/*
+		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
+	*/
+	function submitIntro(){
+		$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
+		canvasID += 1;
+		var newCanvas1 = {
+	        "@id" : "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID,
+	        "@type" : "sc:Canvas",
+	        "label" : "Llang_"+canvasID,
+	        "height" : 1000,
+	        "width" : 667,
+	        "resources" : [ 
+        	]
+      	 }
+      	 $("input[rv='verso']").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
+      	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
+      	 testManifest.sequences[0].canvases.push(newCanvas1);
+      	 canvasID += 1;
+      	 var newCanvas2 = {
+	        "@id" : "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID,
+	        "@type" : "sc:Canvas",
+	        "label" : "Llang_"+canvasID,
+	        "height" : 1000,
+	        "width" : 667,
+	        "resources" : [ 
+        	]
+      	 }
+      	 $("input[rv='recto']").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
+      	 $("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
+      	 testManifest.sequences[0].canvases.push(newCanvas2);
+      	 leafRange += 1;
+		 var leafRange = {
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/"+rangeID,
+	      "@type":"sc:Range",
+	      "label":"Llangantock Breviary Page_"+rangeID ,
+	      "canvases" : [
+	          newCanvas1["@id"],
+	          newCanvas2["@id"]
+	      ],
+	      "resources" : [],
+	      "ranges" : [],
+	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		}
+		currentLeaf = leafRange["@id"];
+		createNewRange(leafRange);
+	}
+
+	/*
+		Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
+	*/
+	function enterCatalogueInfo(canvasID, canvas){
+		var previewImgSrc = $("."+canvas+"Img").attr("src");
+		$(".imgPreview").attr("src",previewImgSrc);
+		$(".contentFormEntry").val("");
+		$(".imgAdditionArea").hide("blind", "300ms", function(){
+			$(".start").show("explode", "500ms");
+			if(canvas === 'recto'){
+				$("#folioSide2").addClass("selectedFolio");
+				$("#folioSide1").removeClass("selectedFolio");
+				$("#catalogueInfoFor").val(canvasID); //beta
+				beta = true;
+			}
+			else if (canvas === 'verso'){
+				$("#folioSide1").addClass("selectedFolio");;
+				$("#folioSide2").removeClass("selectedFolio");
+				$("#catalogueInfoFor").val(canvasID); //alpha
+				alpha = true;
+			}
+			else{
+				$("#folioSide2").addClass("selectedFolio");
+				$("#folioSide1").addClass("selectedFolio");
+				$("#catalogueInfoFor").val(currentLeaf); //zeta
+				alpha = beta = true;
+			}
+			if(alpha && beta) zeta = true;
+
+			if(zeta){
+				$("#zetaInformation").show("explode" , "500ms");
+			}
+			else if (alpha){
+				$("#alphaInformation").show("explode" , "500ms");
+			}
+			else if (beta){
+				$("#betaInformation").show("explode" , "500ms");
+			}
+			else{
+				//this means there is an error
+				console.log('ALPHA-BETA-ZETA ERROR');
+				alpha = beta = zeta = false;
+			}
+			// $("#start").attr("onclick", "submitStart('"+canvas+"');");
+		});
+		
+	}
+
+	/*
+		Accordion UI
+	*/
+	$(function(){
+		$(".leaf").load("../m2/leafTemplate.html"); 
+		$("#formAccordion").accordion({
+			collapsible: true,
+			heightStyle: "content"
+		});
+
+	});
+		
+</script>
