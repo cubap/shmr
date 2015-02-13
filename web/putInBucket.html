@@ -388,7 +388,7 @@
 <script>
 
 //Here we have the "binder" to add our pieces into.  Notice that right now I have defined an anchor object and the master sequence range.
-var rangeID = 0;
+var rangeID = 1;
 var canvasID = 1;
 var annoID = 1;
 var imageID = 1;
@@ -464,36 +464,13 @@ var testManifest = {
 		var otherInfo = {};
 		var uriToSave = $("#catalogueInfoFor").val() //alpha URI, beta URI, or leaf URI
 		var canvasURI = uriToSave;
-		var annoOrRange = "anno";
 		$.each(testManifest.structures, function(){
 			if ($(this)["@id"] === uriToSave){
 				currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
-				annoOrRange = "range"; //the uriToSave is that of a leaf, so annotations will now be saved to a leaf range instead of a canvas.
 				return false;
 			}
 		});
 		
-		var annotationObject = {
-			"@id" : "",
-	        "@type" : "oa:Annotation",
-	        "motivation" : "sc:painting",
-	        "label" : "Text Description",
-	        "resource" : {
-	          "@type" : "cnt:ContentAsText",
-	          "cnt:chars" :""
-			},
-			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-		};
-		var rangeObject = { //this will only be saved 
-			"@id" : "",
-	        "@type" : "sc:Range",
-	        "motivation" : "sc:painting",
-	        "label" : "",
-	        "canvases": [],
-	        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
-	        "resources" : [],
-	        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-		};
 		//Go through each content piece, grab its value and if applicable make it an annotation or a range.
 		$(".contentFormEntry").each(function(){
 			var addedInfoList = {};
@@ -502,13 +479,36 @@ var testManifest = {
 			else if(beta){ addedInfoList = $("#betaInformation").find(".contentList"); }
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
+			var annotationObject = {
+			"@id" : "",
+	        "@type" : "oa:Annotation",
+	        "motivation" : "sc:painting",
+	        "label" : "",
+	        "resource" : {
+	          "@type" : "cnt:ContentAsText",
+	          "cnt:chars" :""
+			},
+			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+			};
+			var rangeObject = { //this will only be saved 
+				"@id" : "",
+		        "@type" : "sc:Range",
+		        "motivation" : "sc:painting",
+		        "label" : "",
+		        "canvases": [],
+		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+		        "resources" : [],
+		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+			};
 			if(entryValue !== "" && entryValue !== undefined ){
 				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
 				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+				console.log("Anno Object @ID is being set to :" + newAnnoURI)
 				annotationObject["@id"] = newAnnoURI;
 				annotationObject.resource["cnt:chars"] = entryValue;
 				rangeObject["@id"] = newRangeURI;
 				rangeObject.label = entryValue;
+				//console.log(annotationObject);
 				switch(entryID){
 					case "contentAuthor":
 						addedInfoList.append("<li><span class='formLabel'>Text Author(s): </span>"+entryValue+"</li>");
@@ -559,6 +559,27 @@ var testManifest = {
 		});
 
 		$(".contextFormEntry").each(function(){
+			var annotationObject = {
+			"@id" : "",
+	        "@type" : "oa:Annotation",
+	        "motivation" : "sc:painting",
+	        "label" : "",
+	        "resource" : {
+	          "@type" : "cnt:ContentAsText",
+	          "cnt:chars" :""
+			},
+			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+			};
+			var rangeObject = { //this will only be saved 
+				"@id" : "",
+		        "@type" : "sc:Range",
+		        "motivation" : "sc:painting",
+		        "label" : "",
+		        "canvases": [],
+		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+		        "resources" : [],
+		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+			};
 			var addedInfoList = {};
 			if(zeta){ addedInfoList = $("#zetaInformation").find(".contextList"); }
 			else if(alpha){ addedInfoList = $("#alphaInformation").find(".contextList"); }
@@ -638,6 +659,27 @@ var testManifest = {
 		});
 
 		$(".carrierFormEntry").each(function(){
+			var annotationObject = {
+			"@id" : "",
+	        "@type" : "oa:Annotation",
+	        "motivation" : "sc:painting",
+	        "label" : "",
+	        "resource" : {
+	          "@type" : "cnt:ContentAsText",
+	          "cnt:chars" :""
+			},
+			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+			};
+			var rangeObject = { //this will only be saved 
+				"@id" : "",
+		        "@type" : "sc:Range",
+		        "motivation" : "sc:painting",
+		        "label" : "",
+		        "canvases": [],
+		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+		        "resources" : [],
+		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+			};
 			var addedInfoList = {};
 			if(zeta){ addedInfoList = $("#zetaInformation").find(".carrierList"); }
 			else if(alpha){ addedInfoList = $("#alphaInformation").find(".carrierList"); }
@@ -759,7 +801,7 @@ var testManifest = {
 	*/
 
 	function saveAnnotationTo(annoObject){
-		annoID += 1;
+		annoID ++;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
 		if(zeta){ //we are saving to a leaf range, so we have to go through STRUCTURES and find it.  You can also check if objectID contains "/range"
 			$.each(testManifest.structures, function(){
@@ -771,9 +813,11 @@ var testManifest = {
 		else{ // we are saving to a canvas so we have to go through the SEQUENCE and find it.  You can also check if objectID contains "/canvas"
 			$.each(testManifest.sequences[0].canvases, function(){
 				if (this["@id"] === objectID){ //this is our canvas object
+					console.log("anno being saved");
+					console.log(annoObject);
 					this.resources.push(annoObject); //push the annotation to the canvas object.
 				}
-			})
+			});
 		}
 	}
 
@@ -781,9 +825,10 @@ var testManifest = {
 		Add the range object to the structures array in the manifest object. 
 	*/
 	function createNewRange(newRangeObject){
-		rangeID += 1;
+		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
+		
 	}
 	/*
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
@@ -890,6 +935,8 @@ var testManifest = {
 		var previewImgSrc = $("."+canvas+"Img").attr("src");
 		$(".imgPreview").attr("src",previewImgSrc);
 		$(".contentFormEntry").val("");
+		$(".contextFormEntry").val("");
+		$(".carrierFormEntry").val("");
 		$(".imgAdditionArea").hide("blind", "300ms", function(){
 			$(".start").show("explode", "500ms");
 			if(canvas === 'recto'){
