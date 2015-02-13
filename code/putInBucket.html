@@ -199,26 +199,29 @@
 		}
 		#whatPiece{
 			position: relative;
+			margin-bottom: 35px;
 		}
 		#folioSide1{
 			position: relative;
-			display: block;
-			height: 50px;
-			width: 40px;
+			display: inline-table;
+			height: 150px;
+			width: 120px;
+			margin-right:25px;
 			border: 3px solid black;
 		}
 		#folioSide2{
 			position: relative;
-			display: block;
-			height: 50px;
-			width: 40px;
+			display: inline-table;
+			height: 150px;
+			width: 120px;
 			border: 3px solid black;
 		}
-		#addedInformation{
+		.addedInformation{
 			border: 2px solid white;
 			position: relative;
 			min-height:50px;
 			width: 100%;
+			display: none;
 		}
 		#formAccordion{
 			position: relative;
@@ -226,19 +229,22 @@
 			border:2px solid black;
 			padding-bottom: 10px;
 		}
-		#contentList{
+		.contentList{
 			position: relative;
 			border: 1px solid blue;
+			padding-left: 0px;
 		}
-		#contextList{
+		.contextList{
 			position: relative;
 			border: 1px solid green;
+			padding-left: 0px;
 		}
-		#carrierList{
+		.carrierList{
 			position: relative;
 			border: 1px solid red;
+			padding-left: 0px;
 		}
-		#addedNotes{
+		.addedNotes{
 			position: relative;
 			border: 1px solid yellow;
 		}		
@@ -261,6 +267,9 @@
 		}
 		#serverLoginFrame{
 			position: relative;
+		}
+		.selectedFolio{
+			border: 3px solid yellow !important;
 		}
 	  </style>
 	</head>
@@ -343,14 +352,35 @@
 				<div id="folioSide1">Side Alpha</div>
 				<div id="folioSide2">Side Beta</div>
 			</div>
-			<div id="addedInformation">
-				<ul id="contentList">
+			<div id="alphaInformation" class="addedInformation">
+				<h3>Alpha</h3>
+				<ul class="contentList">
 				</ul>
-				<ul id="contextList">
+				<ul class="contextList">
 				</ul>
-				<ul id="carrierList">
+				<ul class="carrierList">
 				</ul>
-				<div id="addedNotes"></iv>
+				<div class="addedNotes"></div>
+			</div>
+			<div id="betaInformation" class="addedInformation">
+				<h3>Beta</h3>
+				<ul class="contentList">
+				</ul>
+				<ul class="contextList">
+				</ul>
+				<ul class="carrierList">
+				</ul>
+				<div class="addedNotes"></div>
+			</div>
+			<div id="zetaInformation" class="addedInformation">
+				<h3>Zeta</h3>
+				<ul class="contentList">
+				</ul>
+				<ul class="contextList">
+				</ul>
+				<ul class="carrierList">
+				</ul>
+				<div class="addedNotes"></div>
 			</div>
 		</div>
 	</body>
@@ -363,6 +393,7 @@ var canvasID = 1;
 var annoID = 1;
 var imageID = 1;
 var currentLeaf = "";
+var alpha, beta, zeta = false;
 var testManifest = {
 	  "@context" : "http://www.shared-canvas.org/ns/context.json",
 	  "@id" : "",
@@ -406,6 +437,7 @@ var testManifest = {
 	          //add leaf ranges here in order
 	      ],
 	      "canvases" :[],
+	      "resources" : [],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 		}
 	  ]
@@ -419,6 +451,8 @@ var testManifest = {
 		We need to also account for checking for already existing fields when we go into update for ranges.
 		*/
 		var currentLeafObject = {};
+		var otherInfo = {};
+
 		$.each(testManifest.structures, function(){
 			if ($(this)["@id"] === currentLeafID){
 				currentLeafObject = $(this);
@@ -427,7 +461,10 @@ var testManifest = {
 		});
 		
 		$(".contentFormEntry").each(function(){
-			var addedInfoList = $("#contentList");
+			var addedInfoList = {};
+			if(zeta){ addedInfoList = $("#zetaInformation").find(".contentList"); }
+			else if(alpha){ addedInfoList = $("#alphaInformation").find(".contentList"); }
+			else if(beta){ addedInfoList = $("#betaInformation").find(".contentList"); }
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			var canvasURI = "";
@@ -480,7 +517,9 @@ var testManifest = {
 					        "motivation" : "sc:painting",
 					        "label" : entryValue,
 					        "canvases": [],
-					        "ranges" : [currentLeaf]
+					        "ranges" : [currentLeaf],
+					        "resources" : [],
+					        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
     					};
 						for(var i=1; i<testManifest.structures.length; i++){
 							if (testManifest.structures[i].label === entryValue){
@@ -553,7 +592,10 @@ var testManifest = {
 		});
 
 		$(".contextFormEntry").each(function(){
-			var addedInfoList = $("#contextList");
+			var addedInfoList = {};
+			if(zeta){ addedInfoList = $("#zetaInformation").find(".contextList"); }
+			else if(alpha){ addedInfoList = $("#alphaInformation").find(".contextList"); }
+			else if(beta){ addedInfoList = $("#betaInformation").find(".contextList"); }
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			var canvasURI = "";
@@ -588,6 +630,8 @@ var testManifest = {
 					        "label" : entryValue,
 					        "canvases": [],
 					        "ranges" : [currentLeaf],
+					        "resources" : [],
+					        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
     					};
 						for(var i=1; i<testManifest.structures.length; i++){
 							if (testManifest.structures[i].label === entryValue){
@@ -616,7 +660,9 @@ var testManifest = {
 					        "motivation" : "sc:painting",
 					        "label" : entryValue,
 					        "canvases": [],
-					        "ranges" : [currentLeaf]
+					        "ranges" : [currentLeaf],
+					        "resources" : [],
+					        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
     					};
 						for(var i=1; i<testManifest.structures.length; i++){
 							if (testManifest.structures[i].label === entryValue){
@@ -700,7 +746,10 @@ var testManifest = {
 		});
 
 		$(".carrierFormEntry").each(function(){
-			var addedInfoList = $("#carrierList");
+			var addedInfoList = {};
+			if(zeta){ addedInfoList = $("#zetaInformation").find(".carrierList"); }
+			else if(alpha){ addedInfoList = $("#alphaInformation").find(".carrierList"); }
+			else if(beta){ addedInfoList = $("#betaInformation").find(".carrierList"); }
 			var entryID = $(this).attr("id");
 			var entryValue = $(this).val();
 			var canvasURI = "";
@@ -753,7 +802,9 @@ var testManifest = {
 					        "motivation" : "sc:painting",
 					        "label" : entryValue,
 					        "canvases": [],
-					        "ranges" : [currentLeaf]
+					        "ranges" : [currentLeaf],
+					        "resources" : [],
+					        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
     					};
 						for(var i=1; i<testManifest.structures.length; i++){
 							if (testManifest.structures[i].label === entryValue){
@@ -836,10 +887,15 @@ var testManifest = {
 				}	
 			}	
 		});
-
+		
+		var otherInfoList = {};
+		if(zeta){otherInfoList = $("#zetaInformation").find(".addedNotes"); }
+		else if(alpha){otherInfoList = $("#alphaInformation").find(".addedNotes"); }
+		else if(beta){otherInfoList = $("#betaInformation").find(".addedNotes"); }
 		var canvasNotes = $("#notes").val();
 		var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
 		var canvasURI = $("#catalogueInfoFor").val();
+		otherInfoList.append("<li><span class='formLabel'>Addition Notes: </span>"+canvasNotes+"</li>");
 		var annotationObject = {
 			"@id" : newAnnoURI,
 	        "@type" : "oa:Annotation",
@@ -856,9 +912,11 @@ var testManifest = {
 		$(".start").hide("blind", "300ms", function(){
 			$(".imgAdditionArea").show("explode", "500ms");
 			$("#catalogueInfoFor").val(''); 
-			$("#folioSide2").css("border", "3px solid black");
-			$("#folioSide1").css("border", "3px solid black");
+			$("#folioSide2").removeClass("selectedFolio");
+			$("#folioSide1").removeClass("selectedFolio");
 		});
+
+		alpha = beta = zeta = false;
 
 	}
 
@@ -866,24 +924,41 @@ var testManifest = {
 		//objectID can be the ID of a canvas or the ID of a range.  If it is information that seems like it is a range, check that the range does not alredy exist.  If it doesn't, create a new one and save the annotation to the new one. 
 		annoID += 1;
 		var objectID = $("#catalogueInfoFor").val();
-		if(which === "anno"){
-			$.each(testManifest.sequences[0].canvases,function(){
-				if (this["@id"] === objectID){
-					this.resources.push(annoObject);
-				}
-			})
+		if(zeta){ //we are saving to a leaf range
+			if(which === "anno"){
+				$.each(testManifest.structures,function(){
+					if (this["@id"] === objectID){
+						this.resources.push(annoObject);
+					}
+				});
+			}
+			else if (which === "range"){
+				testManifest.structures.each(function(){
+					if (this["@id"] === objectID){
+						this.resources.push(annoObject);
+					}
+				})
+			}	
 		}
-		else if (which === "range"){
-			testManifest.structures.each(function(){
-				if (this["@id"] === objectID){
-					this.resources.push(annoObject);
-				}
-			})
-		}
-		else{ 
+		else{ // we are saving to a canvas
+			if(which === "anno"){
+				$.each(testManifest.sequences[0].canvases,function(){
+					if (this["@id"] === objectID){
+						this.resources.push(annoObject);
+					}
+				})
+			}
+			else if (which === "range"){
+				testManifest.structures.each(function(){
+					if (this["@id"] === objectID){
+						this.resources.push(annoObject);
+					}
+				});
+			}
+			else{ 
 
+			}
 		}
-
 	}
 
 	function createNewRange(newRangeObject){
@@ -929,8 +1004,9 @@ var testManifest = {
 		$(".start").hide("blind", "300ms", function(){
 			$(".imgAdditionArea").show("explode", "500ms");
 			$("#catalogueInfoFor").val(''); 
-			$("#folioSide2").css("border", "3px solid black");
-			$("#folioSide1").css("border", "3px solid black");
+			$("#folioSide2").removeClass("selectedFolio");
+			$("#folioSide1").removeClass("selectedFolio");
+			alpha = beta = zeta = false;
 		});
 	}
 
@@ -983,39 +1059,46 @@ var testManifest = {
 	function enterCatalogueInfo(canvasID, canvas){
 		var previewImgSrc = $("."+canvas+"Img").attr("src");
 		$(".imgPreview").attr("src",previewImgSrc);
+		$(".contentFormEntry").val("");
 		$(".imgAdditionArea").hide("blind", "300ms", function(){
 			$(".start").show("explode", "500ms");
 			if(canvas === 'recto'){
-				$("#folioSide2").css("border", "3px solid yellow");
-				$("#folioSide1").css("border", "3px solid black");
+				$("#folioSide2").addClass("selectedFolio");
+				$("#folioSide1").removeClass("selectedFolio");
 				$("#catalogueInfoFor").val(canvasID); //beta
+				beta = true;
 			}
 			else if (canvas === 'verso'){
-				$("#folioSide1").css("border", "3px solid yellow");
-				$("#folioSide2").css("border", "3px solid black");
+				$("#folioSide1").addClass("selectedFolio");;
+				$("#folioSide2").removeClass("selectedFolio");
 				$("#catalogueInfoFor").val(canvasID); //alpha
+				alpha = true;
 			}
 			else{
-				$("#folioSide2").css("border", "3px solid yellow");
-				$("#folioSide1").css("border", "3px solid yellow");
-				$("#catalogueInfoFor").val('leaf'); //zeta
+				$("#folioSide2").addClass("selectedFolio");
+				$("#folioSide1").addClass("selectedFolio");
+				$("#catalogueInfoFor").val(currentLeaf); //zeta
+				alpha = beta = true;
+			}
+			if(alpha && beta) zeta = true;
+
+			if(zeta){
+				$("#zetaInformation").show("explode" , "500ms");
+			}
+			else if (alpha){
+				$("#alphaInformation").show("explode" , "500ms");
+			}
+			else if (beta){
+				$("#betaInformation").show("explode" , "500ms");
+			}
+			else{
+				//this means there is an error
+				console.log('ALPHA-BETA-ZETA ERROR');
+				alpha = beta = zeta = false;
 			}
 			// $("#start").attr("onclick", "submitStart('"+canvas+"');");
 		});
-	}
-
-	function returnToOptions(){
-		$(".info").hide("blind", "300ms", function(){$(".start").show("explode", "500ms");})
-		$("#contentForm").hide();
-		$("#carrierForm").hide();
-		$("#contextForm").hide();
-	}
-
-	function returnToImages(){
-		$(".start").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
-		$("#catalogueInfoFor").val(''); 
-		$("#folio2").css("border", "3px solid black");
-		$("#folio1").css("border", "3px solid black");
+		
 	}
 
 	$(function(){
@@ -1025,20 +1108,6 @@ var testManifest = {
 			heightStyle: "content"
 		});
 
-		/*
-			When the use adds an image, can we view that image in a mirador viewer?  Mirador wants to be created using manifests that are coded in at the start, so dynamic content will
-		 	never get the chance to be seen in a m2 viewer (i think)
-		*/
-
-		// Mirador({
-	 //        "id": "previewViewer",
-	 //        "currentWorkspaceType": "singleObject",
-	 //        "mainMenuSettings" : {"show": true, "buttons" : {"bookmark" : true, "layout" : true}},
-	 //        'showAddFrsomURLBox' : false,
-	 //        "data": [
-	 //        { "manifestUri": "http://dms-data.stanford.edu/data/manifests/RomanCoins/bb853kn3021/manifest.json", "location": "Stanford University"} // Roman coins
-	 //        ]
-		// });
 	});
 		
 </script>
