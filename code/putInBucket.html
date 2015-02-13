@@ -394,6 +394,7 @@ var annoID = 1;
 var imageID = 1;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
+//Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
 var testManifest = {
 	  "@context" : "http://www.shared-canvas.org/ns/context.json",
 	  "@id" : "",
@@ -404,26 +405,26 @@ var testManifest = {
 	    "@type" : "sc:Sequence",
 	    "label" : "Llangantock Bucket",
 	    "canvases" : [ 
-	    //This will be the anchor object, but how do we define it as such
+	    //This will be the anchor canvas in the anchor range
 	     {
-	        "@id" : "http://www.example.org/iiif/LlangBrev/anchor",
+	        "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor",
 	        "@type" : "sc:Canvas",
 	        "label" : "Llang_001",
 	        "height" : 1000,
 	        "width" : 667,
 	        "resources" : [ 
-	          {
-	          "@type" : "oa:Annotation",
-	          "motivation" : "sc:painting",
-	          "resource" : {
-	            "@id" : "http://www.example.org/iiif/LlangBrev/image_001",
-	            "@type" : "dctypes:Image",
-	            "format" : "image/jpeg",
-	            "height" : 2365,
-	            "width" : 1579
-	          },
-	          "on" : "http://www.example.org/iiif/LlangBrev/canvas/anchor"
-        	}
+	             {
+		          "@type" : "oa:Annotation",
+		          "motivation" : "sc:painting",
+		          "resource" : {
+		            "@id" : "http://www.example.org/iiif/LlangBrev/image_001",
+		            "@type" : "dctypes:Image",
+		            "format" : "image/jpeg",
+		            "height" : 2365,
+		            "width" : 1579
+		          },
+		          "on" : "http://www.example.org/iiif/LlangBrev/canvas/anchor"
+	        	}
         	]
       	 }
     	 ]
@@ -434,22 +435,31 @@ var testManifest = {
 	      "@type":"sc:Range",
 	      "label":"Llangantock Breviary Page Order",
 	      "ranges" : [
-	          //add leaf ranges here in order
+	          //add leaf ranges here in order for page order
 	      ],
 	      "canvases" :[],
+	      "resources" : [],
+	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+		},
+		,
+		{
+ 		  "@id":"http://www.example.org/iiif/LlangBrev/range/anchor",
+	      "@type":"sc:Range",
+	      "label":"Llangantock Breviary Anchor",
+	      "ranges" : [
+	      ],
+	      "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1_anchor"],
 	      "resources" : [],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 		}
 	  ]
 }
 
+/*
+	When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range. Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that. It also keeps content, context and carrier information separate from each other so we can track them as such.  
+*/
+
 	function saveFolio(){
-
-		/*
-		The decision needs to be made for what is metadata, what is an annotation and what is a range.  For annotations, do they go onto a range or onto a canvas?  For things that become new ranges, we have to create new range objects.
-
-		We need to also account for checking for already existing fields when we go into update for ranges.
-		*/
 		var currentLeafObject = {};
 		var otherInfo = {};
 		var uriToSave = $("#catalogueInfoFor").val() //alpha, beta, or leaf URI
@@ -506,10 +516,6 @@ var testManifest = {
     					saveAnnotationTo(annotationObject);
 						break;
 					case "contentFormat":
-					/*
-					If we only expect a couple, maybe force those here.  Otherwise, whenever they submit a format, they are adding a range unless that range already exists.
-					For existing ranges, if this range wants it can be defined 'within' a range instead of as a range on its own or as an annotation to the range 
-					*/
 						addedInfoList.append("<li><span class='formLabel'>Text Format: </span>"+entryValue+"</li>");
 						var updateOrNew = "";
 						var rangeToUpdate = "";
@@ -533,7 +539,7 @@ var testManifest = {
     					saveAnnotationTo(annotationObject);
 						break;
 					case "contentDescription":
-					//This could be a range
+						//This could be a range
 						addedInfoList.append("<li><span class='formLabel'>Text Description: </span>"+entryValue+"</li>");
     					saveAnnotationTo(annotationObject);
 						break;
@@ -701,7 +707,7 @@ var testManifest = {
 			}	
 		});
 
-//Grab the additional notes field and save it as an annotation
+		//Grab the additional notes field and save it as an annotation
 		var otherInfoList = {};
 		if(zeta){otherInfoList = $("#zetaInformation").find(".addedNotes"); }
 		else if(alpha){otherInfoList = $("#alphaInformation").find(".addedNotes"); }
@@ -737,6 +743,10 @@ var testManifest = {
 
 	}
 
+	/*
+		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range. 
+	*/
+
 	function saveAnnotationTo(annoObject){
 		annoID += 1;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
@@ -756,12 +766,17 @@ var testManifest = {
 		}
 	}
 
+	/*
+		Add the range object to the structures array in the manifest object. 
+	*/
 	function createNewRange(newRangeObject){
 		rangeID += 1;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
 	}
-
+	/*
+		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
+	*/
 	function updateRange(rangeID, leaf){
 		console.log("Updating range "+rangeID+" with leaf "+leaf);
 		var currentRange = {};
@@ -793,6 +808,10 @@ var testManifest = {
 	    });
 	}
 
+	/*
+		Dont save the fields and return to the image options.  
+	*/
+
 	function cancelFolio(){
 		//Don't get data and return to image page
 		$(".start").hide("blind", "300ms", function(){
@@ -804,6 +823,9 @@ var testManifest = {
 		});
 	}
 
+	/*
+		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
+	*/
 	function submitIntro(){
 		$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
 		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
@@ -850,6 +872,9 @@ var testManifest = {
 		createNewRange(leafRange);
 	}
 
+	/*
+		Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
+	*/
 	function enterCatalogueInfo(canvasID, canvas){
 		var previewImgSrc = $("."+canvas+"Img").attr("src");
 		$(".imgPreview").attr("src",previewImgSrc);
@@ -895,6 +920,9 @@ var testManifest = {
 		
 	}
 
+	/*
+		Accordion UI
+	*/
 	$(function(){
 		$(".leaf").load("../m2/leafTemplate.html"); 
 		$("#formAccordion").accordion({
