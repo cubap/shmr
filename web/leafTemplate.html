@@ -80,7 +80,7 @@
             	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
 			</div>
 			<img class="versoImg" src=""/><br>
-			<input type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" canvas=""/>
+			<input id="versoInfo" type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" canvas=""/>
 		</div>
 		<div class="rectoCanvas">
 			<p>This is considered one side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
@@ -91,7 +91,7 @@
             	<input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
 			</div>
 			<img class="rectoImg" src="" /><br>
-			<input type="button" rv="recto" canvas="" value="Enter Addition Information" class="imgCatalogueInfo"/>
+			<input id="rectoInfo" type="button" rv="recto" canvas="" value="Enter Addition Information" class="imgCatalogueInfo"/>
 		</div><br>
 		<input type="button" onclick="enterCatalogueInfo('leaf');" value="Enter Information That Pertains To The Leaf As A Whole"/>
 	</div>
@@ -119,6 +119,7 @@ $(function(){
             reader.onloadend = function(){ // set image data as background of div
                 $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
                 $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+
                 $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                 var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
