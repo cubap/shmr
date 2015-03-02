@@ -1,2 +1,3 @@
-/nbproject/*
-/images/Thumbs.db
+build.xml
+nbbuild.xml
+/nbproject
