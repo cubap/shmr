@@ -72,7 +72,7 @@
 			If you have an image to upload, do so here.  You can either paste in the direct image URI of its location, upload the file to us, or skip this step entirely if you do not have an image.
 		</p>
 		<div class="versoCanvas">
-			<p>This is considered one side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later.</p>
+			<p>This is considered the ALPHA side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later.</p>
 			<div class="addImgBtn" onclick="showImageAddition('verso');">Add Image</div>
 			<div class="uploadness">
 				Enter Image Uri:&nbsp;&nbsp;<textarea rv="verso" class="canvasImageSource"></textarea><br>
@@ -80,10 +80,10 @@
             	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
 			</div>
 			<img class="versoImg" src=""/><br>
-			<input type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" canvas=""/>
+			<input id="rectoCatalogue" type="button" rv="verso" value="Enter Addition Information" class="imgCatalogueInfo" canvas=""/>
 		</div>
 		<div class="rectoCanvas">
-			<p>This is considered one side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
+			<p>This is considered the BETA side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
 			<div class="addImgBtn" onclick="showImageAddition('recto');">Add Image</div>
 			<div class="uploadness">
 				Enter Image URI: &nbsp;&nbsp;<textarea rv="recto" class="canvasImageSource"></textarea><br>
@@ -91,7 +91,7 @@
             	<input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
 			</div>
 			<img class="rectoImg" src="" /><br>
-			<input type="button" rv="recto" canvas="" value="Enter Addition Information" class="imgCatalogueInfo"/>
+			<input id="versoCatalogue" type="button" rv="recto" canvas="" value="Enter Addition Information" class="imgCatalogueInfo"/>
 		</div><br>
 		<input type="button" onclick="enterCatalogueInfo('leaf');" value="Enter Information That Pertains To The Leaf As A Whole"/>
 	</div>
@@ -137,7 +137,7 @@ $(function(){
 					"on" : canvasURI
 				};
 				$("#catalogueInfoFor").val(canvasURI);
-                saveAnnotationTo(annotationObject, "anno")
+                createNewAnno(annotationObject);
             };
        
         }
