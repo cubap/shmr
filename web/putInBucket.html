@@ -316,7 +316,7 @@
 						<li><span class="formLabel">Exlibris: </span> <input type="text" class="contextFormEntry" id="exlibris"/></li>
 						<li><span class="formLabel">Binding: </span> <input type="text" class="contextFormEntry" id="binding"/></li>
 						<li><span class="formLabel">Frame or Mat: </span> <input type="text" class="contextFormEntry" id="frame"/></li>
-						<li><span class="formLabel">Related Manuscripts by Collection: </span> <input type="text" class="contextFormEntry" id="contextRelated"/></li>
+						<!--<li><span class="formLabel">Related Manuscripts by Collection: </span> <input type="text" class="contextFormEntry" id="contextRelated"/></li> -->
 						<li><span class="formLabel">Other: </span> <textarea class="contextFormEntry" id="contextOther"></textarea></li>
 					</ul>
 				</div>
@@ -345,9 +345,8 @@
 						<li><span class="formLabel">Quire Signatures: </span> <input type="text" class="carrierFormEntry" id="carrierSignatures"/></li>
 						<li><span class="formLabel">Artist(s)</span> <textarea class="carrierFormEntry" id="carrierArtists"></textarea></li>
 						<li><span class="formLabel">Folio Number: </span> <input type="text" class="carrierFormEntry" id="carrierFolioNum"/></li>
-<!-- 						<li><span class="formLabel">Page Number: </span> <input type="text" class="carrierFormEntry" id="carrierPageNum"/></li>-->
 						<!--Drop down to pick relation by artist, scribe, workshop -->
-						<li><span class="formLabel">Related Manuscripts by Carrier: </span> <input type="text" class="contextFormEntry" id="carrierRelated"/></li>
+						<!--<li><span class="formLabel">Related Manuscripts by Carrier: </span> <input type="text" class="contextFormEntry" id="carrierRelated"/></li>-->
 						<li><span class="formLabel">Recto or Verso: </span> <input type="text" class="carrierFormEntry" id="carrierRV"/></li>
 						<li><span class="formLabel">Other: </span> <textarea type="text" class="carrierFormEntry" id="carrierOther"></textarea></li>
 					</ul>
@@ -367,7 +366,7 @@
 						<li><span class="formLabel">Rubrics:  </span> <input type="text" class="contentFormEntry" id="rubrics" /> </li>
 						<li><span class="formLabel">Chant:  </span> <input type="text" class="contentFormEntry" id="chant" /> </li>
 						<li><span class="formLabel">Gloss:  </span> <input type="text" class="contentFormEntry" id="gloss" /> </li>
-						<li><span class="formLabel">Annotations:  </span><span>Marginal:</span><input type="text" class="carrierFormEntry" id="marginalAnnos"/><span>Interlinear:<input type="text" class="carrierFormEntry" id="interlinearAnnos"/></span> </li>
+						<li><span class="formLabel">Annotations:  </span><span>Marginal:</span><input type="text" class="contentFormEntry" id="marginalAnnos"/><span>Interlinear:<input type="text" class="contentFormEntry" id="interlinearAnnos"/></span> </li>
 						<!-- <li><span class="formLabel">Other Transcription :  </span> file upload here </li> -->
 						<!-- <li><span class="formLabel">Related Manuscripts by Carrier: </span> <input type="text" class="contextFormEntry" id="contentRelated"/></li> -->
 						<li><span class="formLabel">Other: </span> <textarea class="contentFormEntry" id="contentOther"></textarea></li>
@@ -617,6 +616,10 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Chant: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
+					case "gloss":
+						addedInfoList.append("<li><span class='formLabel'>Gloss: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
 					case "marginalAnnos":
 						addedInfoList.append("<li><span class='formLabel'>Marginal Annos: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
@@ -696,7 +699,7 @@ var testManifest = {
 						createNewAnno(annotationObject);
 						break;
 					case "frame":
-						addedInfoList.append("<li><span class='formLabel'>Binding: </span>"+entryValue+"</li>");
+						addedInfoList.append("<li><span class='formLabel'>Frame: </span>"+entryValue+"</li>");
 						createNewAnno(annotationObject);
 						break;
 					case "contextSection":
@@ -808,8 +811,8 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Script: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
-					case "musicNotations":
-						addedInfoList.append("<li><span class='formLabel'>Music Notations: </span>"+entryValue+"</li>");
+					case "musicNotation":
+						addedInfoList.append("<li><span class='formLabel'>Music Notation: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
 					case "scribe":
