@@ -86,13 +86,13 @@
 	  		background-repeat: repeat;
 	  	}
 	  	.hoverBlue:hover{
-	  		box-shadow: 0px 0px 13px 3px blue;
+	  		box-shadow: 0px 0px 13px 3px rgb(0,255,255);
 	  	}
 	  	.hoverGreen:hover{
-	  		box-shadow: 0px 0px 13px 3px green;
+	  		box-shadow: 0px 0px 13px 3px rgb(0,204,0);
 	  	}
 	  	.hoverRed:hover{
-	  		box-shadow: 0px 0px 13px 3px red;
+	  		box-shadow: 0px 0px 13px 3px rgb(255,0,127);
 	  	}
 	  	ul{
 	  		margin: 10px 0px;
@@ -101,23 +101,23 @@
 	  		list-style-type: none;
 	  	}
 	  	#contextForm{
-	  		border-bottom: 2px solid green;
-	  		border-right: 2px solid green;
-	  		border-left: 2px solid green;
+	  		border-bottom: 2px solid rgb(0,204,0);
+	  		border-right: 2px solid rgb(0,204,0);
+	  		border-left: 2px solid rgb(0,204,0);
 	  		position: relative;
 	  		height: auto;
 	  	}
 	  	#contentForm{
-	  		border-bottom: 2px solid blue;
-	  		border-right: 2px solid blue;
-	  		border-left: 2px solid blue;
+	  		border-bottom: 2px solid rgb(0,255,255);
+	  		border-right: 2px solid  rgb(0,255,255);
+	  		border-left: 2px solid  rgb(0,255,255);
 	  		position: relative;
 	  		height: auto;
 	  	}
 	  	#carrierForm{
-	  		border-bottom: 2px solid red;
-	  		border-right: 2px solid red;
-	  		border-left: 2px solid red;
+	  		border-bottom: 2px solid rgb(255,0,127);
+	  		border-right: 2px solid rgb(255,0,127);
+	  		border-left: 2px solid rgb(255,0,127);
 	  		position: relative;
 	  		height: auto;
 	  	}
@@ -129,24 +129,24 @@
 	  		height: auto;
 	  	}
 	  	#contextHeader{
-	  		color: green;
-	  		border-top: 1px solid green;
-	  		border-right: 1px solid green;
-	  		border-left: 1px solid green;
+	  		color: rgb(0,204,0);
+	  		border-top: 1px solid rgb(0,204,0);
+	  		border-right: 1px solid rgb(0,204,0);
+	  		border-left: 1px solid rgb(0,204,0);
 	  		cursor: pointer;
 	  	}
 	  	#contentHeader{
-	  		color: blue;
-	  		border-top: 1px solid blue;
-	  		border-right: 1px solid blue;
-	  		border-left: 1px solid blue;
+	  		color: rgb(0,255,255);
+	  		border-top: 1px solid  rgb(0,255,255);
+	  		border-right: 1px solid  rgb(0,255,255);
+	  		border-left: 1px solid  rgb(0,255,255);
 	  		cursor: pointer;
 	  	}
 	  	#carrierHeader{
-	  		color: red;
-	  		border-top: 1px solid red;
-	  		border-right: 1px solid red;
-	  		border-left: 1px solid red;
+	  		color: rgb(255,0,127);
+	  		border-top: 1px solid rgb(255,0,127);
+	  		border-right: 1px solid rgb(255,0,127);
+	  		border-left: 1px solid rgb(255,0,127);
 	  		cursor: pointer;
 	  	}
 	  	#notesHeader{
@@ -231,17 +231,17 @@
 		}
 		.contentList{
 			position: relative;
-			border: 1px solid blue;
+			border: 1px solid  rgb(0,255,255);
 			padding-left: 0px;
 		}
 		.contextList{
 			position: relative;
-			border: 1px solid green;
+			border: 1px solid rgb(0,204,0);
 			padding-left: 0px;
 		}
 		.carrierList{
 			position: relative;
-			border: 1px solid red;
+			border: 1px solid rgb(255,0,127);
 			padding-left: 0px;
 		}
 		.addedNotes{
@@ -297,56 +297,85 @@
 		<div class="mainBlock start">
 			<!-- <img class="imgPreview" src="" /><br>-->
  			<input type="hidden" id="catalogueInfoFor" value="" />
- 			<p>Here is where you can enter addition information about the object.  Click below to expand and enter information about the fields you have information on.  <u style="color: blue;">Content</u> is about the written text on the leaf or page such as the language it is in or a transcription of the text.  <u style="color: green;">Context</u> is about where the leaf or page has been, who has owned it, etc.  <u style="color: red;">Carrier</u> information is physical information about the leaf or page itself, such as number of lines, dimensions, etc. </p>
+ 			<p>
+ 				Here is where you can enter addition information about a leaf. Click below to expand and enter information about the fields you have information on. <u style="color: rgb(0,204,0);">Context</u> is about the history of the leaf such as where it has been, who has owned it, etc. <u style="color: rgb(255,0,127);">Carrier</u> information is physical information about the leaf itself, such as support, number of lines, dimensions, etc. <u style="color: rgb(0,255,255);">Content</u> is about the written text on the leaf or page such as the language, author, or a particular part of the text.  
+				<u style="color:yellow;">General Metadata</u> is for information you prefer not to assign to any metadata form.  It is better to answer a question in the forms than give general information. 
+			</p>
 			<div id="formAccordion">
 				<h3 id="contextHeader">Context</h3>
 				<div id="contextForm">
-					<p> Please give an answer for at least one of the questions about context information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<p> Please include information about context here.  If you do not wish to specify your responses, please use the 'other' field.</p>
 					<ul>
 						<li><span class="formLabel">Shelfmark: </span> <input type="text" class="contextFormEntry" id="contextFolioID"/></li>
+						<li><span class="formLabel">Nickname:  </span> <input type="text" class="contextFormEntry" id="nickname" /> </li>
 						<li><span class="formLabel">Patron (first owner): </span> <input type="text" class="contextFormEntry" id="contextPatron"/></li>
-						<li><span class="formLabel">Former Owners seperated by colon (:) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
-						<li><span class="formLabel">Insignia (coat of arms, etc.) </span> <textarea class="contextFormEntry" id="insignia"/></textarea></li>
-						<li><span class="formLabel">Sales: </span> <textarea class="contextFormEntry" id="contextAuction"/></textarea></li>
+						<li><span class="formLabel">Former Owners Seperated by Semi-colon (;) </span> <textarea class="contextFormEntry" id="previousOwners"/></textarea></li>
+						<li><span class="formLabel">Insignia (coat of arms, etc.) </span> <input type="text" class="contextFormEntry" id="insignia"/></li>
+						<li><span class="formLabel">Sales: </span> <input type="text" class="contextFormEntry" id="contextAuction"/></textarea</li>
 						<li><span class="formLabel">Date Acquired: </span> <input type="text" class="contextFormEntry" id="contextDateAcquired"/></li>
 						<li><span class="formLabel">Exlibris: </span> <input type="text" class="contextFormEntry" id="exlibris"/></li>
 						<li><span class="formLabel">Binding: </span> <input type="text" class="contextFormEntry" id="binding"/></li>
 						<li><span class="formLabel">Frame or Mat: </span> <input type="text" class="contextFormEntry" id="frame"/></li>
+						<li><span class="formLabel">Related Manuscripts by Collection: </span> <input type="text" class="contextFormEntry" id="contextRelated"/></li>
 						<li><span class="formLabel">Other: </span> <textarea class="contextFormEntry" id="contextOther"></textarea></li>
 					</ul>
 				</div>
 				<h3 id="carrierHeader">Carrier</h3>
 				<div id="carrierForm">
-					<p> Please give an answer for at least one of the questions about carrier information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<p> Please include information about carrier here.  If you do not wish to specify your responses, please use the 'other' field.</p>
+					<ul>
 					<ul>
 						<li><span class="formLabel">Date: </span> <input type="text" class="carrierFormEntry" id="carrierDate"/></li>
 						<li><span class="formLabel">Place Of Origin: </span> <input type="text" class="carrierFormEntry" id="carrierOrigin"/></li>
 						<li><span class="formLabel">Format (single leaf, half bifolium, fragment): </span> <input type="text" class="carrierFormEntry" id="carrierFormat"/></li>
 						<li><span class="formLabel">Material Support: </span> <input type="text" class="carrierFormEntry" id="support"/></li>
-						<li><span class="formLabel">Type in whether this entry is recto or verso: </span> <input type="text" class="carrierFormEntry" id="carrierRV"/></li>
-						<li><span class="formLabel">Enter the page number: </span> <input type="text" class="carrierFormEntry" id="carrierPageNum"/></li>
-						
-						<li><span class="formLabel">Are there any notable decorations/illustrations/initials?  If so, describe them here: </span> <input type="text" class="carrierFormEntry" id="carrierIllustrations"/></li>
-						<li><span class="formLabel">If applicable, type in the artist(s) of the decorations/illustrations/initials : </span> <textarea class="carrierFormEntry" id="carrierArtists"></textarea></li>
+						<li><span class="formLabel">Dimensions: </span> <span>Width:</span><input type="text" class="carrierFormEntry" id="pageWidth"/><span>Height:<input type="text" class="carrierFormEntry" id="pageHeight"/></span></li>
+						<li><span class="formLabel">Condition: </span> <input type="text" class="carrierFormEntry" id="condition"/></li>
+						<!-- Do a split for lines and columns like you did for heght and width -->
+						<li><span class="formLabel">Layout (lines, columns): </span> <input type="text" id="carrierLayout" class="carrierFormEntry"/> </li>
+						<!-- the next two could also be on the same line -->
+						<li><span class="formLabel">Rulings: </span> <input type="text" id="carrierRulings" class="carrierFormEntry"/> </li>
+						<li><span class="formLabel">Prickings: </span> <input type="text" id="carrierPrickings" class="carrierFormEntry"/> </li>
+						<li><span class="formLabel">Script: </span> <input type="text" class="carrierFormEntry" id="carrierScript"/></li>
+						<li><span class="formLabel">Music Notation: </span> <input type="text" class="carrierFormEntry" id="musicNotation"/></li>
+						<li><span class="formLabel">Scribe (who wrote the script): </span> <input type="text" class="carrierFormEntry" id="scribe"/></li>
+						<li><span class="formLabel">Decorations: </span> <input type="text" class="carrierFormEntry" id="carrierDecorations"/></li>
+						<li><span class="formLabel">Illustrations: </span> <input type="text" class="carrierFormEntry" id="carrierIllustrations"/></li>
+						<li><span class="formLabel">Catch Words: </span> <input type="text" class="carrierFormEntry" id="catchWords"/></li>
+						<li><span class="formLabel">Quire Signatures: </span> <input type="text" class="carrierFormEntry" id="carrierSignatures"/></li>
+						<li><span class="formLabel">Artist(s)</span> <textarea class="carrierFormEntry" id="carrierArtists"></textarea></li>
+						<li><span class="formLabel">Folio Number: </span> <input type="text" class="carrierFormEntry" id="carrierFolioNum"/></li>
+<!-- 						<li><span class="formLabel">Page Number: </span> <input type="text" class="carrierFormEntry" id="carrierPageNum"/></li>-->
+						<!--Drop down to pick relation by artist, scribe, workshop -->
+						<li><span class="formLabel">Related Manuscripts by Carrier: </span> <input type="text" class="contextFormEntry" id="carrierRelated"/></li>
+						<li><span class="formLabel">Recto or Verso: </span> <input type="text" class="carrierFormEntry" id="carrierRV"/></li>
 						<li><span class="formLabel">Other: </span> <textarea type="text" class="carrierFormEntry" id="carrierOther"></textarea></li>
 					</ul>
 				</div>
 				<h3 id="contentHeader">Content</h3>
 				<div id="contentForm">
-					<p> Please give an answer for at least one of the questions about content information below.  If you do not know any, plese type in what you know in the 'other' field. </p>
+					<p> Please include information about content here.  If you do not wish to specify your responses, please use the 'other' field.</p>
 					<ul>
-						<li><span class="formLabel">Type in the author of the text:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
-						<li><span class="formLabel">Type in the language of the text:  </span> <input type="text" id="contentLanguage" class="contentFormEntry" /> </li>
-						<li><span class="formLabel">What format is the text in (1-line, 2-line, etc.)  </span> <input type="text" id="contentFormat" class="contentFormEntry"/> </li>
-						<li><span class="formLabel">Type in the total lines on the page:  </span> <input type="text" id="contentNumLines" class="contentFormEntry"/> </li>
-						<li><span class="formLabel">If you know what this text is describing, type that here (ex. Feast of Saints):  </span> <input type="text" id="contentDescription" class="contentFormEntry"/> </li>
-						<li><span class="formLabel">Attatch a transcription of the text :  </span> file upload here </li>
+						<li><span class="formLabel">Language:  </span> <input type="text" id="contentLanguage" class="contentFormEntry" /> </li>
+						<li><span class="formLabel">Text Author:  </span> <input type="text" class="contentFormEntry" id="contentAuthor" /> </li>
+						<li><span class="formLabel">Generic Title:  </span> <input type="text" class="contentFormEntry" id="contentTitle" /> </li>
+						<li><span class="formLabel">Subject:  </span> <input type="text" class="contentFormEntry" id="contentSubject" /> </li>
+						<li><span class="formLabel">Structure/Section of Text:  </span> <input type="text" class="contentFormEntry" id="contentSection" /> </li>
+						<li><span class="formLabel">Description of Text:  </span> <input type="text" class="contentFormEntry" id="contentDescription" /> </li>
+						<li><span class="formLabel">Incipit:  </span> <input type="text" class="contentFormEntry" id="incipit" /> </li>
+						<li><span class="formLabel">Explicit:  </span> <input type="text" class="contentFormEntry" id="explicit" /> </li>
+						<li><span class="formLabel">Rubrics:  </span> <input type="text" class="contentFormEntry" id="rubrics" /> </li>
+						<li><span class="formLabel">Chant:  </span> <input type="text" class="contentFormEntry" id="chant" /> </li>
+						<li><span class="formLabel">Gloss:  </span> <input type="text" class="contentFormEntry" id="gloss" /> </li>
+						<li><span class="formLabel">Annotations:  </span><span>Marginal:</span><input type="text" class="carrierFormEntry" id="marginalAnnos"/><span>Interlinear:<input type="text" class="carrierFormEntry" id="interlinearAnnos"/></span> </li>
+						<!-- <li><span class="formLabel">Other Transcription :  </span> file upload here </li> -->
+						<!-- <li><span class="formLabel">Related Manuscripts by Carrier: </span> <input type="text" class="contextFormEntry" id="contentRelated"/></li> -->
 						<li><span class="formLabel">Other: </span> <textarea class="contentFormEntry" id="contentOther"></textarea></li>
 					</ul>
 				</div>
-				<h3 id="notesHeader">Additional Notes</h3>
+				<h3 id="notesHeader">General Metadata</h3>
 				<div id="notesForm">
-					<p> If there are addition notes you would like to have stored with this folio, type that here</p>
+					<p> If there are general notes you would prefer not to assign to the metadata forms, you can write those here. </p>
 					<textarea class="notesFormEntry" id="notes"></textarea>
 				</div>
 			</div>
@@ -356,8 +385,8 @@
 		<div id="sideBarInfo">
 			<p>This area will tell you what piece of the leaf you are currently working on.  There are only three options: side ALPHA, side BETA and the leaf as a whole (OMEGA).  You may not know which is recto or verso, so we just call them alpha and beta.  Information you have submitted will also be placed here so you can see your progress.  </p>
 			<div id="whatPiece">
-				<div id="folioSide1">Side Alpha</div>
-				<div id="folioSide2">Side Beta</div>
+				<div id="folioSide1">Side ALPHA</div>
+				<div id="folioSide2">Side BETA</div>
 			</div>
 			<div id="alphaInformation" class="addedInformation">
 				<h3>Alpha</h3>
@@ -380,7 +409,7 @@
 				<div class="addedNotes"></div>
 			</div>
 			<div id="zetaInformation" class="addedInformation">
-				<h3>Zeta</h3>
+				<h3>OMEGA</h3>
 				<ul class="contentList">
 				</ul>
 				<ul class="contextList">
@@ -471,6 +500,16 @@ var testManifest = {
 		var otherInfo = {};
 		var uriToSave = $("#catalogueInfoFor").val() //alpha URI, beta URI, or leaf URI
 		var canvasURI = uriToSave;
+
+		//Clear added information for metadta being submitted to avoid duplicates.  The end goal is to have this as a live updater.
+		if(zeta){
+			$("#zetaInformation").find('ul').empty();
+		} 
+		else{
+			if(alpha) $("#alphaInformation").find('ul').empty();
+			if(beta) $("#betaInformation").find('ul').empty();
+		}
+
 		$.each(testManifest.structures, function(){
 			if ($(this)["@id"] === uriToSave){
 				currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
@@ -516,6 +555,7 @@ var testManifest = {
 				rangeObject["@id"] = newRangeURI;
 				rangeObject.label = entryValue;
 				//console.log(annotationObject);
+
 				switch(entryID){
 					case "contentAuthor":
 						addedInfoList.append("<li><span class='formLabel'>Text Author(s): </span>"+entryValue+"</li>");
@@ -525,8 +565,12 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Text Language: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
-					case "contentFormat":
-						addedInfoList.append("<li><span class='formLabel'>Text Format: </span>"+entryValue+"</li>");
+					case "contentTitle":
+						addedInfoList.append("<li><span class='formLabel'>Text Title: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "contentSection":
+						addedInfoList.append("<li><span class='formLabel'>Content Section: </span>"+entryValue+"</li>");
 						var updateOrNew = "";
 						var rangeToUpdate = "";
 						for(var i=1; i<testManifest.structures.length; i++){
@@ -544,8 +588,8 @@ var testManifest = {
 							createNewRange(rangeObject);
 						}
 						break;
-					case "contentNumLines":
-						addedInfoList.append("<li><span class='formLabel'>Number of Lines: </span>"+entryValue+"</li>");
+					case "contentSubject":
+						addedInfoList.append("<li><span class='formLabel'>Subject: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
 					case "contentDescription":
@@ -557,28 +601,35 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Other Text Information: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
-					case "contentTranscription":
-						//addedInfoList.append("<li><span class='formLabel'>Text Author(s):</span>"+entryValue+"</li>");
+					case "incipit":
+						addedInfoList.append("<li><span class='formLabel'>Incipit: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
 						break;
-					case "contentFormat":
-					addedInfoList.append("<li><span class='formLabel'>Context Format: </span>"+entryValue+"</li>");
-					var updateOrNew = "";
-					var rangeToUpdate = "";
-					for(var i=1; i<testManifest.structures.length; i++){
-						if (testManifest.structures[i].label === entryValue){
-							updateOrNew = "update";
-							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeaf);
-							return false;
-						}
-						else{
-							updateOrNew = "new";
-						}
-					}
-					if(updateOrNew === "new"){
-						createNewRange(rangeObject);
-					}
-					break;
+					case "explicit":
+						addedInfoList.append("<li><span class='formLabel'>Explicit: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "rubrics":
+						addedInfoList.append("<li><span class='formLabel'>Rubrics: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "chant":
+						addedInfoList.append("<li><span class='formLabel'>Chant: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "marginalAnnos":
+						addedInfoList.append("<li><span class='formLabel'>Marginal Annos: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "interlinearAnnos":
+						addedInfoList.append("<li><span class='formLabel'>Interlinear Annos: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "contentRelated":
+						addedInfoList.append("<li><span class='formLabel'>Content Related: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+
 					default:
 				}
 			}
@@ -624,6 +675,10 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Previous Owner(s): </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
+					case "nickname":
+						addedInfoList.append("<li><span class='formLabel'>Nickname: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
 					case "contextPatron":
 						addedInfoList.append("<li><span class='formLabel'>Patron: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
@@ -664,7 +719,6 @@ var testManifest = {
 							createNewRange(rangeObject);
 						}
 						break;
-					
 					case "contextAuction":
 						addedInfoList.append("<li><span class='formLabel'>Recent Auctions: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
@@ -677,6 +731,10 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Shelfmark: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
+					// case "contextRelated":
+					// 	addedInfoList.append("<li><span class='formLabel'>Shelfmark: </span>"+entryValue+"</li>");
+    	// 				createNewAnno(annotationObject);
+					// 	break;
 					case "contextOther":
 						addedInfoList.append("<li><span class='formLabel'>Other Context Information: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
@@ -688,15 +746,15 @@ var testManifest = {
 
 		$(".carrierFormEntry").each(function(){
 			var annotationObject = {
-			"@id" : "",
-	        "@type" : "oa:Annotation",
-	        "motivation" : "sc:painting",
-	        "label" : "",
-	        "resource" : {
-	          "@type" : "cnt:ContentAsText",
-	          "cnt:chars" :""
-			},
-			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+				"@id" : "",
+		        "@type" : "oa:Annotation",
+		        "motivation" : "sc:painting",
+		        "label" : "",
+		        "resource" : {
+		          "@type" : "cnt:ContentAsText",
+		          "cnt:chars" :""
+				},
+				"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
 			};
 			var rangeObject = { //this will only be saved 
 				"@id" : "",
@@ -722,6 +780,42 @@ var testManifest = {
 				rangeObject["@id"] = newRangeURI;
 				rangeObject.label = entryValue;
 				switch(entryID){
+					case "pageWidth":
+						addedInfoList.append("<li><span class='formLabel'>Page Width: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "pageHeight":
+						addedInfoList.append("<li><span class='formLabel'>Page Height </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "condition":
+						addedInfoList.append("<li><span class='formLabel'>Condition: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierLayout":
+						addedInfoList.append("<li><span class='formLabel'>Condition: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierRulings":
+						addedInfoList.append("<li><span class='formLabel'>Rulings: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierPrickings":
+						addedInfoList.append("<li><span class='formLabel'>Rulings: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierScript":
+						addedInfoList.append("<li><span class='formLabel'>Script: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "musicNotations":
+						addedInfoList.append("<li><span class='formLabel'>Music Notations: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "scribe":
+						addedInfoList.append("<li><span class='formLabel'>Scribe: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
 					case "carrierRV":
 						addedInfoList.append("<li><span class='formLabel'>Recto or Verso: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
@@ -730,8 +824,28 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Origin: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
+					case "carrierDecorations":
+						addedInfoList.append("<li><span class='formLabel'>Decorations: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
 					case "support":
 						addedInfoList.append("<li><span class='formLabel'>Support: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "catchWords":
+						addedInfoList.append("<li><span class='formLabel'>Catch Words: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierSignatures":
+						addedInfoList.append("<li><span class='formLabel'>Signature(s): </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierFolioNum":
+						addedInfoList.append("<li><span class='formLabel'>FolioNum: </span>"+entryValue+"</li>");
+    					createNewAnno(annotationObject);
+						break;
+					case "carrierRelated":
+						addedInfoList.append("<li><span class='formLabel'>Carrier Related: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
 					case "carrierPageNum":
@@ -774,12 +888,8 @@ var testManifest = {
 							createNewRange(rangeObject);
 						}
 						break;
-					case "carrierBinding":
-						addedInfoList.append("<li><span class='formLabel'>Binding Information: </span>"+entryValue+"</li>");
-    					createNewAnno(annotationObject);
-						break;
 					case "carrierIllustrations":
-						addedInfoList.append("<li><span class='formLabel'>Decoration/Illustrations: </span>"+entryValue+"</li>");
+						addedInfoList.append("<li><span class='formLabel'>Illustrations: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
 					case "carrierArtists":
@@ -795,7 +905,6 @@ var testManifest = {
     					createNewAnno(annotationObject);
 						break;
 					default:
-
 				}	
 			}	
 		});
@@ -809,12 +918,12 @@ var testManifest = {
 		if(canvasNotes !== ""){
 			var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
 			var canvasURI = $("#catalogueInfoFor").val();
-			otherInfoList.append("<li><span class='formLabel'>Addition Notes: </span>"+canvasNotes+"</li>");
+			otherInfoList.append("<li><span class='formLabel'>General Notes: </span>"+canvasNotes+"</li>");
 			var annoObject = {
 				"@id" : newAnnoURI,
 		        "@type" : "oa:Annotation",
 		        "motivation" : "sc:painting",
-		        "label" : "Additional Notes",
+		        "label" : "General Metadata",
 		        "resource" : {
 		          "@type" : "cnt:ContentAsText",
 		          "cnt:chars" : canvasNotes
@@ -842,20 +951,27 @@ var testManifest = {
 
 	function createNewAnno(annoObject){
 		annoID ++;
+
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
 		if(zeta){ //we are saving to a leaf range, so we have to go through STRUCTURES and find it.  You can also check if objectID contains "/range"
 			$.each(testManifest.structures, function(){
 				if (this["@id"] === objectID){ //Then this is our structure
 					this.resources.push(annoObject); //push the annotation object to its resources.
+					//I have the object to pass.  Do I need to pass as parameters instead of the object? Will this also save an annotation?
+					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+					// var params = annoObject;
+					// $.post(newAnnoUrl, params);
 				}
 			});
 		}
 		else{ // we are saving to a canvas so we have to go through the SEQUENCE and find it.  You can also check if objectID contains "/canvas"
 			$.each(testManifest.sequences[0].canvases, function(){
 				if (this["@id"] === objectID){ //this is our canvas object
-					console.log("anno being saved");
-					console.log(annoObject);
 					this.resources.push(annoObject); //push the annotation to the canvas object.
+					//Will this also save an annotation?
+					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+					// var params = annoObject;
+					// $.post(newAnnoUrl, params);
 				}
 			});
 		}
@@ -868,6 +984,9 @@ var testManifest = {
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
+		// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+		// var params = annoObject;
+		// $.post(newAnnoUrl, params);
 		
 	}
 	/*
@@ -881,7 +1000,9 @@ var testManifest = {
 				if(!$.inArray(leaf, $(this).ranges)){
 					console.log("pushing leaf to range")
 					this.ranges.push(leaf);
-
+					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+					// var params = annoObject;
+					// $.post(newAnnoUrl, params);
 				}
 				else{
 					console.log('LEAF already in range.')
