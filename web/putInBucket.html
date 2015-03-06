@@ -577,7 +577,7 @@ var testManifest = {
 								updateOrNew = "update";
 								rangeToUpdate = testManifest.structures[i]["@id"];
 								updateRange(rangeToUpdate, currentLeaf);
-								return false;
+								break;
 							}
 							else{
 								updateOrNew = "new";
@@ -712,7 +712,7 @@ var testManifest = {
 								updateOrNew = "update";
 								rangeToUpdate = testManifest.structures[i]["@id"];
 								updateRange(rangeToUpdate, currentLeaf);
-								return false;
+								break;
 							}
 							else{
 								updateOrNew = "new";
@@ -832,7 +832,7 @@ var testManifest = {
     					createNewAnno(annotationObject);
 						break;
 					case "support":
-						addedInfoList.append("<li><span class='formLabel'>Support: </span>"+entryValue+"</li>");
+						addedInfoList.append("<li><span class='formLabel'>Material Support: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
 					case "catchWords":
@@ -843,17 +843,13 @@ var testManifest = {
 						addedInfoList.append("<li><span class='formLabel'>Signature(s): </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
-					case "carrierFolioNum":
-						addedInfoList.append("<li><span class='formLabel'>FolioNum: </span>"+entryValue+"</li>");
-    					createNewAnno(annotationObject);
-						break;
 					case "carrierRelated":
 						addedInfoList.append("<li><span class='formLabel'>Carrier Related: </span>"+entryValue+"</li>");
     					createNewAnno(annotationObject);
 						break;
-					case "carrierPageNum":
+					case "carrierFolioNum":
 					//This one is special because it tries to place the leaf directly into the master range.  I think we should add it into the master range when this is defined AND attach this information as an annotation.
-						addedInfoList.append("<li><span class='formLabel'>Page Number: </span>"+entryValue+"</li>");
+						addedInfoList.append("<li><span class='formLabel'>Folio Number: </span>"+entryValue+"</li>");
 						var masterRange = testManifest.structures[0];
 						//we have the current leaf ID up top to have for API.
 						if(masterRange.ranges[entryValue - 1] === undefined || masterRange.ranges[entryValue - 1] === {}){
@@ -881,7 +877,7 @@ var testManifest = {
 								updateOrNew = "update";
 								rangeToUpdate = testManifest.structures[i]["@id"];
 								updateRange(rangeToUpdate, currentLeaf);
-								return false;
+								break;
 							}
 							else{
 								updateOrNew = "new";
@@ -1001,16 +997,15 @@ var testManifest = {
 		$.each(testManifest.structures, function(){
 			if(this["@id"] === rangeID){
 				if(!$.inArray(leaf, $(this).ranges)){
-					console.log("pushing leaf to range")
 					this.ranges.push(leaf);
 					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
 					// var params = annoObject;
 					// $.post(newAnnoUrl, params);
 				}
 				else{
-					console.log('LEAF already in range.')
+					console.log('LEAF already in range.');
+					//return false;
 				}
-				return false;
 			}
 		});
 	}
