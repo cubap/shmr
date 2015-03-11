@@ -294,7 +294,6 @@
 		<div class="mainBlock intro">
 			<p>
 				Here you can create a leaf to place into the bucket.   Login below to begin making a leaf.
-				
 			</p>
 
 			<!-- TESTED. SUCCESSFUL.  
@@ -335,6 +334,7 @@
 							<tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input type="text"  id="libraryStamp"/></td></tr>
 							<tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input type="text"  id="binding"/></td></tr>
 							<tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input type="text"  id="frame"/></td></tr>
+							<tr class="contextFormEntry"><td class="formLabel">Bibliography: </td> <td> <input type="text"  id="bibliography"/></td></tr>
 							<!--<tr class="contextFormEntry"><td><span class="formLabel">Related Manuscripts by Collection: </td> <td>  <input type="text"  id="contextRelated"/></td></tr> -->
 							<tr class="contextFormEntry"><td class="formLabel">Other: </td>  <td><textarea  id="contextOther"></textarea></td></tr>
 						</tbody>
@@ -443,7 +443,7 @@
 							<tr class="contentFormEntry"><td class="formLabel">Dedication:  </td> <td>  <input type="text" class="content" id="dedication" /> </td></tr> 
 							<tr class="contentFormEntry"><td class="formLabel">Dedicatee:  </td> <td>  <input type="text" class="content" id="dedicatee" /> </td></tr> 
 							<tr class="contentFormEntry"><td class="formLabel">Rubrics:  </td> <td>  <input type="text" class="content" id="rubrics" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Chant:  </td> <td>  <input type="text" class="content" id="chant" range="range" /> </td></tr> 
+							<tr class="contentFormEntry"><td class="formLabel">Chant:  </td> <td>  <input type="text" class="content" id="chant" /> </td></tr> 
 							<tr class="contentFormEntry"><td class="formLabel">Gloss:  </td> <td>  <input type="text" class="conten" id="gloss" /> </td></tr> 
 							<tr class="contentFormEntry" special="annotations">
 								<td class="formLabel ">Annotations: </td>
@@ -627,15 +627,15 @@ var testManifest = {
 			var addedInfoLabel = $(this).find(".formLabel").html();
 			var special = $(this).attr("special");
 			var annotationObject = {
-			"@id" : "",
-	        "@type" : "oa:Annotation",
-	        "motivation" : "sc:painting",
-	        "label" : "",
-	        "resource" : {
-	          "@type" : "cnt:ContentAsText",
-	          "cnt:chars" :""
-			},
-			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+				"@id" : "",
+		        "@type" : "oa:Annotation",
+		        "motivation" : "sc:painting",
+		        "label" : "",
+		        "resource" : {
+		          "@type" : "cnt:ContentAsText",
+		          "cnt:chars" :""
+				},
+				"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
 			};
 			var rangeObject = { //this will only be saved 
 				"@id" : "",
@@ -643,7 +643,7 @@ var testManifest = {
 		        "motivation" : "sc:painting",
 		        "label" : "",
 		        "canvases": [],
-		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
 		        "resources" : [],
 		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 			};
@@ -820,7 +820,7 @@ var testManifest = {
 					var lineWidth = $("#lWidth").val();
 					if(leafHeight!== "" || leafWidth!==""){
 						console.log("LEAF IT")
-						var annotationObject1 = jQuery.extend({}, annotationObject);
+						var annotationObject1 = jQuery.extend({}, annotationObject); //cannot just do = annotationObject.  It will cause scope issues.
 						var annotationObject2 = jQuery.extend({}, annotationObject);
 						annotationObject1.label = "Leaf Height";
 						annotationObject1.resource["cnt:chars"] = leafHeight;
@@ -830,7 +830,7 @@ var testManifest = {
 						console.log(annoID);
 						createNewAnno(annotationObject1); //this will increment annoID by 1
 						console.log(annoID);
-						annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
+						annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be saving the new annoID # 
 						createNewAnno(annotationObject2)
 						addedInfoList.append("<li><span class='formLabel'>Leaf Height: </span> "+leafHeight+"</li>");
 						addedInfoList.append("<li><span class='formLabel'>Leaf Width: </span> "+leafWidth+"</li>");
@@ -991,6 +991,8 @@ var testManifest = {
 		console.log("CREATE ANNO "+ annoObject["@id"]);
 		annoID ++;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
+		//var url = "http://165.134.241.141/brokenBooks/saveNewRangeServlet";
+		//$.post(url, annoObject);
 		if(zeta){ //we are saving to a leaf range, so we have to go through STRUCTURES and find it.  You can also check if objectID contains "/range"
 			$.each(testManifest.structures, function(){
 				if (this["@id"] === objectID){ //Then this is our structure
@@ -1005,7 +1007,7 @@ var testManifest = {
 		else{ // we are saving to a canvas so we have to go through the SEQUENCE and find it.  You can also check if objectID contains "/canvas"
 			$.each(testManifest.sequences[0].canvases, function(){
 				if (this["@id"] === objectID){ //this is our canvas object
-					console.log("PUS THIS OBJECT");
+					console.log("PUSH THIS OBJECT");
 					console.log(annoObject);
 					this.resources.push(annoObject); //push the annotation to the canvas object.
 					//Will this also save an annotation?
@@ -1024,9 +1026,8 @@ var testManifest = {
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
-		// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
-		// var params = annoObject;
-		// $.post(newAnnoUrl, params);
+		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+		$.post(newAnnoUrl, annoObject);
 		
 	}
 	/*
@@ -1039,9 +1040,8 @@ var testManifest = {
 			if(this["@id"] === rangeID){
 				if(!$.inArray(leaf, $(this).ranges)){
 					this.ranges.push(leaf);
-					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
-					// var params = annoObject;
-					// $.post(newAnnoUrl, params);
+					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+					$.post(newAnnoUrl, params);
 				}
 				else{
 					console.log('LEAF already in range.');
@@ -1049,6 +1049,9 @@ var testManifest = {
 				}
 			}
 		});
+		var url = "http://165.134.241.141/brokenBooks/updateRangeServlet";
+		//I have a new leaf URL to add to a range, so I want to pass the rangeID and leafURL.  
+		$.post(url, newRangeObject);
 	}
 	
 	function resloveImageURI(rv){
@@ -1095,6 +1098,9 @@ var testManifest = {
 	        "resources" : [ 
         	]
       	 }
+      	 //var url = "http://165.134.241.141/brokenBooks/saveNewCanvasServlet";
+      	 //var params1 = newCanvas1;
+      	 //$.post(url, params);
       	 $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
       	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas1);
@@ -1108,6 +1114,8 @@ var testManifest = {
 	        "resources" : [ 
         	]
       	 }
+      	 //var params2 = newCanvas2
+      	 //$.post(url, params2);
       	 $("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
       	 $("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas2);
@@ -1124,6 +1132,7 @@ var testManifest = {
 	      "ranges" : [],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 		}
+
 		currentLeaf = leafRange["@id"];
 		createNewRange(leafRange);
 	}
