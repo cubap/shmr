@@ -82,7 +82,7 @@
 	  	}
 	  	body{
 	  		z-index: 1;
-	  		background-image: url("../m2/images/BrokenBook01.jpg");
+	  		background-image: url("../images/BrokenBook01.jpg");
 	  		background-repeat: repeat;
 	  	}
 	  	.hoverBlue:hover{
@@ -639,7 +639,7 @@ var testManifest = {
 			var addedInfoLabel = $(this).find(".formLabel").html();
 			var special = $(this).attr("special");
 			var annotationObject = {
-				"@id" : "",
+                        "@id" : "",
 		        "@type" : "oa:Annotation",
 		        "motivation" : "sc:painting",
 		        "label" : "",
@@ -1082,7 +1082,7 @@ var testManifest = {
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
-		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
+		var newAnnoUrl = "http://localhost:8080/brokenBooks/WEB-INF/classes/servlet/SaveNewRangeServlet";
 		$.post(newAnnoUrl, newRangeObject);
 		
 	}
@@ -1162,9 +1162,9 @@ var testManifest = {
 		}
 		annoListCollection.push(newCanvas1AnnoList);
 		annoListID++;
-      	 //var url = "http://165.134.241.141/brokenBooks/saveNewCanvasServlet";
-      	 //var params1 = newCanvas1;
-      	 //$.post(url, params);
+      	 var url = "http://localhost:8080/brokenBooks/saveNewCanvasServlet";
+      	 var params1 = newCanvas1;
+      	 $.post(url, params1);
       	 $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
       	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas1);
