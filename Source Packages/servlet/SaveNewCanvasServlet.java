@@ -52,7 +52,7 @@ public class SaveNewCanvasServlet extends HttpServlet {
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
             System.out.println("content ===== " + "content=" + request.getParameter("content"));
             //value to save
-            out.writeBytes(URLEncoder.encode("content=" + request.getParameter("content"), "utf-8"));
+            out.writeBytes("content=" + URLEncoder.encode(request.getParameter("content"), "utf-8"));
             out.flush();
             out.close(); // flush and close
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));

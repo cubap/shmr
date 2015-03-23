@@ -121,6 +121,15 @@ and open the template in the editor.
                     height: auto;
                     text-align: left;
             }
+            #contextForm table{
+                margin: 0 auto;
+            }
+            #contentForm table{
+                margin: 0 auto;
+            }
+            #carrierForm table{
+                margin: 0 auto;
+            }
             /* 380px is the widest for label */
             li input[type="text"]{
                     position:relative;

@@ -604,7 +604,7 @@ var testManifest = {
 						annotationObject6.resource["cnt:chars"] = lineWidth;
 						annotationObject5["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						//console.log(annoID);
-						createNewAnno(annotationObject); //this will increment annoID by 1
+						createNewAnno(annotationObject5); //this will increment annoID by 1
 						//console.log(annoID);
 						annotationObject6["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
 						createNewAnno(annotationObject6)
@@ -864,8 +864,7 @@ var testManifest = {
 		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
 		canvasID += 1;
 		var newCanvas1 = {
-	        "@id" : "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID,
-	        "@type" : "sc:Canvas",
+ 	        "@type" : "sc:Canvas",
 	        "label" : "Llang_"+canvasID,
 	        "height" : 1000,
 	        "width" : 667,
@@ -877,9 +876,9 @@ var testManifest = {
 			"@type":"sc:AnnotationList",
 			"resources" : [],
 			"on" : newCanvas1["@id"]
-		}
-		annoListCollection.push(newCanvas1AnnoList);
-		annoListID++;
+        }
+        annoListCollection.push(newCanvas1AnnoList);
+        annoListID++;
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
       	 $.post(url, params1);
@@ -888,7 +887,6 @@ var testManifest = {
       	 testManifest.sequences[0].canvases.push(newCanvas1);
       	 canvasID += 1;
       	 var newCanvas2 = {
-	        "@id" : "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID,
 	        "@type" : "sc:Canvas",
 	        "label" : "Llang_"+canvasID,
 	        "height" : 1000,
@@ -897,11 +895,11 @@ var testManifest = {
 	        "otherContent" : []
       	 }
       	 var newCanvas2AnnoList = {
-			"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-			"@type":"sc:AnnotationList",
-			"resources" : [],
-			"on" : newCanvas2["@id"]
-		}
+                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                "@type":"sc:AnnotationList",
+                "resources" : [],
+                "on" : newCanvas2["@id"]
+        }
 		annoListCollection.push(newCanvas2AnnoList);
 		annoListID++;
       	 var params2 = {'content': JSON.stringify(newCanvas2)};
@@ -910,8 +908,7 @@ var testManifest = {
       	 $("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas2);
       	 leafRange += 1;
-		 var leafRange = {
- 		  "@id":"http://www.example.org/iiif/LlangBrev/range/"+rangeID,
+            var leafRange = {
 	      "@type":"sc:Range",
 	      "label":"Llangantock Breviary Page_"+rangeID ,
 	      "canvases" : [
@@ -921,9 +918,10 @@ var testManifest = {
 	      "resources" : [],
 	      "ranges" : [],
 	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-		}
+            }
 
 		currentLeaf = leafRange["@id"];
+		console.log(currentLeaf);
 		createNewRange(leafRange);
 	}
 
