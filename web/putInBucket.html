@@ -1,294 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <meta charset="utf-8">
-	  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
-      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
-    <!--
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	-->
-	  <title>Bucket Example</title>
-	  <style>
-	    input[type="button"]{
-	    	padding:5px;
-	    	background-color: white;
-	    	border: 1px solid black;
-	    	cursor: pointer;
-	    	font-family: "Comic Sans MS", cursive, sans-serif;
-	    }
-	    input[type="button"]:hover{
-	    	box-shadow: 0px 0px 13px 1px;
-	    }
-	  	.mainBlock{
-			position: relative;
-			box-shadow: 0px 0px 13px 3px;
-			margin: 0% 0px 0px 10%;
-			padding: 10px;
-			text-align: center;
-			background-color: #545454;
-			z-index: 2;
-			left: 13%;
-			width: 73%;
-			height: auto;
-	  	}
-	  	.intro{
-	  		display: block;
-	  	}
-	  	.start{
-			display: none;
-	  	}
-	  	.info{
-	  		display: none;
-	  	}
-	  	p{
-	  		font-size: 10pt;
-	  		color: black;
-	  		margin: 15px 0px;
-	  		color: white;
-	  		font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
-	  	}
-	  	.label{
-	  		display: inline-block;
-	  		margin-right: 10px;
-	  	}
-	  	.sbsSquare{
-	  		width: 32%;
-	  		border: 1px solid black;
-	  		display: inline-table;
-	  		height: 300px;
-	  		padding-top:50px;
-	  		margin-bottom: 15px;
-	  	}
-	  	.sbsSquare p:first-letter{
-               text-transform: uppercase;
-        }
-        .sbsSquare p {
-	        font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
-			letter-spacing:0.1em;
-			text-align:center;
-			text-transform: lowercase;
-			line-height: 145%;
-			font-size: 14pt;
-			font-variant: small-caps;
-        	padding: 0px 10px;
-	  	}
-	  	.sbsSqaure h2{
-	  		font-size: 16pt;
-        	font-family:Georgia,serif;
-			color:#4E443C;
-			font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
-	  	}
-	  	body{
-	  		z-index: 1;
-	  		background-image: url("../images/BrokenBook01.jpg");
-	  		background-repeat: repeat;
-	  	}
-	  	.hoverBlue:hover{
-	  		box-shadow: 0px 0px 13px 3px rgb(0,255,255);
-	  	}
-	  	.hoverGreen:hover{
-	  		box-shadow: 0px 0px 13px 3px rgb(0,204,0);
-	  	}
-	  	.hoverRed:hover{
-	  		box-shadow: 0px 0px 13px 3px rgb(255,0,127);
-	  	}
-	  	ul{
-	  		margin: 10px 0px;
-	  	}
-	  	li{
-	  		list-style-type: none;
-	  	}
-	  	#contextForm{
-	  		border-bottom: 2px solid rgb(0,204,0);
-	  		border-right: 2px solid rgb(0,204,0);
-	  		border-left: 2px solid rgb(0,204,0);
-	  		position: relative;
-	  		height: auto;
-	  		text-align: left;
-	  	}
-	  	#contentForm{
-	  		border-bottom: 2px solid rgb(0,255,255);
-	  		border-right: 2px solid  rgb(0,255,255);
-	  		border-left: 2px solid  rgb(0,255,255);
-	  		position: relative;
-	  		height: auto;
-	  		text-align: left;
-	  	}
-	  	#carrierForm{
-	  		border-bottom: 2px solid rgb(255,0,127);
-	  		border-right: 2px solid rgb(255,0,127);
-	  		border-left: 2px solid rgb(255,0,127);
-	  		position: relative;
-	  		height: auto;
-	  		text-align: left;
-	  	}
-	  	/* 380px is the widest for label */
-	  	li input[type="text"]{
-	  		position:relative;
-	  		height: 22px;
-	  		left:380px;
-	  	}
-	  	li textarea{
-	  		position: relative;
-	  		left:380px;
-	  		height: 44px;
-	  	}
-	  	#notesForm{
-	  		border-bottom: 2px solid yellow;
-	  		border-right: 2px solid yellow;
-	  		border-left: 2px solid yellow;
-	  		position: relative;
-	  		height: auto;
-	  	}
-	  	#contextHeader{
-	  		color: rgb(0,204,0);
-	  		border-top: 1px solid rgb(0,204,0);
-	  		border-right: 1px solid rgb(0,204,0);
-	  		border-left: 1px solid rgb(0,204,0);
-	  		cursor: pointer;
-	  	}
-	  	#contentHeader{
-	  		color: rgb(0,255,255);
-	  		border-top: 1px solid  rgb(0,255,255);
-	  		border-right: 1px solid  rgb(0,255,255);
-	  		border-left: 1px solid  rgb(0,255,255);
-	  		cursor: pointer;
-	  	}
-	  	#carrierHeader{
-	  		color: rgb(255,0,127);
-	  		border-top: 1px solid rgb(255,0,127);
-	  		border-right: 1px solid rgb(255,0,127);
-	  		border-left: 1px solid rgb(255,0,127);
-	  		cursor: pointer;
-	  	}
-	  	#notesHeader{
-	  		color: yellow;
-	  		border-top: 1px solid yellow;
-	  		border-right: 1px solid yellow;
-	  		border-left: 1px solid yellow;
-	  		cursor: pointer;
-	  	}
-	  	.infoPart{
-	  		margin: 10px 0px;
-	  	}
-	  	#previousOwners{
-	  		width: 300px;
-	  	}
-	  	.formLabel{
-	  		font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
-			letter-spacing:0.1em;
-			text-align:center;
-			text-transform: lowercase;
-			line-height: 145%;
-			font-size: 12pt;
-			font-variant: small-caps;
-        	padding: 0px 10px;
-	  	}
-	  	.imgAdditionArea{
-	  		position: relative;
-	  		display: none;
-	  	}
-	  	.previewImg{
-	  		height: 200px;
-	  		width: auto;
-	  		position: relative;
-	  	}
-	  	.start .previewImg, .info .previewImg{
-	  		margin-bottom:20px;
-	  	}
-	  	#sideBarInfo{
-			position: fixed;
-			left: 0px;
-			top:15px;
-			height:90%;
-			overflow-y: auto;
-			padding: 5px;
-			width: 20%;
-			background-color: #545454;
-			padding: 10px;
-			box-shadow: 0px 0px 13px 3px;
-			z-index: 2;
-		}
-		#whatPiece{
-			position: relative;
-			margin-bottom: 35px;
-		}
-		#folioSide1{
-			position: relative;
-			display: inline-table;
-			height: 150px;
-			width: 120px;
-			margin-right:25px;
-			border: 3px solid black;
-		}
-		#folioSide2{
-			position: relative;
-			display: inline-table;
-			height: 150px;
-			width: 120px;
-			border: 3px solid black;
-		}
-		.addedInformation{
-			border: 2px solid white;
-			position: relative;
-			min-height:50px;
-			width: 100%;
-			display: none;
-		}
-		#formAccordion{
-			position: relative;
-			height: 90%;
-			border:2px solid black;
-			padding-bottom: 10px;
-		}
-		.contentList{
-			position: relative;
-			border: 1px solid  rgb(0,255,255);
-			padding-left: 0px;
-		}
-		.contextList{
-			position: relative;
-			border: 1px solid rgb(0,204,0);
-			padding-left: 0px;
-		}
-		.carrierList{
-			position: relative;
-			border: 1px solid rgb(255,0,127);
-			padding-left: 0px;
-		}
-		.addedNotes{
-			position: relative;
-			border: 1px solid yellow;
-		}		
-		.ui-accordion-content{
-			height: 1px;
-			padding: 5px 0px;
-		}
-		.ui-accordion-header{
-			padding: 5px 0px;
-		}
-		*:focus{
-			outline: none;
-		}
-		.ui-state-active{
-			outline: none;
-		}
-		#serverLogin{
-			position: relative;
-			border: 1px solid black;
-		}
-		#serverLoginFrame{
-			position: relative;
-		}
-		.selectedFolio{
-			border: 3px solid yellow !important;
-		}
-		#initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
-			display: none;
-		}
-	  </style>
+            <meta charset="utf-8">
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+            <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	    
+            <title>Bucket Example</title>
 	</head>
 	<body>
 		<div class="mainBlock intro">
@@ -476,7 +193,7 @@
 			<input type="button" onclick="saveFolio();" value="Save Metadata"/>
  	        <input type="button" onclick="cancelFolio();" value="Exit Metadata"/>
 		</div>
-		<div id="sideBarInfo">
+		<div class="sideBarInfo">
 			<p>This area will tell you what piece of the leaf you are currently working on.  There are only three options: side ALPHA, side BETA and the leaf as a whole (OMEGA).  You may not know which is recto or verso, so we just call them alpha and beta.  Information you have submitted will also be placed here so you can see your progress.  </p>
 			<div id="whatPiece">
 				<div id="folioSide1">Side ALPHA</div>
@@ -639,7 +356,7 @@ var testManifest = {
 			var addedInfoLabel = $(this).find(".formLabel").html();
 			var special = $(this).attr("special");
 			var annotationObject = {
-                        "@id" : "",
+				"@id" : "",
 		        "@type" : "oa:Annotation",
 		        "motivation" : "sc:painting",
 		        "label" : "",
@@ -1020,6 +737,7 @@ var testManifest = {
 				this.images.push(anno);
 				annoID++;
 				imageID++;
+				//updateCanvas
 				return false;
 			}
 		})
@@ -1041,9 +759,9 @@ var testManifest = {
 					//console.log("MAKE RANGE ANNO");
 					this.resources.push(annoObject); //push the annotation object to its resources.
 					//I have the object to pass.  Do I need to pass as parameters instead of the object? Will this also save an annotation?
-					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
-					// var params = annoObject;
-					// $.post(newAnnoUrl, params);
+					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+					var params = {'content':JSON.stringify(annoObject)};
+					$.post(newAnnoUrl, params);
 				}
 			});
 		}
@@ -1054,9 +772,9 @@ var testManifest = {
 					this.resources.push(annoObject); //push the annotation to the appropriate list.
 					annoList = this;
 					//Image annotation vs. line annotation?
-					// var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
-					// var params = annoObject;
-					// $.post(newAnnoUrl, params);
+					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+					var params = {'content': JSON.stringifu(annoObject)};
+					$.post(newAnnoUrl, params);
 				}
 			});
 			$.each(testManifest.sequences[0].canvases, function(){
@@ -1082,8 +800,8 @@ var testManifest = {
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
-		var newAnnoUrl = "http://localhost:8080/brokenBooks/WEB-INF/classes/servlet/SaveNewRangeServlet";
-		$.post(newAnnoUrl, newRangeObject);
+		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+		$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)});
 		
 	}
 	/*
@@ -1096,12 +814,12 @@ var testManifest = {
 			if(this["@id"] === rangeID){
 				if(!$.inArray(leaf, $(this).ranges)){
 					this.ranges.push(leaf);
-					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRangeServlet";
-					$.post(newAnnoUrl, params);
+					// var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+					// $.post(newAnnoUrl, params);
 				}
 				else{
-					//console.log('LEAF already in range.');
-					//return false;
+					console.log('LEAF already in range.');
+					return false;
 				}
 			}
 		});
@@ -1110,7 +828,7 @@ var testManifest = {
 		//$.post(url, newRangeObject);
 	}
 	
-	function resloveImageURI(rv){
+	function resolveImageURI(rv){
 		var uri = $("."+rv+"Canvas").find(".uploadness").find('textarea').val();
 	    $.ajax({
 	        url: uri,
@@ -1162,8 +880,8 @@ var testManifest = {
 		}
 		annoListCollection.push(newCanvas1AnnoList);
 		annoListID++;
-      	 var url = "http://localhost:8080/brokenBooks/saveNewCanvasServlet";
-      	 var params1 = newCanvas1;
+      	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
+      	 var params1 = {'content': JSON.stringify(newCanvas1)};
       	 $.post(url, params1);
       	 $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
       	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
@@ -1186,8 +904,8 @@ var testManifest = {
 		}
 		annoListCollection.push(newCanvas2AnnoList);
 		annoListID++;
-      	 //var params2 = newCanvas2
-      	 //$.post(url, params2);
+      	 var params2 = {'content': JSON.stringify(newCanvas2)};
+      	 $.post(url, params2);
       	 $("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
       	 $("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 testManifest.sequences[0].canvases.push(newCanvas2);

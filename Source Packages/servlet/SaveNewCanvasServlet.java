@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -38,25 +39,6 @@ public class SaveNewCanvasServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Annotation anno = new Annotation();
-        anno.setNamespace(request.getParameter("namespace"));
-        anno.setContent(request.getParameter("content"));
-//        anno.setSelector(request.getParameter("selector"));
-        anno.setTitle(request.getParameter("title"));
-//        anno.setResource(URLEncoder.encode(request.getParameter("resource"), "utf-8"));
-//        anno.setResourceType(request.getParameter("resourceType"));
-//        anno.setOutterRelative(request.getParameter("outterRelative"));
-        anno.setAddedTime(System.currentTimeMillis()); //This value is set in annotationStore.
-//        anno.setFontColor(request.getParameter("fontColor"));
-//        anno.setFontType(request.getParameter("fontType"));
-        if(null != request.getParameter("permission")){
-            anno.setPermission(Integer.parseInt(request.getParameter("permission")));
-        }else{
-            anno.setPermission(0);
-        }
-        anno.setOriginalAnnoID("");
-        anno.setVersionNum(1); // this value is set in annotationStore. 
-        anno.setForkFromID(request.getParameter("forkFromID"));
         try {
             URL postUrl = new URL(Constant.ANNOTATION_SERVER_ADDR + "/anno/saveNewAnnotation");
             HttpURLConnection connection = (HttpURLConnection) postUrl.openConnection();
@@ -68,8 +50,9 @@ public class SaveNewCanvasServlet extends HttpServlet {
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.connect();
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            //TODO value to save
-            out.writeBytes(request.getParameter("canvasToSave"));
+            System.out.println("content ===== " + "content=" + request.getParameter("content"));
+            //value to save
+            out.writeBytes(URLEncoder.encode("content=" + request.getParameter("content"), "utf-8"));
             out.flush();
             out.close(); // flush and close
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"));

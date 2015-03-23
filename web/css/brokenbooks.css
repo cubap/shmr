@@ -1,0 +1,347 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 23, 2015, 12:24:59 PM
+    Author     : bhaberbe
+*/
+
+            input[type="button"]{
+                padding:5px;
+                background-color: white;
+                border: 1px solid black;
+                cursor: pointer;
+                font-family: "Comic Sans MS", cursive, sans-serif;
+            }
+            input[type="button"]:hover{
+                box-shadow: 0px 0px 13px 1px;
+            }
+            .mainBlock{
+                    position: relative;
+                    box-shadow: 0px 0px 13px 3px;
+                    margin: 0% 0px 0px 10%;
+                    padding: 10px;
+                    text-align: center;
+                    background-color: #545454;
+                    z-index: 2;
+                    left: 13%;
+                    width: 73%;
+                    height: auto;
+            }
+            .intro{
+                    display: block;
+            }
+            .start{
+                    display: none;
+            }
+            .info{
+                    display: none;
+            }
+            p{
+                    font-size: 10pt;
+                    color: black;
+                    margin: 15px 0px;
+                    color: white;
+                    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+            }
+            .label{
+                    display: inline-block;
+                    margin-right: 10px;
+            }
+            .sbsSquare{
+                    width: 32%;
+                    border: 1px solid black;
+                    display: inline-table;
+                    height: 300px;
+                    padding-top:50px;
+                    margin-bottom: 15px;
+            }
+            .sbsSquare p:first-letter{
+                text-transform: uppercase;
+            }
+            .sbsSquare p {
+                font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+                        letter-spacing:0.1em;
+                        text-align:center;
+                        text-transform: lowercase;
+                        line-height: 145%;
+                        font-size: 14pt;
+                        font-variant: small-caps;
+                padding: 0px 10px;
+            }
+            .sbsSqaure h2{
+                    font-size: 16pt;
+            font-family:Georgia,serif;
+                    color:#4E443C;
+                    font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+            }
+            body{
+                    z-index: 1;
+                    background-image: url("../images/BrokenBook01.jpg");
+                    background-repeat: repeat;
+            }
+            .hoverBlue:hover{
+                    box-shadow: 0px 0px 13px 3px rgb(0,255,255);
+            }
+            .hoverGreen:hover{
+                    box-shadow: 0px 0px 13px 3px rgb(0,204,0);
+            }
+            .hoverRed:hover{
+                    box-shadow: 0px 0px 13px 3px rgb(255,0,127);
+            }
+            ul{
+                    margin: 10px 0px;
+            }
+            li{
+                    list-style-type: none;
+            }
+            #contextForm{
+                    border-bottom: 2px solid rgb(0,204,0);
+                    border-right: 2px solid rgb(0,204,0);
+                    border-left: 2px solid rgb(0,204,0);
+                    position: relative;
+                    height: auto;
+                    text-align: left;
+            }
+            #contentForm{
+                    border-bottom: 2px solid rgb(0,255,255);
+                    border-right: 2px solid  rgb(0,255,255);
+                    border-left: 2px solid  rgb(0,255,255);
+                    position: relative;
+                    height: auto;
+                    text-align: left;
+            }
+            #carrierForm{
+                    border-bottom: 2px solid rgb(255,0,127);
+                    border-right: 2px solid rgb(255,0,127);
+                    border-left: 2px solid rgb(255,0,127);
+                    position: relative;
+                    height: auto;
+                    text-align: left;
+            }
+            /* 380px is the widest for label */
+            li input[type="text"]{
+                    position:relative;
+                    height: 22px;
+                    left:380px;
+            }
+            li textarea{
+                    position: relative;
+                    left:380px;
+                    height: 44px;
+            }
+            #notesForm{
+                    border-bottom: 2px solid yellow;
+                    border-right: 2px solid yellow;
+                    border-left: 2px solid yellow;
+                    position: relative;
+                    height: auto;
+            }
+            #contextHeader{
+                    color: rgb(0,204,0);
+                    border-top: 1px solid rgb(0,204,0);
+                    border-right: 1px solid rgb(0,204,0);
+                    border-left: 1px solid rgb(0,204,0);
+                    cursor: pointer;
+            }
+            #contentHeader{
+                    color: rgb(0,255,255);
+                    border-top: 1px solid  rgb(0,255,255);
+                    border-right: 1px solid  rgb(0,255,255);
+                    border-left: 1px solid  rgb(0,255,255);
+                    cursor: pointer;
+            }
+            #carrierHeader{
+                    color: rgb(255,0,127);
+                    border-top: 1px solid rgb(255,0,127);
+                    border-right: 1px solid rgb(255,0,127);
+                    border-left: 1px solid rgb(255,0,127);
+                    cursor: pointer;
+            }
+            #notesHeader{
+                    color: yellow;
+                    border-top: 1px solid yellow;
+                    border-right: 1px solid yellow;
+                    border-left: 1px solid yellow;
+                    cursor: pointer;
+            }
+            .infoPart{
+                    margin: 10px 0px;
+            }
+            #previousOwners{
+                    width: 300px;
+            }
+            .formLabel{
+                    font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+                    letter-spacing:0.1em;
+                    text-align:center;
+                    text-transform: lowercase;
+                    line-height: 145%;
+                    font-size: 12pt;
+                    font-variant: small-caps;
+            padding: 0px 10px;
+            }
+            .imgAdditionArea{
+                    position: relative;
+                    display: none;
+            }
+            .previewImg{
+                    height: 200px;
+                    width: auto;
+                    position: relative;
+            }
+            .start .previewImg, .info .previewImg{
+                    margin-bottom:20px;
+            }
+            .sideBarInfo{
+                    position: fixed;
+                    left: 0px;
+                    top:15px;
+                    height:90%;
+                    overflow-y: auto;
+                    padding: 5px;
+                    width: 20%;
+                    background-color: #545454;
+                    padding: 10px;
+                    box-shadow: 0px 0px 13px 3px;
+                    z-index: 2;
+            }
+            #whatPiece{
+                    position: relative;
+                    margin-bottom: 35px;
+            }
+            #folioSide1{
+                    position: relative;
+                    display: inline-table;
+                    height: 150px;
+                    width: 120px;
+                    margin-right:25px;
+                    border: 3px solid black;
+            }
+            #folioSide2{
+                    position: relative;
+                    display: inline-table;
+                    height: 150px;
+                    width: 120px;
+                    border: 3px solid black;
+            }
+            .addedInformation{
+                    border: 2px solid white;
+                    position: relative;
+                    min-height:50px;
+                    width: 100%;
+                    display: none;
+            }
+            #formAccordion{
+                    position: relative;
+                    height: 90%;
+                    border:2px solid black;
+                    padding-bottom: 10px;
+            }
+            .contentList{
+                    position: relative;
+                    border: 1px solid  rgb(0,255,255);
+                    padding-left: 0px;
+            }
+            .contextList{
+                    position: relative;
+                    border: 1px solid rgb(0,204,0);
+                    padding-left: 0px;
+            }
+            .carrierList{
+                    position: relative;
+                    border: 1px solid rgb(255,0,127);
+                    padding-left: 0px;
+            }
+            .addedNotes{
+                    position: relative;
+                    border: 1px solid yellow;
+            }		
+            .ui-accordion-content{
+                    height: 1px;
+                    padding: 5px 0px;
+            }
+            .ui-accordion-header{
+                    padding: 5px 0px;
+            }
+            *:focus{
+                    outline: none;
+            }
+            .ui-state-active{
+                    outline: none;
+            }
+            #serverLogin{
+                    position: relative;
+                    border: 1px solid black;
+            }
+            #serverLoginFrame{
+                    position: relative;
+            }
+            .selectedFolio{
+                    border: 3px solid yellow !important;
+            }
+            #initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
+                    display: none;
+            }
+            .leafTemplate{
+                            position: relative;
+            }
+            .versoCanvas{
+                    position: relative;
+                    display: inline-table;
+                    width: 48%;
+                    text-align:center;
+                    border: 2px solid black;
+            }
+            .rectoCanvas{
+                    position: relative;
+                    display: inline-table;
+                    width:48%;
+                    text-align: center;
+                    border: 2px solid black;
+            }
+            .rectoImg{
+                    position: relative;
+                    display: none;
+            }
+            .versoImg{
+                    position: relative;
+                    display: none;
+            }
+            .addImgBtn{
+                    border: 1px solid black;
+                    height: 100px;
+                    width: 100px;
+                    font-size: 14pt;
+                    text-align: center;
+                    margin: 0 auto;
+                    line-height: 100px;
+                    position: relative;
+            }
+            .knownInformation{
+                    position: relative;
+                    display: none;
+            }
+            .uploadness{
+                    display: none;
+                    position: relative;
+                    border: 1px solid black;
+                    margin: 0px 2px auto;
+                    padding : 5px;
+            }
+            .uploadness textarea{
+                    display: inline-table;
+            }
+            .uploadness input{
+                    display: inline-table;
+            }
+            img{
+                    height:300px;
+                    width: auto;
+                    position: relative;
+            }
+            .imgCatalogueInfo{
+
+            }

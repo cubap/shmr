@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>saveNewCanvas</servlet-name>
+        <servlet-class>servlet.SaveNewCanvasServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>saveProject</servlet-name>
+        <servlet-class>servlet.SaveProjectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>saveNewCanvas</servlet-name>
+        <url-pattern>/saveNewCanvas</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>saveNewRange</servlet-name>
+        <servlet-class>servlet.SaveNewRangeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>saveNewRange</servlet-name>
+        <url-pattern>/saveNewRange</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>updateCanvas</servlet-name>
+        <servlet-class>servlet.UpdateCanvasServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateCanvas</servlet-name>
+        <url-pattern>/updateCanvas</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>updateRange</servlet-name>
+        <servlet-class>servlet.UpdateRangeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateRange</servlet-name>
+        <url-pattern>/updateRange</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+</web-app>
