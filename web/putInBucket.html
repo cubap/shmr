@@ -908,12 +908,12 @@ var testManifest = {
 	        "images" : [],
 	        "otherContent": []
       	 }
-      	 var newCanvas1AnnoList = {
-			"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-			"@type":"sc:AnnotationList",
-			"resources" : [],
-			"on" : newCanvas1["@id"]
-        }
+   //    	 var newCanvas1AnnoList = {
+			// "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+			// "@type":"sc:AnnotationList",
+			// "resources" : [],
+			// "on" : newCanvas1["@id"]
+   //      } //local
         annoListCollection.push(newCanvas1AnnoList);
         annoListID++;
         testManifest.sequences[0].canvases.push(newCanvas1);
@@ -925,6 +925,13 @@ var testManifest = {
       	 	data = JSON.parse(data);
       	 	$("#versoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"', 'verso');"); //live with dev server
       	 	$("input[rv='verso']").attr("canvasServerID", data["@id"]); //live with dev server
+ 	   	 	var newCanvas1AnnoList = {
+				"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+				"@type":"sc:AnnotationList",
+				"resources" : [],
+				"on" : data["@id"]
+       	 	} //local
+        	annoListCollection.push(newCanvas1AnnoList);
       	 	console.log("FIRST CANVAS SAVED ID "+ data["@id"]);
       	 	newCanvas1ServerID = data["@id"];
   	 		canvasID += 1;
@@ -936,13 +943,14 @@ var testManifest = {
 		        "images" : [],
 		        "otherContent" : []
 	      	 }
-      	 	var newCanvas2AnnoList = {
-	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-	                "@type":"sc:AnnotationList",
-	                "resources" : [],
-	                "on" : newCanvas2["@id"]
-	        }
-			annoListCollection.push(newCanvas2AnnoList);
+   //    	 	var newCanvas2AnnoList = {
+	  //               "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	  //               "@type":"sc:AnnotationList",
+	  //               "resources" : [],
+	  //               "on" : newCanvas2["@id"]
+	  //       }
+			// annoListCollection.push(newCanvas2AnnoList);
+			//local
 			annoListID++;
 			//$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
       	 	$("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
@@ -954,6 +962,13 @@ var testManifest = {
 	      		newCanvas2ServerID = data["@id"];
 	      		$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"','recto');");
       	 		$("input[rv='recto']").attr("canvas", data["@id"]); // live with dev server
+ 		   	 	var newCanvas2AnnoList = {
+	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                "@type":"sc:AnnotationList",
+	                "resources" : [],
+	                "on" : data["@id"]
+	        	}
+				annoListCollection.push(newCanvas2AnnoList);
 	  	 	 	rangeID += 1;
 	            var leafRangeObject = {
 			      	"@type":"sc:Range",
