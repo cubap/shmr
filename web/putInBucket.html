@@ -759,6 +759,7 @@ var testManifest = {
 	function createNewAnno(annoObject, img){
 		annoID ++;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
+		console.log("ANNO FOR "+objectID);
 		var annoServerID = -1;
 		console.log("Create anno");
 		//var url = "http://165.134.241.141/brokenBooks/saveNewRangeServlet";
@@ -901,6 +902,7 @@ var testManifest = {
 		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
 		canvasID += 1;
 		var newCanvas1 = {
+			//"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID //local
  	        "@type" : "sc:Canvas",
 	        "label" : "Llang_"+canvasID,
 	        "height" : 1000,
@@ -914,7 +916,7 @@ var testManifest = {
 			// "resources" : [],
 			// "on" : newCanvas1["@id"]
    //      } //local
-        annoListCollection.push(newCanvas1AnnoList);
+        //annoListCollection.push(newCanvas1AnnoList);
         annoListID++;
         testManifest.sequences[0].canvases.push(newCanvas1);
         // $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');"); //local
@@ -925,6 +927,8 @@ var testManifest = {
       	 	data = JSON.parse(data);
       	 	$("#versoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"', 'verso');"); //live with dev server
       	 	$("input[rv='verso']").attr("canvasServerID", data["@id"]); //live with dev server
+      	 	newCanvas1["@id"] = data["@id"];
+      	 	testManifest.sequences[0].canvases.push(newCanvas1);
  	   	 	var newCanvas1AnnoList = {
 				"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
@@ -936,6 +940,7 @@ var testManifest = {
       	 	newCanvas1ServerID = data["@id"];
   	 		canvasID += 1;
       	 	var newCanvas2 = {
+      	 		//"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID
 		        "@type" : "sc:Canvas",
 		        "label" : "Llang_"+canvasID,
 		        "height" : 1000,
@@ -943,7 +948,7 @@ var testManifest = {
 		        "images" : [],
 		        "otherContent" : []
 	      	 }
-   //    	 	var newCanvas2AnnoList = {
+   	  //    	 	var newCanvas2AnnoList = {
 	  //               "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	  //               "@type":"sc:AnnotationList",
 	  //               "resources" : [],
@@ -954,7 +959,7 @@ var testManifest = {
 			annoListID++;
 			//$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
       	 	$("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
-	      	testManifest.sequences[0].canvases.push(newCanvas2);
+	      	
 	      	var params2 = {'content': JSON.stringify(newCanvas2)};
 	      	$.post(url, params2, function(data){
 	      		data=JSON.parse(data);
@@ -962,6 +967,8 @@ var testManifest = {
 	      		newCanvas2ServerID = data["@id"];
 	      		$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"','recto');");
       	 		$("input[rv='recto']").attr("canvas", data["@id"]); // live with dev server
+      	 		newCanvas2["@id"] = data["@id"];
+      	 		testManifest.sequences[0].canvases.push(newCanvas2);
  		   	 	var newCanvas2AnnoList = {
 	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
@@ -971,6 +978,7 @@ var testManifest = {
 				annoListCollection.push(newCanvas2AnnoList);
 	  	 	 	rangeID += 1;
 	            var leafRangeObject = {
+	            	//"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID //local
 			      	"@type":"sc:Range",
 			      	"label":"Llangantock Breviary Page_"+rangeID ,
 			      	"canvases" : [
