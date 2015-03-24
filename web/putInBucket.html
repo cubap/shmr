@@ -243,6 +243,11 @@ var annoListID = 2;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
 var annoListCollection = [];
+
+var serverCanvasID = -1;
+var serverAnnoID = -1;
+var currentLeafServerID = -1;
+
 //Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
 var annotationList = {
 	"@id":"", 
@@ -372,12 +377,13 @@ var testManifest = {
 		        "motivation" : "sc:painting",
 		        "label" : "",
 		        "canvases": [],
-		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
+		        "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
 		        "resources" : [],
 		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 			};
 			if (special === "annotations"){
 				//console.log("Special Annos");
+				//IF we want a "remove annotation" among this functionality, I will have to keep annotation ID's with the addedInfo list so that remove click events can be attached to these elements with their serverID. 
 				var inter = $("#interlinearAnnos").val();
 				var marginal = $("#marginalAnnos").val();
 				if(inter!=="" && inter!==undefined){
@@ -385,16 +391,16 @@ var testManifest = {
 					annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 					annoCopy1.label = "Interlinear Annotations";
 					annoCopy1.resource["cnt:chars"] = inter;
-					createNewAnno(annoCopy1);
-					addedInfoList1.append("<li><span class='formLabel'>Annotations - Interlinear: </span> "+inter+"</li>");
+					var annoServerID1 = createNewAnno(annoCopy1);
+					addedInfoList1.append("<li><span class='formLabel'>Annotations - Interlinear: </span> "+inter+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
 				}
 				if(marginal!=="" && marginal!==undefined){
 					var annoCopy2 = jQuery.extend({}, annotationObject);
 					annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 					annoCopy2.label = "Marginal Annotations";
 					annoCopy2.resource["cnt:chars"] = marginal;
-					createNewAnno(annoCopy2);
-					addedInfoList1.append("<li><span class='formLabel'>Decorations - Border: </span> "+marginal+"</li>");
+					var serverAnnoID2 = createNewAnno(annoCopy2);
+					addedInfoList1.append("<li local ><span class='formLabel'>Decorations - Border: </span>"+marginal+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
 				}
 			}
 			else if(entryValue !== "" && entryValue !== undefined ){
@@ -412,7 +418,7 @@ var testManifest = {
 						if (testManifest.structures[i].label === entryValue){
 							updateOrNew = "update";
 							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeaf);
+							updateRange(rangeToUpdate, currentLeafServerID);
 							break;
 						}
 						else{
@@ -420,17 +426,17 @@ var testManifest = {
 						}
 					}
 					if(updateOrNew === "new"){
-						createNewRange(rangeObject);
-						addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
+						var rangeServerID = createNewRange(rangeObject);
+						addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
 					}
 				}
 				else{
 					annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 					annotationObject.label = addedInfoLabel;
 					annotationObject.resource["cnt:chars"] = entryValue;
-					createNewAnno(annotationObject);
+					var annoServerID = createNewAnno(annotationObject);
 					//console.log(addedInfoList1);
-					addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
+					addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li><span annoServerID='"+annoServerID+"' class='removeInfo'> X </span>");
 					//There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
 				}
 				//console.log(annotationObject);
@@ -467,7 +473,7 @@ var testManifest = {
 		        "motivation" : "sc:painting",
 		        "label" : "",
 		        "canvases": [],
-		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. 
+		        "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. 
 		        "resources" : [],
 		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 			};
@@ -488,7 +494,7 @@ var testManifest = {
 						if (testManifest.structures[i].label === entryValue){
 							updateOrNew = "update";
 							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeaf);
+							//updateRange(rangeToUpdate, currentLeafServerID);
 							break;
 						}
 						else{
@@ -496,8 +502,8 @@ var testManifest = {
 						}
 					}
 					if(updateOrNew === "new"){
-						createNewRange(rangeObject);
-						addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
+						var rangeServerID = createNewRange(rangeObject);
+						addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
 					}
 				}
 				else{
@@ -505,9 +511,9 @@ var testManifest = {
 					annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 					annotationObject.label = addedInfoLabel;
 					annotationObject.resource["cnt:chars"] = entryValue;
-					createNewAnno(annotationObject);
+					var annoServerID = createNewAnno(annotationObject);
 					//console.log("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
-					addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
+					addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
 					//There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
 				}
 				//console.log(annotationObject);
@@ -546,7 +552,7 @@ var testManifest = {
 		        "motivation" : "sc:painting",
 		        "label" : "",
 		        "canvases": [],
-		        "ranges" : [currentLeaf], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+		        "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
 		        "resources" : [],
 		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 			};
@@ -570,12 +576,12 @@ var testManifest = {
 						annotationObject2.resource["cnt:chars"] = leafWidth;
 						annotationObject1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						//console.log(annoID);
-						createNewAnno(annotationObject1); //this will increment annoID by 1
+						var annoServerID1 = createNewAnno(annotationObject1); //this will increment annoID by 1
 						//console.log(annoID);
 						annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be saving the new annoID # 
-						createNewAnno(annotationObject2)
-						addedInfoList3.append("<li><span class='formLabel'>Leaf Height: </span> "+leafHeight+"</li>");
-						addedInfoList3.append("<li><span class='formLabel'>Leaf Width: </span> "+leafWidth+"</li>");
+						var annoServerID2 = createNewAnno(annotationObject2)
+						addedInfoList3.append("<li><span class='formLabel'>Leaf Height: </span> "+leafHeight+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
+						addedInfoList3.append("<li><span class='formLabel'>Leaf Width: </span> "+leafWidth+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
 					}
 					if(textHeight !== "" || textWidth !==""){
 						//console.log("TEXT IT")
@@ -587,12 +593,12 @@ var testManifest = {
 						annotationObject4.resource["cnt:chars"] = textWidth;
 						annotationObject3["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						//console.log(annoID);
-						createNewAnno(annotationObject3); //this will increment annoID by 1
+						var annoServerID3 = createNewAnno(annotationObject3); //this will increment annoID by 1
 						//console.log(annoID);
 						annotationObject4["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
-						createNewAnno(annotationObject4)
-						addedInfoList3.append("<li><span class='formLabel'>Text Height: </span> "+textHeight+"</li>");
-						addedInfoList3.append("<li><span class='formLabel'>Text Width: </span> "+textWidth+"</li>");
+						var annoServerID4= createNewAnno(annotationObject4)
+						addedInfoList3.append("<li><span class='formLabel'>Text Height: </span> "+textHeight+" <span annoServerID='"+annoServerID3+"' class='removeInfo'> X </span></li>");
+						addedInfoList3.append("<li><span class='formLabel'>Text Width: </span> "+textWidth+" <span annoServerID='"+annoServerID4+"' class='removeInfo'> X </span></li>");
 					}
 					if(lineHeight !== "" || lineWidth !== ""){
 						//console.log("LINE IT");
@@ -604,12 +610,12 @@ var testManifest = {
 						annotationObject6.resource["cnt:chars"] = lineWidth;
 						annotationObject5["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						//console.log(annoID);
-						createNewAnno(annotationObject5); //this will increment annoID by 1
+						var annoServerID5 = createNewAnno(annotationObject5); //this will increment annoID by 1
 						//console.log(annoID);
 						annotationObject6["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
-						createNewAnno(annotationObject6)
-						addedInfoList3.append("<li><span class='formLabel'>Line Height: </span> "+lineHeight+"</li>");
-						addedInfoList3.append("<li><span class='formLabel'>Line Width: </span> "+lineWidth+"</li>");
+						var annoServerID6 = createNewAnno(annotationObject6);
+						addedInfoList3.append("<li><span class='formLabel'>Line Height: </span> "+lineHeight+" <span annoServerID='"+annoServerID5+"' class='removeInfo'> X </span></li>");
+						addedInfoList3.append("<li><span class='formLabel'>Line Width: </span> "+lineWidth+" <span annoServerID='"+annoServerID6+"' class='removeInfo'> X </span></li>");
 					}
 				}
 				else if(special === "layout"){
@@ -622,8 +628,8 @@ var testManifest = {
 						annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						annoCopy1.label = "Lines";
 						annoCopy1.resource["cnt:chars"] = lines;
-						createNewAnno(annoCopy1);
-						addedInfoList3.append("<li><span class='formLabel'>Layout - Lines: </span> "+lines+"</li>");
+						var annoServerID1 = createNewAnno(annoCopy1);
+						addedInfoList3.append("<li><span class='formLabel'>Layout - Lines: </span> "+lines+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
 					}
 					if(columns!=="" && columns!==undefined){
 						//console.log("COLUMNS");
@@ -631,8 +637,8 @@ var testManifest = {
 						annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						annoCopy2.label = "Columns";
 						annoCopy2.resource["cnt:chars"] = columns;
-						createNewAnno(annoCopy2);
-						addedInfoList3.append("<li><span class='formLabel'>Layout - Columns: </span> "+columns+"</li>");
+						annoServerID2 = createNewAnno(annoCopy2);
+						addedInfoList3.append("<li><span class='formLabel'>Layout - Columns: </span> "+columns+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
 					}
 				}
 				else if(special === "decorations"){
@@ -645,8 +651,8 @@ var testManifest = {
 						annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						annoCopy1.label = "Initials";
 						annoCopy1.resource["cnt:chars"] = initials;
-						createNewAnno(annoCopy1);
-						addedInfoList3.append("<li><span class='formLabel'>Decorations - Initials: </span> "+initials+"</li>");
+						var annoServerID1 = createNewAnno(annoCopy1);
+						addedInfoList3.append("<li><span class='formLabel'>Decorations - Initials: </span> "+initials+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
 					}
 					if(border!=="" && border!==undefined){
 						//console.log("BORDER")
@@ -654,8 +660,8 @@ var testManifest = {
 						annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 						annoCopy2.label = "Border";
 						annoCopy2.resource["cnt:chars"] = border;
-						createNewAnno(annoCopy2);
-						addedInfoList3.append("<li><span class='formLabel'>Decorations - Border: </span> "+border+"</li>");
+						var annoServerID2 = createNewAnno(annoCopy2);
+						addedInfoList3.append("<li><span class='formLabel'>Decorations - Border: </span> "+border+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
 					}
 				}
 			}
@@ -672,7 +678,7 @@ var testManifest = {
 						if (testManifest.structures[i].label === entryValue){
 							updateOrNew = "update";
 							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeaf);
+							//updateRange(rangeToUpdate, currentLeafServerID);
 							break;
 						}
 						else{
@@ -680,16 +686,16 @@ var testManifest = {
 						}
 					}
 					if(updateOrNew === "new"){
-						createNewRange(rangeObject);
-						addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
+						var rangeServerID = createNewRange(rangeObject);
+						addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span rangeServerID='"+rangeServerID2+"' class='removeInfo'> X </span></li>");
 					}
 				}
 				else{
 					annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
 					annotationObject.label = addedInfoLabel;
 					annotationObject.resource["cnt:chars"] = entryValue;
-					createNewAnno(annotationObject);
-					addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
+					var annoServerID = createNewAnno(annotationObject);
+					addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
 					//There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
 				}
 			}	
@@ -701,7 +707,7 @@ var testManifest = {
 		if(canvasNotes !== ""){
 			var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
 			var canvasURI = $("#catalogueInfoFor").val();
-			otherInfoList.append("<li><span class='formLabel'>General Notes: </span> "+canvasNotes+"</li>");
+			
 			var annoObject = {
 				"@id" : newAnnoURI,
 		        "@type" : "oa:Annotation",
@@ -713,7 +719,8 @@ var testManifest = {
 				},
 				"on" : canvasURI
 			};
-			createNewAnno(annoObject);
+			var annoServerID = createNewAnno(annoObject);
+			otherInfoList.append("<li><span class='formLabel'>General Notes: </span> "+canvasNotes+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
 		}
 
 		$(".start").hide("blind", "300ms", function(){
@@ -732,10 +739,12 @@ var testManifest = {
 		//DO not add image annotations into an annotation list. 
 		//console.log("CANVASURI: "+canvasURI);
 		//console.log(anno);
+		//here, the anno is an image annotation.  The object can be directly saved into a canvases 'images[]' field outside of an annotation list.  I have the @id of the canvas and the annotation I want to put into its images[] field.
+		var annoServerID = createNewAnno(anno); //live
+		anno["@id"] = annoServerID; //live
 		$.each(testManifest.sequences[0].canvases, function(){
 			if(this["@id"] === canvasURI){
 				this.images.push(anno);
-				annoID++;
 				imageID++;
 				//updateCanvas
 				return false;
@@ -750,6 +759,8 @@ var testManifest = {
 	function createNewAnno(annoObject, img){
 		annoID ++;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
+		var annoServerID = -1;
+		console.log("Create anno");
 		//var url = "http://165.134.241.141/brokenBooks/saveNewRangeServlet";
 		//$.post(url, annoObject);
 		if(zeta){ //we are saving to a leaf range, so we have to go through STRUCTURES and find it.  You can also check if objectID contains "/range"
@@ -761,11 +772,24 @@ var testManifest = {
 					//I have the object to pass.  Do I need to pass as parameters instead of the object? Will this also save an annotation?
 					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
 					var params = {'content':JSON.stringify(annoObject)};
-					$.post(newAnnoUrl, params);
+					console.log("On a leaf.  Save it.");
+					$.post(newAnnoUrl, params, function(data){
+						data=JSON.parse(data);
+						annoServerID = data["@id"];
+					});
 				}
 			});
 		}
 		else{ 
+			//We need to save the annotation to the DB.  IF it is an image annotation, that annoation object should be added to the images[] field of the canvas in its "on" field.  
+			var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+			var params = {'content':JSON.stringify(annoObject)};
+			console.log("On a canvas.  Save it.");
+			$.post(newAnnoUrl, params, function(data){
+				data=JSON.parse(data);
+				annoServerID = data["@id"];
+			});//live.  Does not add to images[] field of appropriate canvas. 
+
 			var annoList = {};
 			$.each(annoListCollection, function(){
 				if (this.on === objectID){ //this is our annotation list to add the annotation to 
@@ -774,9 +798,12 @@ var testManifest = {
 					//Image annotation vs. line annotation?
 					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
 					var params = {'content': JSON.stringifu(annoObject)};
-					$.post(newAnnoUrl, params);
+					$.post(newAnnoUrl, params, function(data){
+						data=JSON.parse(data);
+						annoServerID = data["@id"];
+					});
 				}
-			});
+			}); //local
 			$.each(testManifest.sequences[0].canvases, function(){
 				if (this["@id"] === objectID){ //this is our canvas object
 					var otherContent = {"@id":annoList["@id"], "@type":"sc:AnnotationList"};
@@ -789,19 +816,27 @@ var testManifest = {
 					})
 					if(!listIncluded)this.otherContent.push(otherContent); //If the annotation list is not already included in the otherContent field, add it. 
 				}
-			});
+			});//local
 		}
+		return annoServerID;
 	}
 
 	/*
 		Add the range object to the structures array in the manifest object. 
 	*/
-	function createNewRange(newRangeObject){
+	function createNewRange(newRangeObject, current){
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		testManifest.structures.push(newRangeObject);
 		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
-		$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)});
+		var rangeServerID = -1;
+		$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
+			data=JSON.parse(data);
+			if(current === 'currentLeaf'){
+				currentLeafServerID = data["@id"];
+			}
+			return data["@id"];
+		});
 		
 	}
 	/*
@@ -861,6 +896,8 @@ var testManifest = {
 	*/
 	function submitIntro(){
 		$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+		var newCanvas1ServerID = -1;
+		var newCanvas2ServerID = -1;
 		//create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
 		canvasID += 1;
 		var newCanvas1 = {
@@ -879,50 +916,68 @@ var testManifest = {
         }
         annoListCollection.push(newCanvas1AnnoList);
         annoListID++;
+        testManifest.sequences[0].canvases.push(newCanvas1);
+        // $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');"); //local
+      	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
-      	 $.post(url, params1);
-      	 $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');");
-      	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
-      	 testManifest.sequences[0].canvases.push(newCanvas1);
-      	 canvasID += 1;
-      	 var newCanvas2 = {
-	        "@type" : "sc:Canvas",
-	        "label" : "Llang_"+canvasID,
-	        "height" : 1000,
-	        "width" : 667,
-	        "images" : [],
-	        "otherContent" : []
-      	 }
-      	 var newCanvas2AnnoList = {
-                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-                "@type":"sc:AnnotationList",
-                "resources" : [],
-                "on" : newCanvas2["@id"]
-        }
-		annoListCollection.push(newCanvas2AnnoList);
-		annoListID++;
-      	 var params2 = {'content': JSON.stringify(newCanvas2)};
-      	 $.post(url, params2);
-      	 $("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
-      	 $("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
-      	 testManifest.sequences[0].canvases.push(newCanvas2);
-      	 leafRange += 1;
-            var leafRange = {
-	      "@type":"sc:Range",
-	      "label":"Llangantock Breviary Page_"+rangeID ,
-	      "canvases" : [
-	          newCanvas1["@id"],
-	          newCanvas2["@id"]
-	      ],
-	      "resources" : [],
-	      "ranges" : [],
-	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-            }
+      	 $.post(url, params1, function(data){
+      	 	data = JSON.parse(data);
+      	 	$("#versoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"', 'verso');"); //live with dev server
+      	 	$("input[rv='verso']").attr("canvasServerID", data["@id"]); //live with dev server
+      	 	console.log("FIRST CANVAS SAVED ID "+ data["@id"]);
+      	 	newCanvas1ServerID = data["@id"];
+  	 		canvasID += 1;
+      	 	var newCanvas2 = {
+		        "@type" : "sc:Canvas",
+		        "label" : "Llang_"+canvasID,
+		        "height" : 1000,
+		        "width" : 667,
+		        "images" : [],
+		        "otherContent" : []
+	      	 }
+      	 	var newCanvas2AnnoList = {
+	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                "@type":"sc:AnnotationList",
+	                "resources" : [],
+	                "on" : newCanvas2["@id"]
+	        }
+			annoListCollection.push(newCanvas2AnnoList);
+			annoListID++;
+			//$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
+      	 	$("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
+	      	testManifest.sequences[0].canvases.push(newCanvas2);
+	      	var params2 = {'content': JSON.stringify(newCanvas2)};
+	      	$.post(url, params2, function(data){
+	      		data=JSON.parse(data);
+	      		console.log("Second CANVAS SAVED ID "+ data["@id"]);
+	      		newCanvas2ServerID = data["@id"];
+	      		$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"','recto');");
+      	 		$("input[rv='recto']").attr("canvas", data["@id"]); // live with dev server
+	  	 	 	rangeID += 1;
+	            var leafRangeObject = {
+			      	"@type":"sc:Range",
+			      	"label":"Llangantock Breviary Page_"+rangeID ,
+			      	"canvases" : [
+			          //newCanvas1["@id"], //local
+			          //newCanvas2["@id"] //local
+			          newCanvas1ServerID, //live on dev server
+			          newCanvas2ServerID //live on dev server
+			      	],
+			      	"resources" : [],
+			      	"ranges" : [],
+		      		"isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+        		}
+				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
+				console.log("SAVE LEAF");
+				createNewRange(leafRangeObject, 'currentLeaf');
+      	 	});
+  	 	});
+      	
+      	 
 
-		currentLeaf = leafRange["@id"];
-		console.log(currentLeaf);
-		createNewRange(leafRange);
+      	 
+      	
 	}
 
 	/*
@@ -951,7 +1006,7 @@ var testManifest = {
 			else{
 				$("#folioSide2").addClass("selectedFolio");
 				$("#folioSide1").addClass("selectedFolio");
-				$("#catalogueInfoFor").val(currentLeaf); //zeta
+				$("#catalogueInfoFor").val(currentLeafServerID); //zeta
 				alpha = beta = true;
 			}
 			if(alpha && beta) zeta = true;

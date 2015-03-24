@@ -1,7 +1,7 @@
 <html>
 	<head>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
-  		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
+		<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+  		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script> -->
                 <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">		
 	</head>
 	<body>
@@ -47,7 +47,8 @@ $(function(){
         //start spinny?
         var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
         var files = !!this.files ? this.files : [];
-        var canvasURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvas");
+        var canvasURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvas"); //local
+        var canvasServerURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvasServerID"); //live
         if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
  
         if (/^image/.test( files[0].type)){ // only image file
@@ -72,10 +73,11 @@ $(function(){
 				        "height" : 2365,
 				        "width" : 1579
 					},
-					"on" : canvasURI
+					"on" : canvasServerURI
 				};
 				//$("#catalogueInfoFor").val(canvasURI);
-                addImage(annotationObject, canvasURI);
+                //addImage(annotationObject, canvasURI); // local
+                addImage(annotationObject, canvasServerURI); // live
             };
        
         }
