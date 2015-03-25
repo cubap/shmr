@@ -7,7 +7,12 @@ and open the template in the editor.
     Created on : Mar 23, 2015, 12:24:59 PM
     Author     : bhaberbe
 */
-
+            .removeInfo{
+                font-size: 14px;
+                color: red;
+                cursor: pointer;
+                float: right;
+            }
             input[type="button"]{
                 padding:5px;
                 background-color: white;
@@ -40,23 +45,23 @@ and open the template in the editor.
                     display: none;
             }
             p{
-                    font-size: 10pt;
-                    color: black;
-                    margin: 15px 0px;
-                    color: white;
-                    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
+                font-size: 10pt;
+                color: black;
+                margin: 15px 0px;
+                color: white;
+                font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
             }
             .label{
-                    display: inline-block;
-                    margin-right: 10px;
+                display: inline-block;
+                margin-right: 10px;
             }
             .sbsSquare{
-                    width: 32%;
-                    border: 1px solid black;
-                    display: inline-table;
-                    height: 300px;
-                    padding-top:50px;
-                    margin-bottom: 15px;
+                width: 32%;
+                border: 1px solid black;
+                display: inline-table;
+                height: 300px;
+                padding-top:50px;
+                margin-bottom: 15px;
             }
             .sbsSquare p:first-letter{
                 text-transform: uppercase;
@@ -72,10 +77,10 @@ and open the template in the editor.
                 padding: 0px 10px;
             }
             .sbsSqaure h2{
-                    font-size: 16pt;
-            font-family:Georgia,serif;
-                    color:#4E443C;
-                    font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
+                font-size: 16pt;
+                font-family:Georgia,serif;
+                color:#4E443C;
+                font-variant: small-caps; text-transform: none; font-weight: 100; margin-bottom: 0;
             }
             body{
                     z-index: 1;

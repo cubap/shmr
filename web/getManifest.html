@@ -11,10 +11,25 @@ and open the template in the editor.
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
         <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">
+        <style>
+            .range{
+                border: 2px solid red;
+                margin: 5px;
+                display: block;
+                position: relative;
+            }
+
+            .canvas{
+                border: 2px solid blue;
+                marginL 5px;
+                display: block;
+                position: relative;
+            }
+        </style>
     </head>
     <body>
-        <div id="mainBlock focusedRange">
-            <div class="rangeLeaves"></div>
+        <div class="mainBlock" id="focusedRange">
+            <button onclick="organizeRanges();">SORT RANGES</button>
         </div>
         <div class="sideBarInfo">
             <div class="manifestData"></div>
@@ -22,3 +37,178 @@ and open the template in the editor.
         </div>
     </body>
 </html>
+<script>
+var rangeCollection = [
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/1",
+  "@type":"sc:Range",
+  "label":"Page 1",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://i.huffpost.com/gen/1719761/images/o-COOL-CAT-facebook.jpg", "http://cloud-4.steamusercontent.com/ugc/43108316458046990/EC4110525593F4CC213E69257ABE6F0BE1D18D9A/"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/2",
+  "@type":"sc:Range",
+  "label":"Page 2",
+  "ranges" : [
+  ],
+  "canvases" :["http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg", "http://t1.gstatic.com/images?q=tbn:ANd9GcTp4NWeyeVT9SAmrOTmjyR1x_WQIUsIxs-LuWTBF8ywgB0V1dkM"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/3",
+  "@type":"sc:Range",
+  "label":"Page 3",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://funlava.com/wp-content/uploads/2013/03/cool-hd-wallpapers.jpg", "http://homenewdepot.co/assets/Oi8vdaW5wa3d3LnBob3RvaW5waXhlbC5jb20=/18074/mypicture/nice-cool-gundam-hd-desktop-wallpaper-backgrounds.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/4",
+  "@type":"sc:Range",
+  "label":"Page 4",
+  "ranges" : [
+  ],
+  "canvases" :["http://www.hdwallpaperscool.com/wp-content/uploads/2014/06/amazing-backgrounds-cool-wallpapers-of-high-resolution.jpg", "http://t3.gstatic.com/images?q=tbn:ANd9GcR-CUW-EqZ7WboySAFm_3oQH9xLbxZsSHu2EyPsQ8gCObts0-nJ"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/5",
+  "@type":"sc:Range",
+  "label":"Page 5",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://t1.gstatic.com/images?q=tbn:ANd9GcQM3TBh35_znmOW65GdTY1u6WZCa5smnvv_s1nIJl355iaqIBeVGg", "http://www.darveshtv.com/wp-content/uploads/2015/02/cool_car_3d_wallpapers_hot.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/6",
+  "@type":"sc:Range",
+  "label":"Page 6",
+  "ranges" : [
+  ],
+  "canvases" :["http://ajournalofmusicalthings.com/wp-content/uploads/Cool.jpg", "http://upload.wikimedia.org/wikipedia/commons/2/20/Cool,_Calif_sign.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/7",
+  "@type":"sc:Range",
+  "label":"Section 1",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/2"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/8",
+  "@type":"sc:Range",
+  "label":"Section 2",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/3", "http://www.example.org/iiif/LlangBrev/range/4"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/9",
+  "@type":"sc:Range",
+  "label":"Section 3",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/5", "http://www.example.org/iiif/LlangBrev/range/6"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/10",
+  "@type":"sc:Range",
+  "label":"Table Of Contents",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/7", "http://www.example.org/iiif/LlangBrev/range/8", "http://www.example.org/iiif/LlangBrev/range/9"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+]
+
+function getAllRanges(){
+    return rangeCollection;
+}
+
+function organizeRanges(){
+    rangeCollection = mergeSort(rangeCollection);
+    console.log("USE THIS SORTED LIST TO BUILD PAGE.  IT IS IN ORDER FROM smallest To LARGEST");
+    console.log(rangeCollection);
+    for(var i = rangeCollection.length, i>=0, i--){
+        var outerRange = rangeCollection[i];
+        var outerRangeLabel = rangeCollection[i].label;
+        var currentRange = $("<div class='range'>"+outerRangeLabel+"</div>");
+        //$("#focusedRange").append()
+        var innerRanges = [rangeCollection[i].ranges];
+        if(innerRanges.length > 0){
+            $.each(innerRange, function(){
+                var thisRange = this;
+                $.each(rangeCollection, function(){
+                    if(this["@id"] === thisRange){
+                        var thisLabel = this.label;
+                        var embedRange = $("<div class='range'>"+thisLabel+"</div>");
+                        currentRange.append(embedRange);
+                    }
+                })
+            });
+        }
+        else{ //we are on a leaf, resolve its canvases
+            var currentCanvases = outerRange.canvases;
+            $.each(currentCanvases, function(){
+                $.each(rangeCollection, function(){
+                    if(this["@id"] === currentCanvas){
+                        //This is the canvas to get data from
+                    }
+                })
+                var currentCanvas = $("<div class='canvas'>"+this+"</div>");
+            });
+        }
+    }
+}
+
+function merge(left, right){
+    var result  = [],
+        il      = 0,
+        ir      = 0;
+
+    while (il < left.length && ir < right.length){
+        if (left[il].ranges.length < right[ir].ranges.length){
+            result.push(left[il++]);
+        } else {
+            result.push(right[ir++]);
+        }
+    }
+
+    return result.concat(left.slice(il)).concat(right.slice(ir));
+}
+
+function mergeSort(items){
+    if (items.length < 2) {
+        return items;
+    }
+
+    var middle = Math.floor(items.length / 2),
+        left    = items.slice(0, middle),
+        right   = items.slice(middle),
+        params = merge(mergeSort(left), mergeSort(right));
+    
+    // Add the arguments to replace everything between 0 and last item in the array
+    params.unshift(0, items.length);
+    items.splice.apply(items, params);
+    return items;
+}
+</script>
