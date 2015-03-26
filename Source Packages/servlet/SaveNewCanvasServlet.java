@@ -15,7 +15,6 @@
 package servlet;
 
 import common.Constant;
-import entity.Annotation;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class SaveNewCanvasServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            URL postUrl = new URL(Constant.ANNOTATION_SERVER_ADDR + "/anno/saveNewAnnotation");
+            URL postUrl = new URL(Constant.ANNOTATION_SERVER_ADDR + "/anno/saveNewAnnotation.action");
             HttpURLConnection connection = (HttpURLConnection) postUrl.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
@@ -50,7 +49,6 @@ public class SaveNewCanvasServlet extends HttpServlet {
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.connect();
             DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-            System.out.println("content ===== " + "content=" + request.getParameter("content"));
             //value to save
             out.writeBytes("content=" + URLEncoder.encode(request.getParameter("content"), "utf-8"));
             out.flush();

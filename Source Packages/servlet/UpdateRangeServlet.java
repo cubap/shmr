@@ -29,7 +29,7 @@ public class UpdateRangeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            URL postUrl = new URL(Constant.ANNOTATION_SERVER_ADDR + "/anno/updateAnnotation");
+            URL postUrl = new URL(Constant.ANNOTATION_SERVER_ADDR + "/anno/updateAnnotation.action");
             HttpURLConnection connection = (HttpURLConnection) postUrl.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
