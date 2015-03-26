@@ -103,6 +103,63 @@ var rangeCollection = [
 },
 
 {
+  "@id":"http://www.example.org/iiif/LlangBrev/range/102",
+  "@type":"sc:Range",
+  "label":"First Page, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://t1.gstatic.com/images?q=tbn:ANd9GcT_cVgwB1vOupPsjjiGbnPrkK24fpq9BThi3fkVNrgoX0oMNwzv0w", "http://t0.gstatic.com/images?q=tbn:ANd9GcTLM1VY3Ehp3F1hd78mrszS3euO32XV-BjtgXaaKNcRJ8je3ECmZg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/103",
+  "@type":"sc:Range",
+  "label":"Last Page, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://browsewallpaper.com/wp-content/uploads/2014/11/cool%20designs%20wallpaper-cKAa.jpg","http://www.desktopaper.com/wp-content/uploads/great-cool-design-backgrounds.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/104",
+  "@type":"sc:Range",
+  "label":"Unknown Page X, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://7-themes.com/data_images/out/34/6884816-toucan-bird-cartoon.jpg","http://www.chicagonow.com/greenamajigger/files/2013/04/bee-eater_1627477i.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/105",
+  "@type":"sc:Range",
+  "label":"Unknown Page Y, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.arizonafoothillsmagazine.com/images/stories/aug13/Butterfly_Blue.jpg", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Butterflies_%28Costa_Rica%29.jpg/800px-Butterflies_%28Costa_Rica%29.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/106",
+  "@type":"sc:Range",
+  "label":"Last Section",
+  "ranges" : [
+     "http://www.example.org/iiif/LlangBrev/range/102",
+     "http://www.example.org/iiif/LlangBrev/range/103",
+     "http://www.example.org/iiif/LlangBrev/range/105",
+     "http://www.example.org/iiif/LlangBrev/range/104",
+   ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+}, //EX: we know this is the last section.  Here are 4 pages we know are in it.  It is not inside the table of contents array.
+
+{
   "@id":"http://www.example.org/iiif/LlangBrev/range/7",
   "@type":"sc:Range",
   "label":"Section 1",
@@ -148,12 +205,19 @@ function organizeRanges(){
     rangeCollection = mergeSort(rangeCollection);
     console.log("USE THIS SORTED LIST TO BUILD PAGE.  IT IS IN ORDER FROM smallest To LARGEST");
     console.log(rangeCollection);
+    var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
         var outerRange = rangeCollection[i];
         // console.log("RANGE");
         // console.log(rangeCollection[i])
         var outerRangeLabel = rangeCollection[i].label;
-        var currentRange = $("<div class='range'>"+outerRangeLabel+"</div>");
+        //existingRanges.push(rangeCollection[i]["@id"]);
+        var existingRangeToUpdate = "";
+        console.log("a");
+        if($("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]').length > 0){
+          existingRangeToUpdate = $("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]');
+        }
+        var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
         var innerRanges = rangeCollection[i].ranges;
         if(innerRanges.length > 0){
             for(var j = 0; j<innerRanges.length;j++){
@@ -162,11 +226,17 @@ function organizeRanges(){
                     if(this["@id"] === thisRange){
                         var thisLabel = this.label;
                         var embedRange = $("<div class='range' rangeID='"+this['@id']+"'>"+thisLabel+"</div>");
-                        currentRange.append(embedRange);
+                        if(existingRangeToUpdate !== ""){
+                          existingRangeToUpdate.append(embedRange);
+                        }
+                        else{
+                          currentRange.append(embedRange);
+                          $("#focusedRange").append(currentRange);
+                        }
                     }
                 });
             }
-            $("#focusedRange").append(currentRange);
+            
         }
         else{ //we are on a leaf, resolve its canvases
             var currentCanvases = outerRange.canvases;
