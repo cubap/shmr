@@ -21,7 +21,7 @@ and open the template in the editor.
 
             .canvas{
                 border: 2px solid blue;
-                marginL 5px;
+                margin: 5px;
                 display: block;
                 position: relative;
             }
@@ -148,7 +148,7 @@ function organizeRanges(){
     rangeCollection = mergeSort(rangeCollection);
     console.log("USE THIS SORTED LIST TO BUILD PAGE.  IT IS IN ORDER FROM smallest To LARGEST");
     console.log(rangeCollection);
-    for(var i = rangeCollection.length, i>=0, i--){
+    for(var i = rangeCollection.length; i>=0; i--){
         var outerRange = rangeCollection[i];
         var outerRangeLabel = rangeCollection[i].label;
         var currentRange = $("<div class='range'>"+outerRangeLabel+"</div>");
