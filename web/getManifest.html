@@ -148,35 +148,42 @@ function organizeRanges(){
     rangeCollection = mergeSort(rangeCollection);
     console.log("USE THIS SORTED LIST TO BUILD PAGE.  IT IS IN ORDER FROM smallest To LARGEST");
     console.log(rangeCollection);
-    for(var i = rangeCollection.length; i>=0; i--){
+    for(var i = rangeCollection.length - 1; i>=0; i--){
         var outerRange = rangeCollection[i];
+        // console.log("RANGE");
+        // console.log(rangeCollection[i])
         var outerRangeLabel = rangeCollection[i].label;
         var currentRange = $("<div class='range'>"+outerRangeLabel+"</div>");
-        //$("#focusedRange").append()
-        var innerRanges = [rangeCollection[i].ranges];
+        var innerRanges = rangeCollection[i].ranges;
         if(innerRanges.length > 0){
-            $.each(innerRange, function(){
-                var thisRange = this;
+            for(var j = 0; j<innerRanges.length;j++){
+                var thisRange = innerRanges[j];
                 $.each(rangeCollection, function(){
                     if(this["@id"] === thisRange){
                         var thisLabel = this.label;
-                        var embedRange = $("<div class='range'>"+thisLabel+"</div>");
+                        var embedRange = $("<div class='range' rangeID='"+this['@id']+"'>"+thisLabel+"</div>");
                         currentRange.append(embedRange);
                     }
-                })
-            });
+                });
+            }
+            $("#focusedRange").append(currentRange);
         }
         else{ //we are on a leaf, resolve its canvases
             var currentCanvases = outerRange.canvases;
+            console.log("CANVASES");
+            console.log(currentCanvases);
+            var rangeForCanvases = $("#focusedRange").find('div[rangeID="'+outerRange['@id']+'"]');
             $.each(currentCanvases, function(){
-                $.each(rangeCollection, function(){
-                    if(this["@id"] === currentCanvas){
-                        //This is the canvas to get data from
-                    }
-                })
+                // $.each(rangeCollection, function(){
+                //     if(this["@id"] === currentCanvas){
+                //         //This is the canvas to get data from
+                //     }
+                // });
                 var currentCanvas = $("<div class='canvas'>"+this+"</div>");
+                rangeForCanvases.append(currentCanvas);
             });
         }
+        
     }
 }
 
