@@ -18,12 +18,25 @@ and open the template in the editor.
                 display: block;
                 position: relative;
             }
+            .range .range{
+                border: 2px solid purple;
+            }
 
+            .range .range .range{
+                border: 2px solid orange;
+            }
+            .range .range .range .range{
+                border: 2px solid green;
+            }
             .canvas{
                 border: 2px solid blue;
-                margin: 5px;
-                display: block;
+                display: inline-block;
                 position: relative;
+            }
+
+            .canvasImg{
+              max-height: 300px;
+              max-width: 200px;
             }
         </style>
     </head>
@@ -130,7 +143,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://7-themes.com/data_images/out/34/6884816-toucan-bird-cartoon.jpg","http://www.chicagonow.com/greenamajigger/files/2013/04/bee-eater_1627477i.jpg"],
+  "canvases" :["http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Haliaeetus_leucocephalus_-Skagit_valley-8-2c.jpg/300px-Haliaeetus_leucocephalus_-Skagit_valley-8-2c.jpg","http://www.chicagonow.com/greenamajigger/files/2013/04/bee-eater_1627477i.jpg"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -195,68 +208,94 @@ var rangeCollection = [
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/110",
+  "@type":"sc:Range",
+  "label":"canterberry page, unknown section",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.slu.edu/Images/marketing_communications/logos/slu/slu_2c.bmp", "http://vaccinenewsdaily.com/wp-content/uploads/2015/01/SLU_Vert_blue.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
 ]
 
 function getAllRanges(){
     return rangeCollection;
 }
 
+/*
+* @params: rangeCollection: an array containing all the ranges of a project.  It is sorted so the array contains ranges from smallest to largest. 
+*For now, it is a global array.  It will most likely be handed in as a parameter to the function in the future. 
+*Builds the tree structure of ranges from an ordered list of ranges (by size of their ranges[] field).
+*/
 function organizeRanges(){
     rangeCollection = mergeSort(rangeCollection);
-    console.log("USE THIS SORTED LIST TO BUILD PAGE.  IT IS IN ORDER FROM smallest To LARGEST");
-    console.log(rangeCollection);
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
-        var outerRange = rangeCollection[i];
+        var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         // console.log("RANGE");
         // console.log(rangeCollection[i])
         var outerRangeLabel = rangeCollection[i].label;
         //existingRanges.push(rangeCollection[i]["@id"]);
         var existingRangeToUpdate = "";
-        console.log("a");
-        if($("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]').length > 0){
-          existingRangeToUpdate = $("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]');
+        //...The trick is that we check if we have already accounted for this range as an outer range
+        if($("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]').length > 0){ 
+          //If so, then what we are doing is adding other sections or leaves into it, so there is an existing range. 
+          existingRangeToUpdate = $("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]'); // get it.
         }
-        var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
+
+        //Create an html range object that can be added
+        var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
+        //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
-        if(innerRanges.length > 0){
-            for(var j = 0; j<innerRanges.length;j++){
+        //obvious
+        if(innerRanges.length > 0){ //If there are inner ranges
+            for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
                 var thisRange = innerRanges[j];
-                $.each(rangeCollection, function(){
-                    if(this["@id"] === thisRange){
+                $.each(rangeCollection, function(){ //check each range in the collection
+                    if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
                         var thisLabel = this.label;
-                        var embedRange = $("<div class='range' rangeID='"+this['@id']+"'>"+thisLabel+"</div>");
-                        if(existingRangeToUpdate !== ""){
+                        var embedRange = $("<div class='range' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
                           existingRangeToUpdate.append(embedRange);
                         }
-                        else{
+                        else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
                           currentRange.append(embedRange);
                           $("#focusedRange").append(currentRange);
                         }
-                    }
+                    } //If you didn't find it among the collection, we can't do anything with it.  
                 });
             }
-            
         }
-        else{ //we are on a leaf, resolve its canvases
-            var currentCanvases = outerRange.canvases;
+        else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
+            var currentCanvases = outerRange.canvases; //For testing purposes, I just put a URL in for the canvas.  What we would really do is get canvas info via the URI and build a canvas inside the leaf range.  This skips a step and just grabs this random image URI I went on google and found. 
             console.log("CANVASES");
             console.log(currentCanvases);
             var rangeForCanvases = $("#focusedRange").find('div[rangeID="'+outerRange['@id']+'"]');
-            $.each(currentCanvases, function(){
+            $.each(currentCanvases, function(){ //for whatever canvases there are, if any
                 // $.each(rangeCollection, function(){
                 //     if(this["@id"] === currentCanvas){
                 //         //This is the canvas to get data from
                 //     }
                 // });
-                var currentCanvas = $("<div class='canvas'>"+this+"</div>");
-                rangeForCanvases.append(currentCanvas);
+                var currentCanvas = $("<div class='canvas'><img class='canvasImg' src='"+this+"'/></div>"); //create an html canvas object
+                if(rangeForCanvases){ //if the range exists in a section
+                  rangeForCanvases.append(currentCanvas); //put the canvas object in the range object (the leaf)
+                }
+                else{ //the range does not exist in a section, but rather as a parent range.  Append to DOM.
+                  $("#focusedRange").append(currentCanvas)
+                }
             });
         }
         
     }
 }
 
+/*
+* Helper function for mergeSort().  It mergest the left and right arrays created when splitting the source array in the middle. 
+*/
 function merge(left, right){
     var result  = [],
         il      = 0,
@@ -272,7 +311,9 @@ function merge(left, right){
 
     return result.concat(left.slice(il)).concat(right.slice(ir));
 }
-
+/*
+* The classic merge sort function that sorts an array of numbers from smallest to largest.  In our case, the array is an array of range objects, but what I test is the length of their ranges[] field, since those with the highest count in the ranges[] field will be top parent objects and the ordered array is easier to build the tree structure from.  Even for an array of 1000 ranges, this runs pretty quick.  
+*/
 function mergeSort(items){
     if (items.length < 2) {
         return items;
