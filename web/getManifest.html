@@ -38,6 +38,9 @@ and open the template in the editor.
               max-height: 300px;
               max-width: 200px;
             }
+            .bucketPage{
+              border: 4px solid white;
+            }
         </style>
     </head>
     <body>
@@ -51,6 +54,7 @@ and open the template in the editor.
     </body>
 </html>
 <script>
+//range collection can be looked at like the master range.  If we ever hope to keep these in order, there must be a range that accounts for all of them from which we can change the indexes around.  
 var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
@@ -211,11 +215,22 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/110",
   "@type":"sc:Range",
-  "label":"canterberry page, unknown section",
+  "label":"SLU page, unknown section",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
   "canvases" :["http://www.slu.edu/Images/marketing_communications/logos/slu/slu_2c.bmp", "http://vaccinenewsdaily.com/wp-content/uploads/2015/01/SLU_Vert_blue.jpg"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/111",
+  "@type":"sc:Range",
+  "label":"Not sure if this is in this project.",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://rbrua3v80lj2rulsf7iqfnpmf.wpengine.netdna-cdn.com/wp-content/uploads/2014/10/St_Louis_Blues3.jpg", "http://www.sports-logos-screensavers.com/user/St_Louis_Blues4.jpg"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -271,9 +286,17 @@ function organizeRanges(){
         }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
             var currentCanvases = outerRange.canvases; //For testing purposes, I just put a URL in for the canvas.  What we would really do is get canvas info via the URI and build a canvas inside the leaf range.  This skips a step and just grabs this random image URI I went on google and found. 
-            console.log("CANVASES");
-            console.log(currentCanvases);
+            var a = false;
+            var newLeaf = undefined;
             var rangeForCanvases = $("#focusedRange").find('div[rangeID="'+outerRange['@id']+'"]');
+            if(rangeForCanvases.length > 0){ //if the range exists in a section
+              console.log("THERE IS A RANGE FOR THE CANVASES");
+              console.log(rangeForCanvases);
+              a=true;
+            }
+            else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
+              newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
+            }
             $.each(currentCanvases, function(){ //for whatever canvases there are, if any
                 // $.each(rangeCollection, function(){
                 //     if(this["@id"] === currentCanvas){
@@ -281,13 +304,18 @@ function organizeRanges(){
                 //     }
                 // });
                 var currentCanvas = $("<div class='canvas'><img class='canvasImg' src='"+this+"'/></div>"); //create an html canvas object
-                if(rangeForCanvases){ //if the range exists in a section
+                if(a){ //if the range exists in a section
                   rangeForCanvases.append(currentCanvas); //put the canvas object in the range object (the leaf)
                 }
-                else{ //the range does not exist in a section, but rather as a parent range.  Append to DOM.
-                  $("#focusedRange").append(currentCanvas)
+                else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
+                  console.log("WE HAVE TURNED A NEW LEAF");
+                  console.log(currentCanvas);
+                  newLeaf.append(currentCanvas);
                 }
             });
+            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
+              $("#focusedRange").append(newLeaf);
+            }
         }
         
     }
