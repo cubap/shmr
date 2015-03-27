@@ -55,6 +55,525 @@ and open the template in the editor.
 </html>
 <script>
 //range collection can be looked at like the master range.  If we ever hope to keep these in order, there must be a range that accounts for all of them from which we can change the indexes around.  
+
+//THE LEAF IS THE SMALLEST INDEPENDANT RANGE: pcuba
+
+//we will have to create smaller ranges than leaves to be able to create image fragments.  A new section can start 2/3 down the canvas, so the first page of the next section is the bottom 3rd of that image.  
+
+//atomic/indivisible ranges can have canvases that if you move that canvas, you have to move the range. 
+
+
+//GOAL: Represent the second half of the last page of section 1 to be the start section 2.  
+
+var canvases = [
+  {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_001",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/2",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_002",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://funlava.com/wp-content/uploads/2013/03/cool-hd-wallpapers.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/3",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSRYZAj0K5SiHcZonHG--GrygYLgnjhSXX35BfapUckYLB7fKYI",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/3"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/4",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://i.huffpost.com/gen/1719761/images/o-COOL-CAT-facebook.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/4"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/5",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://cloud-4.steamusercontent.com/ugc/43108316458046990/EC4110525593F4CC213E69257ABE6F0BE1D18D9A/",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/5"
+          }],
+          "otherContent":[],
+         }]
+   },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/6",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.hdwallpaperscool.com/wp-content/uploads/2014/06/amazing-backgrounds-cool-wallpapers-of-high-resolution.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/6"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/7",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://t3.gstatic.com/images?q=tbn:ANd9GcR-CUW-EqZ7WboySAFm_3oQH9xLbxZsSHu2EyPsQ8gCObts0-nJ",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/7"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/8",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://t1.gstatic.com/images?q=tbn:ANd9GcQM3TBh35_znmOW65GdTY1u6WZCa5smnvv_s1nIJl355iaqIBeVGg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/9",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.darveshtv.com/wp-content/uploads/2015/02/cool_car_3d_wallpapers_hot.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/10",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://ajournalofmusicalthings.com/wp-content/uploads/Cool.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/11",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://upload.wikimedia.org/wikipedia/commons/2/20/Cool,_Calif_sign.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/12",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://t1.gstatic.com/images?q=tbn:ANd9GcT_cVgwB1vOupPsjjiGbnPrkK24fpq9BThi3fkVNrgoX0oMNwzv0w",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/12"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/13",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://t0.gstatic.com/images?q=tbn:ANd9GcTLM1VY3Ehp3F1hd78mrszS3euO32XV-BjtgXaaKNcRJ8je3ECmZg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/14",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://browsewallpaper.com/wp-content/uploads/2014/11/cool%20designs%20wallpaper-cKAa.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/15",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.desktopaper.com/wp-content/uploads/great-cool-design-backgrounds.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/16",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Haliaeetus_leucocephalus_-Skagit_valley-8-2c.jpg/300px-Haliaeetus_leucocephalus_-Skagit_valley-8-2c.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/17",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.chicagonow.com/greenamajigger/files/2013/04/bee-eater_1627477i.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/18",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.arizonafoothillsmagazine.com/images/stories/aug13/Butterfly_Blue.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/19",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Butterflies_%28Costa_Rica%29.jpg/800px-Butterflies_%28Costa_Rica%29.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/20",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.slu.edu/Images/marketing_communications/logos/slu/slu_2c.bmp",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/21",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://vaccinenewsdaily.com/wp-content/uploads/2015/01/SLU_Vert_blue.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/22",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://vaccinenewsdaily.com/wp-content/uploads/2015/01/SLU_Vert_blue.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
+          }],
+          "otherContent":[],
+         }]
+   },
+   {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/23",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_03",
+          "height" : 300,
+          "width" : 200,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.sports-logos-screensavers.com/user/St_Louis_Blues4.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                // "height" : 2365,
+                // "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
+          }],
+          "otherContent":[],
+         }]
+   }
+]
+
 var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
@@ -63,7 +582,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://i.huffpost.com/gen/1719761/images/o-COOL-CAT-facebook.jpg", "http://cloud-4.steamusercontent.com/ugc/43108316458046990/EC4110525593F4CC213E69257ABE6F0BE1D18D9A/"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/4", "http://www.example.org/iiif/LlangBrev/canvas/5"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -73,7 +592,7 @@ var rangeCollection = [
   "label":"Page 2",
   "ranges" : [
   ],
-  "canvases" :["http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg", "http://t1.gstatic.com/images?q=tbn:ANd9GcTp4NWeyeVT9SAmrOTmjyR1x_WQIUsIxs-LuWTBF8ywgB0V1dkM"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1", "http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,150"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -84,7 +603,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://funlava.com/wp-content/uploads/2013/03/cool-hd-wallpapers.jpg", "http://homenewdepot.co/assets/Oi8vdaW5wa3d3LnBob3RvaW5waXhlbC5jb20=/18074/mypicture/nice-cool-gundam-hd-desktop-wallpaper-backgrounds.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150", "http://www.example.org/iiif/LlangBrev/canvas/3"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -94,7 +613,7 @@ var rangeCollection = [
   "label":"Page 4",
   "ranges" : [
   ],
-  "canvases" :["http://www.hdwallpaperscool.com/wp-content/uploads/2014/06/amazing-backgrounds-cool-wallpapers-of-high-resolution.jpg", "http://t3.gstatic.com/images?q=tbn:ANd9GcR-CUW-EqZ7WboySAFm_3oQH9xLbxZsSHu2EyPsQ8gCObts0-nJ"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/6", "http://www.example.org/iiif/LlangBrev/canvas/7"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -105,7 +624,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://t1.gstatic.com/images?q=tbn:ANd9GcQM3TBh35_znmOW65GdTY1u6WZCa5smnvv_s1nIJl355iaqIBeVGg", "http://www.darveshtv.com/wp-content/uploads/2015/02/cool_car_3d_wallpapers_hot.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/8", "http://www.example.org/iiif/LlangBrev/canvas/9"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -115,7 +634,7 @@ var rangeCollection = [
   "label":"Page 6: What do you think?",
   "ranges" : [
   ],
-  "canvases" :["http://ajournalofmusicalthings.com/wp-content/uploads/Cool.jpg", "http://upload.wikimedia.org/wikipedia/commons/2/20/Cool,_Calif_sign.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/10", "http://www.example.org/iiif/LlangBrev/canvas/11"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -126,7 +645,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://t1.gstatic.com/images?q=tbn:ANd9GcT_cVgwB1vOupPsjjiGbnPrkK24fpq9BThi3fkVNrgoX0oMNwzv0w", "http://t0.gstatic.com/images?q=tbn:ANd9GcTLM1VY3Ehp3F1hd78mrszS3euO32XV-BjtgXaaKNcRJ8je3ECmZg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/12", "http://www.example.org/iiif/LlangBrev/canvas/13"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 {
@@ -136,7 +655,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://browsewallpaper.com/wp-content/uploads/2014/11/cool%20designs%20wallpaper-cKAa.jpg","http://www.desktopaper.com/wp-content/uploads/great-cool-design-backgrounds.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/14","http://www.example.org/iiif/LlangBrev/canvas/15"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -147,7 +666,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Haliaeetus_leucocephalus_-Skagit_valley-8-2c.jpg/300px-Haliaeetus_leucocephalus_-Skagit_valley-8-2c.jpg","http://www.chicagonow.com/greenamajigger/files/2013/04/bee-eater_1627477i.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/16","http://www.example.org/iiif/LlangBrev/canvas/17"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -158,7 +677,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://www.arizonafoothillsmagazine.com/images/stories/aug13/Butterfly_Blue.jpg", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Butterflies_%28Costa_Rica%29.jpg/800px-Butterflies_%28Costa_Rica%29.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/18", "http://www.example.org/iiif/LlangBrev/canvas/19"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -180,7 +699,7 @@ var rangeCollection = [
   "@id":"http://www.example.org/iiif/LlangBrev/range/7",
   "@type":"sc:Range",
   "label":"Section 1",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/2"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/201"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -189,7 +708,7 @@ var rangeCollection = [
   "@id":"http://www.example.org/iiif/LlangBrev/range/8",
   "@type":"sc:Range",
   "label":"Section 2",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/3", "http://www.example.org/iiif/LlangBrev/range/4"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/202", "http://www.example.org/iiif/LlangBrev/range/3"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -219,7 +738,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://www.slu.edu/Images/marketing_communications/logos/slu/slu_2c.bmp", "http://vaccinenewsdaily.com/wp-content/uploads/2015/01/SLU_Vert_blue.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/20", "http://www.example.org/iiif/LlangBrev/canvas/21"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -230,7 +749,7 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://rbrua3v80lj2rulsf7iqfnpmf.wpengine.netdna-cdn.com/wp-content/uploads/2014/10/St_Louis_Blues3.jpg", "http://www.sports-logos-screensavers.com/user/St_Louis_Blues4.jpg"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -245,6 +764,8 @@ function getAllRanges(){
 *For now, it is a global array.  It will most likely be handed in as a parameter to the function in the future. 
 *Builds the tree structure of ranges from an ordered list of ranges (by size of their ranges[] field).
 */
+
+//Think about sorted vs. unsorted ranges. 
 function organizeRanges(){
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
@@ -253,7 +774,7 @@ function organizeRanges(){
         // console.log("RANGE");
         // console.log(rangeCollection[i])
         var outerRangeLabel = rangeCollection[i].label;
-        //existingRanges.push(rangeCollection[i]["@id"]);
+        //existingRanges.push(rangeCollection[i]["@id"]); //DO IT THIS WAY or write into a variable and push it in at the end. 
         var existingRangeToUpdate = "";
         //...The trick is that we check if we have already accounted for this range as an outer range
         if($("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]').length > 0){ 
@@ -298,19 +819,38 @@ function organizeRanges(){
               newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
             $.each(currentCanvases, function(){ //for whatever canvases there are, if any
-                // $.each(rangeCollection, function(){
-                //     if(this["@id"] === currentCanvas){
-                //         //This is the canvas to get data from
-                //     }
-                // });
-                var currentCanvas = $("<div class='canvas'><img class='canvasImg' src='"+this+"'/></div>"); //create an html canvas object
+              var originalCanvas = this;
+              var currentCanvas = originalCanvas.subtring(0, orignalCanvas.indexOf("xywh"));
+              // var x,y,w,h = 0;
+              // var XYWHarray = [x,y,w,h];
+              // var XYWHsubstring = originalCanavs.substring(originalCanvas.lastIndexOf('#' + 1)); 
+              // var canvasImg = "";
+              // if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
+              //     var numberArray = XYWHsubstring.substring(lineURL.lastIndexOf('xywh=') + 5).split(',');
+              //     if(numberArray.length === 4){ // string must have all 4 to be valid
+              //         x = numberArray[0];
+              //         y = numberArray[1];
+              //         w = numberArray[2];
+              //         h = numberArray[3];
+              //         XYWHarray = [x,y,w,h];
+              // }
+              console.log("Check canvas array for "+currentCanvas);
+              //console.log("SEGMENT " : XYWHarray);
+              var canvasHTML = $("<div class='canvas'><img src='' /></div>");
+                 $.each(canvases, function(){
+                     if(this["@id"] === currentCanvas){
+                         canvasHTML.find('img').attr('src', this.images.resource["@id"]);
+                         break;
+                     }
+                 });
+                
                 if(a){ //if the range exists in a section
-                  rangeForCanvases.append(currentCanvas); //put the canvas object in the range object (the leaf)
+                  rangeForCanvases.append(canvasHTML); //put the canvas object in the range object (the leaf)
                 }
                 else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
                   console.log("WE HAVE TURNED A NEW LEAF");
                   console.log(currentCanvas);
-                  newLeaf.append(currentCanvas);
+                  newLeaf.append(canvasHTML);
                 }
             });
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.

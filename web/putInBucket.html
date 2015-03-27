@@ -21,6 +21,7 @@
 			</div> -->
 			
 			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
+			<input type="button" value="Test update" onclick="testUpdate();"/>
 		</div>
 
 		<div class="mainBlock imgAdditionArea">
@@ -418,7 +419,7 @@ var testManifest = {
 						if (testManifest.structures[i].label === entryValue){
 							updateOrNew = "update";
 							rangeToUpdate = testManifest.structures[i]["@id"];
-							//updateRange(rangeToUpdate, currentLeafServerID);
+							updateRange(rangeToUpdate, currentLeafServerID);
 							break;
 						}
 						else{
@@ -493,7 +494,7 @@ var testManifest = {
 						if (testManifest.structures[i].label === entryValue){
 							updateOrNew = "update";
 							rangeToUpdate = testManifest.structures[i]["@id"];
-							//updateRange(rangeToUpdate, currentLeafServerID);
+							updateRange(rangeToUpdate, currentLeafServerID);
 							break;
 						}
 						else{
@@ -677,7 +678,7 @@ var testManifest = {
 						if (testManifest.structures[i].label === entryValue){
 							updateOrNew = "update";
 							rangeToUpdate = testManifest.structures[i]["@id"];
-							//updateRange(rangeToUpdate, currentLeafServerID);
+							updateRange(rangeToUpdate, currentLeafServerID);
 							break;
 						}
 						else{
@@ -855,9 +856,14 @@ var testManifest = {
 		$.each(testManifest.structures, function(){
 			if(this["@id"] === rangeID){
 				if(!$.inArray(leaf, $(this).ranges)){
+					var ranges = this.ranges;
 					this.ranges.push(leaf);
-					// var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
-					// $.post(newAnnoUrl, params);
+					var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+					var paramObj = {"ranges" : ranges};
+					var params = {"content" : JSON.stringify(ranges)};
+					$.post(newAnnoUrl, params, function(data){
+
+					});
 				}
 				else{
 					console.log('LEAF already in range.');
@@ -1010,8 +1016,13 @@ var testManifest = {
 	}
 
 	function removeInfo(listItem){
-		console.log("REMOVE THIS ITEM");
-		console.log(listItem);
+		var serverID = listItem.attr("annoserverid");
+		var url = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+		var paramObj = {"@id" : serverID};
+		var params = {"content" : JSON.stringify(paramObj)};
+		$.post(url, params, function(data){
+			listItem.remove();
+		});
 	}
 
 	/*
@@ -1062,6 +1073,17 @@ var testManifest = {
 			// $("#start").attr("onclick", "submitStart('"+canvas+"');");
 		});
 		
+	}
+
+	function testUpdate(){
+		var ranges = {"@id" : "http://165.134.241.141/annotationstore/annotation/55158b5be4b020ab18d13ef5", ranges:["http://NewRange1", "http://newRange2"]};
+		var updateUrl = "http://localhost:8080/brokenBooks/updateRange";
+		var params = {"content" : JSON.stringify(ranges)};
+		$.post(updateUrl, params, function(data){
+			console.log("UPDATED");
+		});
+
+
 	}
 
 	/*
