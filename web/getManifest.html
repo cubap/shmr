@@ -613,7 +613,7 @@ var rangeCollection = [
   "@type":"sc:Range",
   "label":"Weird Page 2",
   "ranges" : [
-      //add leaf ranges here in order for page order
+      "http://www.example.org/iiif/LlangBrev/range/2"
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,150"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
@@ -624,7 +624,7 @@ var rangeCollection = [
   "@type":"sc:Range",
   "label":"Weird Page 3",
   "ranges" : [
-      //add leaf ranges here in order for page order
+      "http://www.example.org/iiif/LlangBrev/range/3"
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
@@ -733,7 +733,7 @@ var rangeCollection = [
   "@id":"http://www.example.org/iiif/LlangBrev/range/8",
   "@type":"sc:Range",
   "label":"Section 1",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/203"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/2"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -742,7 +742,7 @@ var rangeCollection = [
   "@id":"http://www.example.org/iiif/LlangBrev/range/9",
   "@type":"sc:Range",
   "label":"Section 2",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/204", "http://www.example.org/iiif/LlangBrev/range/4"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/3", "http://www.example.org/iiif/LlangBrev/range/4"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -821,7 +821,7 @@ function organizeRanges(){
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
         //obvious
-        if(innerRanges.length > 0){ //If there are inner ranges
+        if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
             for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
                 var thisRange = innerRanges[j];
                 $.each(rangeCollection, function(){ //check each range in the collection
@@ -839,7 +839,54 @@ function organizeRanges(){
                 });
             }
         }
+        else if(innerRanges.length ===1 &&  rangeCollection[i].canvases.length === 1){//special case.  These ranges are meant to replace canvases of this leaf with fragments.  We have made fragments atomic ranges so that we can keep this IIIF.  Right here, I need to build the leaf.  This code will be reached before the code in the else every time because of the ordered array by range field size.  Fortunately, there will only be up to two ranges in here.  Those ranges will be URI's of leaves. Therefore, we can directly grab that leaf from the array.  We can cheat a bit and start from the i we are at since we know it does not come before this one.
+
+          var canvasToReplace = rangeCollection[i].canvases[0];
+          var subStr = canvasToReplace.substring(0,canvasToReplace.indexOf("#xywh"));
+
+
+
+          for(var x=0; x<i; x++){
+            //we know there is only one
+            var innerRangeSubstring = innerRanges[0];
+            if(innerRanges[0].indexOf("#xywh") > -1) innerRangeSubstring = innerRanges[0].substring(0, innerRanges[0].indexOf("#xywh"));
+            var leafRangeCanvases= rangeCollection[x].canvases;
+            if (rangeCollection[x]["@id"] == innerRangeSubstring){
+              //replace the canvas in the leaf range with the canvas from the inner range
+                var l = -1;
+                $.each(leafRangeCanvases, function(){
+                  l++;
+                 // console.log(this + " == " +subStr);
+                  if(this == subStr){
+                    console.log(rangeCollection[x].canvases[l] + "  is now  " + canvasToReplace);
+                    rangeCollection[x].canvases[l] = canvasToReplace;
+                  }
+                  else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.  
+                    if(this.indexOf("#xywh") > -1){
+                      //it could be a fragment
+                      var tmp = this;
+                      tmp = tmp.substring(0, tmp.indexOf("#xywh"));
+                      tmp += "";
+                      if(this == tmp){ //Then it was a fragment, so we can push
+                        console.log(rangeCollection[x].canvases+ "  push  "+canvasToReplace);
+                        rangeCollection[x].canvases.push(canvasToReplace);
+                      }
+                      else{
+                        //it was the wrong canvas.  Leave it alone.
+                      }
+                    }
+                    
+                  }
+                });
+            }
+            //What we have done is skipped further down into the array and altered a single canvas in a leaf.  When we get to that canvas in this function, it will not have any ranges so it will skip to the code below and build out the leaf.
+          }
+        }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
+          // console.log("Leaf CANVASES");
+          // console.log(outerRange.canvases);
+
+          //TODO 3/27 everything works up to here.  Error is in here somewhere.
             var currentCanvases = outerRange.canvases;
             var a = false;
             var newLeaf = undefined;
@@ -850,20 +897,23 @@ function organizeRanges(){
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
               newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
-            $.each(currentCanvases, function(){ //for whatever canvases there are, if any
+
+            $.each(currentCanvases, function(){ //for whatever canvases there are, if any, or many fragments
               //console.log("GET THIS CANVAS");
               //console.log(this);
-              var originalCanvas = this;
+              var originalCanvas = String(this);
               var currentCanvas = "";
+              console.log(originalCanvas);
+              console.log(String(originalCanvas).indexOf("#xywh"));
               if(originalCanvas.indexOf("#xywh") >= 0){
                 currentCanvas = originalCanvas.substring(0, originalCanvas.indexOf("#xywh"));
-                console.log('Canvas to resolve if');
-                console.log(currentCanvas);
+                //console.log('Canvas to resolve if');
+                //console.log(currentCanvas);
               }
               else{
-                currentCanvas = originalCanvas;
-                console.log('Canvas to resolve else');
-                console.log(currentCanvas);
+                currentCanvas = originalCanvas.substring(0, originalCanvas.indexOf("#xywh"));
+                //console.log('Canvas to resolve else');
+                //console.log(currentCanvas);
               }
               //console.log("CURRENT CANVAS: " + currentCanvas);
               var XYWHarray = [0,0,0,0];
@@ -883,15 +933,16 @@ function organizeRanges(){
                   }
               }
               var canvasHTML = $("<div class='canvas'> <img src='' /></div>");
-
+              // console.log("CURRENT CANVAS");
+              // console.log(currentCanvas);
                $.each(pageCanvases, function(){
                    //console.log("Match canvas to resolve");
                    //console.log(this["@id"]);
                    if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
-                    console.log("Canvas Image Source");
-                    console.log(this.images[0].resource["@id"]);
+                   // console.log("Canvas Image Source");
+                   // console.log(this.images[0].resource["@id"]);
                        canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
-                       canvasHTML.find('img').attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                       canvasHTML.find('img').attr("style", "left:-"+XYWHarray[0]+"px; top:-"+XYWHarray[1]+"px; height:"+this.height+"px; width:"+this.width+"px");
                        if(XYWHarray[2] == 0 || XYWHarray[3] == 0){
                           canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
                        }
