@@ -32,6 +32,7 @@ and open the template in the editor.
                 border: 2px solid blue;
                 display: inline-block;
                 position: relative;
+                overflow: hidden;
             }
 
             .canvasImg{
@@ -65,7 +66,7 @@ and open the template in the editor.
 
 //GOAL: Represent the second half of the last page of section 1 to be the start section 2.  
 
-var canvases = [
+var pageCanvases = [
   {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1",
@@ -85,8 +86,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -107,8 +108,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -129,8 +130,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/3"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -151,8 +152,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/4"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -173,8 +174,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/5"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
     {
       //This will be the anchor canvas in the anchor range
@@ -195,8 +196,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/6"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -217,8 +218,8 @@ var canvases = [
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/7"
           }],
-          "otherContent":[],
-         }]
+          "otherContent":[]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -240,7 +241,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -262,7 +263,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -284,7 +285,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -306,7 +307,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -328,7 +329,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/12"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -350,7 +351,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -372,7 +373,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -394,7 +395,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -416,7 +417,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -438,7 +439,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -460,7 +461,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -482,7 +483,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -504,7 +505,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -526,7 +527,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -548,7 +549,7 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
           }],
           "otherContent":[],
-         }]
+         
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -570,9 +571,9 @@ var canvases = [
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
           }],
           "otherContent":[],
-         }]
+         
    }
-]
+];
 
 var rangeCollection = [
 {
@@ -592,7 +593,7 @@ var rangeCollection = [
   "label":"Page 2",
   "ranges" : [
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1", "http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,150"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1", "http://www.example.org/iiif/LlangBrev/canvas/2"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -603,7 +604,29 @@ var rangeCollection = [
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150", "http://www.example.org/iiif/LlangBrev/canvas/3"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2", "http://www.example.org/iiif/LlangBrev/canvas/3"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/203",
+  "@type":"sc:Range",
+  "label":"Weird Page 2",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,150"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/204",
+  "@type":"sc:Range",
+  "label":"Weird Page 3",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -612,8 +635,9 @@ var rangeCollection = [
   "@type":"sc:Range",
   "label":"Page 4",
   "ranges" : [
+      //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/6", "http://www.example.org/iiif/LlangBrev/canvas/7"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/4", "http://www.example.org/iiif/LlangBrev/canvas/5"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -622,6 +646,16 @@ var rangeCollection = [
   "@type":"sc:Range",
   "label":"Page 5",
   "ranges" : [
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/6", "http://www.example.org/iiif/LlangBrev/canvas/7"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/6",
+  "@type":"sc:Range",
+  "label":"Page 6",
+  "ranges" : [
       //add leaf ranges here in order for page order
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/8", "http://www.example.org/iiif/LlangBrev/canvas/9"],
@@ -629,9 +663,9 @@ var rangeCollection = [
 },
 
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/6",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/7",
   "@type":"sc:Range",
-  "label":"Page 6: What do you think?",
+  "label":"Page 7: What do you think?",
   "ranges" : [
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/10", "http://www.example.org/iiif/LlangBrev/canvas/11"],
@@ -696,25 +730,25 @@ var rangeCollection = [
 }, //EX: we know this is the last section.  Here are 4 pages we know are in it.  It is not inside the table of contents array.
 
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/7",
-  "@type":"sc:Range",
-  "label":"Section 1",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/201"],
-  "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-
-{
   "@id":"http://www.example.org/iiif/LlangBrev/range/8",
   "@type":"sc:Range",
-  "label":"Section 2",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/202", "http://www.example.org/iiif/LlangBrev/range/3"],
+  "label":"Section 1",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/203"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/9",
+  "@type":"sc:Range",
+  "label":"Section 2",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/204", "http://www.example.org/iiif/LlangBrev/range/4"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/10",
   "@type":"sc:Range",
   "label":"Section 3",
   "ranges" : ["http://www.example.org/iiif/LlangBrev/range/5", "http://www.example.org/iiif/LlangBrev/range/6"],
@@ -723,10 +757,10 @@ var rangeCollection = [
 },
 
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/10",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/11",
   "@type":"sc:Range",
   "label":"Table Of Contents",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/7", "http://www.example.org/iiif/LlangBrev/range/8", "http://www.example.org/iiif/LlangBrev/range/9"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/8", "http://www.example.org/iiif/LlangBrev/range/9", "http://www.example.org/iiif/LlangBrev/range/10"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -806,52 +840,74 @@ function organizeRanges(){
             }
         }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
-            var currentCanvases = outerRange.canvases; //For testing purposes, I just put a URL in for the canvas.  What we would really do is get canvas info via the URI and build a canvas inside the leaf range.  This skips a step and just grabs this random image URI I went on google and found. 
+            var currentCanvases = outerRange.canvases;
             var a = false;
             var newLeaf = undefined;
             var rangeForCanvases = $("#focusedRange").find('div[rangeID="'+outerRange['@id']+'"]');
             if(rangeForCanvases.length > 0){ //if the range exists in a section
-              console.log("THERE IS A RANGE FOR THE CANVASES");
-              console.log(rangeForCanvases);
               a=true;
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
               newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
             $.each(currentCanvases, function(){ //for whatever canvases there are, if any
+              //console.log("GET THIS CANVAS");
+              //console.log(this);
               var originalCanvas = this;
-              var currentCanvas = originalCanvas.subtring(0, orignalCanvas.indexOf("xywh"));
-              // var x,y,w,h = 0;
-              // var XYWHarray = [x,y,w,h];
-              // var XYWHsubstring = originalCanavs.substring(originalCanvas.lastIndexOf('#' + 1)); 
-              // var canvasImg = "";
-              // if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
-              //     var numberArray = XYWHsubstring.substring(lineURL.lastIndexOf('xywh=') + 5).split(',');
-              //     if(numberArray.length === 4){ // string must have all 4 to be valid
-              //         x = numberArray[0];
-              //         y = numberArray[1];
-              //         w = numberArray[2];
-              //         h = numberArray[3];
-              //         XYWHarray = [x,y,w,h];
-              // }
-              console.log("Check canvas array for "+currentCanvas);
-              //console.log("SEGMENT " : XYWHarray);
-              var canvasHTML = $("<div class='canvas'><img src='' /></div>");
-                 $.each(canvases, function(){
-                     if(this["@id"] === currentCanvas){
-                         canvasHTML.find('img').attr('src', this.images.resource["@id"]);
-                         break;
-                     }
-                 });
-                
-                if(a){ //if the range exists in a section
-                  rangeForCanvases.append(canvasHTML); //put the canvas object in the range object (the leaf)
-                }
-                else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
-                  console.log("WE HAVE TURNED A NEW LEAF");
-                  console.log(currentCanvas);
-                  newLeaf.append(canvasHTML);
-                }
+              var currentCanvas = "";
+              if(originalCanvas.indexOf("#xywh") >= 0){
+                currentCanvas = originalCanvas.substring(0, originalCanvas.indexOf("#xywh"));
+                console.log('Canvas to resolve if');
+                console.log(currentCanvas);
+              }
+              else{
+                currentCanvas = originalCanvas;
+                console.log('Canvas to resolve else');
+                console.log(currentCanvas);
+              }
+              //console.log("CURRENT CANVAS: " + currentCanvas);
+              var XYWHarray = [0,0,0,0];
+              var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
+              var canvasImg = "";
+              if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
+                  var numberArray = XYWHsubstring.substring(originalCanvas.lastIndexOf('xywh=') + 5).split(',');
+                  if(numberArray.length === 4){ // string must have all 4 to be valid
+                      var x = numberArray[0];
+                      var y = numberArray[1];
+                      var w = numberArray[2];
+                      var h = numberArray[3];
+                      XYWHarray = [x,y,w,h];
+                  }
+                  else{
+                    XYWHarray = [0,0,0,0];
+                  }
+              }
+              var canvasHTML = $("<div class='canvas'> <img src='' /></div>");
+
+               $.each(pageCanvases, function(){
+                   //console.log("Match canvas to resolve");
+                   //console.log(this["@id"]);
+                   if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
+                    console.log("Canvas Image Source");
+                    console.log(this.images[0].resource["@id"]);
+                       canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
+                       canvasHTML.find('img').attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                       if(XYWHarray[2] == 0 || XYWHarray[3] == 0){
+                          canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                       }
+                       else{
+                          canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
+                       }
+                   }
+               });
+              
+              if(a){ //if the range exists in a section
+                rangeForCanvases.append(canvasHTML); //put the canvas object in the range object (the leaf)
+              }
+              else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
+                //console.log("WE HAVE TURNED A NEW LEAF");
+                newLeaf.append(canvasHTML);
+              }
             });
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
               $("#focusedRange").append(newLeaf);
