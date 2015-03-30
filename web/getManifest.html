@@ -615,12 +615,23 @@ var rangeCollection = [
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/2"
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,150"],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,75"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/204",
+  "@type":"sc:Range",
+  "label":"Weird Page 3",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/3"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,75,200,75"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/404",
   "@type":"sc:Range",
   "label":"Weird Page 3",
   "ranges" : [
@@ -805,8 +816,6 @@ function organizeRanges(){
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
-        // console.log("RANGE");
-        // console.log(rangeCollection[i])
         var outerRangeLabel = rangeCollection[i].label;
         //existingRanges.push(rangeCollection[i]["@id"]); //DO IT THIS WAY or write into a variable and push it in at the end. 
         var existingRangeToUpdate = "";
@@ -844,8 +853,6 @@ function organizeRanges(){
           var canvasToReplace = rangeCollection[i].canvases[0];
           var subStr = canvasToReplace.substring(0,canvasToReplace.indexOf("#xywh"));
 
-
-
           for(var x=0; x<i; x++){
             //we know there is only one
             var innerRangeSubstring = innerRanges[0];
@@ -856,26 +863,32 @@ function organizeRanges(){
                 var l = -1;
                 $.each(leafRangeCanvases, function(){
                   l++;
-                 // console.log(this + " == " +subStr);
                   if(this == subStr){
-                   // console.log(rangeCollection[x].canvases[l] + "  is now  " + canvasToReplace);
                     rangeCollection[x].canvases[l] = canvasToReplace;
                   }
                   else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.  
                     if(this.indexOf("#xywh") > -1){
                       //it could be a fragment
+                      console.log("Fragment or wrong canvas?");
                       var tmp = this;
-                      tmp = tmp.substring(0, tmp.indexOf("#xywh"));
-                      tmp += "";
-                      if(this == tmp){ //Then it was a fragment, so we can push
-                        //console.log(rangeCollection[x].canvases+ "  push  "+canvasToReplace);
-                        rangeCollection[x].canvases.push(canvasToReplace);
-                      }
-                      else{
-                        //it was the wrong canvas.  Leave it alone.
+                      if(tmp.indexOf("#xywh") > -1){ //If this is not true, it isn't possible that we are on the correct canvas.
+                        tmp = tmp.substring(0, tmp.indexOf("#xywh")); //It is at least a fragment, but for the right canvas?  Strip #xyhw=.... off the URI
+                        tmp += ""; //cast it to a string.
+                        var tmpCompare = leafRangeCanvases[l].substring(0,leafRangeCanvases[l].indexOf("#xywh")); //Strip #xywh off the canvas we are checking equivalency to
+                        tmpCompare += ""; // cast to a string
+                        console.log(tmpCompare +"  ==  "+tmp);
+                        console.log($.inArray(canvasToReplace, leafRangeCanvases));
+                        if(tmpCompare == tmp && $.inArray(canvasToReplace, leafRangeCanvases) < 0){ //Then it was a new fragment for this canvas, so we can push the fragment to this leaf. 
+                           rangeCollection[x].canvases.splice(l+1, 0, canvasToReplace);
+                           console.log("NEW CANVASES");
+                           console.log(rangeCollection[x].canvases);
+                           //place canavs in at appropriate location among canvases in case there are multiple fragments.  This will build them out in the order users think they go.  
+                        }
+                        else{
+                          //it was the wrong canvas.  Leave it alone.
+                        }  
                       }
                     }
-                    
                   }
                 });
             }
@@ -883,9 +896,6 @@ function organizeRanges(){
           }
         }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
-          // console.log("Leaf CANVASES");
-          // console.log(outerRange.canvases);
-
             var currentCanvases = outerRange.canvases;
             var a = false;
             var newLeaf = undefined;
@@ -898,27 +908,14 @@ function organizeRanges(){
             }
 
             $.each(currentCanvases, function(){ //for whatever canvases there are, if any, or many fragments
-              //console.log("GET THIS CANVAS");
-              //console.log(this);
               var originalCanvas = String(this);
               var currentCanvas = "";
-              //console.log(originalCanvas);
-             // console.log(String(originalCanvas).indexOf("#xywh"));
               if(originalCanvas.indexOf("#xywh") >= 0){
                 currentCanvas = originalCanvas.substring(0, originalCanvas.indexOf("#xywh"));
-                //console.log("Substring of " + originalCanvas);
-                //console.log(currentCanvas);
-                //console.log('Canvas to resolve if');
-                //console.log(currentCanvas);
               }
               else{
                 currentCanvas = originalCanvas;
-                //console.log("Current canvas is original canvas:  " + originalCanvas, currentCanvas);
-                //console.log(currentCanvas);
-                //console.log('Canvas to resolve else');
-                //console.log(currentCanvas);
               }
-              //console.log("CURRENT CANVAS: " + currentCanvas);
               var XYWHarray = [0,0,0,0];
               var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
               var canvasImg = "";
@@ -937,14 +934,8 @@ function organizeRanges(){
                   }
               }
               var canvasHTML = $("<div class='canvas'> <img src='' /></div>");
-              // console.log("CURRENT CANVAS");
-              // console.log(currentCanvas);
                $.each(pageCanvases, function(){
-                   //console.log("Match canvas to resolve");
-                   //console.log(this["@id"]);
                    if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
-                   // console.log("Canvas Image Source");
-                   // console.log(this.images[0].resource["@id"]);
                        canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
                        canvasHTML.find('img').attr("style", "left:-"+XYWHarray[0]+"px; top:-"+XYWHarray[1]+"px; height:"+this.height+"px; width:"+this.width+"px");
                        if(XYWHarray[2] == 0 || XYWHarray[3] == 0){
@@ -960,7 +951,6 @@ function organizeRanges(){
                 rangeForCanvases.append(canvasHTML); //put the canvas object in the range object (the leaf)
               }
               else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
-                //console.log("WE HAVE TURNED A NEW LEAF");
                 newLeaf.append(canvasHTML);
               }
             });
