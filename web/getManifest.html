@@ -37,12 +37,21 @@ and open the template in the editor.
                 position: relative;
                 overflow: hidden;
                 margin: 5px 6px;
+                height: 300px;
+                width: 200px;
             }
 
             .canvasImg{
               height: 300px;
               width: 200px;
               position:relative;
+            }
+            .canvasinner{
+              overflow: hidden;
+              border: 1px solid yellow;
+              left: -1px;
+              top: -1px;
+              position: relative;
             }
             .bucketPage{
               border: 4px solid white;
@@ -907,6 +916,12 @@ function organizeRanges(){
         }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
             var currentCanvases = outerRange.canvases;
+            var firstCanvas = currentCanvases[0];
+            if(firstCanvas.indexOf("#xywh") >=0){
+              firstCanvas = firstCanvas.substring(0, firstCanvas.indexOf("#xywh"));
+            }
+            //console.log("Current Canvases");
+            //console.log(currentCanvases);
             var a = false;
             var newLeaf = undefined;
             var rangeForCanvases = $("#focusedRange").find('div[rangeID="'+outerRange['@id']+'"]');
@@ -917,17 +932,40 @@ function organizeRanges(){
               newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
 
+            var canvasHolder1 = $("<div sideA='' class='canvas'> </div>");
+            var canvasHolder2 = $("<div sideB='' class='canvas'> </div>");
+
+            var canvasHolder3 = $("<div sideA='' class='canvas'> <img class='canvasImg' /> </div>");
+            var canvasHolder4 = $("<div sideB='' class='canvas'> <img class='canvasImg' /> </div>");
+
+
+            var side1 = true;
+            var side2 = false;
+
+            var holderToAppend = $("");
+            
             $.each(currentCanvases, function(){ //for whatever canvases there are, if any, or many fragments
               var originalCanvas = String(this);
               var currentCanvas = "";
               var fragment = false;
-              var canvasHolder = $("<div class='canvas'> <img class='canvasImg' src='' /></div>");
+              
               if(originalCanvas.indexOf("#xywh") >= 0){
                 currentCanvas = originalCanvas.substring(0, originalCanvas.indexOf("#xywh"));
                 fragment =true;
               }
               else{
                 currentCanvas = originalCanvas;
+              }
+              console.log(currentCanvas +" == "+firstCanvas);
+              if(currentCanvas == firstCanvas){ //we are still on sideA
+                console.log("EQUAL");
+                side1 = true;
+                side2 = false
+              }
+              else{ //we are on sideB
+                side1=false;
+                side2 = true;
+                console.log("NOT EQUAL");
               }
               var XYWHarray = [0,0,0,0];
               var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
@@ -947,46 +985,76 @@ function organizeRanges(){
                   }
               }
               //This part creates chunks and places them in.
-              // var canvasHTML = $("<div class='canvas'> <img class='canvasImg' src='' /></div>");
-              //  $.each(pageCanvases, function(){
-              //      if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
-              //          canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
-              //          if(XYWHarray[2] == 0 || XYWHarray[3] == 0){
-              //             canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
-              //             canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
-              //          }
-              //          else{
-              //             canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
-              //             canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
-              //          }
-                       
-              //      }
-              //  });
-
-              //This part will create the canvas and highlight the fragments instead of making chunks.
-              var fragmentHTML = $("<div class='fragment'></div>");
+              var canvasHTML = $("<div class='canvasinner'> <img class='canvasImg' src='' /></div>");
                $.each(pageCanvases, function(){
-                   var left = parseInt(XYWHarray[0]);
-                   var top = parseInt(XYWHarray[1]);
-                   var width = parseInt(XYWHarray[2]) - 2; //acount for 2 1px borders
-                   var height = parseInt(XYWHarray[3]) - 2; // account for 2 1px borders
-                   if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
-                       canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
-                       canvasHolder.find('img').attr("src", this.images[0].resource["@id"]);
-                       if(fragment){ // if it is a fragment, we want the fragment box drawn in the canvas.
-                          fragmentHTML.attr("style", "left:"+left+"px; top:"+top+"px; height:"+height+"px; width:"+width+"px");
-                          canvasHolder.append(fragmentHTML);
+                   if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
+                       canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
+                       if(XYWHarray[2] == 0 || XYWHarray[3] == 0){
+                          canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                          canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
+                          if(side1){
+                            console.log("append to holder1");
+                            canvasHolder1.append(canvasHTML);
+                            holderToAppend = canvasHolder1;
+                          }
+                          else{
+                            console.log("append to holder2");
+                            canvasHolder2.append(canvasHTML);
+                            holderToAppend = canvasHolder2;
+                          }
                        }
-                       
+                       else{
+                          canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
+                          canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
+                          if(side1){
+                            console.log("append to holder1");
+                            canvasHolder1.append(canvasHTML);
+                            holderToAppend = canvasHolder1;
+                          }
+                          else{
+                            console.log("append to holder2");
+                            canvasHolder2.append(canvasHTML);
+                            holderToAppend = canvasHolder2;
+                          }
+                       }
                    }
                });
-              if(a){ //if the range exists in a section
-                rangeForCanvases.append(canvasHolder); //put the canvas object in the range object (the leaf)
-              }
-              else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
-                newLeaf.append(canvasHolder);
-              }
+
+            //  This part will create the canvas and highlight the fragments instead of making chunks.
+              // var fragmentHTML = $("<div class='fragment'></div>");
+              // $.each(pageCanvases, function(){
+              //      var left = parseInt(XYWHarray[0]);
+              //      var top = parseInt(XYWHarray[1]);
+              //      var width = parseInt(XYWHarray[2]) - 2; //acount for 2 1px borders
+              //      var height = parseInt(XYWHarray[3]) - 2; // account for 2 1px borders
+              //      if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
+              //          //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+              //          if(side1){
+              //             canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
+              //          }
+              //          else{
+              //             canvasHolder4.find('img').attr("src", this.images[0].resource["@id"]);
+              //          }
+              //          if(fragment){ // if it is a fragment, we want the fragment box drawn in the canvas.
+              //             fragmentHTML.attr("style", "left:"+left+"px; top:"+top+"px; height:"+height+"px; width:"+width+"px");
+              //             if(side1){
+              //               canvasHolder3.append(fragmentHTML);
+              //             }
+              //             else{
+              //               canvasHolder4.append(fragmentHTML);
+              //             }
+              //          }
+              //      }
+              // });
+             
             });
+            console.log("Append holders to appropriate range.");
+            if(a){ //if the range exists in a section
+              rangeForCanvases.append(canvasHolder1, canvasHolder2); //put the canvas object in the range object (the leaf)
+            }
+            else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
+              newLeaf.append(canvasHolder1, canvasHolder2);
+            }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
               $("#focusedRange").append(newLeaf);
             }
