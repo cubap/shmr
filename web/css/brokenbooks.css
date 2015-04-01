@@ -351,11 +351,11 @@ and open the template in the editor.
             .uploadness input{
                     display: inline-table;
             }
-            img{
-                    height:300px;
-                    width: auto;
-                    position: relative;
-            }
+            /*img{
+                height:300px;
+                width: auto;
+                position: relative;
+            }*/
             .imgCatalogueInfo{
 
             }
