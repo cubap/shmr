@@ -600,7 +600,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
   "@type":"sc:Range",
-  "label":"Page 1",
+  "label":"Folio 1",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -611,7 +611,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/2",
   "@type":"sc:Range",
-  "label":"Page 2",
+  "label":"Folio 2",
   "ranges" : [
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1", "http://www.example.org/iiif/LlangBrev/canvas/2"],
@@ -621,7 +621,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/3",
   "@type":"sc:Range",
-  "label":"Page 3",
+  "label":"Folio 3",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -632,7 +632,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/203",
   "@type":"sc:Range",
-  "label":"Weird Page 2",
+  "label":"Weird Folio 2",
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/2"
   ],
@@ -643,7 +643,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/204",
   "@type":"sc:Range",
-  "label":"Weird Page 3",
+  "label":"Weird Folio 3",
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/3"
   ],
@@ -654,7 +654,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/404",
   "@type":"sc:Range",
-  "label":"Weird Page 3",
+  "label":"Weird Folio 3",
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/3"
   ],
@@ -665,7 +665,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/4",
   "@type":"sc:Range",
-  "label":"Page 4",
+  "label":"Folio 4",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -676,7 +676,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/5",
   "@type":"sc:Range",
-  "label":"Page 5",
+  "label":"Folio 5",
   "ranges" : [
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/6", "http://www.example.org/iiif/LlangBrev/canvas/7"],
@@ -686,7 +686,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/6",
   "@type":"sc:Range",
-  "label":"Page 6",
+  "label":"Folio 6",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -697,7 +697,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/7",
   "@type":"sc:Range",
-  "label":"Page 7: What do you think?",
+  "label":"Folio 7: What do you think?",
   "ranges" : [
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/10", "http://www.example.org/iiif/LlangBrev/canvas/11"],
@@ -707,7 +707,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/102",
   "@type":"sc:Range",
-  "label":"First Page, Last Secion",
+  "label":"First Folio, Last Secion",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -717,7 +717,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/103",
   "@type":"sc:Range",
-  "label":"Last Page, Last Secion",
+  "label":"Last Folio, Last Secion",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -728,7 +728,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/104",
   "@type":"sc:Range",
-  "label":"Unknown Page X, Last Secion",
+  "label":"Unknown Folio X, Last Secion",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -739,7 +739,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/105",
   "@type":"sc:Range",
-  "label":"Unknown Page Y, Last Secion",
+  "label":"Unknown Folio Y, Last Secion",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -800,7 +800,7 @@ var rangeCollection = [
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/110",
   "@type":"sc:Range",
-  "label":"SLU page, unknown section",
+  "label":"SLU Folio, unknown section",
   "ranges" : [
       //add leaf ranges here in order for page order
   ],
@@ -838,13 +838,19 @@ function organizeRanges(){
     for(var i = rangeCollection.length - 1; i>=0; i--){
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
-        //existingRanges.push(rangeCollection[i]["@id"]); //DO IT THIS WAY or write into a variable and push it in at the end. 
         var existingRangeToUpdate = "";
-        //...The trick is that we check if we have already accounted for this range as an outer range
-        if($("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]').length > 0){ 
-          //If so, then what we are doing is adding other sections or leaves into it, so there is an existing range. 
-          existingRangeToUpdate = $("#focusedRange").find('div[rangeID="'+rangeCollection[i]['@id']+'"]'); // get it.
+        
+
+        if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
+          console.log($.inArray(rangeCollection[i]["@id"], existingRanges));
+          existingRanges.push(rangeCollection[i]["@id"]);
         }
+        else{
+          console.log("Update existing range");
+          existingRangeToUpdate = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]'); // get it.
+          console.log(existingRangeToUpdate);
+        }
+        
 
         //Create an html range object that can be added
         var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
@@ -858,6 +864,9 @@ function organizeRanges(){
                     if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
                         var thisLabel = this.label;
                         var embedRange = $("<div class='range' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        if($.inArray(this["@id"], existingRanges) == -1){
+                          existingRanges.push(this["@id"]);
+                        }
                         if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
                           existingRangeToUpdate.append(embedRange);
                         }
@@ -890,15 +899,12 @@ function organizeRanges(){
                   else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.  
                     if(this.indexOf("#xywh") > -1){
                       //it could be a fragment
-                      console.log("Fragment or wrong canvas?");
                       var tmp = this;
                       if(tmp.indexOf("#xywh") > -1){ //If this is not true, it isn't possible that we are on the correct canvas.
                         tmp = tmp.substring(0, tmp.indexOf("#xywh")); //It is at least a fragment, but for the right canvas?  Strip #xyhw=.... off the URI
                         tmp += ""; //cast it to a string.
                         var tmpCompare = leafRangeCanvases[l].substring(0,leafRangeCanvases[l].indexOf("#xywh")); //Strip #xywh off the canvas we are checking equivalency to
                         tmpCompare += ""; // cast to a string
-                        console.log(tmpCompare +"  ==  "+tmp);
-                        console.log($.inArray(canvasToReplace, leafRangeCanvases));
                         if(tmpCompare == tmp && $.inArray(canvasToReplace, leafRangeCanvases) < 0){ //Then it was a new fragment for this canvas, so we can push the fragment to this leaf. 
                            rangeCollection[x].canvases.splice(l+1, 0, canvasToReplace);
                            //place canavs in at appropriate location among canvases in case there are multiple fragments.  This will build them out in the order users think they go.  
@@ -956,16 +962,13 @@ function organizeRanges(){
               else{
                 currentCanvas = originalCanvas;
               }
-              console.log(currentCanvas +" == "+firstCanvas);
               if(currentCanvas == firstCanvas){ //we are still on sideA
-                console.log("EQUAL");
                 side1 = true;
                 side2 = false
               }
               else{ //we are on sideB
                 side1=false;
                 side2 = true;
-                console.log("NOT EQUAL");
               }
               var XYWHarray = [0,0,0,0];
               var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
@@ -984,35 +987,31 @@ function organizeRanges(){
                     XYWHarray = [0,0,0,0];
                   }
               }
-              //This part creates chunks and places them in.
+              //This part creates chunks and places them in the canvas.
               var canvasHTML = $("<div class='canvasinner'> <img class='canvasImg' src='' /></div>");
                $.each(pageCanvases, function(){
                    if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
                        canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
-                       if(XYWHarray[2] == 0 || XYWHarray[3] == 0){
-                          canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                       if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
+                          canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
                           canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
-                          if(side1){
-                            console.log("append to holder1");
+                          if(side1){ //put it in side1.  
                             canvasHolder1.append(canvasHTML);
                             holderToAppend = canvasHolder1;
                           }
-                          else{
-                            console.log("append to holder2");
+                          else{ //maybe we should check if side2 is true, but I'll just assume it
                             canvasHolder2.append(canvasHTML);
                             holderToAppend = canvasHolder2;
                           }
                        }
-                       else{
+                       else{ //the height and width of the fragment piece were not 0.
                           canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
                           canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
-                          if(side1){
-                            console.log("append to holder1");
+                          if(side1){//put it in side1.
                             canvasHolder1.append(canvasHTML);
                             holderToAppend = canvasHolder1;
                           }
-                          else{
-                            console.log("append to holder2");
+                          else{//maybe we should check if side2 is true, but I'll just assume it
                             canvasHolder2.append(canvasHTML);
                             holderToAppend = canvasHolder2;
                           }
@@ -1048,7 +1047,6 @@ function organizeRanges(){
               // });
              
             });
-            console.log("Append holders to appropriate range.");
             if(a){ //if the range exists in a section
               rangeForCanvases.append(canvasHolder1, canvasHolder2); //put the canvas object in the range object (the leaf)
             }
@@ -1057,6 +1055,9 @@ function organizeRanges(){
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
               $("#focusedRange").append(newLeaf);
+              if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
+                  existingRanges.push(newLeaf.attr("rangeID"));
+              }
             }
         }
         
