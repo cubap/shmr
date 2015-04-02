@@ -8,9 +8,43 @@
             <title>Breviary Leaf Addition</title>
 	</head>
 	<body>
+		<!--
+			We need to think about the process for adding a fragment.  Fragments are important because we can save 2 kinds of fragments.  A fragment can be a content-related fragment where a certain piece of the same cavas are blocked off for importance between sections or leaves.  It could also be an image chunk of the canvas, where the position, size and zoom ratio may all be unknown or known.  
+
+			Instead of annotations, when these distinctions are made they are turned into ranges.  The range contains the canvas fragment piece (#xywh=).  The same URI without the (#xywh) is the "whole canvas" piece.  Having the "whole canvas" piece be the actual canvas with its metadata and each fragment be its own existing piece with its own metadata maintains the parent-child tree structure and keeps each fragment seperate from but connected to the whole canvas.  This way layered annotations are possible on fragments just like they would be on a canvas.
+
+			For code implementation, it allows a fragment to be defined like this:
+			{
+			  "@id":"http://www.example.org/iiif/LlangBrev/range/404",
+			  "@type":"sc:Range",
+			  "label":"Weird Page 3",
+			  "ranges" : [
+			 *     "http://www.example.org/iiif/LlangBrev/range/3"
+			  ],
+			 * "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150"],
+			  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+			},
+
+...
+
+			{
+			  "@id":"http://www.example.org/iiif/LlangBrev/range/3",
+			  "@type":"sc:Range",
+			  "label":"Page 3",
+			  "ranges" : [
+			      //add leaf ranges here in order for page order
+			  ],
+			 * "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2", "http://www.example.org/iiif/LlangBrev/canvas/3"],
+			  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+			},
+...
+
+			Where this fragment knows that it is a part of range3.  Chopping off #xywh=... gives us which canvas the fragment goes on to, and the original canvas URI gives us the canvas height and width and other metadata.  We can then place this inside of canvas2 at the #xywh coordinates.  It ensures that the fragment has a real "whole" canvas to have a relationship with.  
+		-->
+
 		<div class="mainBlock intro">
 			<p>
-				Here you can create a leaf to place into the bucket.   Login below to begin making a leaf.
+				Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  If your data is accurate, your leaf will be placed with the other LLangantock Breviary leaves. 
 			</p>
 
 			<!-- TESTED. SUCCESSFUL.  
