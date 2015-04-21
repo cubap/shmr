@@ -1,0 +1,225 @@
+var rangeCollection = [
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/1",
+  "@type":"sc:Range",
+  "label":"Folio 1",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/4", "http://www.example.org/iiif/LlangBrev/canvas/5"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{ //A connection of content can be made like this, but not fragments
+  "@id":"http://www.example.org/iiif/LlangBrev/range/2",
+  "@type":"sc:Range",
+  "label":"Folio 2",
+  "ranges" : [
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1", "http://www.example.org/iiif/LlangBrev/canvas/2"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{//A connection of content can be made like this, but not fragments
+  "@id":"http://www.example.org/iiif/LlangBrev/range/3",
+  "@type":"sc:Range",
+  "label":"Folio 3",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2", "http://www.example.org/iiif/LlangBrev/canvas/3"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/203",
+  "@type":"sc:Range",
+  "label":"Weird Folio 2",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/2"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,75"],
+  //This will only work for image fragments when each fragment is its own canvas.  Either in the canavas or the range we must mark it as a fragment. 
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/204",
+  "@type":"sc:Range",
+  "label":"Weird Folio 3",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/3"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,75,200,75"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/404",
+  "@type":"sc:Range",
+  "label":"Weird Folio 3",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/3"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/4",
+  "@type":"sc:Range",
+  "label":"Folio 4",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/24", "http://www.example.org/iiif/LlangBrev/canvas/25"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/5",
+  "@type":"sc:Range",
+  "label":"Folio 5",
+  "ranges" : [
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/6", "http://www.example.org/iiif/LlangBrev/canvas/7"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/6",
+  "@type":"sc:Range",
+  "label":"Folio 6",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/8", "http://www.example.org/iiif/LlangBrev/canvas/9"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/7",
+  "@type":"sc:Range",
+  "label":"Folio 7: What do you think?",
+  "ranges" : [
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/10", "http://www.example.org/iiif/LlangBrev/canvas/11"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/102",
+  "@type":"sc:Range",
+  "label":"First Folio, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/12", "http://www.example.org/iiif/LlangBrev/canvas/13"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/103",
+  "@type":"sc:Range",
+  "label":"Last Folio, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/14","http://www.example.org/iiif/LlangBrev/canvas/15"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/104",
+  "@type":"sc:Range",
+  "label":"Unknown Folio X, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/16","http://www.example.org/iiif/LlangBrev/canvas/17"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/105",
+  "@type":"sc:Range",
+  "label":"Unknown Folio Y, Last Secion",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/18", "http://www.example.org/iiif/LlangBrev/canvas/19"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/106",
+  "@type":"sc:Range",
+  "label":"Last Section",
+  "ranges" : [
+     "http://www.example.org/iiif/LlangBrev/range/102",
+     "http://www.example.org/iiif/LlangBrev/range/103",
+     "http://www.example.org/iiif/LlangBrev/range/105",
+     "http://www.example.org/iiif/LlangBrev/range/104",
+   ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+}, //EX: we know this is the last section.  Here are 4 pages we know are in it.  It is not inside the table of contents array.
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/8",
+  "@type":"sc:Range",
+  "label":"Section 1",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/2"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/9",
+  "@type":"sc:Range",
+  "label":"Section 2",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/3", "http://www.example.org/iiif/LlangBrev/range/4"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/10",
+  "@type":"sc:Range",
+  "label":"Section 3",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/5", "http://www.example.org/iiif/LlangBrev/range/6"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/11",
+  "@type":"sc:Range",
+  "label":"Table Of Contents",
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/8", "http://www.example.org/iiif/LlangBrev/range/9", "http://www.example.org/iiif/LlangBrev/range/10"],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/110",
+  "@type":"sc:Range",
+  "label":"SLU Folio, unknown section",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/20", "http://www.example.org/iiif/LlangBrev/canvas/21"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/111",
+  "@type":"sc:Range",
+  "label":"Not sure if this is in this project.",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+]
