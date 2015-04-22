@@ -46,6 +46,7 @@
 			<p>
 				Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  If your data is accurate, your leaf will be placed with the other LLangantock Breviary leaves. 
 			</p>
+			<p>You will prepare this leaf as <span id="whoCreates">a contriubter</span></p>
 
 			<!-- TESTED. SUCCESSFUL.  
 			<div id="serverLogin">
@@ -55,181 +56,18 @@
 			</div> -->
 			
 			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
-			<input type="button" value="Test update" onclick="testUpdate();"/>
+<!-- 			<input type="button" value="Test update" onclick="testUpdate();"/> successful-->
+ 			<input id="beAdmin" type="button" value="Be Project Admin" onclick="admin();"/>
+			<input id="beContributer" type="button" value="Be A Contributer" onclick="contributer();"/>
 		</div>
 
 		<div class="mainBlock imgAdditionArea">
 			<div class="leaf"></div>
 		</div>
-
 		<div class="mainBlock start">
-			<!-- <img class="imgPreview" src="" /><br>-->
- 			<input type="hidden" id="catalogueInfoFor" value="" />
- 			<p>
- 				Here is where you can enter addition information about a leaf. Click below to expand and enter information about the fields you have information on. <u style="color: rgb(0,204,0);">Context</u> is about the history of the leaf such as where it has been, who has owned it, etc. <u style="color: rgb(255,0,127);">Carrier</u> information is physical information about the leaf itself, such as support, number of lines, dimensions, etc. <u style="color: rgb(0,255,255);">Content</u> is about the written text on the leaf or page such as the language, author, or a particular part of the text.  
-				<u style="color:yellow;">General Metadata</u> is for information you prefer not to assign to any metadata form.  It is better to answer a question in the forms than give general information. 
-			</p>
-			<div id="formAccordion">
-				<h3 id="contextHeader">Context</h3>
-				<div id="contextForm">
-					<p> Please include information about context here.  If you do not wish to specify your responses, please use the 'other' field.</p>
-					<table>
-						<tbody>
-							<tr class="contextFormEntry"><td class="formLabel">Institution or Repository: </td> <td> <input class="content" type="text"  id="InstOrRepo"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Shelfmark: </td> <td> <input class="content" type="text"  id="contextFolioID"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Nickname:  </td> <td> <input class="content" type="text"  id="nickname" /> </td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Patron (first owner): </td> <td> <input class="content" type="text"  id="contextPatron"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Former Owners Seperated by Semi-colon (;) </td> <td> <textarea class="content" id="previousOwners"/></textarea></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Insignia (coat of arms, etc.) </td> <td> <input class="content" type="text"  id="insignia"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Sales: </td> <td> <input class="content" type="text"  id="contextAuction" range="range" /></textarea</td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Date Acquired: </td> <td> <input class="content" type="text"  id="contextDateAcquired"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Exlibris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input class="content" type="text"  id="libraryStamp"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input class="content" type="text"  id="binding"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input class="content" type="text"  id="frame"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Bibliography: </td> <td> <input class="content" type="text"  id="bibliography"/></td></tr>
-							<tr class="contextFormEntry"><td class="formLabel">Link To Record: </td> <td> <input class="content" type="text"  id="linkToRecord"/></td></tr>
-							<!--<tr class="contextFormEntry"><td><span class="formLabel">Related Manuscripts by Collection: </td> <td>  <input class="content" type="text"  id="contextRelated"/></td></tr> -->
-							<tr class="contextFormEntry"><td class="formLabel">Other: </td>  <td><textarea class="content" id="contextOther"></textarea></td></tr>
-						</tbody>
-					</table>
-				</div>
-				<h3 id="carrierHeader">Carrier</h3>
-				<div id="carrierForm">
-					<p> Please include information about carrier here.  If you do not wish to specify your responses, please use the 'other' field.</p>
-					<table>
-						<tbody>
-							<tr class="carrierFormEntry"><td class="formLabel">Date: </td> <td> <input class="content" type="text" class="content" id="carrierDate"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Place Of Origin: </td> <td> <input class="content" type="text" class="content" id="carrierOrigin"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Format (single leaf, half bifolium, fragment): </td> <td> <input class="content" type="text" class="content" id="carrierFormat"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Material Support: </td> <td> <input class="content" type="text" class="content" id="support"/></td></tr>
-							<tr class="carrierFormEntry" special="dimensions">
-								<td class="formLabel ">Dimensions: </td>
-								<td>
-									<select class="specialFormEntry">
-										<option value="0">Select Dimensions</option>
-										<option value="leafDim">Manuscript Dimensions</option>
-										<option value="tbDim">Text Block Dimensions</option>
-										<option value="lineDim">Line Dimensions</option>
-									</select>
-									<div id="leafDim">
-										<span class="formLabel">Leaf Height:<input class="content" id="leafHeight" type="text"/></span>
-										<span class="formLabel">Leaf Width: <input class="content" id="leafWidth" type="text"/></span>
-									</div>
-									<div id="tbDim">
-										<span class="formLabel">Text Block Height:<input class="content" id="tbHeight" type="text"/></span>
-										<span class="formLabel">Text Block Width: <input class="content" id="tbWidth" type="text"/></span>
-									</div>
-									<div id="lineDim">
-										<span class="formLabel">Single Line Height:<input class="content" id="lHeight" type="text"/> </span>
-										<span class="formLabel">Single Line Width: <input class="content" id="lWidth" type="text"/> </span>
-									</div>
-								</td>
-							</tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Condition: </td> <td> <input class="content" type="text" id="condition"/></td></tr>
-							<!-- Do a split for lines and columns like you did for heght and width -->
-							<tr class="carrierFormEntry" special="layout">
-								<td class="formLabel ">Layout: </td>
-								<td>
-									<select class="specialFormEntry">
-										<option value="0">Type</option>
-										<option value="lines">Lines</option>
-										<option value="columns">Columns</option>
-									</select>
-									<div id="lines">
-										<span class="formLabel">Lines:<input class="content" id="layoutLines" type="text"/></span>
-									</div>
-									<div id="columns">
-										<span class="formLabel">Columns:<input class="content" id="layoutColumns" type="text"/></span>
-									</div>
-								</td>
-							</tr>
-							<!-- the next two could also be on the same line -->
-							<tr class="carrierFormEntry"><td class="formLabel">Rulings: </td> <td> <input class="content" type="text" id="carrierRulings" /> </td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Prickings: </td> <td> <input class="content" type="text" id="carrierPrickings" /> </td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Script: </td> <td> <input class="content" type="text" id="carrierScript"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Music Notation: </td> <td> <input class="content" type="text" id="musicNotation"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Scribe (who wrote the script): </td> <td> <input class="content" type="text" class="carrierFormEntry" id="scribe"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Colophon: </td> <td> <input class="content" type="text"  id="colophon"/></td></tr>
-							<tr class="carrierFormEntry" special="decorations">
-								<td class="formLabel ">Decorations: </td>
-								<td>
-									<select class="specialFormEntry">
-										<option value="0">Type</option>
-										<option value="initials">Initials</option>
-										<option value="borders">Border</option>
-									</select>
-									<div id="initials">
-										<span class="formLabel">Initials:<input class="content" id="carrierInitials" type="text"/></span>
-									</div>
-									<div id="borders">
-										<span class="formLabel">Borders:<input class="content" id="carrierBorder" type="text"/></span>
-									</div>
-								</td>
-							</tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Illustrations: </td> <td> <input class="content" type="text" id="carrierIllustrations"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Catch Words: </td> <td> <input class="content" type="text" id="catchWords"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Quire Signatures: </td> <td> <input class="content" type="text" id="carrierSignatures"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Artist(s)</td> <td> <textarea class="content" id="carrierArtists"></textarea></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Folio Number: </td> <td> <input class="content" type="text" id="carrierFolioNum"/></td></tr>
-							<!--Drop down to pick relation by artist, scribe, workshop -->
-							<!--<li><span class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text"  id="carrierRelated"/></td></tr>-->
-							<tr class="carrierFormEntry"><td class="formLabel">Recto or Verso: </td> <td> <input class="content" type="text" id="carrierRV"/></td></tr>
-							<tr class="carrierFormEntry"><td class="formLabel">Other: </td> <td> <textarea class="content" type="text" id="carrierOther"></textarea></td></tr>
-						</tbody>
-					</table>
-				</div>
-				<h3 id="contentHeader">Content</h3>
-				<div id="contentForm">
-					<p> Please include information about content here.  If you do not wish to specify your responses, please use the 'other' field.</p>
-					<table>
-						<tbody>
-							<tr class="contentFormEntry"><td class="formLabel">Language:  </td> <td>  <input class="content" type="text" id="contentLanguage" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Text Author:  </td> <td>  <input class="content" type="text" class="content" id="contentAuthor" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Generic Title:  </td> <td>  <input class="content" type="text" class="content" id="contentTitle" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Subject:  </td> <td>  <input class="content" type="text" class="contentF" id="contentSubject" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Structure/Section of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentSection" range="range" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Description of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentDescription" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Incipit:  </td> <td>  <input class="content" type="text" class="content" id="incipit" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Explicit:  </td> <td>  <input class="content" type="text" class="content" id="explicit" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Title Page:  </td> <td>  <input class="content" type="text" class="content" id="titlePage" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Prologue:  </td> <td>  <input class="content" type="text" class="content" id="contentPrologue" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Dedication:  </td> <td>  <input class="content" type="text" class="content" id="dedication" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Dedicatee:  </td> <td>  <input class="content" type="text" class="content" id="dedicatee" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Rubrics:  </td> <td>  <input class="content" type="text" class="content" id="rubrics" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Chant:  </td> <td>  <input class="content" type="text" class="content" id="chant" /> </td></tr> 
-							<tr class="contentFormEntry"><td class="formLabel">Gloss:  </td> <td>  <input class="content" type="text" class="conten" id="gloss" /> </td></tr> 
-							<tr class="contentFormEntry" special="annotations">
-								<td class="formLabel ">Annotations: </td>
-								<td>
-									<select class="specialFormEntry">
-										<option value="0">Type</option>
-										<option value="inter">Interlinear</option>
-										<option value="marginal">Marginal</option>
-									</select>
-									<div id="inter">
-										<span class="formLabel">Interlinear:<input class="content" id="interlinearAnnos" type="text"/></span>
-									</div>
-									<div id="marginal">
-										<span class="formLabel">Marginal:<input class="content" id="marginalAnnos" type="text"/></span>
-									</div>
-								</td>
-							</tr>
-							<!-- <li><span class="formLabel">Other Transcription :  </td> <td>  file upload here </li> -->
-							<!-- <li><span class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text" class="contextFormEntry" id="contentRelated"/></li> -->
-							<tr class="contentFormEntry"><td class="formLabel">Other: </td> <td> <textarea class="content" id="contentOther"></textarea></td></tr>
-						</tbody>
-					</table>
-				</div>
-				<h3 id="notesHeader">General Metadata</h3>
-				<div id="notesForm">
-					<p> If there are general notes you would prefer not to assign to the metadata forms, you can write those here. </p>
-					<textarea class="notesFormEntry" id="notes"></textarea>
-				</div>
-			</div>
-			<input type="button" onclick="saveFolio();" value="Save Metadata"/>
- 	        <input type="button" onclick="cancelFolio();" value="Exit Metadata"/>
+			
 		</div>
+		
 		<div class="sideBarInfo">
 			<p>This area will tell you what piece of the leaf you are currently working on.  There are only three options: side ALPHA, side BETA and the leaf as a whole (OMEGA).  You may not know which is recto or verso, so we just call them alpha and beta.  Information you have submitted will also be placed here so you can see your progress.  </p>
 			<div id="whatPiece">
@@ -280,10 +118,15 @@ var annoListID = 2;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
 var annoListCollection = [];
+var annoListAlpha = -1;
+var annolistBeta = -1;
+var rangeListID = -1;
 
 var serverCanvasID = -1;
 var serverAnnoID = -1;
 var currentLeafServerID = -1;
+var admin = false;
+var contributer = true;
 
 //Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
 var annotationList = {
@@ -356,422 +199,7 @@ var testManifest = {
 	  ]
 }
 
-/*
-	When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range. Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that. It also keeps content, context and carrier information separate from each other so we can track them as such.  
-*/
 
-	function saveFolio(){
-		var currentLeafObject = {};
-		var otherInfo = {};
-		var uriToSave = $("#catalogueInfoFor").val() //alpha URI, beta URI, or leaf URI
-		var canvasURI = uriToSave;
-		var otherInfoList = {};
-		if(zeta){
-			$("#zetaInformation").find('ul').empty();
-			otherInfoList = $("#zetaInformation").find(".addedNotes"); //for the notes field
-		}
-		else if(alpha){
-			$("#alphaInformation").find('ul').empty();
-			otherInfoList = $("#alphaInformation").find(".addedNotes"); //for the notes field
-		}
-		else if(beta){
-			$("#betaInformation").find('ul').empty();
-			otherInfoList = $("#betaInformation").find(".addedNotes"); //for the notes field
-		}
-		$.each(testManifest.structures, function(){
-			if ($(this)["@id"] === uriToSave){
-				currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
-				return false;
-			}
-		});
-		
-		//Go through each content piece, grab its value and if applicable make it an annotation or a range.
-		$(".contentFormEntry").each(function(){
-			var addedInfoList1 = {};
-			if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
-			else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
-			else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
-			var entryID = $(this).find(".content").attr("id");
-			var entryValue = $(this).find(".content").val();
-			var range = $(this).find(".content").attr("range");
-			range = (range !== "" && range !== undefined);
-			var addedInfoLabel = $(this).find(".formLabel").html();
-			var special = $(this).attr("special");
-			var annotationObject = {
-				"@id" : "",
-		        "@type" : "oa:Annotation",
-		        "motivation" : "sc:painting",
-		        "label" : "",
-		        "resource" : {
-		          "@type" : "cnt:ContentAsText",
-		          "cnt:chars" :""
-				},
-				"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-			};
-			var rangeObject = { //this will only be saved 
-				"@id" : "",
-		        "@type" : "sc:Range",
-		        "motivation" : "sc:painting",
-		        "label" : "",
-		        "canvases": [],
-		        "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
-		        "resources" : [],
-		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-			};
-			if (special === "annotations"){
-				//console.log("Special Annos");
-				var inter = $("#interlinearAnnos").val();
-				var marginal = $("#marginalAnnos").val();
-				if(inter!=="" && inter!==undefined){
-					var annoCopy1 = jQuery.extend({}, annotationObject);
-					annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-					annoCopy1.label = "Interlinear Annotations";
-					annoCopy1.resource["cnt:chars"] = inter;
-
-					createNewAnno(annoCopy1, "Annotations - Interlinear:", inter, addedInfoList1);
-					// addedInfoList1.append("<li><span class='formLabel'>Annotations - Interlinear: </span> "+inter+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
-				}
-				if(marginal!=="" && marginal!==undefined){
-					var annoCopy2 = jQuery.extend({}, annotationObject);
-					annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-					annoCopy2.label = "Marginal Annotations";
-					annoCopy2.resource["cnt:chars"] = marginal;
-					createNewAnno(annoCopy2, "Annotations - Marginal", marginal, addedInfoList1);
-					// addedInfoList1.append("<li local ><span class='formLabel'>Annotations - Marginal: </span>"+marginal+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
-				}
-			}
-			else if(entryValue !== "" && entryValue !== undefined ){
-				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-				//console.log("Anno Object @ID is being set to :" + newAnnoURI)
-				annotationObject["@id"] = newAnnoURI;
-				annotationObject.resource["cnt:chars"] = entryValue;
-				rangeObject["@id"] = newRangeURI;
-				rangeObject.label = entryValue;
-				if(range){
-					var updateOrNew = "";
-					var rangeToUpdate = "";
-					for(var i=1; i<testManifest.structures.length; i++){
-						if (testManifest.structures[i].label === entryValue){
-							updateOrNew = "update";
-							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeafServerID);
-							break;
-						}
-						else{
-							updateOrNew = "new";
-						}
-					}
-					if(updateOrNew === "new"){
-						createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList1);
-						// addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
-					}
-				}
-				else{
-					annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-					annotationObject.label = addedInfoLabel;
-					annotationObject.resource["cnt:chars"] = entryValue;
-					createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1);
-					// addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li><span annoServerID='"+annoServerID+"' class='removeInfo'> X </span>");
-					//There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-				}
-				//console.log(annotationObject);
-			}
-		});
-
-		$(".contextFormEntry").each(function(){
-			var addedInfoList2 = {};
-			//console.log(alpha, beta, zeta);
-			if(zeta){ addedInfoList2 = $("#zetaInformation").find(".contextList"); }
-			else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
-			else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
-			//console.log(addedInfoList2);
-			var entryID = $(this).find(".content").attr("id");
-			var entryValue = $(this).find(".content").val();
-			var range = $(this).find(".content").attr("range");
-			range = (range !== "" && range !== undefined);
-			var addedInfoLabel = $(this).find(".formLabel").html();
-			//console.log(entryID, entryValue, range, addedInfoLabel);
-			var annotationObject = {
-				"@id" : "",
-		        "@type" : "oa:Annotation",
-		        "motivation" : "sc:painting",
-		        "label" : "",
-		        "resource" : {
-		          "@type" : "cnt:ContentAsText",
-		          "cnt:chars" :""
-			},
-			"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-			};
-			var rangeObject = { //this will only be saved 
-				"@id" : "",
-		        "@type" : "sc:Range",
-		        "motivation" : "sc:painting",
-		        "label" : "",
-		        "canvases": [],
-		        "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. 
-		        "resources" : [],
-		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-			};
-			if(entryValue !== "" && entryValue !== undefined ){
-				//console.log('HELLO')
-				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-				//console.log("Anno Object @ID is being set to :" + newAnnoURI)
-				annotationObject["@id"] = newAnnoURI;
-				annotationObject.resource["cnt:chars"] = entryValue;
-				rangeObject["@id"] = newRangeURI;
-				rangeObject.label = entryValue;
-				if(range){
-					//console.log("RANGE")
-					var updateOrNew = "";
-					var rangeToUpdate = "";
-					for(var i=1; i<testManifest.structures.length; i++){
-						if (testManifest.structures[i].label === entryValue){
-							updateOrNew = "update";
-							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeafServerID);
-							break;
-						}
-						else{
-							updateOrNew = "new";
-						}
-					}
-					if(updateOrNew === "new"){
-						createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList2);
-						// addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
-					}
-				}
-				else{
-					//console.log("ANNO")
-					annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-					annotationObject.label = addedInfoLabel;
-					annotationObject.resource["cnt:chars"] = entryValue;
-					createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2);
-					//console.log("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
-					// addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
-					//There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-				}
-				//console.log(annotationObject);
-			}		
-		});
-
-		$(".carrierFormEntry").each(function(){
-			var addedInfoList3 = {};
-			
-			if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
-			else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
-			else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
-			var entryID = $(this).find(".content").attr("id");
-			var entryValue = $(this).find(".content").val();
-			var range = $(this).find(".content").attr("range");
-			range = (range !== "" && range !== undefined);
-		    var addedInfoLabel = $(this).find(".formLabel").html();
-
-			////console.log("RANGE T/F: "+range);
-			
-			var special = $(this).attr("special");
-			var annotationObject = {
-				"@id" : "",
-		        "@type" : "oa:Annotation",
-		        "motivation" : "sc:painting",
-		        "label" : "",
-		        "resource" : {
-		          "@type" : "cnt:ContentAsText",
-		          "cnt:chars" :""
-				},
-				"on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-			};
-			var rangeObject = { //this will only be saved 
-				"@id" : "",
-		        "@type" : "sc:Range",
-		        "motivation" : "sc:painting",
-		        "label" : "",
-		        "canvases": [],
-		        "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
-		        "resources" : [],
-		        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-			};
-			if(special !== "" && special !== undefined){
-				//console.log(special);
-				if(special === "dimensions"){
-					//console.log("DIMENSIONS")
-					var leafHeight = $("#leafHeight").val();
-					var leafWidth = $("#leafWidth").val();
-					var textHeight = $("#tbHeight").val();
-					var textWidth = $("#tbWidth").val();
-					var lineHeight = $("#lHeight").val();
-					var lineWidth = $("#lWidth").val();
-					if(leafHeight!== "" || leafWidth!==""){
-						//console.log("LEAF IT")
-						var annotationObject1 = jQuery.extend({}, annotationObject); //cannot just do = annotationObject.  It will cause scope issues.
-						var annotationObject2 = jQuery.extend({}, annotationObject);
-						annotationObject1.label = "Leaf Height";
-						annotationObject1.resource["cnt:chars"] = leafHeight;
-						annotationObject2.label = "Leaf Width";
-						annotationObject2.resource["cnt:chars"] = leafWidth;
-						annotationObject1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						//console.log(annoID);
-						createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3); //this will increment annoID by 1
-						//console.log(annoID);
-						annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be saving the new annoID # 
-						createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Leaf Height: </span> "+leafHeight+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
-						// addedInfoList3.append("<li><span class='formLabel'>Leaf Width: </span> "+leafWidth+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
-					}
-					if(textHeight !== "" || textWidth !==""){
-						//console.log("TEXT IT")
-						var annotationObject3 = jQuery.extend({}, annotationObject);
-						var annotationObject4 = jQuery.extend({}, annotationObject);
-						annotationObject3.label = "Text Block Height";
-						annotationObject3.resource["cnt:chars"] = textHeight;
-						annotationObject4.label = "Text Block Width";
-						annotationObject4.resource["cnt:chars"] = textWidth;
-						annotationObject3["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						//console.log(annoID);
-						createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3); //this will increment annoID by 1
-						//console.log(annoID);
-						annotationObject4["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
-						createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Text Height: </span> "+textHeight+" <span annoServerID='"+annoServerID3+"' class='removeInfo'> X </span></li>");
-						// addedInfoList3.append("<li><span class='formLabel'>Text Width: </span> "+textWidth+" <span annoServerID='"+annoServerID4+"' class='removeInfo'> X </span></li>");
-					}
-					if(lineHeight !== "" || lineWidth !== ""){
-						//console.log("LINE IT");
-						var annotationObject5 = jQuery.extend({}, annotationObject);
-						var annotationObject6 = jQuery.extend({}, annotationObject);
-						annotationObject5.label = "Line Height";
-						annotationObject5.resource["cnt:chars"] = lineHeight;
-						annotationObject6.label = "Line Width";
-						annotationObject6.resource["cnt:chars"] = lineWidth;
-						annotationObject5["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						//console.log(annoID);
-						createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3); //this will increment annoID by 1
-						//console.log(annoID);
-						annotationObject6["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
-						createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Line Height: </span> "+lineHeight+" <span annoServerID='"+annoServerID5+"' class='removeInfo'> X </span></li>");
-						// addedInfoList3.append("<li><span class='formLabel'>Line Width: </span> "+lineWidth+" <span annoServerID='"+annoServerID6+"' class='removeInfo'> X </span></li>");
-					}
-				}
-				else if(special === "layout"){
-					//console.log("LAYOUT");
-					var lines = $("#layoutLines").val();
-					var columns = $("#layoutColumns").val();
-					if(lines!=="" && lines!==undefined){
-						//console.log("LINES");
-						var annoCopy1 = jQuery.extend({}, annotationObject);;
-						annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						annoCopy1.label = "Lines";
-						annoCopy1.resource["cnt:chars"] = lines;
-						createNewAnno(annoCopy1, "Layout - Lines", lines, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Layout - Lines: </span> "+lines+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
-					}
-					if(columns!=="" && columns!==undefined){
-						//console.log("COLUMNS");
-						var annoCopy2 = jQuery.extend({}, annotationObject);;
-						annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						annoCopy2.label = "Columns";
-						annoCopy2.resource["cnt:chars"] = columns;
-						createNewAnno(annoCopy2, "Layout - Columns", columns, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Layout - Columns: </span> "+columns+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
-					}
-				}
-				else if(special === "decorations"){
-					//console.log("DECORATIONS")
-					var initials = $("#carrierInitials").val();
-					var border = $("#carrierBorder").val();
-					if(initials!=="" && initials!==undefined){
-						//console.log("INITIALS")
-						var annoCopy1 = jQuery.extend({}, annotationObject);
-						annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						annoCopy1.label = "Initials";
-						annoCopy1.resource["cnt:chars"] = initials;
-						createNewAnno(annoCopy1, "Decorations - Initials", initials, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Decorations - Initials: </span> "+initials+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
-					}
-					if(border!=="" && border!==undefined){
-						//console.log("BORDER")
-						var annoCopy2 = jQuery.extend({}, annotationObject);
-						annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-						annoCopy2.label = "Border";
-						annoCopy2.resource["cnt:chars"] = border;
-						createNewAnno(annoCopy2, "Decorations - Border", border, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>Decorations - Border: </span> "+border+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
-					}
-				}
-			}
-			else if(entryValue !== "" && entryValue !== undefined ){
-				var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-				var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-				annotationObject["@id"] = newAnnoURI;
-				annotationObject.resource["cnt:chars"] = entryValue;
-				rangeObject["@id"] = newRangeURI;
-				if(range){
-					var updateOrNew = "";
-					var rangeToUpdate = "";
-					for(var i=1; i<testManifest.structures.length; i++){
-						if (testManifest.structures[i].label === entryValue){
-							updateOrNew = "update";
-							rangeToUpdate = testManifest.structures[i]["@id"];
-							updateRange(rangeToUpdate, currentLeafServerID);
-							break;
-						}
-						else{
-							updateOrNew = "new";
-						}
-					}
-					if(updateOrNew === "new"){
-						createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList3);
-						// addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span rangeServerID='"+rangeServerID2+"' class='removeInfo'> X </span></li>");
-					}
-				}
-				else{
-					annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-					annotationObject.label = addedInfoLabel;
-					annotationObject.resource["cnt:chars"] = entryValue;
-					createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3);
-					// addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
-					//There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-				}
-			}	
-		});
-
-		//Grab the additional notes field and save it as an annotation
-
-		var canvasNotes = $("#notes").val();
-		if(canvasNotes !== ""){
-			var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-			var canvasURI = $("#catalogueInfoFor").val();
-			
-			var annoObject = {
-				"@id" : newAnnoURI,
-		        "@type" : "oa:Annotation",
-		        "motivation" : "sc:painting",
-		        "label" : "General Metadata",
-		        "resource" : {
-		          "@type" : "cnt:ContentAsText",
-		          "cnt:chars" : canvasNotes
-				},
-				"on" : canvasURI
-			};
-			createNewAnno(annoObject, "General Notes", canvasNotes, otherInfoList);
-			// otherInfoList.append("<li><span class='formLabel'>General Notes: </span> "+canvasNotes+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
-		}
-
-		$(".start").hide("blind", "300ms", function(){
-			$(".imgAdditionArea").show("explode", "500ms");
-			$("#catalogueInfoFor").val(''); 
-			$("#folioSide2").removeClass("selectedFolio");
-			$("#folioSide1").removeClass("selectedFolio");
-		});
-
-		//since we are saving and going back to choosing what to give additional information to, all the possible choices are set to false to be chosen from again. 
-		alpha = beta = zeta = false;
-
-		
-
-	}
 
 	function addImage(anno, canvasURI){
 		//DO not add image annotations into an annotation list. 
@@ -807,15 +235,17 @@ var testManifest = {
 					//console.log("MAKE RANGE ANNO");
 					this.resources.push(annoObject); //push the annotation object to its resources.
 					//I have the object to pass.  Do I need to pass as parameters instead of the object? Will this also save an annotation?
-					var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
-					var params = {'content':JSON.stringify(annoObject)};
-					console.log("On a leaf.  Save it.");
-					$.post(newAnnoUrl, params, function(data){
-						data=JSON.parse(data);
-						annoServerID = data["@id"];
-						list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' onclick='removeInfo($(this));' class='removeInfo'> X </span></li>");
-					});
+					
 				}
+			});
+			var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+			var info = {"@id" : rageListID, "resources": [] }
+			var params = {'content':JSON.stringify(annoObject)};
+			console.log("On a leaf.  Save it.");
+			$.post(newAnnoUrl, params, function(data){
+				data=JSON.parse(data);
+				annoServerID = data["@id"];
+				list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' onclick='removeInfo($(this));' class='removeInfo'> X </span></li>");
 			});
 		}
 		else{ 
@@ -880,6 +310,21 @@ var testManifest = {
 			else{
 				list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
 			}
+			
+        	var newRangeAnnoList = {
+                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                "@type":"sc:AnnotationList",
+                "resources" : [],
+                "on" : data["@id"]
+        	}
+        	var listURL = "http://localhost:8080/brokenBooks/saveNewRange";
+        	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
+        	$.post(listURL, listParams, function(data2){
+        		data2 = JSON.parse(data2);
+        		console.log("New Anno List 2");
+        		console.log(data2);
+        		rangeListID = data2["@id"];
+        	});
 		});
 		
 	}
@@ -967,23 +412,32 @@ var testManifest = {
         //annoListCollection.push(newCanvas1AnnoList);
         annoListID++;
         testManifest.sequences[0].canvases.push(newCanvas1);
-        // $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');"); //local
+         $("#versoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'verso');"); //local
       	 $("input[rv='verso']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
       	 $.post(url, params1, function(data){
       	 	data = JSON.parse(data);
-      	 	$("#versoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"', 'verso');"); //live with dev server
-      	 	$("input[rv='verso']").attr("canvasServerID", data["@id"]); //live with dev server
+      	 	//$("#versoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"', 'verso');"); //live with dev server
+      	 	//$("input[rv='verso']").attr("canvasServerID", data["@id"]); //live with dev server
       	 	newCanvas1["@id"] = data["@id"];
       	 	testManifest.sequences[0].canvases.push(newCanvas1);
  	   	 	var newCanvas1AnnoList = {
-				"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
 				"on" : data["@id"]
        	 	} //local
         	annoListCollection.push(newCanvas1AnnoList);
+        	//save anno list for new canvas
+        	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
+        	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
+        	$.post(listURL1, listParams1, function(data){
+        		data = JSON.parse(data);
+        		console.log("New Anno List 1");
+        		console.log(data);
+        		annoListAlpha = data["@id"];
+        	});
       	 	console.log("FIRST CANVAS SAVED ID "+ data["@id"]);
       	 	newCanvas1ServerID = data["@id"];
   	 		canvasID += 1;
@@ -1005,7 +459,7 @@ var testManifest = {
 			// annoListCollection.push(newCanvas2AnnoList);
 			//local
 			annoListID++;
-			//$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
+			$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','recto');");
       	 	$("input[rv='recto']").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
 	      	
 	      	var params2 = {'content': JSON.stringify(newCanvas2)};
@@ -1013,18 +467,27 @@ var testManifest = {
 	      		data=JSON.parse(data);
 	      		console.log("Second CANVAS SAVED ID "+ data["@id"]);
 	      		newCanvas2ServerID = data["@id"];
-	      		$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"','recto');");
-      	 		$("input[rv='recto']").attr("canvas", data["@id"]); // live with dev server
+	      		//$("#rectoCatalogue").attr("onclick","enterCatalogueInfo('"+data['@id']+"','recto');");
+      	 		//$("input[rv='recto']").attr("canvas", data["@id"]); // live with dev server
       	 		newCanvas2["@id"] = data["@id"];
       	 		testManifest.sequences[0].canvases.push(newCanvas2);
  		   	 	var newCanvas2AnnoList = {
-	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
 	                "on" : data["@id"]
 	        	}
 				annoListCollection.push(newCanvas2AnnoList);
+				var listURL2 = "http://localhost:8080/brokenBooks/saveNewRange";
+	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
+	        	$.post(listURL2, listParams2, function(data){
+	        		data = JSON.parse(data);
+	        		console.log("New Anno List 2");
+	        		console.log(data);
+	        		annoListBeta = this["@id"];
+	        	});
 	  	 	 	rangeID += 1;
+	  	 	 	annoListID += 1;
 	            var leafRangeObject = {
 	            	//"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID //local
 			      	"@type":"sc:Range",
@@ -1061,55 +524,7 @@ var testManifest = {
 		});
 	}
 
-	/*
-		Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
-	*/
-	function enterCatalogueInfo(canvasID, canvas){
-		var previewImgSrc = $("."+canvas+"Img").attr("src");
-		$(".imgPreview").attr("src",previewImgSrc);
-		$(".contentFormEntry").val("");
-		$(".contextFormEntry").val("");
-		$(".carrierFormEntry").val("");
-		$(".imgAdditionArea").hide("blind", "300ms", function(){
-			$(".start").show("explode", "500ms");
-			if(canvas === 'recto'){
-				$("#folioSide1").addClass("selectedFolio");
-				$("#folioSide2").removeClass("selectedFolio");
-				$("#catalogueInfoFor").val(canvasID); //alpha
-				alpha = true;
-			}
-			else if (canvas === 'verso'){
-				$("#folioSide2").addClass("selectedFolio");;
-				$("#folioSide1").removeClass("selectedFolio");
-				$("#catalogueInfoFor").val(canvasID); //beta
-				beta = true;
-			}
-			else{
-				$("#folioSide2").addClass("selectedFolio");
-				$("#folioSide1").addClass("selectedFolio");
-				$("#catalogueInfoFor").val(currentLeafServerID); //zeta
-				alpha = beta = true;
-			}
-			if(alpha && beta) zeta = true;
-
-			if(zeta){
-				$("#zetaInformation").show("explode" , "500ms");
-			}
-			else if (alpha){
-				$("#alphaInformation").show("explode" , "500ms");
-			}
-			else if (beta){
-				$("#betaInformation").show("explode" , "500ms");
-			}
-			else{
-				//this means there is an error
-				//console.log('ALPHA-BETA-ZETA ERROR');
-				alpha = beta = zeta = false;
-			}
-			// $("#start").attr("onclick", "submitStart('"+canvas+"');");
-		});
-		
-	}
+	
 
 	function testUpdate(){
 		var ranges = {"@id" : "http://165.134.241.141/annotationstore/annotation/55158b5be4b020ab18d13ef5", ranges:["http://NewRange1", "http://newRange2"]};
@@ -1122,11 +537,26 @@ var testManifest = {
 
 	}
 
+	function admin(){
+		admin=true; contributer=false;
+		$("#whoCreates").html("the project admin.");
+		$("#beAdmin").hide();
+		$("#beContributer").show();
+	}
+
+	function contrubuter(){
+		admin=false; contributer=true;
+		$("#whoCreates").html("a contributer.");
+		$("#beAdmin").show();
+		$("#beContributer").hide();
+	}
+
 	/*
 		Accordion UI
 	*/
 	$(function(){
 		$(".leaf").load("../brokenBooks/leafTemplate.html"); 
+		$(".start").load("../brokenBooks/leafInformation.html");
 		$("#formAccordion").accordion({
 			active:false,
 			collapsible: true,

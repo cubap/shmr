@@ -359,3 +359,8 @@ and open the template in the editor.
             .imgCatalogueInfo{
 
             }
+            #whoCreates{
+                font-size:14pt;
+                color:black;
+                font-weight:bold;
+            }

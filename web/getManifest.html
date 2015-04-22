@@ -873,7 +873,15 @@ var rangeCollection = [
 ]
 
 function getAllRanges(){
-    return rangeCollection;
+  var properties={"@type" : "sc:Range"};
+  var url="localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
+  var params = {"content" : JSON.stringify(properties)};
+  $.post(updateUrl, params, function(data){
+     rangeCollection = JSON.parse(data);
+     console.log("RANGE COLLECTION");
+     console.log(rangeCollection);
+     organizeRanges();
+  });
 }
 
 /*
@@ -889,20 +897,15 @@ function organizeRanges(){
     for(var i = rangeCollection.length - 1; i>=0; i--){
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
-        var existingRangeToUpdate = "";
-        
+        var existingRangeToUpdate = ""; 
 
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
-          console.log($.inArray(rangeCollection[i]["@id"], existingRanges));
           existingRanges.push(rangeCollection[i]["@id"]);
         }
         else{
-          console.log("Update existing range");
           existingRangeToUpdate = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]'); // get it.
-          console.log(existingRangeToUpdate);
         }
         
-
         //Create an html range object that can be added
         var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
@@ -930,10 +933,8 @@ function organizeRanges(){
             }
         }
         else if(innerRanges.length ===1 &&  rangeCollection[i].canvases.length === 1){//special case.  These ranges are meant to replace canvases of this leaf with fragments of this canvas.  We have made fragments atomic ranges so that pieces of the same canvas that exist in different ranges can be connected.  They will exist as their own entity on each individual leaf so that they can have their own annotation, but they will be connected by location with the canvas no matter where it exists.  This code will be reached before the code in the else every time because of the ordered array by range field size.  Fortunately, there will only be up to two ranges in here.  Those ranges will be URI's of leaves. Therefore, we can directly grab that leaf from the array.  We can cheat a bit and start from the i we are at since we know it does not come before this one.
-
           var canvasToReplace = rangeCollection[i].canvases[0];
           var subStr = canvasToReplace.substring(0,canvasToReplace.indexOf("#xywh"));
-
           for(var x=0; x<i; x++){
             //we know there is only one
             var innerRangeSubstring = innerRanges[0];
