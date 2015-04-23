@@ -241,7 +241,6 @@ var testManifest = {
 			var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
 			var info = {"@id" : rageListID, "resources": [] }
 			var params = {'content':JSON.stringify(annoObject)};
-			console.log("On a leaf.  Save it.");
 			$.post(newAnnoUrl, params, function(data){
 				data=JSON.parse(data);
 				annoServerID = data["@id"];
