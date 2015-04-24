@@ -235,68 +235,90 @@ var testManifest = {
 		annoID ++;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
 		var annoServerID = -1;
-		//var url = "http://165.134.241.141/brokenBooks/saveNewRangeServlet";
-		//$.post(url, annoObject);
-		if(zeta){ //we are saving to a leaf range, so we have to go through STRUCTURES and find it.  You can also check if objectID contains "/range"
-			var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
-			var annoparams = {'content':JSON.stringify(annoObject)};
-			$.post(newAnnoUrl, annoparams, function(data){
-				data=JSON.parse(data);
-				annoObject["@id"] = data["@id"];
-				list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' onclick='removeInfo($(this));' class='removeInfo'> X </span></li>");
-				annoListCollection[2].resources.push(annoObject);
-			});
-			
-		}
-		else{ 
-			//We need to save the annotation to the DB.  IF it is an image annotation, that annoation object should be added to the images[] field of the canvas in its "on" field.  
-			var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
-			var params = {'content':JSON.stringify(annoObject)};
-			$.post(newAnnoUrl, params, function(data){
-				data=JSON.parse(data);
-				annoObject["@id"] = data["@id"];
-				list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' onclick='removeInfo($(this));' class='removeInfo'> X </span></li>");
-				if(alpha){
-					annoListCollection[0].resources.push(annoObject); //live
-				}
-				else{
-					annoListCollection[1].resources.push(annoObject); //live
-				}
+		console.log("Create new anno for "+objectID);
+		annoObject.on = objectID; //set the on property to be what object we are saving to 
+		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+		var params = {'content':JSON.stringify(annoObject)};
+		$.post(newAnnoUrl, params, function(data){
+			data=JSON.parse(data);
+			annoObject["@id"] = data["@id"];
+			list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' onclick='removeInfo($(this));' class='removeInfo'> X </span></li>");
+			if(zeta){
+				annoListCollection[2].resources.push(annoObject); //live
+				console.log("Leaf list is updated");
+			}
+			else if(alpha){
+				annoListCollection[0].resources.push(annoObject); //live
+				console.log("Alpha list is updated");
+			}
+			else{
+				annoListCollection[1].resources.push(annoObject); //live
+				console.log("Beta list is updated")
+			}
 
-				//console.log("anno server id should be "+annoServerID);
-				
-			});//live.  Does not add to images[] field of appropriate canvas. 
-
-			var annoList = {};
+			console.log("Starting update of list collection on server")
 			$.each(annoListCollection, function(){
 				if (this.on === objectID){ //this is our annotation list to add the annotation to 
 					this.resources.push(annoObject); //push the annotation to the appropriate list.
-					annoList = this;
+					// console.log("ANNO ADDED TO THIS LIST "+objectID);
+					// console.log(annoObject);
 					//Image annotation vs. line annotation?
 					var updateAnnoListURL = "http://localhost:8080/brokenBooks/updateRange";
 					var newResources = this.resources;
-					var params = {"@id": this["@id"], "resources":newResources};
+					var updateContent = newResources;
+					// console.log("anno list");
+					// console.log(this);
+					// console.log(this["@id"]);
+					var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
+					var params = {"content":JSON.stringify(paramsObj)};
+					
 					$.post(updateAnnoListURL, params, function(data){
-						console.log("List Updated");
-					})
+						console.log("List Updated On Server");
+					});
 				}
-			}); //local.  Adds annotation to the annotation list.
-			$.each(testManifest.sequences[0].canvases, function(){
-				if (this["@id"] === objectID){ //this is our canvas object
-					var otherContent = {"@id":annoList["@id"], "@type":"sc:AnnotationList"};
-					var listIncluded = false;
-					$.each(this.otherContent,function(){
-						if(this["@id"] === annoList["@id"]){
-							listIncluded = true;
-							return false;
+			}); 
+				
+			});//live. 
+		 
+			if(zeta){
+				$.each(testManifest.structures, function(){
+					if (this["@id"] === objectID){ //this is our canvas object
+						var otherContent = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList"};
+						var listIncluded = false;
+						$.each(this.otherContent,function(){
+							if(this["@id"] === annoListCollection[2]["@id"]){
+								listIncluded = true;
+								return false;
+							}
+						})
+						if(!listIncluded)this.otherContent.push(otherContent); //If the annotation list is not already included in the otherContent field, add it. 
+						console.log("Local Leaf otherContent updated.");
+					}
+				});//local. adds the annotation list uri to the other content field.  
+			}
+			else{
+				var annoListID = -1;
+				$.each(testManifest.sequences[0].canvases, function(){
+					if (this["@id"] === objectID){ //this is our canvas object
+						if(alpha){
+							annoListID = annoListCollection[0]["@id"];
 						}
-					})
-					if(!listIncluded)this.otherContent.push(otherContent); //If the annotation list is not already included in the otherContent field, add it. 
-				}
-			});//local. adds the annotation list uri to the other content field.  
-		}
-		//console.log("ANNO ID:" +annoServerID);
-		//return annoServerID;
+						else{
+							annoListID = annoListCollection[1]["@id"];
+						}
+						var otherContent = {"@id":annoListID, "@type":"sc:AnnotationList"};
+						var listIncluded = false;
+						$.each(this.otherContent,function(){
+							if(this["@id"] === annoListID){
+								listIncluded = true;
+								return false;
+							}
+						})
+						if(!listIncluded)this.otherContent.push(otherContent); //If the annotation list is not already included in the otherContent field, add it. 
+						console.log("local canvas otherContent updated");
+					}
+				});
+			}//local
 	}
 
 	/*
@@ -333,7 +355,13 @@ var testManifest = {
         		data2 = JSON.parse(data2);
         		console.log("New Anno List 2");
         		console.log(data2);
-        		annoListCollection[2]["@id"] = data2["@id"]
+        		annoListCollection[2]["@id"] = data2["@id"];
+        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+        		var paramObj = {"@id":currentLeafServerID, "otherContent":data["@id"]};
+        		var params = {"content":JSON.stringify(paramObj)};
+        		$.post(updateCanvasURL, params, function(data){
+        			console.log("Leaf otherContent updated live");
+        		});
         	});
 		});
 		
@@ -351,7 +379,7 @@ var testManifest = {
 					this.ranges.push(leaf);
 					var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
 					var paramObj = {"ranges" : ranges};
-					var params = {"content" : JSON.stringify(ranges)};
+					var params = {"content" : JSON.stringify(paramObj)};
 					$.post(newAnnoUrl, params, function(data){
 
 					});
@@ -428,29 +456,37 @@ var testManifest = {
       	 testManifest.sequences[0].canvases.push(newCanvas1); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
-      	 $.post(url, params1, function(data){
+      	 $.post(url, params1, function(data){ //save first new canvas
       	 	data = JSON.parse(data);
 
       	 	newCanvas1["@id"] = data["@id"];
       	 	$("#versoCatalogue").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'verso');"); 
       	 	$("input[rv='verso']").attr("canvas", data["@id"]); 
       	 	testManifest.sequences[0].canvases.push(newCanvas1); //live
- 	   	 	var newCanvas1AnnoList = {
+ 	   	 	
+        	//annoListCollection.push(newCanvas1AnnoList);
+        	annoListCollection[0].on = data["@id"];
+        	//save anno list for new canvas
+        	var newCanvas1AnnoList = {
 				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
 				"on" : data["@id"]
        	 	} //local
-        	//annoListCollection.push(newCanvas1AnnoList);
-        	annoListCollection[0].on = data["@id"];
-        	//save anno list for new canvas
         	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
-        	$.post(listURL1, listParams1, function(data){
+        	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
         		data = JSON.parse(data);
         		console.log("New Anno List 1");
         		console.log(data);
         		annoListCollection[0]["@id"] = data["@id"];
+        		//update otherContent of first canvas
+        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+        		var paramObj = {"@id":newCanvas1["@id"], "otherContent":data["@id"]};
+        		var params = {"content":JSON.stringify(paramObj)};
+        		$.post(updateCanvasURL, params, function(data){
+        			console.log("Canvas 1 otherContent updated live");
+        		});
         	});
       	 	console.log("FIRST CANVAS SAVED ID "+ data["@id"]);
       	 	newCanvas1ServerID = data["@id"];
@@ -499,7 +535,13 @@ var testManifest = {
 	        		data = JSON.parse(data);
 	        		console.log("New Anno List 2");
 	        		console.log(data);
-	        		annoListCollection[1]["@id"] = this["@id"];
+	        		annoListCollection[1]["@id"] = data["@id"];
+	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+	        		var paramObj = {"@id":newCanvas2["@id"], "otherContent":data["@id"]};
+	        		var params = {"content":JSON.stringify(paramObj)};
+	        		$.post(updateCanvasURL, params, function(data){
+	        			console.log("Canvas 2 otherContent updated live");
+	        		});
 	        	});
 	  	 	 	rangeID += 1;
 	  	 	 	annoListID += 1;
@@ -542,16 +584,16 @@ var testManifest = {
 
 	
 
-	function testUpdate(){
-		var ranges = {"@id" : "http://165.134.241.141/annotationstore/annotation/55158b5be4b020ab18d13ef5", ranges:["http://NewRange1", "http://newRange2"]};
-		var updateUrl = "http://localhost:8080/brokenBooks/updateRange";
-		var params = {"content" : JSON.stringify(ranges)};
-		$.post(updateUrl, params, function(data){
-			console.log("UPDATED");
-		});
+	// function testUpdate(){
+	// 	var ranges = {"@id" : "http://165.134.241.141/annotationstore/annotation/55158b5be4b020ab18d13ef5", ranges:["http://NewRange1", "http://newRange2"]};
+	// 	var updateUrl = "http://localhost:8080/brokenBooks/updateRange";
+	// 	var params = {"content" : JSON.stringify(ranges)};
+	// 	$.post(updateUrl, params, function(data){
+	// 		console.log("UPDATED");
+	// 	});
 
 
-	}
+	// }
 
 	function admin(){
 		admin=true; contributer=false;

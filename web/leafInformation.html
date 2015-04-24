@@ -23,7 +23,7 @@ and open the template in the editor.
                                             <tr class="contextFormEntry"><td class="formLabel">Patron (first owner): </td> <td> <input class="content" type="text"  id="contextPatron"/></td></tr>
                                             <tr class="contextFormEntry"><td class="formLabel">Former Owners Seperated by Semi-colon (;) </td> <td> <textarea class="content" id="previousOwners"/></textarea></td></tr>
                                             <tr class="contextFormEntry"><td class="formLabel">Insignia (coat of arms, etc.) </td> <td> <input class="content" type="text"  id="insignia"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Sales: </td> <td> <input class="content" type="text"  id="contextAuction" range="range" /></textarea</td></tr>
+                                            <tr class="contextFormEntry"><td class="formLabel">Sales: </td> <td> <input class="content" type="text"  id="contextAuction" /></textarea</td></tr>
                                             <tr class="contextFormEntry"><td class="formLabel">Date Acquired: </td> <td> <input class="content" type="text"  id="contextDateAcquired"/></td></tr>
                                             <tr class="contextFormEntry"><td class="formLabel">Exlibris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
                                             <tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input class="content" type="text"  id="libraryStamp"/></td></tr>
@@ -130,7 +130,7 @@ and open the template in the editor.
                                             <tr class="contentFormEntry"><td class="formLabel">Text Author:  </td> <td>  <input class="content" type="text" class="content" id="contentAuthor" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Generic Title:  </td> <td>  <input class="content" type="text" class="content" id="contentTitle" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Subject:  </td> <td>  <input class="content" type="text" class="contentF" id="contentSubject" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Structure/Section of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentSection" range="range" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Structure/Section of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentSection" admin="admin" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Description of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentDescription" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Incipit:  </td> <td>  <input class="content" type="text" class="content" id="incipit" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Explicit:  </td> <td>  <input class="content" type="text" class="content" id="explicit" /> </td></tr> 
@@ -326,7 +326,7 @@ and open the template in the editor.
                 annotationObject.resource["cnt:chars"] = entryValue;
                 rangeObject["@id"] = newRangeURI;
                 rangeObject.label = entryValue;
-                if(range){
+                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
                     var updateOrNew = "";
                     var rangeToUpdate = "";
                     for(var i=1; i<testManifest.structures.length; i++){
@@ -400,7 +400,7 @@ and open the template in the editor.
                 annotationObject.resource["cnt:chars"] = entryValue;
                 rangeObject["@id"] = newRangeURI;
                 rangeObject.label = entryValue;
-                if(range){
+                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
                     //console.log("RANGE")
                     var updateOrNew = "";
                     var rangeToUpdate = "";
@@ -585,7 +585,7 @@ and open the template in the editor.
                 annotationObject["@id"] = newAnnoURI;
                 annotationObject.resource["cnt:chars"] = entryValue;
                 rangeObject["@id"] = newRangeURI;
-                if(range){
+                if(range){//there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
                     var updateOrNew = "";
                     var rangeToUpdate = "";
                     for(var i=1; i<testManifest.structures.length; i++){
