@@ -173,6 +173,18 @@ and open the template in the editor.
             <input type="button" onclick="cancelFolio();" value="Exit Metadata"/>
     </div>
 <script>
+    $(function(){
+        $("#formAccordion").accordion({
+            active:false,
+            collapsible: true,
+            heightStyle: "content"
+        });
+        $(".specialFormEntry").on('change', function(){
+            var showValue = $(this).val();
+            $("#"+showValue).show();
+            //Hide the other ones?
+        });
+    })
     /*
         Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
     */

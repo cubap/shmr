@@ -78,7 +78,8 @@ and open the template in the editor.
     </head>
     <body>
         <div class="mainBlock" id="focusedRange">
-            <button onclick="organizeRanges();">SORT RANGES</button>
+            <button onclick="getAllRanges();">SORT RANGES LIVE</button>
+            <button onclick="organizeRanges();">SORT RANGES LOCAL</button>
         </div>
         <div class="sideBarInfo">
             <div class="manifestData"></div>
@@ -870,17 +871,37 @@ var rangeCollection = [
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
-]
+];
 
 function getAllRanges(){
   var properties={"@type" : "sc:Range"};
-  var url="localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
+  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
-  $.post(updateUrl, params, function(data){
+  console.log("GET RANGES LIVE");
+  $.post(url, params, function(data){
+     console.log("Got ranges");
      rangeCollection = JSON.parse(data);
-     console.log("RANGE COLLECTION");
-     console.log(rangeCollection);
+     getAllCanvases();
+  });
+}
+
+function getAllAnnotations(){
+  var properties={"@type" : "sc:annotationList"};
+  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
+  var params = {"content" : JSON.stringify(properties)};
+  $.post(url, params, function(data){
+     annotationLists = JSON.parse(data);
      organizeRanges();
+  });
+}
+
+function getAllCanvases(){
+  var properties={"@type" : "sc:Canvas"};
+  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
+  var params = {"content" : JSON.stringify(properties)};
+  $.post(url, params, function(data){
+     pageCanvases = JSON.parse(data);
+     getAllAnnotations();
   });
 }
 
@@ -1081,9 +1102,10 @@ function organizeRanges(){
                    var annotation = $("<div class='annotation'></div>");
                    if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
                        //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
-                       var currentCanvasAnnotations = {"resources":[]};
+                       var currentCanvasAnnotations=[];
+                       var currentCanvasAnnotationLists = [];
                        if(this["otherContent"]!== undefined && this["otherContent"].length >0){
-                        currentCanvasAnnotations = annotationLists[0]; //get the canvas annotations.  
+                        currentCanvasAnnotationsLists = this.otherContent; //get the canvas annotations. 
                        }
                        if(side1 && this.images.length>0){
                           canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
@@ -1101,7 +1123,13 @@ function organizeRanges(){
                           }
                        }
 
-                      $.each(currentCanvasAnnotations.resources, function(){
+                      $.each(currentCanvasAnnotationLists, function(){
+                        $.get(this["@id"], function(data){
+                            data=JSON.parse(data);
+                            currentCanvasAnnotations.append(data.resources);
+                        });
+                      });
+                      $.each(currentCanvasAnnotations, function(){
                         var canvas = this.on;
                         var XYWHarray2 = [0,0,0,0];
                         if(canvas.indexOf("#xywh") >= 0){
