@@ -9,27 +9,27 @@
 		<p>
 			If you have an image to upload, do so here.  You can either paste in the direct image URI of its location, upload the file to us, or skip this step entirely if you do not have an image.
 		</p>
-		<div class="versoCanvas">
-			<p>This is considered the ALPHA side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later.</p>
-			<div class="addImgBtn" onclick="showImageAddition('verso');">Add Image</div>
-			<div class="uploadness">
-				Enter Image Uri:&nbsp;&nbsp;<textarea rv="verso" class="canvasImageSource"></textarea><br>
-				OR<br>
-            	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
-			</div>
-			<img class="versoImg" src=""/><br>
-			<input id="rectoCatalogue" type="button" rv="verso" value="Enter ALPHA Metadata" class="imgCatalogueInfo" canvas=""/>
-		</div>
 		<div class="rectoCanvas">
-			<p>This is considered the BETA side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
+			<p>This is considered the ALPHA side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later.</p>
 			<div class="addImgBtn" onclick="showImageAddition('recto');">Add Image</div>
 			<div class="uploadness">
-				Enter Image URI: &nbsp;&nbsp;<textarea rv="recto" class="canvasImageSource"></textarea><br>
+				Enter Image Uri:&nbsp;&nbsp;<textarea rv="recto" class="canvasImageSource"></textarea><button onclick='updateImageAnno("alpha");'>SAVE</button><br>
 				OR<br>
             	<input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
 			</div>
-			<img class="rectoImg" src="" /><br>
-			<input id="versoCatalogue" type="button" rv="recto" canvas="" value="Enter BETA Metadata" class="imgCatalogueInfo"/>
+			<img class="rectoImg" src=""/><br>
+			<input id="rectoCatalogue" type="button" rv="recto" value="Enter ALPHA Metadata" class="imgCatalogueInfo" canvas=""/>
+		</div>
+		<div class="versoCanvas">
+			<p>This is considered the BETA side of the leaf.  If you are not sure whether it is recto or verso, that is O.K.  You can add this information later. </p>
+			<div class="addImgBtn" onclick="showImageAddition('verso');">Add Image</div>
+			<div class="uploadness">
+				Enter Image URI: &nbsp;&nbsp;<textarea rv="verso" class="canvasImageSource"></textarea><button onclick='updateImageAnno("beta");'>SAVE</button><br>
+				OR<br>
+            	<input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
+			</div>
+			<img class="versoImg" src="" /><br>
+			<input id="versoCatalogue" type="button" rv="verso" canvas="" value="Enter BETA Metadata" class="imgCatalogueInfo"/>
 		</div><br>
 		<input type="button" onclick="enterCatalogueInfo('leaf');" value="Enter OMEGA (unassigned to either side) Metadata"/>
 	</div>
@@ -40,6 +40,23 @@
 function showImageAddition(which){
 	$("."+which+"Canvas").find(".addImgBtn").hide();
 	$("."+which+"Canvas").find(".uploadness").show("explode", "500ms");
+}
+
+function updateImageAnno(which){
+	if(which === "alpha"){
+		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+		var paramObj = {"@id": $("#rectoCatalogue").attr("canvas"), "images":[$('textarea[rv="recto"]').val()]};
+		var params = {"content":JSON.stringify(paramObj)};
+		$.post(updateCanvasURL, params, function(data){
+		});
+	}
+	else{
+		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+		var paramObj = {"@id": $("#rectoCatalogue").attr("canvas"), "images":[$('textarea[rv="verso"]').val()]};
+		var params = {"content":JSON.stringify(paramObj)};
+		$.post(updateCanvasURL, params, function(data){
+		});
+	}
 }
 
 $(function(){
@@ -76,7 +93,7 @@ $(function(){
 					"on" : canvasServerURI
 				};
 				//$("#catalogueInfoFor").val(canvasURI);
-                //addImage(annotationObject, canvasURI); // local
+                //(annotationObject, canvasURI); // local
                 addImage(annotationObject, canvasServerURI); // live
             };
        

@@ -57,7 +57,7 @@ and open the template in the editor.
               border: 4px solid white;
             }
             .fragment{
-              border: 1px solid yellow;
+              border: 1px solid black;
               position: absolute;
               background: yellow;
               opacity: .3;
@@ -126,7 +126,7 @@ var annotationLists = [
         "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
       }
     ]
-    }
+  }
 ];
 var pageCanvases = [
 
@@ -869,11 +869,12 @@ var rangeCollection = [
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
+}
 
 ];
 
 function getAllRanges(){
+  //THERE WILL AT LEAST BE ONE RANGE
   var properties={"@type" : "sc:Range"};
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
@@ -886,21 +887,25 @@ function getAllRanges(){
 }
 
 function getAllAnnotations(){
-  var properties={"@type" : "sc:annotationList"};
+  //THERE MAY BE NO ANNOTATIONS
+  var properties={"@type" : "sc:AnnotationList"};
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
      annotationLists = JSON.parse(data);
+     console.log("Got annotations");
      organizeRanges();
   });
 }
 
 function getAllCanvases(){
+  //THERE WILL AT LEAST BE 2 CANVASES
   var properties={"@type" : "sc:Canvas"};
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
      pageCanvases = JSON.parse(data);
+     console.log("got canvases")
      getAllAnnotations();
   });
 }
@@ -913,9 +918,12 @@ function getAllCanvases(){
 
 //Think about sorted vs. unsorted ranges. 
 function organizeRanges(){
+  console.log("Organizing Ranges");
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
+      //console.log("Building Range");
+      //console.log(rangeCollection[i]);
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
         var existingRangeToUpdate = ""; 
@@ -933,6 +941,7 @@ function organizeRanges(){
         var innerRanges = rangeCollection[i].ranges;
         //obvious
         if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
+         //console.log("Working inner ranges.")
             for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
                 var thisRange = innerRanges[j];
                 $.each(rangeCollection, function(){ //check each range in the collection
@@ -994,6 +1003,7 @@ function organizeRanges(){
           }
         }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
+          //console.log("Working on a leaf");
             var currentCanvases = outerRange.canvases;
             var firstCanvas = currentCanvases[0];
             if(firstCanvas.indexOf("#xywh") >=0){
@@ -1005,17 +1015,20 @@ function organizeRanges(){
             var newLeaf = undefined;
             var rangeForCanvases = $("#focusedRange").find('div[rangeID="'+outerRange['@id']+'"]');
             if(rangeForCanvases.length > 0){ //if the range exists in a section
+                //console.log("I know the outer range");
+                //console.log(rangeForCanvases);
               a=true;
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
+               // console.log("This is a new leaf");
               newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
 
             var canvasHolder1 = $("<div sideA='' class='canvas'> </div>");
             var canvasHolder2 = $("<div sideB='' class='canvas'> </div>");
 
-            var canvasHolder3 = $("<div sideA='' class='canvas'> <img class='canvasImg' /> </div>");
-            var canvasHolder4 = $("<div sideB='' class='canvas'> <img class='canvasImg' /> </div>");
+            var canvasHolder3 = $("<div sideA='' class='canvas'> <img class='canvasImg' src='http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png' /> </div>");
+            var canvasHolder4 = $("<div sideB='' class='canvas'> <img class='canvasImg' src='http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png' /> </div>");
 
 
             var side1 = true;
@@ -1024,6 +1037,7 @@ function organizeRanges(){
             var holderToAppend = $("");
             
             $.each(currentCanvases, function(){ //for whatever canvases there are, if any, or many fragments
+              //console.log("Working on canvases");
               var originalCanvas = String(this);
               var currentCanvas = "";
               var fragment = false;
@@ -1102,10 +1116,13 @@ function organizeRanges(){
                    var annotation = $("<div class='annotation'></div>");
                    if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
                        //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                      // console.log("Working on canvas images");
                        var currentCanvasAnnotations=[];
                        var currentCanvasAnnotationLists = [];
                        if(this["otherContent"]!== undefined && this["otherContent"].length >0){
-                        currentCanvasAnnotationsLists = this.otherContent; //get the canvas annotations. 
+                        console.log("Set annotation lists");
+                        currentCanvasAnnotationLists = this.otherContent; //get the canvas annotations. 
+                        currentCanvasAnnotations.push(annotationLists[0].resources); // local.  Comment out when running live
                        }
                        if(side1 && this.images.length>0){
                           canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
@@ -1122,69 +1139,122 @@ function organizeRanges(){
                             canvasHolder4.append(fragmentHTML);
                           }
                        }
-
-                      $.each(currentCanvasAnnotationLists, function(){
-                        $.get(this["@id"], function(data){
-                            data=JSON.parse(data);
-                            currentCanvasAnnotations.append(data.resources);
-                        });
-                      });
-                      $.each(currentCanvasAnnotations, function(){
-                        var canvas = this.on;
-                        var XYWHarray2 = [0,0,0,0];
-                        if(canvas.indexOf("#xywh") >= 0){
-                          var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
-                          if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
-                              var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
-                              if(numberArray.length === 4){ // string must have all 4 to be valid
-                                  var x = numberArray[0];
-                                  var y = numberArray[1];
-                                  var w = numberArray[2];
-                                  var h = numberArray[3];
-                                  XYWHarray2 = [x,y,w,h];
+//                      $.each(currentCanvasAnnotationLists, function(){ //get each annotationList's annotations
+//                        console.log("SET Current Canvas ANNOTATIONS");
+//                        console.log(this);
+//                         $.get(this, function(data2){ //CORS seems to be preventing me from grabbing these annotations
+//                           console.log("ANNOLIST GET");
+//                           console.log(data2);
+//                             //currentCanvasAnnotations.push(data2.resources);
+//                         }, function(data2){ //make that annotations are gathered, then run the code to append annos to their location.
+//                            data2=JSON.parse(data2);
+//                            var annos = data2.resources;
+//                            $.each(annos,function(){
+//                             console.log("an Anno");
+//                             console.log(this);
+//                                var canvas = this.on;
+//                                 var XYWHarray2 = [0,0,0,0];
+//                                 if(canvas.indexOf("#xywh") >= 0){
+//                                   var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
+//                                   if(XYWHsubstring.indexOf('=') > -1){ //string must contain data1 to be valid
+//                                       var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
+//                                       if(numberArray.length === 4){ // string must have all 4 to be valid
+//                                           var x = numberArray[0];
+//                                           var y = numberArray[1];
+//                                           var w = numberArray[2];
+//                                           var h = numberArray[3];
+//                                           XYWHarray2 = [x,y,w,h];
+//                                       }
+//                                       else{
+//                                         //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
+//                                         XYWHarray2 = [0,0,0,0];
+//                                       }
+//                                   }
+//                                   annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;"    );
+//                                 }
+//                                 if(this.resource["@type"] == "dctypes:Image"){
+//                                   var img = $("<img class='canvasImgFragment' src='"+this.resource["@id"]+"'/>");
+//                                   annotation.addClass("imgFragment").append(img);
+//                                 }
+//                                 if(this.resource["@type"] == "cnt:ContentAsText"){
+//                                   var text = this.resource["cnt:chars"];
+//                                   annotation.attr("annoText", text);
+//                                 }
+//                                 if(side1){
+//                                   //console.log("Append anno to holder 1");
+//                                   canvasHolder3.append(annotation);
+//                                 }
+//                                 else{
+//                                     //console.log("Append anno to holder 2");
+//                                   canvasHolder4.append(annotation);
+//                                 }
+//                            });
+//                            });
+//                         }); //LIVE.  Must comment this out when doing local demo.
+                        console.log(currentCanvasAnnotations);
+                        for(var x=0; x<currentCanvasAnnotations.length; x++){
+                            console.log(currentCanvasAnnotations[x]);
+                            $.each(currentCanvasAnnotations[x], function(){
+                             console.log(this);
+                              var canvas = this.on;
+                              var XYWHarray2 = [0,0,0,0];
+                              if(canvas.indexOf("#xywh") >= 0){
+                                var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
+                                if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
+                                    var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
+                                    if(numberArray.length === 4){ // string must have all 4 to be valid
+                                        var x = numberArray[0];
+                                        var y = numberArray[1];
+                                        var w = numberArray[2];
+                                        var h = numberArray[3];
+                                        XYWHarray2 = [x,y,w,h];
+                                    }
+                                    else{
+                                      //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
+                                      XYWHarray2 = [0,0,0,0];
+                                    }
+                                }
+                                annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;");
+                              }
+                              if(this.resource["@type"] == "dctypes:Image"){
+                                var img = $("<img class='canvasImgFragment' src='"+this.resource["@id"]+"'/>");
+                                annotation.addClass("imgFragment").append(img);
+                              }
+                              if(this.resource["@type"] == "cnt:ContentAsText"){
+                                var text = this.resource["cnt:chars"];
+                                annotation.attr("annoText", text);
+                              }
+                              if(side1){
+                                //console.log("Append anno to holder 1");
+                                canvasHolder3.append(annotation);
                               }
                               else{
-                                //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
-                                XYWHarray2 = [0,0,0,0];
+                                  //console.log("Append anno to holder 2");
+                                canvasHolder4.append(annotation);
                               }
+                            }); //must comment this out when running live
+                        }
+                        
+                       //The canvas holders must be completely built before this part.  We may need to implement a timeout for now.  
+                        if(a){ //if the range exists in a section
+                           // console.log("Append canvases to range.");
+                          rangeForCanvases.append(canvasHolder3, canvasHolder4); //put the canvas object in the range object (the leaf)
+                        }
+                        else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
+                            //console.log("Append canvases to new leaf");
+                          newLeaf.append(canvasHolder3, canvasHolder4);
+                        }
+                        if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
+                          $("#focusedRange").append(newLeaf);
+                         // console.log("append new leaf to DOM");
+                          if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
+                              existingRanges.push(newLeaf.attr("rangeID"));
                           }
-                          annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;"    );
                         }
-                        console.log(this["@type"]);
-                        if(this.resource["@type"] == "dctypes:Image"){
-                          console.log("IMG ANNO FRAG");
-                          var img = $("<img class='canvasImgFragment' src='"+this.resource["@id"]+"'/>");
-                          annotation.addClass("imgFragment").append(img);
-                        }
-                        if(this.resource["@type"] == "cnt:ContentAsText"){
-                          var text = this.resource["cnt:chars"];
-                          annotation.attr("annoText", text);
-                        }
-                        if(side1){
-                          canvasHolder3.append(annotation);
-                        }
-                        else{
-                          canvasHolder4.append(annotation);
-                        }
-                      });
                    }
               });
-             
-            });
-            if(a){ //if the range exists in a section
-              rangeForCanvases.append(canvasHolder3, canvasHolder4); //put the canvas object in the range object (the leaf)
-            }
-            else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
-              newLeaf.append(canvasHolder3, canvasHolder4);
-            }
-            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
-              $("#focusedRange").append(newLeaf);
-              if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
-                  existingRanges.push(newLeaf.attr("rangeID"));
-              }
-            }
+           });
         }
-        
     }
 }
 
