@@ -227,6 +227,69 @@ var testManifest = {
 	}
 
 	/*
+		Check if this particular annotation already exists.  If it does, we want to update the annotation.  Otherwise, we want to save a new one.
+		@see createNewAnno()
+	*/
+	function annoExists(annoObject){
+		var labelToCheckFor = annoObject.label;
+		var tmpAnnos = [];
+		var theReturn = false;
+		var theURI = "";
+		if(zeta){
+                    tmpAnnos = annoListCollection[2];
+		}
+		else if(alpha){
+                    tmpAnnos = annoListCollection[0];
+		}
+		else{
+                    tmpAnnos = annoListCollection[1];
+		}
+		$.each(tmpAnnos.resources, function(){
+                    if(this.label == labelToCheckFor){
+                            theReturn = true;
+                            return -1;
+                    }
+		});
+		console.log("Anno Exists? "+theReturn);
+		return theReturn;
+	}
+
+	function updateAnnotation(annoURI, annoObj){
+		console.log("Update Anno, don't save new one.")
+		var resourceObj = annoObj.resource;
+		var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
+		var paramObj = {"@id":annoURI, "resource": resourceObj};
+		var params = {"content":JSON.stringify(paramObj)};
+		$.post(updateAnnoURL, params, function(data){
+			console.log("Anno updated on server");
+		});
+		if(zeta){
+                    $.each(annoListCollection[2].resources, function(){
+                        if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                console.log("Local Anno Updated.");
+                        }
+                    });
+		}
+		else if (alpha){
+                    $.each(annoListCollection[0].resources, function(){
+                        if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                console.log("Local Anno Updated.");
+                        }
+                    });
+		}
+		else{
+                    $.each(annoListCollection[1].resources, function(){
+                        if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                console.log("Local Anno Updated.");
+                        }
+                    });
+		}
+	}
+
+	/*
 		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range. 
 	*/
 
@@ -239,6 +302,29 @@ var testManifest = {
 		annoObject.on = objectID; //set the on property to be what object we are saving to 
 		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
 		var params = {'content':JSON.stringify(annoObject)};
+		var labelToCheckFor = annoObject.label;
+		var tmpAnnos = [];
+		var theReturn = undefined;
+		var theURI = "";
+
+		/* See if the annotation exists and if so, update the annotation isntead of saving a new one. */
+		if(zeta){
+			tmpAnnos = annoListCollection[2];
+		}
+		else if(alpha){
+			tmpAnnos = annoListCollection[0];
+		}
+		else{
+			tmpAnnos = annoListCollection[1];
+		}
+		$.each(tmpAnnos.resources, function(){
+			if(this.label == labelToCheckFor){
+				updateAnnotation(this["@id"], annoObject);
+			}
+		});
+		if(annoExists(annoObject)){ /* Works with the code block above this.  Check if this annotation exists and if so, we do not want to run any of the code below.  */
+			return false;
+		}
 		$.post(newAnnoUrl, params, function(data){
 			data=JSON.parse(data);
 			annoObject["@id"] = data["@id"];
@@ -278,7 +364,7 @@ var testManifest = {
 				}
 			}); 
 				
-		});//live. 
+		});  //live. 
 		 
 		if(zeta){
 			$.each(testManifest.structures, function(){
@@ -565,11 +651,7 @@ var testManifest = {
 				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
       	 	});
   	 	});
-      	
-      	 
-
-      	 
-      	
+      	     	
 	}
 
 	function removeInfo(listItem){

@@ -184,16 +184,54 @@ and open the template in the editor.
             $("#"+showValue).show();
             //Hide the other ones?
         });
-    })
+    });
+    function populateAnnoForms(){
+        var annos = [];
+        if(zeta){
+            annos = annoListCollection[2].resources;
+        }
+        else if(alpha){
+            annos = annoListCollection[0].resources;
+        }
+        else{
+            annos = annoListCollection[1].resources;
+        }
+        $.each($(".contextFormEntry"), function(){
+            var label1 = $(this).find('formLabel').html().replace(":", "");
+            var currentEntry1 = $(this).find(".content");
+            $.each(annos, function(){
+                if (this.label == label1){
+                    currentEntry1.val(this.resource["cnt:chars"]);
+                }
+            });
+        });
+        $.each($(".contentFormEntry"), function(){
+            var label2 = $(this).find('formLabel').html().replace(":", "");
+            var currentEntry2 = $(this).find(".content");
+            $.each(annos, function(){
+                if (this.label == label2){
+                    currentEntry2.val(this.resource["cnt:chars"]);
+                }
+            });
+        });
+        $.each($(".carrierFormEntry"), function(){
+            var label3 = $(this).find('formLabel').html().replace(":", "");
+            var currentEntry3 = $(this).find(".content");
+            $.each(annos, function(){
+                if (this.label == label3){
+                    currentEntry3.val(this.resource["cnt:chars"]);
+                }
+            });
+        });
+    };
     /*
         Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
     */
+   
     function enterCatalogueInfo(canvasID, canvas){
         var previewImgSrc = $("."+canvas+"Img").attr("src");
         $(".imgPreview").attr("src",previewImgSrc);
-        $(".contentFormEntry").val("");
-        $(".contextFormEntry").val("");
-        $(".carrierFormEntry").val("");
+        $(".content").val(""); //Reset all fields
         $(".imgAdditionArea").hide("blind", "300ms", function(){
             $(".start").show("explode", "500ms");
             if(canvas === 'recto'){
@@ -230,6 +268,7 @@ and open the template in the editor.
                 //console.log('ALPHA-BETA-ZETA ERROR');
                 alpha = beta = zeta = false;
             }
+            populateAnnoForms();
             // $("#start").attr("onclick", "submitStart('"+canvas+"');");
         });
         
