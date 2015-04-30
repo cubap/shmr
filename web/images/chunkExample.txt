@@ -99,34 +99,34 @@ and open the template in the editor.
 
 //GOAL: Represent the second half of the last page of section 1 to be the start section 2.  
 var annotationLists = [
-//    {
-//      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
-//      "@type" : "sc:AnnotationLists",
-//      "label" : "Fragments",
-//      "resources" : [ {
-//        "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
-//        "@type" : "oa:Annotation",
-//        "motivation" : "sc:painting",
-//        "resource" : {
-//          "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
-//          "@type" : "dctypes:Image",
-//          "format" : "image/jpeg",
-//          "height" : 50,
-//          "width" : 150
-//        },
-//        "on" : "http://www.example.org/iiif/LlangBrev/canvas/1#xywh=10,15,150,50"
-//      },
-//      {
-//        "@type" : "oa:Annotation",
-//        "motivation" : "sc:painting",
-//        "resource" : {
-//          "@type" : "cnt:ContentAsText",
-//          "cnt:chars" : "This is an image fragment."
-//        },
-//        "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
-//      }
-//    ]
-//  }
+    // {
+    //   "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
+    //   "@type" : "sc:AnnotationLists",
+    //   "label" : "Fragments",
+    //   "resources" : [ {
+    //     "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
+    //     "@type" : "oa:Annotation",
+    //     "motivation" : "sc:painting",
+    //     "resource" : {
+    //       "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
+    //       "@type" : "dctypes:Image",
+    //       "format" : "image/jpeg",
+    //       "height" : 50,
+    //       "width" : 150
+    //     },
+    //     "on" : "http://www.example.org/iiif/LlangBrev/canvas/1#xywh=10,15,150,50"
+    //   },
+    //   {
+    //     "@type" : "oa:Annotation",
+    //     "motivation" : "sc:painting",
+    //     "resource" : {
+    //       "@type" : "cnt:ContentAsText",
+    //       "cnt:chars" : "This is an image fragment."
+    //     },
+    //     "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+    //   }
+    // ]
+    // }
 ];
 var pageCanvases = [
 
@@ -139,16 +139,16 @@ var pageCanvases = [
           "width" : 200,
           "images" : [
           {
-               "@type" : "oa:Annotation",
-               "motivation" : "sc:painting",
-               "resource" : {
-                 "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
-                 "@type" : "dctypes:Image",
-                 "format" : "image/jpeg",
-                 "height" : 2365,
-                 "width" : 1579
-               },
-               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                "height" : 2365,
+                "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
           }
           ],
           "otherContent":[]
@@ -713,6 +713,39 @@ var rangeCollection = [
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/203",
+  "@type":"sc:Range",
+  "label":"Weird Folio 2",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/2"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,0,200,75"],
+  //This will only work for image fragments when each fragment is its own canvas.  Either in the canavas or the range we must mark it as a fragment. 
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/204",
+  "@type":"sc:Range",
+  "label":"Weird Folio 3",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/3"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,75,200,75"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/404",
+  "@type":"sc:Range",
+  "label":"Weird Folio 3",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/3"
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2#xywh=0,150,200,150"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/4",
@@ -869,9 +902,9 @@ var rangeCollection = [
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-}
+},
 
-];
+]
 
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
@@ -1075,70 +1108,70 @@ function organizeRanges(){
                   }
               }
               //This part creates chunks and places them in the canvas.  We can show only cropped parts of the canvas
-              // var canvasHTML = $("<div fragment='"+fragment+"' class='canvasinner'> <img class='canvasImg' src='' /></div>");
-              //  $.each(pageCanvases, function(){
-              //      if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
-              //          canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
-              //          if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
-              //             canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
-              //             canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
-              //             if(side1){ //put it in side1.  
-              //               canvasHolder1.append(canvasHTML);
-              //               holderToAppend = canvasHolder1;
-              //             }
-              //             else{ //maybe we should check if side2 is true, but I'll just assume it
-              //               canvasHolder2.append(canvasHTML);
-              //               holderToAppend = canvasHolder2;
-              //             }
-              //          }
-              //          else{ //the height and width of the fragment piece were not 0.
-              //             canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
-              //             canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
-              //             if(side1){//put it in side1.
-              //               canvasHolder1.append(canvasHTML);
-              //               holderToAppend = canvasHolder1;
-              //             }
-              //             else{//maybe we should check if side2 is true, but I'll just assume it
-              //               canvasHolder2.append(canvasHTML);
-              //               holderToAppend = canvasHolder2;
-              //             }
-              //          }
-              //      }
-              //  });
+               var canvasHTML = $("<div fragment='"+fragment+"' class='canvasinner'> <img class='canvasImg' src='' /></div>");
+                $.each(pageCanvases, function(){
+                    if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
+                        canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
+                        if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
+                           canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
+                           canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
+                           if(side1){ //put it in side1.  
+                             canvasHolder1.append(canvasHTML);
+                             //holderToAppend = canvasHolder1;
+                           }
+                           else{ //maybe we should check if side2 is true, but I'll just assume it
+                             canvasHolder2.append(canvasHTML);
+                             //holderToAppend = canvasHolder2;
+                           }
+                        }
+                        else{ //the height and width of the fragment piece were not 0.
+                           canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
+                           canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
+                           if(side1){//put it in side1.
+                             canvasHolder1.append(canvasHTML);
+                             //holderToAppend = canvasHolder1;
+                           }
+                           else{//maybe we should check if side2 is true, but I'll just assume it
+                             canvasHolder2.append(canvasHTML);
+                             //holderToAppend = canvasHolder2;
+                           }
+                        }
+                    }
+//                });
 
              // This part will create the canvas and highlight the fragmental pieces instead of cropping chunks.
               var fragmentHTML = $("<div class='fragment'></div>");
-              $.each(pageCanvases, function(){
-                   var left = parseInt(XYWHarray[0]);
-                   var top = parseInt(XYWHarray[1]);
-                   var width = parseInt(XYWHarray[2]) - 2; //acount for 2 2px borders
-                   var height = parseInt(XYWHarray[3]) - 2; // account for 2 2px borders
-                   var annotation = $("<div class='annotation'></div>");
-                   if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
-                       //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
-                      // console.log("Working on canvas images");
-                       var currentCanvasAnnotations=[];
-                       var currentCanvasAnnotationLists = [];
-                       if(this["otherContent"]!== undefined && this["otherContent"].length >0){
-                        console.log("Set annotation lists");
-                        currentCanvasAnnotationLists = this.otherContent; //get the canvas annotations. 
-                        currentCanvasAnnotations.push(annotationLists[0].resources); // local.  Comment out when running live
-                       }
-                       if(side1 && this.images.length>0){
-                          canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
-                       }
-                       else if (side2 && this.images.length>0){
-                          canvasHolder4.find('img').attr("src", this.images[0].resource["@id"]);
-                       }
-                       if(fragment){ // if it is a fragment, we want the fragment box drawn in the canvas.
-                          fragmentHTML.attr("style", "left:"+left+"px; top:"+top+"px; height:"+height+"px; width:"+width+"px");
-                          if(side1){
-                            canvasHolder3.append(fragmentHTML);
-                          }
-                          else{
-                            canvasHolder4.append(fragmentHTML);
-                          }
-                       }
+//              $.each(pageCanvases, function(){
+//                   var left = parseInt(XYWHarray[0]);
+//                   var top = parseInt(XYWHarray[1]);
+//                   var width = parseInt(XYWHarray[2]) - 2; //acount for 2 2px borders
+//                   var height = parseInt(XYWHarray[3]) - 2; // account for 2 2px borders
+//                   var annotation = $("<div class='annotation'></div>");
+//                   if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
+//                       //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+//                      // console.log("Working on canvas images");
+//                       var currentCanvasAnnotations=[];
+//                       var currentCanvasAnnotationLists = [];
+//                       if(this["otherContent"]!== undefined && this["otherContent"].length >0){
+//                        console.log("Set annotation lists");
+//                        currentCanvasAnnotationLists = this.otherContent; //get the canvas annotations. 
+//                        currentCanvasAnnotations.push(annotationLists[0].resources); // local.  Comment out when running live
+//                       }
+//                       if(side1 && this.images.length>0){
+//                          canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
+//                       }
+//                       else if (side2 && this.images.length>0){
+//                          canvasHolder4.find('img').attr("src", this.images[0].resource["@id"]);
+//                       }
+//                       if(fragment){ // if it is a fragment, we want the fragment box drawn in the canvas.
+//                          fragmentHTML.attr("style", "left:"+left+"px; top:"+top+"px; height:"+height+"px; width:"+width+"px");
+//                          if(side1){
+//                            canvasHolder3.append(fragmentHTML);
+//                          }
+//                          else{
+//                            canvasHolder4.append(fragmentHTML);
+//                          }
+//                       }
                        
 //                      $.each(currentCanvasAnnotationLists, function(data1){ //get each annotationList's annotations
 //                        console.log("SET Current Canvas ANNOTATIONS");
@@ -1186,58 +1219,58 @@ function organizeRanges(){
 //                            }
                         // }); //Must comment this out when doing local demo.
  //                     }); //live 
- console.log(currentCanvasAnnotations);
-                        for(var x=0; x<currentCanvasAnnotations.length; x++){
-                            console.log(currentCanvasAnnotations[x]);
-                            $.each(currentCanvasAnnotations[x], function(){
-                             console.log(this);
-                              var canvas = this.on;
-                              var XYWHarray2 = [0,0,0,0];
-                              if(canvas.indexOf("#xywh") >= 0){
-                                var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
-                                if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
-                                    var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
-                                    if(numberArray.length === 4){ // string must have all 4 to be valid
-                                        var x = numberArray[0];
-                                        var y = numberArray[1];
-                                        var w = numberArray[2];
-                                        var h = numberArray[3];
-                                        XYWHarray2 = [x,y,w,h];
-                                    }
-                                    else{
-                                      //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
-                                      XYWHarray2 = [0,0,0,0];
-                                    }
-                                }
-                                annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;");
-                              }
-                              if(this.resource["@type"] == "dctypes:Image"){
-                                var img = $("<img class='canvasImgFragment' src='"+this.resource["@id"]+"'/>");
-                                annotation.addClass("imgFragment").append(img);
-                              }
-                              if(this.resource["@type"] == "cnt:ContentAsText"){
-                                var text = this.resource["cnt:chars"];
-                                annotation.attr("annoText", text);
-                              }
-                              if(side1){
-                                //console.log("Append anno to holder 1");
-                                canvasHolder3.append(annotation);
-                              }
-                              else{
-                                  //console.log("Append anno to holder 2");
-                                canvasHolder4.append(annotation);
-                              }
-                            }); //must comment this out when running live
-                        }
+//                        console.log(currentCanvasAnnotations);
+//                        for(var x=0; x<currentCanvasAnnotations.length; x++){
+//                            console.log(currentCanvasAnnotations[x]);
+//                            $.each(currentCanvasAnnotations[x], function(){
+//                             console.log(this);
+//                              var canvas = this.on;
+//                              var XYWHarray2 = [0,0,0,0];
+//                              if(canvas.indexOf("#xywh") >= 0){
+//                                var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
+//                                if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
+//                                    var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
+//                                    if(numberArray.length === 4){ // string must have all 4 to be valid
+//                                        var x = numberArray[0];
+//                                        var y = numberArray[1];
+//                                        var w = numberArray[2];
+//                                        var h = numberArray[3];
+//                                        XYWHarray2 = [x,y,w,h];
+//                                    }
+//                                    else{
+//                                      //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
+//                                      XYWHarray2 = [0,0,0,0];
+//                                    }
+//                                }
+//                                annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;");
+//                              }
+//                              if(this.resource["@type"] == "dctypes:Image"){
+//                                var img = $("<img class='canvasImgFragment' src='"+this.resource["@id"]+"'/>");
+//                                annotation.addClass("imgFragment").append(img);
+//                              }
+//                              if(this.resource["@type"] == "cnt:ContentAsText"){
+//                                var text = this.resource["cnt:chars"];
+//                                annotation.attr("annoText", text);
+//                              }
+//                              if(side1){
+//                                //console.log("Append anno to holder 1");
+//                                canvasHolder3.append(annotation);
+//                              }
+//                              else{
+//                                  //console.log("Append anno to holder 2");
+//                                canvasHolder4.append(annotation);
+//                              }
+//                            }); //must comment this out when running live
+//                        }
                         
                        //The canvas holders must be completely built before this part.  We may need to implement a timeout for now.  
                         if(a){ //if the range exists in a section
                            // console.log("Append canvases to range.");
-                          rangeForCanvases.append(canvasHolder3, canvasHolder4); //put the canvas object in the range object (the leaf)
+                          rangeForCanvases.append(canvasHolder1, canvasHolder2); //put the canvas object in the range object (the leaf)
                         }
                         else{ //the range does not exist in a section, but rather as a parent range.  Add canvas to the new leaf
                             //console.log("Append canvases to new leaf");
-                          newLeaf.append(canvasHolder3, canvasHolder4);
+                          newLeaf.append(canvasHolder1, canvasHolder2);
                         }
                         if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
                           $("#focusedRange").append(newLeaf);
@@ -1246,7 +1279,7 @@ function organizeRanges(){
                               existingRanges.push(newLeaf.attr("rangeID"));
                           }
                         }
-                   }
+                   //}
               });
            });
         }
