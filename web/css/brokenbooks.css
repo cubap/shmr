@@ -135,7 +135,7 @@ and open the template in the editor.
             #carrierForm table{
                 margin: 0 auto;
             }
-            /* 380px is the widest for label */
+            /* 380px is the widest  label */
             li input[type="text"]{
                     position:relative;
                     height: 22px;
@@ -197,13 +197,14 @@ and open the template in the editor.
             }
             #whatPiece{
                     position: relative;
-                    margin-bottom: 35px;
+                    margin-top: 21px;
+                    height:auto;
             }
             #folioSide1{
                     position: relative;
                     display: block;
-                    height: 150px;
-                    width: 120px;
+                    height: 200px;
+                    width: 180px;
                     margin-right:25px;
                     background-color: white;
                     margin-bottom: 5px;
@@ -211,15 +212,15 @@ and open the template in the editor.
             #folioSide2{
                     position: relative;
                     display: block;
-                    height: 150px;
-                    width: 120px;
+                    height: 200px;
+                    width: 180px;
                     background-color: white;
             }
             #oneAndtwo{
                     position: relative;
                     display: block;
-                    height: 150px;
-                    width: 250px;
+                    height: 200px;
+                    width: 330px;
                     background-color: white;
                     margin-bottom: 5px;
             }
@@ -233,12 +234,16 @@ and open the template in the editor.
             #formTabs{
                 position: relative;
                 border:2px solid black;
-/*                    height: 90%;
-                    
-                    padding-bottom: 10px;*/
+                height:100%;
             }
             #formTabs p{
                 color: black;
+            }
+            .content{
+                border: 2px solid black;
+            }
+            select{
+                border: 2px solid black;
             }
             #saveMetadata{
                 position: relative;
@@ -256,8 +261,28 @@ and open the template in the editor.
             *:focus{
                     outline: none;
             }
+            
+            .ui-tabs, .ui-tabs-nav{
+                padding: 0px !important;
+            }
             .ui-state-active{
                     outline: none;
+            }
+            .ui-tabs-active{
+                
+            }
+            .ui-widget-content{
+                min-height:534px !important; /* Forces content area under tab to have a min height that works with the side area.  */
+                border: none !important;
+            }
+            .ui-widget-header{
+                background-image: none !important;
+                background-color: #545454 !important;
+                border: none !important;
+            }
+            .ui-state-default, .ui-state-hover{ /* background color of tabs and hover */
+                background-image: none !important;
+                background-color: #FFF !important;
             }
             #serverLogin{
                     position: relative;
@@ -291,11 +316,28 @@ and open the template in the editor.
             }
             .rectoImg{
                     position: relative;
-                    display: none;
+                    background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');                   
+                    max-height: 200px;
+                    max-width:180px;
+                    background-size: 150px 150px;
+                    min-height: 150px;
+                    min-width:150px;
+                    display: inline-block;
+/*                    display: none;*/
             }
             .versoImg{
                     position: relative;
-                    display: none;
+                    background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');
+                    background-size: 150px 150px;
+                    min-height: 150px;
+                    min-width:150px;
+                    max-height: 200px;
+                    max-width:180px;
+                    display: inline-block;
+/*                    display: none;*/
+            }
+            .canvasImageFile{
+                display: none;
             }
             .addImgBtn{
                     border: 1px solid black;

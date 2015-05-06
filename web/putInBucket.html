@@ -30,14 +30,17 @@
 
 		<div class="mainBlock imgAdditionArea">
                     <div class="sideBarInfo">
-                        <p>This area will tell you what piece of the leaf you are currently working on.  
+<!--                        <p>This area will tell you what piece of the leaf you are currently working on.  
                             There are only three options: side ALPHA, side BETA and the leaf as a whole (OMEGA).  
                             You may not know which is recto or verso, so we just call them alpha and beta.  
-                            Information you have submitted will also be placed here so you can see your progress.  </p>
+                            Information you have submitted will also be placed here so you can see your progress. <br>
+                            Click in the Add Image field to select an image to upload.  Once an image has been uploaded,
+                            you can double click on it to replace it with a different image.
+                        </p>-->
                         <div id="whatPiece">
                             <div id="oneAndtwo"><img class="rectoImg" src=""/><img class="versoImg" src=""/></div>
-                            <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" /><img class="rectoImg" src=""/></div>
-                            <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" /><img class="versoImg" src=""/></div>
+                            <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" /><img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/></div>
+                            <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" /><img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/></div>
                             
                         </div>
                     </div>
@@ -642,6 +645,7 @@ var testManifest = {
                 });
                 $('.canvasImageFile').on("change", function(event){
                     //start spinny?
+                    var target = event.target;
                     var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
                     var files = !!this.files ? this.files : [];
                     var canvasURI = $(this).parent().attr("canvas"); //local
@@ -674,7 +678,12 @@ var testManifest = {
                                             };
                                             //$("#catalogueInfoFor").val(canvasURI);
                             //(annotationObject, canvasURI); // local
-                            addImage(annotationObject, canvasServerURI); // live
+                            addImage(annotationObject, canvasServerURI); // live\
+                            target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                target.click();
+                            };
+                            
                         };
 
                     }

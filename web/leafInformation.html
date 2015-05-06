@@ -209,7 +209,7 @@ and open the template in the editor.
             console.log("ANNOS FOR Beta");
         }
         $.each($(".contextFormEntry"), function(){
-            var label1 = $(this).find('formLabel').html().replace(":", "");
+            var label1 = $(this).find('.formLabel').html().replace(":", "");
             var currentEntry1 = $(this).find(".content");
             $.each(annos, function(){
                 console.log("Anno label "+this.label);
@@ -220,7 +220,7 @@ and open the template in the editor.
             });
         });
         $.each($(".contentFormEntry"), function(){
-            var label2 = $(this).find('formLabel').html().replace(":", "");
+            var label2 = $(this).find('.formLabel').html().replace(":", "");
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
                 console.log("Anno label "+this.label);
@@ -231,7 +231,7 @@ and open the template in the editor.
             });
         });
         $.each($(".carrierFormEntry"), function(){
-            var label3 = $(this).find('formLabel').html().replace(":", "");
+            var label3 = $(this).find('.formLabel').html().replace(":", "");
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
                 console.log("Anno label "+this.label);
