@@ -26,14 +26,14 @@ and open the template in the editor.
             .mainBlock{
                     position: relative;
                     box-shadow: 0px 0px 13px 3px;
-                    margin: 0% 0px 0px 10%;
+                    margin: 0 auto;
                     padding: 10px;
                     text-align: center;
                     background-color: #545454;
                     z-index: 2;
-                    left: 13%;
-                    width: 73%;
-                    height: auto;
+                    width: auto;
+                    height: 100%;
+                    overflow-y: auto;
             }
             .intro{
                     display: block;
@@ -103,25 +103,25 @@ and open the template in the editor.
                     list-style-type: none;
             }
             #contextForm{
-                    border-bottom: 2px solid rgb(0,204,0);
+/*                    border-bottom: 2px solid rgb(0,204,0);
                     border-right: 2px solid rgb(0,204,0);
-                    border-left: 2px solid rgb(0,204,0);
+                    border-left: 2px solid rgb(0,204,0);*/
                     position: relative;
                     height: auto;
                     text-align: left;
             }
             #contentForm{
-                    border-bottom: 2px solid rgb(0,255,255);
+/*                    border-bottom: 2px solid rgb(0,255,255);
                     border-right: 2px solid  rgb(0,255,255);
-                    border-left: 2px solid  rgb(0,255,255);
+                    border-left: 2px solid  rgb(0,255,255);*/
                     position: relative;
                     height: auto;
                     text-align: left;
             }
             #carrierForm{
-                    border-bottom: 2px solid rgb(255,0,127);
+/*                    border-bottom: 2px solid rgb(255,0,127);
                     border-right: 2px solid rgb(255,0,127);
-                    border-left: 2px solid rgb(255,0,127);
+                    border-left: 2px solid rgb(255,0,127);*/
                     position: relative;
                     height: auto;
                     text-align: left;
@@ -153,34 +153,6 @@ and open the template in the editor.
                     position: relative;
                     height: auto;
             }
-            #contextHeader{
-                    color: rgb(0,204,0);
-                    border-top: 1px solid rgb(0,204,0);
-                    border-right: 1px solid rgb(0,204,0);
-                    border-left: 1px solid rgb(0,204,0);
-                    cursor: pointer;
-            }
-            #contentHeader{
-                    color: rgb(0,255,255);
-                    border-top: 1px solid  rgb(0,255,255);
-                    border-right: 1px solid  rgb(0,255,255);
-                    border-left: 1px solid  rgb(0,255,255);
-                    cursor: pointer;
-            }
-            #carrierHeader{
-                    color: rgb(255,0,127);
-                    border-top: 1px solid rgb(255,0,127);
-                    border-right: 1px solid rgb(255,0,127);
-                    border-left: 1px solid rgb(255,0,127);
-                    cursor: pointer;
-            }
-            #notesHeader{
-                    color: yellow;
-                    border-top: 1px solid yellow;
-                    border-right: 1px solid yellow;
-                    border-left: 1px solid yellow;
-                    cursor: pointer;
-            }
             .infoPart{
                     margin: 10px 0px;
             }
@@ -209,18 +181,19 @@ and open the template in the editor.
             .start .previewImg, .info .previewImg{
                     margin-bottom:20px;
             }
+            .leaf{
+                position: relative;
+                display: inline-block;
+                width:72%;
+            }
             .sideBarInfo{
-                    position: fixed;
-                    left: 0px;
-                    top:15px;
-                    height:90%;
-                    overflow-y: auto;
-                    padding: 5px;
-                    width: 20%;
-                    background-color: #545454;
-                    padding: 10px;
-                    box-shadow: 0px 0px 13px 3px;
-                    z-index: 2;
+                position: relative;
+                height: auto;
+                width: 27%;
+                background-color: #545454;
+                z-index: 2;
+                float: left;
+                overflow-x: visible;
             }
             #whatPiece{
                     position: relative;
@@ -228,18 +201,27 @@ and open the template in the editor.
             }
             #folioSide1{
                     position: relative;
-                    display: inline-table;
+                    display: block;
                     height: 150px;
                     width: 120px;
                     margin-right:25px;
-                    border: 3px solid black;
+                    background-color: white;
+                    margin-bottom: 5px;
             }
             #folioSide2{
                     position: relative;
-                    display: inline-table;
+                    display: block;
                     height: 150px;
                     width: 120px;
-                    border: 3px solid black;
+                    background-color: white;
+            }
+            #oneAndtwo{
+                    position: relative;
+                    display: block;
+                    height: 150px;
+                    width: 250px;
+                    background-color: white;
+                    margin-bottom: 5px;
             }
             .addedInformation{
                     border: 2px solid white;
@@ -248,37 +230,28 @@ and open the template in the editor.
                     width: 100%;
                     display: none;
             }
-            #formAccordion{
-                    position: relative;
-                    height: 90%;
-                    border:2px solid black;
-                    padding-bottom: 10px;
+            #formTabs{
+                position: relative;
+                border:2px solid black;
+/*                    height: 90%;
+                    
+                    padding-bottom: 10px;*/
             }
-            .contentList{
-                    position: relative;
-                    border: 1px solid  rgb(0,255,255);
-                    padding-left: 0px;
+            #formTabs p{
+                color: black;
             }
-            .contextList{
-                    position: relative;
-                    border: 1px solid rgb(0,204,0);
-                    padding-left: 0px;
+            #saveMetadata{
+                position: relative;
+                display: inline-block;
+                bottom: 0px;
+                right : 50px;
+                left:40%;
             }
-            .carrierList{
-                    position: relative;
-                    border: 1px solid rgb(255,0,127);
-                    padding-left: 0px;
-            }
-            .addedNotes{
-                    position: relative;
-                    border: 1px solid yellow;
-            }		
-            .ui-accordion-content{
-                    height: 1px;
-                    padding: 5px 0px;
-            }
-            .ui-accordion-header{
-                    padding: 5px 0px;
+            #cancelMetadata{
+                position: relative;
+                display: inline-block;
+                bottom: 0px;
+                left:40%;
             }
             *:focus{
                     outline: none;
@@ -294,7 +267,7 @@ and open the template in the editor.
                     position: relative;
             }
             .selectedFolio{
-                    border: 3px solid yellow !important;
+                    width: 104% !important;
             }
             #initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
                     display: none;

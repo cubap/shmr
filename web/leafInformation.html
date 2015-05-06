@@ -4,39 +4,52 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-    <div>
+<html>
+	<head>
+<!--		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
+            <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">			-->
+	</head>
             <!-- <img class="imgPreview" src="" /><br>-->
             <input type="hidden" id="catalogueInfoFor" value="" />
             <p>
-                    Here is where you can enter addition information about a leaf. Click below to expand and enter information about the fields you have information on. <u style="color: rgb(0,204,0);">Context</u> is about the history of the leaf such as where it has been, who has owned it, etc. <u style="color: rgb(255,0,127);">Carrier</u> information is physical information about the leaf itself, such as support, number of lines, dimensions, etc. <u style="color: rgb(0,255,255);">Content</u> is about the written text on the leaf or page such as the language, author, or a particular part of the text.  
-                    <u style="color:yellow;">General Metadata</u> is for information you prefer not to assign to any metadata form.  It is better to answer a question in the forms than give general information. 
+                    <!-- Here is where you can enter addition information about a leaf. Click below to expand and enter information about the fields you have information on. <u style="color: rgb(0,204,0);">Context</u> is about the history of the leaf such as where it has been, who has owned it, etc. <u style="color: rgb(255,0,127);">Carrier</u> information is physical information about the leaf itself, such as support, number of lines, dimensions, etc. <u style="color: rgb(0,255,255);">Content</u> is about the written text on the leaf or page such as the language, author, or a particular part of the text.  
+                    <u style="color:yellow;">General Metadata</u> is for information you prefer not to assign to any metadata form.  It is better to answer a question in the forms than give general information.  -->
             </p>
-            <div id="formAccordion">
-                    <h3 id="contextHeader">Context</h3>
+            <div id="formTabs">
+                <ul>
+                    <li><a href="#contextForm">Context</a></li>
+                    <li><a href="#carrierForm">Carrier</a></li>
+                    <li><a href="#contentForm">Content</a></li>
+                    <li><a href="#notesForm">General Metadata</a></li>
+                    <li><a href="#placement">Arrange</a></li>
+                </ul>
+                    <!-- <h3 id="contextHeader">Context</h3> -->
                     <div id="contextForm">
                             <p> Please include information about context here.  If you do not wish to specify your responses, please use the 'other' field.</p>
                             <table>
-                                    <tbody>
-                                            <tr class="contextFormEntry"><td class="formLabel">Institution or Repository: </td> <td> <input class="content" type="text"  id="InstOrRepo"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Shelfmark: </td> <td> <input class="content" type="text"  id="contextFolioID"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Nickname:  </td> <td> <input class="content" type="text"  id="nickname" /> </td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Patron (first owner): </td> <td> <input class="content" type="text"  id="contextPatron"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Former Owners Seperated by Semi-colon (;) </td> <td> <textarea class="content" id="previousOwners"/></textarea></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Insignia (coat of arms, etc.) </td> <td> <input class="content" type="text"  id="insignia"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Sales: </td> <td> <input class="content" type="text"  id="contextAuction" /></textarea</td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Date Acquired: </td> <td> <input class="content" type="text"  id="contextDateAcquired"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Exlibris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input class="content" type="text"  id="libraryStamp"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input class="content" type="text"  id="binding"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input class="content" type="text"  id="frame"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Bibliography: </td> <td> <input class="content" type="text"  id="bibliography"/></td></tr>
-                                            <tr class="contextFormEntry"><td class="formLabel">Link To Record: </td> <td> <input class="content" type="text"  id="linkToRecord"/></td></tr>
-                                            <!--<tr class="contextFormEntry"><td><span class="formLabel">Related Manuscripts by Collection: </td> <td>  <input class="content" type="text"  id="contextRelated"/></td></tr> -->
-                                            <tr class="contextFormEntry"><td class="formLabel">Other: </td>  <td><textarea class="content" id="contextOther"></textarea></td></tr>
-                                    </tbody>
+                                <tbody>
+                                    <tr class="contextFormEntry"><td class="formLabel">Institution or Repository: </td> <td> <input class="content" type="text"  id="InstOrRepo"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Shelfmark: </td> <td> <input class="content" type="text"  id="contextFolioID"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Nickname:  </td> <td> <input class="content" type="text"  id="nickname" /> </td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Patron (first owner): </td> <td> <input class="content" type="text"  id="contextPatron"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Former Owners Seperated by Semi-colon (;) </td> <td> <textarea class="content" id="previousOwners"/></textarea></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Insignia (coat of arms, etc.) </td> <td> <input class="content" type="text"  id="insignia"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Sales: </td> <td> <input class="content" type="text"  id="contextAuction" /></textarea</td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Date Acquired: </td> <td> <input class="content" type="text"  id="contextDateAcquired"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Exlibris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input class="content" type="text"  id="libraryStamp"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input class="content" type="text"  id="binding"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input class="content" type="text"  id="frame"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Bibliography: </td> <td> <input class="content" type="text"  id="bibliography"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Link To Record: </td> <td> <input class="content" type="text"  id="linkToRecord"/></td></tr>
+                                    <tr class="contextFormEntry"><td><span class="formLabel">Related Manuscripts by Collection: </td> <td>  <input class="content" type="text"  id="contextRelated"/></td></tr> 
+                                    <tr class="contextFormEntry"><td class="formLabel">Other: </td>  <td><textarea class="content" id="contextOther"></textarea></td></tr>
+                                </tbody>
                             </table>
                     </div>
-                    <h3 id="carrierHeader">Carrier</h3>
+                    <!-- <h3 id="carrierHeader">Carrier</h3> -->
                     <div id="carrierForm">
                             <p> Please include information about carrier here.  If you do not wish to specify your responses, please use the 'other' field.</p>
                             <table>
@@ -69,7 +82,6 @@ and open the template in the editor.
                                                     </td>
                                             </tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Condition: </td> <td> <input class="content" type="text" id="condition"/></td></tr>
-                                            <!-- Do a split for lines and columns like you did for heght and width -->
                                             <tr class="carrierFormEntry" special="layout">
                                                     <td class="formLabel ">Layout: </td>
                                                     <td>
@@ -86,7 +98,6 @@ and open the template in the editor.
                                                             </div>
                                                     </td>
                                             </tr>
-                                            <!-- the next two could also be on the same line -->
                                             <tr class="carrierFormEntry"><td class="formLabel">Rulings: </td> <td> <input class="content" type="text" id="carrierRulings" /> </td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Prickings: </td> <td> <input class="content" type="text" id="carrierPrickings" /> </td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Script: </td> <td> <input class="content" type="text" id="carrierScript"/></td></tr>
@@ -114,14 +125,13 @@ and open the template in the editor.
                                             <tr class="carrierFormEntry"><td class="formLabel">Quire Signatures: </td> <td> <input class="content" type="text" id="carrierSignatures"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Artist(s)</td> <td> <textarea class="content" id="carrierArtists"></textarea></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Folio Number: </td> <td> <input class="content" type="text" id="carrierFolioNum"/></td></tr>
-                                            <!--Drop down to pick relation by artist, scribe, workshop -->
-                                            <!--<li><span class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text"  id="carrierRelated"/></td></tr>-->
+                                            <tr class="carrierFormEntry"><td class="formLabel">Related Manuscripts by Carrier: </td><td><input class="content" type="text"  id="carrierRelated"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Recto or Verso: </td> <td> <input class="content" type="text" id="carrierRV"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Other: </td> <td> <textarea class="content" type="text" id="carrierOther"></textarea></td></tr>
                                     </tbody>
                             </table>
                     </div>
-                    <h3 id="contentHeader">Content</h3>
+                    <!-- <h3 id="contentHeader">Content</h3> -->
                     <div id="contentForm">
                             <p> Please include information about content here.  If you do not wish to specify your responses, please use the 'other' field.</p>
                             <table>
@@ -150,35 +160,34 @@ and open the template in the editor.
                                                                     <option value="marginal">Marginal</option>
                                                             </select>
                                                             <div id="inter">
-                                                                    <span class="formLabel">Interlinear:<input class="content" id="interlinearAnnos" type="text"/></span>
+                                                                    <span class="formLabel">Interlinear Annotations:<input class="content" id="interlinearAnnos" type="text"/></span>
                                                             </div>
                                                             <div id="marginal">
-                                                                    <span class="formLabel">Marginal:<input class="content" id="marginalAnnos" type="text"/></span>
+                                                                    <span class="formLabel">Marginal Annotations:<input class="content" id="marginalAnnos" type="text"/></span>
                                                             </div>
                                                     </td>
                                             </tr>
-                                            <!-- <li><span class="formLabel">Other Transcription :  </td> <td>  file upload here </li> -->
-                                            <!-- <li><span class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text" class="contextFormEntry" id="contentRelated"/></li> -->
+                                            <tr><td class="formLabel">Other Transcription :  </td> <td>  file upload here </td> </tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text" class="contextFormEntry" id="contentRelated"/></td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Other: </td> <td> <textarea class="content" id="contentOther"></textarea></td></tr>
                                     </tbody>
                             </table>
                     </div>
-                    <h3 id="notesHeader">General Metadata</h3>
+                    <!-- <h3 id="notesHeader">General Metadata</h3> -->
                     <div id="notesForm">
                             <p> If there are general notes you would prefer not to assign to the metadata forms, you can write those here. </p>
                             <textarea class="notesFormEntry" id="notes"></textarea>
                     </div>
+                    <div id="placement">
+                        <p>Here you can select the section to place this leaf into.</p>
+                    </div>
             </div>
-            <input type="button" onclick="saveFolio();" value="Save Metadata"/>
-            <input type="button" onclick="cancelFolio();" value="Exit Metadata"/>
-    </div>
+            <input id="saveMetadata" type="button" onclick="saveFolio();" value="Save Metadata"/>
+            <input id="cancelMetadata" type="button" onclick="cancelFolio();" value="Exit Metadata"/>
+</html>
 <script>
     $(function(){
-        $("#formAccordion").accordion({
-            active:false,
-            collapsible: true,
-            heightStyle: "content"
-        });
+        
         $(".specialFormEntry").on('change', function(){
             var showValue = $(this).val();
             $("#"+showValue).show();
@@ -189,17 +198,22 @@ and open the template in the editor.
         var annos = [];
         if(zeta){
             annos = annoListCollection[2].resources;
+            console.log("ANNOS FOR LEAF");
         }
         else if(alpha){
             annos = annoListCollection[0].resources;
+            console.log("ANNOS FOR Alpha");
         }
         else{
             annos = annoListCollection[1].resources;
+            console.log("ANNOS FOR Beta");
         }
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('formLabel').html().replace(":", "");
             var currentEntry1 = $(this).find(".content");
             $.each(annos, function(){
+                console.log("Anno label "+this.label);
+                console.log(this.label + " == " +label1);
                 if (this.label == label1){
                     currentEntry1.val(this.resource["cnt:chars"]);
                 }
@@ -209,6 +223,8 @@ and open the template in the editor.
             var label2 = $(this).find('formLabel').html().replace(":", "");
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
+                console.log("Anno label "+this.label);
+                console.log(this.label + " == " +label1);
                 if (this.label == label2){
                     currentEntry2.val(this.resource["cnt:chars"]);
                 }
@@ -218,6 +234,8 @@ and open the template in the editor.
             var label3 = $(this).find('formLabel').html().replace(":", "");
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
+                console.log("Anno label "+this.label);
+                console.log(this.label + " == " +label3);
                 if (this.label == label3){
                     currentEntry3.val(this.resource["cnt:chars"]);
                 }
@@ -232,45 +250,32 @@ and open the template in the editor.
         var previewImgSrc = $("."+canvas+"Img").attr("src");
         $(".imgPreview").attr("src",previewImgSrc);
         $(".content").val(""); //Reset all fields
-        $(".imgAdditionArea").hide("blind", "300ms", function(){
-            $(".start").show("explode", "500ms");
+            //$(".start").show("explode", "500ms");
             if(canvas === 'recto'){
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
+                $("#oneAndtwo").removeClass("selectedFolio");
                 $("#catalogueInfoFor").val(canvasID); //alpha
                 alpha = true;
+                beta= false;
             }
             else if (canvas === 'verso'){
                 $("#folioSide2").addClass("selectedFolio");;
                 $("#folioSide1").removeClass("selectedFolio");
+                $("#oneAndtwo").removeClass("selectedFolio");
                 $("#catalogueInfoFor").val(canvasID); //beta
                 beta = true;
+                alpha = false;
             }
             else{
-                $("#folioSide2").addClass("selectedFolio");
-                $("#folioSide1").addClass("selectedFolio");
+                $("#oneAndtwo").addClass("selectedFolio");
+                $("#folioSide1").removeClass("selectedFolio");
+                $("#folioSide2").removeClass("selectedFolio");
                 $("#catalogueInfoFor").val(currentLeafServerID); //zeta
-                alpha = beta = true;
-            }
-            if(alpha && beta) zeta = true;
-
-            if(zeta){
-                $("#zetaInformation").show("explode" , "500ms");
-            }
-            else if (alpha){
-                $("#alphaInformation").show("explode" , "500ms");
-            }
-            else if (beta){
-                $("#betaInformation").show("explode" , "500ms");
-            }
-            else{
-                //this means there is an error
-                //console.log('ALPHA-BETA-ZETA ERROR');
-                alpha = beta = zeta = false;
+                alpha = beta = zeta = true;
             }
             populateAnnoForms();
             // $("#start").attr("onclick", "submitStart('"+canvas+"');");
-        });
         
     }
     /*
@@ -283,18 +288,18 @@ and open the template in the editor.
         var uriToSave = $("#catalogueInfoFor").val() //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
-        if(zeta){
-            $("#zetaInformation").find('ul').empty();
-            otherInfoList = $("#zetaInformation").find(".addedNotes"); //for the notes field
-        }
-        else if(alpha){
-            $("#alphaInformation").find('ul').empty();
-            otherInfoList = $("#alphaInformation").find(".addedNotes"); //for the notes field
-        }
-        else if(beta){
-            $("#betaInformation").find('ul').empty();
-            otherInfoList = $("#betaInformation").find(".addedNotes"); //for the notes field
-        }
+        // if(zeta){
+        //     $("#zetaInformation").find('ul').empty();
+        //     otherInfoList = $("#zetaInformation").find(".addedNotes"); //for the notes field
+        // }
+        // else if(alpha){
+        //     $("#alphaInformation").find('ul').empty();
+        //     otherInfoList = $("#alphaInformation").find(".addedNotes"); //for the notes field
+        // }
+        // else if(beta){
+        //     $("#betaInformation").find('ul').empty();
+        //     otherInfoList = $("#betaInformation").find(".addedNotes"); //for the notes field
+        // }
         $.each(testManifest.structures, function(){
             if ($(this)["@id"] === uriToSave){
                 currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
@@ -345,7 +350,7 @@ and open the template in the editor.
                     annoCopy1.label = "Interlinear Annotations";
                     annoCopy1.resource["cnt:chars"] = inter;
 
-                    createNewAnno(annoCopy1, "Annotations - Interlinear:", inter, addedInfoList1);
+                    createNewAnno(annoCopy1, "Interlinear Annotations", inter, addedInfoList1);
                     // addedInfoList1.append("<li><span class='formLabel'>Annotations - Interlinear: </span> "+inter+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                 }
                 if(marginal!=="" && marginal!==undefined){
@@ -353,7 +358,7 @@ and open the template in the editor.
                     annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annoCopy2.label = "Marginal Annotations";
                     annoCopy2.resource["cnt:chars"] = marginal;
-                    createNewAnno(annoCopy2, "Annotations - Marginal", marginal, addedInfoList1);
+                    createNewAnno(annoCopy2, "Marginal Annotations", marginal, addedInfoList1);
                     // addedInfoList1.append("<li local ><span class='formLabel'>Annotations - Marginal: </span>"+marginal+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
                 }
             }
@@ -540,9 +545,9 @@ and open the template in the editor.
                         //console.log("TEXT IT")
                         var annotationObject3 = jQuery.extend({}, annotationObject);
                         var annotationObject4 = jQuery.extend({}, annotationObject);
-                        annotationObject3.label = "Text Block Height";
+                        annotationObject3.label = "Text Height";
                         annotationObject3.resource["cnt:chars"] = textHeight;
-                        annotationObject4.label = "Text Block Width";
+                        annotationObject4.label = "Text Width";
                         annotationObject4.resource["cnt:chars"] = textWidth;
                         annotationObject3["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         //console.log(annoID);
@@ -581,7 +586,7 @@ and open the template in the editor.
                         annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy1.label = "Lines";
                         annoCopy1.resource["cnt:chars"] = lines;
-                        createNewAnno(annoCopy1, "Layout - Lines", lines, addedInfoList3);
+                        createNewAnno(annoCopy1, "Lines", lines, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Layout - Lines: </span> "+lines+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                     }
                     if(columns!=="" && columns!==undefined){
@@ -590,7 +595,7 @@ and open the template in the editor.
                         annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy2.label = "Columns";
                         annoCopy2.resource["cnt:chars"] = columns;
-                        createNewAnno(annoCopy2, "Layout - Columns", columns, addedInfoList3);
+                        createNewAnno(annoCopy2, "Columns", columns, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Layout - Columns: </span> "+columns+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
                     }
                 }
@@ -604,7 +609,7 @@ and open the template in the editor.
                         annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy1.label = "Initials";
                         annoCopy1.resource["cnt:chars"] = initials;
-                        createNewAnno(annoCopy1, "Decorations - Initials", initials, addedInfoList3);
+                        createNewAnno(annoCopy1, "Initials", initials, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Decorations - Initials: </span> "+initials+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                     }
                     if(border!=="" && border!==undefined){
@@ -613,7 +618,7 @@ and open the template in the editor.
                         annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy2.label = "Border";
                         annoCopy2.resource["cnt:chars"] = border;
-                        createNewAnno(annoCopy2, "Decorations - Border", border, addedInfoList3);
+                        createNewAnno(annoCopy2, "Border", border, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Decorations - Border: </span> "+border+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
                     }
                 }

@@ -1,8 +1,12 @@
+<!--
+	This will not exist anymore.  A user will be clicking on the image to the left of what piece they are entering annotations for. 
+	-->
 <html>
 	<head>
-		<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
-  		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script> -->
-                <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
+            <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
 	</head>
 	<body>
 	<div class="leafTemplate">
@@ -42,63 +46,10 @@ function showImageAddition(which){
 	$("."+which+"Canvas").find(".uploadness").show("explode", "500ms");
 }
 
-function updateImageAnno(which){
-	if(which === "alpha"){
-		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-		var paramObj = {"@id": $("#rectoCatalogue").attr("canvas"), "images":[$('textarea[rv="recto"]').val()]};
-		var params = {"content":JSON.stringify(paramObj)};
-		$.post(updateCanvasURL, params, function(data){
-		});
-	}
-	else{
-		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-		var paramObj = {"@id": $("#rectoCatalogue").attr("canvas"), "images":[$('textarea[rv="verso"]').val()]};
-		var params = {"content":JSON.stringify(paramObj)};
-		$.post(updateCanvasURL, params, function(data){
-		});
-	}
-}
+
 
 $(function(){
-		$('.canvasImageFile').on("change", function(event){
-        //start spinny?
-        var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
-        var files = !!this.files ? this.files : [];
-        var canvasURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvas"); //local
-        var canvasServerURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvasServerID"); //live
-        if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
- 
-        if (/^image/.test( files[0].type)){ // only image file
-        	var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
-            var reader = new FileReader(); // instance of the FileReader
-            reader.readAsDataURL(files[0]); // read the local file
-            reader.onloadend = function(){ // set image data as background of div
-                $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
-                var annotationObject = {
-					"@id" : newAnnoURI,
-			        "@type" : "oa:Annotation",
-			        "motivation" : "sc:painting",
-			        "label" : "Canvas Image",
-			        "resource" : {
-				        "@id" : newImageURI,
-				        "@type" : "dctypes:Image",
-				        "format" : "image/jpeg",
-				        "height" : 2365,
-				        "width" : 1579
-					},
-					"on" : canvasServerURI
-				};
-				//$("#catalogueInfoFor").val(canvasURI);
-                //(annotationObject, canvasURI); // local
-                addImage(annotationObject, canvasServerURI); // live
-            };
-       
-        }
-    });
+
  });
         
 </script>
