@@ -202,25 +202,26 @@ and open the template in the editor.
             #folioSide1{
                     position: relative;
                     display: block;
-                    height: 140px;
-                    width: 120px;
+                    height: 170px;
+                    width: 155px;
                     margin-right:25px;
                     background-color: white;
-                    margin-bottom: 20px;
-                    margin-top: 20px;
+                    margin-bottom: 13px;
+                    margin-top: 13px;
+                    
             }
             #folioSide2{
                     position: relative;
                     display: block;
-                    height: 140px;
-                    width: 120px;
+                    height: 170px;
+                    width: 155px;
                     background-color: white;
             }
             #oneAndtwo{
                     position: relative;
                     display: block;
-                    height: 140px;
-                    width: 120px;
+                    height: 170px;
+                    width: 200px;
                     background-color: white;
                     margin-bottom: 5px;
             }
@@ -263,6 +264,12 @@ and open the template in the editor.
             }
             *:focus{
                     outline: none;
+            }
+            li[role="tab"]{ /* Forces Bottom Border under tabs */
+                border-bottom: 1px solid black !important;
+            }
+            .ui-corner-all{
+                border:none !important; /* Get rid of bevels */
             }
             .ui-tabs-anchor{ /* Tab markers. */
                 font-variant: small-caps !important;
@@ -334,7 +341,7 @@ and open the template in the editor.
                     background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');                   
                     max-height: 140px;
                     max-width:120px;
-                    background-size: 100px 100px;
+                    background-size: 120px 140px;
                     min-height: 140px;
                     min-width:120px;
                     display: inline-block;
@@ -343,7 +350,7 @@ and open the template in the editor.
             .versoImg{
                     position: relative;
                     background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');
-                    background-size: 100px 100px;
+                    background-size: 120px 140px;
                     min-height: 140px;
                     min-width:120px;
                     max-height: 140px;

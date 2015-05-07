@@ -28,19 +28,22 @@
 			<input id="beContributer" type="button" value="Be A Contributer" onclick="contributer();"/>
 		</div>
 		<div class="mainBlock imgAdditionArea">
+			<div id="leafAdditionLabel">
+				Llangantock Leaf Addition
+			</div>
             <div class="sideBarInfo">
                 <div id="whatPiece">
                     <div id="oneAndtwo">
-                    	<div id="oneAndtwoLabel">LEAF LABEL</div><img class="rectoImg" src=""/><img class="versoImg" src=""/>
+                    	<div id="oneAndtwoLabel">LEAF LABEL</div><img style="display:none;" class="rectoImg" src=""/><img style="display:none;" class="versoImg" src=""/>
                    	 	<i>EYE</i>
                 	</div>
                     <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
-                    	<div id="folio1Label">Folio 1 Label></div>
+                    	<div id="folio1Label">Folio 1 Label</div>
                     	<img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/>
                     	<i>EYE</i>
                 	</div>
                     <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
-                    	<div id="folio1Label">Folio 2 Label></div>
+                    	<div id="folio1Label">Folio 2 Label</div>
                     	<img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/>
 						<i>EYE</i>
                     </div>
@@ -150,8 +153,6 @@ var testManifest = {
 		}
 	  ]
 }
-
-
 
 	function addImage(anno, canvasURI){
 		//DO not add image annotations into an annotation list. 
