@@ -33,7 +33,6 @@ and open the template in the editor.
                     z-index: 2;
                     width: auto;
                     height: 100%;
-                    overflow-y: auto;
             }
             .intro{
                     display: block;
@@ -252,8 +251,8 @@ and open the template in the editor.
                 position: relative;
                 display: inline-block;
                 bottom: 0px;
-                right : 50px;
                 left:40%;
+                margin-top: 11px;
             }
             #cancelMetadata{
                 position: relative;
@@ -274,9 +273,17 @@ and open the template in the editor.
             .ui-tabs-active{
                 
             }
-            .ui-widget-content{
-                min-height:534px !important; /* Forces content area under tab to have a min height that works with the side area.  */
+            .ui-tabs-panel{
+                min-height:334px !important; /* Forces content area under tab to have a min height that works with the side area.  */
+                max-height: 334px !important;
                 border: none !important;
+                overflow-y: auto;
+            }
+            .ui-widget-content{
+/*                min-height:534px !important;  Forces content area under tab to have a min height that works with the side area.  
+                max-height: 534px !important;
+                border: none !important;
+                overflow-y: auto;*/
             }
             .ui-widget-header{
                 background-image: none !important;
