@@ -235,6 +235,9 @@ and open the template in the editor.
                 position: relative;
                 border:2px solid black;
                 height:100%;
+                max-width: 83%;
+                left: 10%;
+                top : 4px;
             }
             #formTabs p{
                 color: black;
@@ -292,7 +295,7 @@ and open the template in the editor.
                     position: relative;
             }
             .selectedFolio{
-                    width: 104% !important;
+                    width: 130% !important;
             }
             #initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
                     display: none;
