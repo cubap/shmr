@@ -29,7 +29,7 @@ and open the template in the editor.
                     margin: 0 auto;
                     padding: 10px;
                     text-align: center;
-                    background-color: #545454;
+                    background-color: black;
                     z-index: 2;
                     width: auto;
                     height: 100%;
@@ -170,6 +170,7 @@ and open the template in the editor.
             }
             .imgAdditionArea{
                     position: relative;
+                    width: 1000px;
                     display: none;
             }
             .previewImg{
@@ -189,37 +190,37 @@ and open the template in the editor.
                 position: relative;
                 height: auto;
                 width: 27%;
-                background-color: #545454;
                 z-index: 2;
                 float: left;
                 overflow-x: visible;
+                top: 23px;
             }
             #whatPiece{
                     position: relative;
-                    margin-top: 21px;
                     height:auto;
             }
             #folioSide1{
                     position: relative;
                     display: block;
-                    height: 200px;
-                    width: 180px;
+                    height: 140px;
+                    width: 120px;
                     margin-right:25px;
                     background-color: white;
-                    margin-bottom: 5px;
+                    margin-bottom: 20px;
+                    margin-top: 20px;
             }
             #folioSide2{
                     position: relative;
                     display: block;
-                    height: 200px;
-                    width: 180px;
+                    height: 140px;
+                    width: 120px;
                     background-color: white;
             }
             #oneAndtwo{
                     position: relative;
                     display: block;
-                    height: 200px;
-                    width: 330px;
+                    height: 140px;
+                    width: 120px;
                     background-color: white;
                     margin-bottom: 5px;
             }
@@ -234,8 +235,8 @@ and open the template in the editor.
                 position: relative;
                 border:2px solid black;
                 height:100%;
-                max-width: 83%;
-                left: 10%;
+                width:100%;
+                left: 0%;
                 top : 4px;
             }
             #formTabs p{
@@ -251,19 +252,23 @@ and open the template in the editor.
                 position: relative;
                 display: inline-block;
                 bottom: 0px;
-                left:40%;
+                left:264px;
                 margin-top: 11px;
             }
             #cancelMetadata{
                 position: relative;
                 display: inline-block;
                 bottom: 0px;
-                left:40%;
+                left:264px;
             }
             *:focus{
                     outline: none;
             }
-            
+            .ui-tabs-anchor{ /* Tab markers. */
+                font-variant: small-caps !important;
+                font-size: 10pt !important;
+                color: black !important;
+            }
             .ui-tabs, .ui-tabs-nav{
                 padding: 0px !important;
             }
@@ -274,8 +279,8 @@ and open the template in the editor.
                 
             }
             .ui-tabs-panel{
-                min-height:334px !important; /* Forces content area under tab to have a min height that works with the side area.  */
-                max-height: 334px !important;
+                min-height:450px !important; /* Forces content area under tab to have a min height that works with the side area.  */
+                max-height: 450px !important;
                 border: none !important;
                 overflow-y: auto;
             }
@@ -287,7 +292,7 @@ and open the template in the editor.
             }
             .ui-widget-header{
                 background-image: none !important;
-                background-color: #545454 !important;
+                background-color: black !important;
                 border: none !important;
             }
             .ui-state-default, .ui-state-hover{ /* background color of tabs and hover */
@@ -302,7 +307,7 @@ and open the template in the editor.
                     position: relative;
             }
             .selectedFolio{
-                    width: 130% !important;
+                    width: 104% !important;
             }
             #initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
                     display: none;
@@ -327,22 +332,22 @@ and open the template in the editor.
             .rectoImg{
                     position: relative;
                     background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');                   
-                    max-height: 200px;
-                    max-width:180px;
-                    background-size: 150px 150px;
-                    min-height: 150px;
-                    min-width:150px;
+                    max-height: 140px;
+                    max-width:120px;
+                    background-size: 100px 100px;
+                    min-height: 140px;
+                    min-width:120px;
                     display: inline-block;
 /*                    display: none;*/
             }
             .versoImg{
                     position: relative;
                     background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');
-                    background-size: 150px 150px;
-                    min-height: 150px;
-                    min-width:150px;
-                    max-height: 200px;
-                    max-width:180px;
+                    background-size: 100px 100px;
+                    min-height: 140px;
+                    min-width:120px;
+                    max-height: 140px;
+                    max-width:120px;
                     display: inline-block;
 /*                    display: none;*/
             }

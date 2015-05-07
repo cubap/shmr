@@ -27,26 +27,28 @@
  			<input id="beAdmin" type="button" value="Be Project Admin" onclick="admin();"/>
 			<input id="beContributer" type="button" value="Be A Contributer" onclick="contributer();"/>
 		</div>
-
 		<div class="mainBlock imgAdditionArea">
-                    <div class="sideBarInfo">
-<!--                        <p>This area will tell you what piece of the leaf you are currently working on.  
-                            There are only three options: side ALPHA, side BETA and the leaf as a whole (OMEGA).  
-                            You may not know which is recto or verso, so we just call them alpha and beta.  
-                            Information you have submitted will also be placed here so you can see your progress. <br>
-                            Click in the Add Image field to select an image to upload.  Once an image has been uploaded,
-                            you can double click on it to replace it with a different image.
-                        </p>-->
-                        <div id="whatPiece">
-                            <div id="oneAndtwo"><img class="rectoImg" src=""/><img class="versoImg" src=""/></div>
-                            <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" /><img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/></div>
-                            <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" /><img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/></div>
-                            
-                        </div>
+            <div class="sideBarInfo">
+                <div id="whatPiece">
+                    <div id="oneAndtwo">
+                    	<div id="oneAndtwoLabel">LEAF LABEL</div><img class="rectoImg" src=""/><img class="versoImg" src=""/>
+                   	 	<i>EYE</i>
+                	</div>
+                    <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+                    	<div id="folio1Label">Folio 1 Label></div>
+                    	<img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/>
+                    	<i>EYE</i>
+                	</div>
+                    <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
+                    	<div id="folio1Label">Folio 2 Label></div>
+                    	<img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/>
+						<i>EYE</i>
                     </div>
-                    <div class="leaf"></div>
-                    <div style="clear:both"></div>
-                </div>				
+                </div>
+            </div>
+            <div class="leaf"></div>
+            <div style="clear:both"></div>
+        </div>				
 	</body>
 </html>
 <script>
