@@ -227,19 +227,25 @@ and open the template in the editor.
         if(zeta){
             annos = annoListCollection[2].resources;
             console.log("POPULATE ANNOS FOR LEAF");
-            annos = JSON.parse(annos);
+            if(annos.length > 0){
+                annos = JSON.parse(annos);
+            }
             console.log(annos);
         }
         else if(alpha){
             annos = annoListCollection[0].resources;
             console.log("POPULATE ANNOS FOR Alpha");
-            annos = JSON.parse(annos);
+            if(annos.length > 0){
+                annos = JSON.parse(annos);
+            }
             console.log(annos);
         }
         else{
             annos = annoListCollection[1].resources;
             console.log("POPULATE ANNOS FOR Beta");
-            annos = JSON.parse(annos);
+            if(annos.length > 0){
+                annos = JSON.parse(annos);
+            }
             console.log(annos);
         }
         $.each($(".contextFormEntry"), function(){
