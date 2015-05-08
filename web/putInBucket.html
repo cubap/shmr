@@ -76,307 +76,46 @@ var admin = false;
 var contributer = true;
 
 function existing(){
-    var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1";
-    var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2";
-    var leaf = "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5";
+    var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545";
+    var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547";
+    var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
 
     var testLists = [
         {
-                "@type" : "sc:AnnotationList",
-                "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                "addedTime" : NumberLong("1431100110271"),
-                "originalAnnoID" : "",
-                "version" : 1,
-                "permission" : 0,
-                "forkFromID" : "",
-                "@id" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e3",
-                "resources" : "[{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e8','@type':'oa:Annotation','motivation':'sc:painting','label':'Date: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'eee'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e9','@type':'oa:Annotation','motivation':'sc:painting','label':'Place Of Origin: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'rrr'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e7','@type':'oa:Annotation','motivation':'sc:painting','label':'Language:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'tttt'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ec','@type':'oa:Annotation','motivation':'sc:painting','label':'Text Author:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'yyy'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'}]"
-        },
-        {
             "@type" : "sc:AnnotationList",
-            "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
-            "addedTime" : NumberLong("1431100110360"),
+            "on" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545",
             "originalAnnoID" : "",
             "version" : 1,
             "permission" : 0,
             "forkFromID" : "",
-            "@id" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e4",
-            "resources" : "[{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e8','@type':'oa:Annotation','motivation':'sc:painting','label':'Date: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'eee'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e9','@type':'oa:Annotation','motivation':'sc:painting','label':'Place Of Origin: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'rrr'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e7','@type':'oa:Annotation','motivation':'sc:painting','label':'Language:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'tttt'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ec','@type':'oa:Annotation','motivation':'sc:painting','label':'Text Author:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'yyy'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ea','@type':'oa:Annotation','motivation':'sc:painting','label':'Shelfmark: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'www'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4eb','@type':'oa:Annotation','motivation':'sc:painting','label':'Institution or Repository: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'qqqq'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ed','@type':'oa:Annotation','motivation':'sc:painting','label':'General Metadata','resource':{'@type':'cnt:ContentAsText','cnt:chars':'asdfghjkl'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4ef','@type':'oa:Annotation','motivation':'sc:painting','label':'Material Support: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'jkjkjk'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4ef','@type':'oa:Annotation','motivation':'sc:painting','label':'Material Support: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'jkjkjk'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2'}]"
+            "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546",
+            "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"}]"
         },
         {
             "@type" : "sc:AnnotationList",
-            "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-            "addedTime" : NumberLong("1431100110416"),
+            "on" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547",
             "originalAnnoID" : "",
             "version" : 1,
             "permission" : 0,
             "forkFromID" : "",
-            "@id" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e6",
-            "resources" : "[{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f3','@type':'oa:Annotation','motivation':'sc:painting','label':'Rulings: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'vvvv'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f5','@type':'oa:Annotation','motivation':'sc:painting','label':'Description of Text:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'nnnnn'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f6','@type':'oa:Annotation','motivation':'sc:painting','label':'Condition: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'cccc'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f4','@type':'oa:Annotation','motivation':'sc:painting','label':'Structure/Section of Text:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'bbb'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'}]"
+            "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548",
+            "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547\"}]"
+        },
+        {
+            "@type" : "sc:AnnotationList",
+            "on" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549",
+            "originalAnnoID" : "",
+            "version" : 1,
+            "permission" : 0,
+            "forkFromID" : "",
+            "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a",
+            "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549\"}]"
         }
+        
 
     ];
     //already included, full object, in the resources field.
-        var testAnnos = [
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4f0",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Format (single leaf, half bifolium, fragment): ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "ghghgh"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
-                    "addedTime" : NumberLong("1431100178889"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4f1",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Generic Title:  ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "llll"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
-                    "addedTime" : NumberLong("1431100178891"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4f2",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Nickname:  ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "asaas"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
-                    "addedTime" : NumberLong("1431100178899"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f3",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Rulings: ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "vvvv"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-                    "addedTime" : NumberLong("1431100205613"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f4",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Structure/Section of Text:  ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "bbb"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-                    "addedTime" : NumberLong("1431100205615"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f5",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Description of Text:  ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "nnnnn"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-                    "addedTime" : NumberLong("1431100205617"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f6",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Condition: ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "cccc"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-                    "addedTime" : NumberLong("1431100205619"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f7",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "General Metadata",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "mmmmmmmmmm"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-                    "addedTime" : NumberLong("1431100205611"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f8",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Former Owners Seperated by Semi-colon (;) ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "zxzxzxzxzx"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
-                    "addedTime" : NumberLong("1431100205630"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e7",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Language:  ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "tttt"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142407"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e8",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Date: ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "eee"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142409"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e9",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Place Of Origin: ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "rrr"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142411"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ea",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Shelfmark: ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "www"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142414"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4eb",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Institution or Repository: ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "qqqq"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142415"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ec",
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "Text Author:  ",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "yyy"
-                    },
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142419"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : ""
-            },
-            {
-                    "@type" : "oa:Annotation",
-                    "motivation" : "sc:painting",
-                    "label" : "General Metadata",
-                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
-                    "addedTime" : NumberLong("1431100142432"),
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : "",
-                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ed",
-                    "resource" : {
-                            "@type" : "cnt:ContentAsText",
-                            "cnt:chars" : "asdfghjkl"
-                    }
-            }
-
-
-    ];
+       
     
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);
@@ -386,6 +125,8 @@ function existing(){
     $("#folioSide2").attr("canvas", betaCanvas);
     
     $("#oneAndTwo").attr("canvas", leaf);
+    $("#oneAndTwo").attr("onclick","enterCatalogueInfo('leaf');"); 
+    currentLeafServerID = leaf;
     submitIntro('testEdit');
     alpha = true;
     annoListCollection[0] = testLists[0];
@@ -793,6 +534,7 @@ var testManifest = {
             if(test === "testEdit"){
                 return false;
             }
+            
             var newCanvas1ServerID = -1;
             var newCanvas2ServerID = -1;
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
@@ -827,6 +569,7 @@ var testManifest = {
       	 	newCanvas1["@id"] = data["@id"];
       	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');"); 
       	 	$("#folioSide1").attr("canvas", data["@id"]); 
+                $("#folioSide1").click();
       	 	testManifest.sequences[0].canvases.push(newCanvas1); //live
  	   	 	
         	//annoListCollection.push(newCanvas1AnnoList);

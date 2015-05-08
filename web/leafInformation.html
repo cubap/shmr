@@ -227,44 +227,53 @@ and open the template in the editor.
         if(zeta){
             annos = annoListCollection[2].resources;
             console.log("POPULATE ANNOS FOR LEAF");
+            annos = JSON.parse(annos);
+            console.log(annos);
         }
         else if(alpha){
             annos = annoListCollection[0].resources;
             console.log("POPULATE ANNOS FOR Alpha");
+            annos = JSON.parse(annos);
+            console.log(annos);
         }
         else{
             annos = annoListCollection[1].resources;
             console.log("POPULATE ANNOS FOR Beta");
+            annos = JSON.parse(annos);
+            console.log(annos);
         }
         $.each($(".contextFormEntry"), function(){
-            var label1 = $(this).find('.formLabel').html().replace(":", "");
+            var label1 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry1 = $(this).find(".content");
             $.each(annos, function(){
-                console.log("Anno label "+this.label);
-                console.log(this.label + " == " +label1);
-                if (this.label == label1){
+                var checkLabel1 = this.label.replace(":", "").trim();
+                console.log(checkLabel1 + " == " +label1);
+                if (checkLabel1 == label1){
+                    console.log("THESE WERE EQUAL");
                     currentEntry1.val(this.resource["cnt:chars"]);
                 }
             });
         });
         $.each($(".contentFormEntry"), function(){
-            var label2 = $(this).find('.formLabel').html().replace(":", "");
+            var label2 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
-                console.log("Anno label "+this.label);
-                console.log(this.label + " == " +label1);
-                if (this.label == label2){
+                var checkLabel2 = this.label.replace(":", "").trim();
+                console.log(checkLabel2 + " == " +label2);
+                if (checkLabel2 == label2){
+                    console.log("THESE WERE EQUAL");
                     currentEntry2.val(this.resource["cnt:chars"]);
                 }
             });
         });
         $.each($(".carrierFormEntry"), function(){
-            var label3 = $(this).find('.formLabel').html().replace(":", "");
+            var label3 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
-                console.log("Anno label "+this.label);
-                console.log(this.label + " == " +label3);
-                if (this.label == label3){
+                var checkLabel3 = this.label.replace(":", "").trim();
+                console.log(checkLabel3 + " == " +label3);
+                if (checkLabel3 == label3){
+                    console.log("THESE WERE EQUAL");
                     currentEntry3.val(this.resource["cnt:chars"]);
                 }
             });
