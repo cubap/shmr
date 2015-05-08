@@ -64,7 +64,7 @@ and open the template in the editor.
                                     <tr class="contextFormEntry"><td class="formLabel">Bibliography: </td> <td> <input class="content" type="text"  id="bibliography"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Link To Record: </td> <td> <input class="content" type="text"  id="linkToRecord"/></td></tr>
                                     <tr class="contextFormEntry"><td><span class="formLabel">Related Manuscripts by Collection: </td> <td>  <input class="content" type="text"  id="contextRelated"/></td></tr> 
-                                    <tr class="contextFormEntry"><td class="formLabel">Other: </td>  <td><textarea class="content" id="contextOther"></textarea></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Other Context Info: </td>  <td><textarea class="content" id="contextOther"></textarea></td></tr>
                                 </tbody>
                             </table>
                     </div>
@@ -145,7 +145,7 @@ and open the template in the editor.
                                             <tr class="carrierFormEntry"><td class="formLabel">Folio Number: </td> <td> <input class="content" type="text" id="carrierFolioNum"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Related Manuscripts by Carrier: </td><td><input class="content" type="text"  id="carrierRelated"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Recto or Verso: </td> <td> <input class="content" type="text" id="carrierRV"/></td></tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Other: </td> <td> <textarea class="content" type="text" id="carrierOther"></textarea></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Other Carrier Info: </td> <td> <textarea class="content" type="text" id="carrierOther"></textarea></td></tr>
                                     </tbody>
                             </table>
                     </div>
@@ -186,7 +186,7 @@ and open the template in the editor.
                                             </tr>
                                             <tr><td class="formLabel">Other Transcription :  </td> <td>  file upload here </td> </tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text" class="contextFormEntry" id="contentRelated"/></td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Other: </td> <td> <textarea class="content" id="contentOther"></textarea></td></tr>
+                                            <tr class="contentFormEntry"><td class="formLabel">Other Content Info: </td> <td> <textarea class="content" id="contentOther"></textarea></td></tr>
                                     </tbody>
                             </table>
                     </div>
@@ -252,6 +252,9 @@ and open the template in the editor.
                     console.log("THESE WERE EQUAL");
                     currentEntry1.val(this.resource["cnt:chars"]);
                 }
+                else if(checkLabel1 == "General Metadata"){
+                    $("#notes").val(this.resource["cnt:chars"]);
+                }
             });
         });
         $.each($(".contentFormEntry"), function(){
@@ -264,6 +267,9 @@ and open the template in the editor.
                     console.log("THESE WERE EQUAL");
                     currentEntry2.val(this.resource["cnt:chars"]);
                 }
+                else if(checkLabel2 == "General Metadata"){
+                    $("#notes").val(this.resource["cnt:chars"]);
+                }
             });
         });
         $.each($(".carrierFormEntry"), function(){
@@ -275,6 +281,9 @@ and open the template in the editor.
                 if (checkLabel3 == label3){
                     console.log("THESE WERE EQUAL");
                     currentEntry3.val(this.resource["cnt:chars"]);
+                }
+                else if(checkLabel3 == "General Metadata"){
+                    $("#notes").val(this.resource["cnt:chars"]);
                 }
             });
         });
@@ -719,7 +728,7 @@ and open the template in the editor.
                 },
                 "on" : canvasURI
             };
-            createNewAnno(annoObject, "General Notes", canvasNotes, otherInfoList);
+            createNewAnno(annoObject, "General Metadata", canvasNotes, otherInfoList);
             // otherInfoList.append("<li><span class='formLabel'>General Notes: </span> "+canvasNotes+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
         }
 
