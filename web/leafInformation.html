@@ -193,7 +193,7 @@ and open the template in the editor.
                     <!-- <h3 id="notesHeader">General Metadata</h3> -->
                     <div id="notesForm">
                             <p> If there are general notes you would prefer not to assign to the metadata forms, you can write those here. </p>
-                            <textarea class="notesFormEntry" id="notes"></textarea>
+                            <textarea class="notesFormEntry content" id="notes"></textarea>
                     </div>
                     <div id="placement">
                         <p>Here you can select the section to place this leaf into.</p>
@@ -336,7 +336,7 @@ and open the template in the editor.
     function saveFolio(){
         var currentLeafObject = {};
         var otherInfo = {};
-        var uriToSave = $("#catalogueInfoFor").val() //alpha URI, beta URI, or leaf URI
+        var uriToSave = $("#catalogueInfoFor").val(); //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
         // if(zeta){
