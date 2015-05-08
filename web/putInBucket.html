@@ -24,6 +24,7 @@
 			</div> -->
 			
 			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
+			<input type="button" id="editLeaf" value="View Existing Leaf" onclick="existing();"/>
  			<input id="beAdmin" type="button" value="Be Project Admin" onclick="admin();"/>
 			<input id="beContributer" type="button" value="Be A Contributer" onclick="contributer();"/>
 		</div>
@@ -73,6 +74,325 @@ var serverAnnoID = -1;
 var currentLeafServerID = -1;
 var admin = false;
 var contributer = true;
+
+function existing(){
+    var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1";
+    var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2";
+    var leaf = "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5";
+
+    var testLists = [
+        {
+                "@type" : "sc:AnnotationList",
+                "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                "addedTime" : NumberLong("1431100110271"),
+                "originalAnnoID" : "",
+                "version" : 1,
+                "permission" : 0,
+                "forkFromID" : "",
+                "@id" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e3",
+                "resources" : "[{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e8','@type':'oa:Annotation','motivation':'sc:painting','label':'Date: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'eee'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e9','@type':'oa:Annotation','motivation':'sc:painting','label':'Place Of Origin: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'rrr'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e7','@type':'oa:Annotation','motivation':'sc:painting','label':'Language:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'tttt'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ec','@type':'oa:Annotation','motivation':'sc:painting','label':'Text Author:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'yyy'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'}]"
+        },
+        {
+            "@type" : "sc:AnnotationList",
+            "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
+            "addedTime" : NumberLong("1431100110360"),
+            "originalAnnoID" : "",
+            "version" : 1,
+            "permission" : 0,
+            "forkFromID" : "",
+            "@id" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e4",
+            "resources" : "[{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e8','@type':'oa:Annotation','motivation':'sc:painting','label':'Date: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'eee'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e9','@type':'oa:Annotation','motivation':'sc:painting','label':'Place Of Origin: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'rrr'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e7','@type':'oa:Annotation','motivation':'sc:painting','label':'Language:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'tttt'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ec','@type':'oa:Annotation','motivation':'sc:painting','label':'Text Author:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'yyy'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ea','@type':'oa:Annotation','motivation':'sc:painting','label':'Shelfmark: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'www'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4eb','@type':'oa:Annotation','motivation':'sc:painting','label':'Institution or Repository: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'qqqq'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ed','@type':'oa:Annotation','motivation':'sc:painting','label':'General Metadata','resource':{'@type':'cnt:ContentAsText','cnt:chars':'asdfghjkl'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4ef','@type':'oa:Annotation','motivation':'sc:painting','label':'Material Support: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'jkjkjk'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4ef','@type':'oa:Annotation','motivation':'sc:painting','label':'Material Support: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'jkjkjk'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2'}]"
+        },
+        {
+            "@type" : "sc:AnnotationList",
+            "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+            "addedTime" : NumberLong("1431100110416"),
+            "originalAnnoID" : "",
+            "version" : 1,
+            "permission" : 0,
+            "forkFromID" : "",
+            "@id" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e6",
+            "resources" : "[{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f3','@type':'oa:Annotation','motivation':'sc:painting','label':'Rulings: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'vvvv'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f5','@type':'oa:Annotation','motivation':'sc:painting','label':'Description of Text:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'nnnnn'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f6','@type':'oa:Annotation','motivation':'sc:painting','label':'Condition: ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'cccc'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'},{'@id':'http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f4','@type':'oa:Annotation','motivation':'sc:painting','label':'Structure/Section of Text:  ','resource':{'@type':'cnt:ContentAsText','cnt:chars':'bbb'},'on':'http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5'}]"
+        }
+
+    ];
+    //already included, full object, in the resources field.
+        var testAnnos = [
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4f0",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Format (single leaf, half bifolium, fragment): ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "ghghgh"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
+                    "addedTime" : NumberLong("1431100178889"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4f1",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Generic Title:  ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "llll"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
+                    "addedTime" : NumberLong("1431100178891"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb12e4b0f1c678d2a4f2",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Nickname:  ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "asaas"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e2",
+                    "addedTime" : NumberLong("1431100178899"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f3",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Rulings: ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "vvvv"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+                    "addedTime" : NumberLong("1431100205613"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f4",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Structure/Section of Text:  ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "bbb"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+                    "addedTime" : NumberLong("1431100205615"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f5",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Description of Text:  ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "nnnnn"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+                    "addedTime" : NumberLong("1431100205617"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f6",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Condition: ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "cccc"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+                    "addedTime" : NumberLong("1431100205619"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f7",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "General Metadata",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "mmmmmmmmmm"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+                    "addedTime" : NumberLong("1431100205611"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdb2de4b0f1c678d2a4f8",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Former Owners Seperated by Semi-colon (;) ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "zxzxzxzxzx"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e5",
+                    "addedTime" : NumberLong("1431100205630"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e7",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Language:  ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "tttt"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142407"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e8",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Date: ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "eee"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142409"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4e9",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Place Of Origin: ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "rrr"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142411"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ea",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Shelfmark: ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "www"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142414"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4eb",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Institution or Repository: ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "qqqq"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142415"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ec",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "Text Author:  ",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "yyy"
+                    },
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142419"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : ""
+            },
+            {
+                    "@type" : "oa:Annotation",
+                    "motivation" : "sc:painting",
+                    "label" : "General Metadata",
+                    "on" : "http://165.134.241.141/annotationstore/annotation/554cdacee4b0f1c678d2a4e1",
+                    "addedTime" : NumberLong("1431100142432"),
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : "",
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/554cdaeee4b0f1c678d2a4ed",
+                    "resource" : {
+                            "@type" : "cnt:ContentAsText",
+                            "cnt:chars" : "asdfghjkl"
+                    }
+            }
+
+
+    ];
+    
+    $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
+    $("#folioSide1").attr("canvas", alphaCanvas);
+    $("#folioSide1").addClass("selectedFolio");
+
+    $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvas+"', 'verso');"); 
+    $("#folioSide2").attr("canvas", betaCanvas);
+    
+    $("#oneAndTwo").attr("canvas", leaf);
+    submitIntro('testEdit');
+    alpha = true;
+    annoListCollection[0] = testLists[0];
+    annoListCollection[1] = testLists[1];
+    annoListCollection[2] = testLists[2];
+    $("#folioSide1").click();
+}
 
 //Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
 var alphaAnnoList = {
@@ -201,7 +521,7 @@ var testManifest = {
 		else{
             tmpAnnos = annoListCollection[1];
 		}
-		$.each(tmpAnnos.resources, function(){
+            $.each(tmpAnnos.resources, function(){
             if(this.label == labelToCheckFor){
 	            theReturn = true;
 	            return -1;
@@ -220,28 +540,28 @@ var testManifest = {
 			console.log("Anno updated on server");
 		});
 		if(zeta){
-            $.each(annoListCollection[2].resources, function(){
-                if(this["@id"] == annoURI){
-                        this.resource = annoObj.resource;
-                        console.log("Local Anno Updated.");
-                }
-            });
+                    $.each(annoListCollection[2].resources, function(){
+                        if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                console.log("Local Anno Updated.");
+                        }
+                    });
 		}
 		else if (alpha){
-            $.each(annoListCollection[0].resources, function(){
-                if(this["@id"] == annoURI){
-                        this.resource = annoObj.resource;
-                        console.log("Local Anno Updated.");
-                }
-            });
+                    $.each(annoListCollection[0].resources, function(){
+                        if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                console.log("Local Anno Updated.");
+                        }
+                    });
 		}
 		else{
-            $.each(annoListCollection[1].resources, function(){
-                if(this["@id"] == annoURI){
-                        this.resource = annoObj.resource;
-                        console.log("Local Anno Updated.");
-                }
-            });
+                    $.each(annoListCollection[1].resources, function(){
+                        if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                console.log("Local Anno Updated.");
+                        }
+                    });
 		}
 	}
 
@@ -266,7 +586,7 @@ var testManifest = {
 		if(zeta){
 			tmpAnnos = annoListCollection[2];
 		}
-		else if(alpha){
+		else if (alpha){
 			tmpAnnos = annoListCollection[0];
 		}
 		else{
@@ -283,7 +603,7 @@ var testManifest = {
 		$.post(newAnnoUrl, params, function(data){
 			data=JSON.parse(data);
 			annoObject["@id"] = data["@id"];
-			list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' onclick='removeInfo($(this));' class='removeInfo'> X </span></li>");
+                        console.log("NEW ANNO.  ABZ: "+alpha, beta, zeta);
 			if(zeta){
 				annoListCollection[2].resources.push(annoObject); //live
 				console.log("Leaf list is updated");
@@ -300,7 +620,7 @@ var testManifest = {
 			console.log("Starting update of list collection on server")
 			$.each(annoListCollection, function(){
 				if (this.on === objectID){ //this is our annotation list to add the annotation to 
-					this.resources.push(annoObject); //push the annotation to the appropriate list.
+					//this.resources.push(annoObject); //push the annotation to the appropriate list.
 					// console.log("ANNO ADDED TO THIS LIST "+objectID);
 					// console.log(annoObject);
 					//Image annotation vs. line annotation?
@@ -468,8 +788,11 @@ var testManifest = {
 	/*
 		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
 	*/
-	function submitIntro(){
+	function submitIntro(test){
             $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+            if(test === "testEdit"){
+                return false;
+            }
             var newCanvas1ServerID = -1;
             var newCanvas2ServerID = -1;
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.

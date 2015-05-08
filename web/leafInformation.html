@@ -19,11 +19,31 @@ and open the template in the editor.
             </p>
             <div id="formTabs">
                 <ul>
-                    <li><a href="#contextForm">Context</a><i>hlp</i></li>
-                    <li><a href="#carrierForm">Carrier</a><i>hlp</i></li>
-                    <li><a href="#contentForm">Content</a><i>hlp</i></li>
-                    <li><a href="#notesForm">General</a><i>hlp</i></li>
-                    <li><a href="#placement">Arrange</a><i>hlp</i></li>
+                    <li>
+                        <a href="#contextForm">Context</a>
+                        <i class="helperIcon" helper="context">hlp</i>
+                        <div class="helperContent" helper="context">This area is for the context helper text.</div>
+                    </li>
+                    <li>
+                        <a href="#carrierForm">Carrier</a>
+                        <i class="helperIcon" helper="carrier">hlp</i>
+                        <div class="helperContent" helper="carrier">This area is for the carrier helper text. </div>
+                        
+                    </li>
+                    <li>
+                        <a href="#contentForm">Content</a>
+                        <i class="helperIcon" helper="content">hlp</i>
+                        <div class="helperContent" helper="content">This area is for the content helper text.</div>
+                    </li>
+                    <li>
+                        <a href="#notesForm">General</a>
+                        <i class="helperIcon" helper="general">hlp</i>
+                        <div class="helperContent" helper="general">This area is for the general helper text.</div>
+                    </li>
+                    <li><a href="#placement">Arrange</a>
+                        <i class="helperIcon" helper="arrange">hlp</i>
+                        <div class="helperContent" helper="arrange">This area is for the arrange helper text.</div>
+                    </li>
                 </ul>
                     <!-- <h3 id="contextHeader">Context</h3> -->
                     <div id="contextForm">
@@ -179,12 +199,23 @@ and open the template in the editor.
                         <p>Here you can select the section to place this leaf into.</p>
                     </div>
             </div>
-            <input id="saveMetadata" type="button" onclick="saveFolio();" value="Save Metadata"/>
-            <input id="cancelMetadata" type="button" onclick="cancelFolio();" value="Exit Metadata"/>
+            <input id="saveMetadata" type="button" onclick="saveFolio();" value="Submit"/>
+            <input id="cancelMetadata" type="button" onclick="cancelFolio();" value="Cancel"/>
 </html>
 <script>
     $(function(){
-        
+        $('#formTabs ul li i').click(function(){
+            console.log("TAB HELPER HOVER");
+            var helper = $(this).attr("helper");
+            $('div[helper="'+helper+'"]').fadeIn(400);
+        });
+//        .mouseleave(function(){
+//            var helper = $(this).attr("helper");
+//            $('div[helper="'+helper+'"]').hide();
+//        });
+        $('#formTabs ul li').mouseleave(function(){
+            $(this).find('div[helper]').hide();
+        });
         $(".specialFormEntry").on('change', function(){
             var showValue = $(this).val();
             $("#"+showValue).show();
@@ -195,15 +226,15 @@ and open the template in the editor.
         var annos = [];
         if(zeta){
             annos = annoListCollection[2].resources;
-            console.log("ANNOS FOR LEAF");
+            console.log("POPULATE ANNOS FOR LEAF");
         }
         else if(alpha){
             annos = annoListCollection[0].resources;
-            console.log("ANNOS FOR Alpha");
+            console.log("POPULATE ANNOS FOR Alpha");
         }
         else{
             annos = annoListCollection[1].resources;
-            console.log("ANNOS FOR Beta");
+            console.log("POPULATE ANNOS FOR Beta");
         }
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('.formLabel').html().replace(":", "");
@@ -238,6 +269,8 @@ and open the template in the editor.
                 }
             });
         });
+        
+        
     };
     /*
         Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
@@ -248,7 +281,8 @@ and open the template in the editor.
         $(".imgPreview").attr("src",previewImgSrc);
         $(".content").val(""); //Reset all fields
             //$(".start").show("explode", "500ms");
-            if(canvas === 'recto'){
+            if(canvas == 'recto'){
+                console.log("RECTO, ALPHA IS TRUE");
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -256,7 +290,8 @@ and open the template in the editor.
                 alpha = true;
                 beta= false;
             }
-            else if (canvas === 'verso'){
+            else if (canvas == 'verso'){
+                console.log("VERSO, BETA IS TRUE");
                 $("#folioSide2").addClass("selectedFolio");;
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -265,6 +300,7 @@ and open the template in the editor.
                 alpha = false;
             }
             else{
+                console.log("LEAF: ALPHA, BETA, ZETA IS TRUE");
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -684,11 +720,6 @@ and open the template in the editor.
             $("#folioSide2").removeClass("selectedFolio");
             $("#folioSide1").removeClass("selectedFolio");
         });
-
-        //since we are saving and going back to choosing what to give additional information to, all the possible choices are set to false to be chosen from again. 
-        alpha = beta = zeta = false;
-
-        
-
+       
     }
 </script>
