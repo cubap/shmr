@@ -480,16 +480,21 @@ and open the template in the editor.
                 position: relative;
 
             }
-            .arrangeSection .parent{
+            .arrangeSection.parent{
                 border: 2px solid blue;
                 padding: 8px;
 
             }
 
-            .arrangeSection .child{
+            .arrangeSection.child{
                 display: none;
                 border: 2px solid red;
                 padding: 5px;
+            }
+            
+            div[relation="bucket"]{
+                display: none;
+                border: 2px solid green;
             }
 
             

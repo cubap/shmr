@@ -43,6 +43,7 @@ function getAllCanvases(){
 }
 
 function gatherRangesForArrange(){
+     console.log("Organizing Ranges");
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
@@ -50,46 +51,63 @@ function gatherRangesForArrange(){
       //console.log(rangeCollection[i]);
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
-        if(outerRangeLabel == undefined || outerRangeLabel == ""){
-          outerRangeLabel = "Unknown_"+i;
-        }
         var existingRangeToUpdate = ""; 
-
-          if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){ //this is a parent because of the sorted list.  Append it and all its children.
-            var parentRange = $("<div class='arrangeSection parent' rangeID='"+rangeCollection[i]['@id']+"' relation='"+i+"'><div>"+outerRangeLabel+"</div></div>");
-            $("#placement").append(parentRange);
-            existingRanges.push(rangeCollection[i]["@id"]);
-            console.log("APPENDED PARENT");
-          }
-          var childRange = $("<div class='arrangeSection child' rangeID='"+rangeCollection[i]["@id"]+"' relation='"+i+"_1'><div>"+outerRangeLabel+"</div></div>");
-          //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
-          var innerRanges = rangeCollection[i].ranges;
-          if(innerRanges.length > 0){ //If there are inner ranges
-           console.log("Working inner ranges.")
-              for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
-                  var thisRange = innerRanges[j]["@id"];
-                  $.each(rangeCollection, function(){ //check each range in the collection
-                      if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
-                          var thisLabel = this.label;
-                          if(thisLabel == undefined || thisLabel == ""){
-                            outerRangeLabel = "Unknown_"+i+"_"+j;
-                          }
-                          childRange = $("<div class='arrangeSection child' rangeID='"+this['@id']+"' relation='"+i+"_"+j+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
-                          console.log("APPEND CHILD");
-                          if($.inArray(this["@id"], existingRanges) == -1){ //this range has not yet been placed in the DOM.
-                            $("#placement").append(childRange);
-                            existingRanges.push(this["@id"]);
-                          }
-                          else{
-                            //already accounted for.  Do nothing. 
-                          }
-                      } //If you didn't find it among the collection, we can't do anything with it.  
-                  });
+        var tag = "parent";
+        var relation = "";
+        if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
+          existingRanges.push(rangeCollection[i]["@id"]);
+        }
+        else{
+          existingRangeToUpdate = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]');
+          relation = rangeCollection[i]["@id"];
+          tag = "child";
+        }
+        
+        //Create an html range object that can be added
+        var currentRange = $("<div class='arrangeSection "+tag+"' relation='"+relation+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
+        //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
+        var innerRanges = rangeCollection[i].ranges;
+        //obvious
+        if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
+         //console.log("Working inner ranges.")
+            for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
+                var thisRange = innerRanges[j];
+                $.each(rangeCollection, function(){ //check each range in the collection
+                    if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
+                        var thisLabel = this.label;
+                        var embedRange = $("<div class='arrangeSection child' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        if($.inArray(this["@id"], existingRanges) == -1){
+                          existingRanges.push(this["@id"]);
+                        }
+                        if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
+                          existingRangeToUpdate.append(embedRange);
+                        }
+                        else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
+                          currentRange.append(embedRange);
+                          $("#placement").append(currentRange);
+                        }
+                    } //If you didn't find it among the collection, we can't do anything with it.  
+                });
+            }
+        }
+        else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
+            var a = false;
+            var newLeaf = undefined;
+            var existingRange = $("#placement").find('div[rangeID="'+outerRange['@id']+'"]');
+            if(existingRange.length > 0){ //if the range exists in a section
+                //It already exists, do not append this leaf.
+            }
+            else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
+              newLeaf = $("<div class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
+            }
+            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
+                $("#placement").append(newLeaf);
+               // console.log("append new leaf to DOM");
+                if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
+                    existingRanges.push(newLeaf.attr("rangeID"));
+                }
               }
-          }
-          else{
-            //Do nothing, move on to the next parent.  
-          }
+        }
     }
 }
 
