@@ -42,8 +42,38 @@ function getAllCanvases(){
   });
 }
 
+function toggleChildren(parentRange){
+  var children = parentRange.find(".child");
+  //var actualDepth = $(".rangeArrangementArea").length;
+  var intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
+  var newArea = $("<div depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
+  var relation = parentRange.attr("rangeID");
+  var newArea = $("<div relation='"+relation+"' depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
+  console.log("DEPTH : "+intendedDepth);
+  $.each(children, function(){
+    newArea.append(this);
+    console.log(this);
+  });
+  if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
+    $("#placement").append(newArea);
+    newArea.find('.child').show();
+    console.log("AREA does not exist.  Append in.");
+  }
+  else{ //if the are already exists
+    if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
+      $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
+      console.log("Depth exists, but this is a child of that depth.");
+      toggleChildren(parentRange);
+    }
+    else{ //if the area clicked was the one already highlighted
+      console.log("Depth and child exist.");
+      $("div[depth='"+intendedDepth+"']").remove(); //just remove the area, this was a true toggle.  
+    }
+  }
+}
+
 function gatherRangesForArrange(){
-     console.log("Organizing Ranges");
+     console.log("Organizing Ranges for arrange tab.");
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
@@ -64,7 +94,7 @@ function gatherRangesForArrange(){
         }
         
         //Create an html range object that can be added
-        var currentRange = $("<div class='arrangeSection "+tag+"' relation='"+relation+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
+        var currentRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection "+tag+"' relation='"+relation+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
         //obvious
@@ -75,7 +105,7 @@ function gatherRangesForArrange(){
                 $.each(rangeCollection, function(){ //check each range in the collection
                     if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
                         var thisLabel = this.label;
-                        var embedRange = $("<div class='arrangeSection child' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection child' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                           existingRanges.push(this["@id"]);
                         }
@@ -84,7 +114,7 @@ function gatherRangesForArrange(){
                         }
                         else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
                           currentRange.append(embedRange);
-                          $("#placement").append(currentRange);
+                          $(".rangeArrangementArea").append(currentRange);
                         }
                     } //If you didn't find it among the collection, we can't do anything with it.  
                 });
@@ -93,15 +123,15 @@ function gatherRangesForArrange(){
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
             var a = false;
             var newLeaf = undefined;
-            var existingRange = $("#placement").find('div[rangeID="'+outerRange['@id']+'"]');
+            var existingRange = $(".rangeArrangementArea").find('div[rangeID="'+outerRange['@id']+'"]');
             if(existingRange.length > 0){ //if the range exists in a section
                 //It already exists, do not append this leaf.
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
-              newLeaf = $("<div class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
+              newLeaf = $("<div onclick='toggleChildren($(this));' class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
-                $("#placement").append(newLeaf);
+                $(".rangeArrangementArea").append(newLeaf);
                // console.log("append new leaf to DOM");
                 if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
                     existingRanges.push(newLeaf.attr("rangeID"));
