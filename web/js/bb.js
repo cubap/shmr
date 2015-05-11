@@ -50,26 +50,34 @@ function gatherRangesForArrange(){
       //console.log(rangeCollection[i]);
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
+        if(outerRangeLabel == undefined || outerRangeLabel == ""){
+          outerRangeLabel = "Unknown_"+i;
+        }
         var existingRangeToUpdate = ""; 
 
           if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){ //this is a parent because of the sorted list.  Append it and all its children.
-            var parentRange = $("<div class='arrangeSection parent' rangeID='"+this['@id']+"' relation='"+i+"''><div>"+thisLabel+"</div></div>");
+            var parentRange = $("<div class='arrangeSection parent' rangeID='"+rangeCollection[i]['@id']+"' relation='"+i+"'><div>"+outerRangeLabel+"</div></div>");
             $("#placement").append(parentRange);
             existingRanges.push(rangeCollection[i]["@id"]);
+            console.log("APPENDED PARENT");
           }
           var childRange = $("<div class='arrangeSection child' rangeID='"+rangeCollection[i]["@id"]+"' relation='"+i+"_1'><div>"+outerRangeLabel+"</div></div>");
           //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
           var innerRanges = rangeCollection[i].ranges;
           if(innerRanges.length > 0){ //If there are inner ranges
-           //console.log("Working inner ranges.")
+           console.log("Working inner ranges.")
               for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
-                  var thisRange = innerRanges[j];
+                  var thisRange = innerRanges[j]["@id"];
                   $.each(rangeCollection, function(){ //check each range in the collection
                       if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
                           var thisLabel = this.label;
+                          if(thisLabel == undefined || thisLabel == ""){
+                            outerRangeLabel = "Unknown_"+i+"_"+j;
+                          }
                           childRange = $("<div class='arrangeSection child' rangeID='"+this['@id']+"' relation='"+i+"_"+j+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                          console.log("APPEND CHILD");
                           if($.inArray(this["@id"], existingRanges) == -1){ //this range has not yet been placed in the DOM.
-                            $("#placement").append(currentRange);
+                            $("#placement").append(childRange);
                             existingRanges.push(this["@id"]);
                           }
                           else{
