@@ -474,3 +474,22 @@ and open the template in the editor.
                 color:white;
                 font-weight:bold;
             }
+
+            .arrangeSection{
+                display: block;
+                position: relative;
+
+            }
+            .arrangeSection .parent{
+                border: 2px solid blue;
+                padding: 8px;
+
+            }
+
+            .arrangeSection .child{
+                display: none;
+                border: 2px solid red;
+                padding: 5px;
+            }
+
+            
