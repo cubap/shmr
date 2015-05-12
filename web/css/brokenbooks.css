@@ -493,7 +493,7 @@ and open the template in the editor.
             }
             
             div[relation="bucket"]{
-                display: none;
+                display: block;
                 border: 2px solid green;
             }
 
@@ -507,6 +507,9 @@ and open the template in the editor.
                 position: relative;
                 border: 2px solid black;
                 padding: 2px; 
+            }
+            div[leaf="true"]{
+                display: none;
             }
 
             

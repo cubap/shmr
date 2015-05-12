@@ -43,31 +43,49 @@ function getAllCanvases(){
 }
 
 function toggleChildren(parentRange){
-  var children = parentRange.find(".child");
+  var parentDepth = parseInt(parentRange.parent().attr("depth"));
+  var children = parentRange.children(".child");
   //var actualDepth = $(".rangeArrangementArea").length;
   var intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
   var newArea = $("<div depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
   var relation = parentRange.attr("rangeID");
   var newArea = $("<div relation='"+relation+"' depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
+  var existingInCopy = [];
   console.log("DEPTH : "+intendedDepth);
   $.each(children, function(){
-    newArea.append(this);
-    console.log(this);
+    var rangeID = $(this).attr("rangeID");
+    console.log("has "+rangeID+" already been added to the new area : "+$.inArray(rangeID, existingInCopy));
+    if($.inArray(rangeID, existingInCopy) == -1){
+      console.log("Add to new area.")
+       existingInCopy.push(rangeID);
+       $(this).clone().appendTo(newArea);
+    }
+    
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     $("#placement").append(newArea);
-    newArea.find('.child').show();
+    newArea.find('.child').not('div[leaf="true"]').show();
     console.log("AREA does not exist.  Append in.");
+    parentRange.addClass("selectedSection");
   }
   else{ //if the are already exists
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
-      console.log("Depth exists, but this is a child of that depth.");
+      console.log("Depth exists, but this is a child of that depth. Remove selection on all children.");
+      $.each(parentRange.parent().find('div'),function(){
+        $(this).removeClass("selectedSection");
+        console.log("removed");
+      })
+      
       toggleChildren(parentRange);
     }
     else{ //if the area clicked was the one already highlighted
-      console.log("Depth and child exist.");
+      console.log("Depth and child exist.  Unselect in ");
+      console.log(parentRange);
       $("div[depth='"+intendedDepth+"']").remove(); //just remove the area, this was a true toggle.  
+      $.each(parentRange.find('.arrangeSection'), function(){
+        $(this).removeClass("selectedSection"); //remove selected areas  
+      });
     }
   }
 }
@@ -84,6 +102,7 @@ function gatherRangesForArrange(){
         var existingRangeToUpdate = ""; 
         var tag = "parent";
         var relation = "";
+        var isLeaf = false;
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
         }
@@ -97,15 +116,28 @@ function gatherRangesForArrange(){
         var currentRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection "+tag+"' relation='"+relation+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
+        var canvases = rangeCollection[i].canvases.length;
+        if(canvases !== 0 && canvases!==undefined){
+          isLeaf = true;
+        }
+        else{
+          isLeaf = false;
+        }
         //obvious
         if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
-         //console.log("Working inner ranges.")
             for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
                 var thisRange = innerRanges[j];
                 $.each(rangeCollection, function(){ //check each range in the collection
                     if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
                         var thisLabel = this.label;
-                        var embedRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection child' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        var thisCanvases = this.canvases.length;
+                        if(thisCanvases !== 0 && thisCanvases!==undefined){
+                          isLeaf = true;
+                        }
+                        else{
+                          isLeaf = false;
+                        }
+                        var embedRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection child' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                           existingRanges.push(this["@id"]);
                         }
@@ -120,7 +152,7 @@ function gatherRangesForArrange(){
                 });
             }
         }
-        else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
+        else{ //There are no inner ranges. It could be a section with no children or a leaf.  
             var a = false;
             var newLeaf = undefined;
             var existingRange = $(".rangeArrangementArea").find('div[rangeID="'+outerRange['@id']+'"]');
@@ -128,11 +160,10 @@ function gatherRangesForArrange(){
                 //It already exists, do not append this leaf.
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
-              newLeaf = $("<div onclick='toggleChildren($(this));' class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
+              newLeaf = $("<div onclick='toggleChildren($(this));' leaf='"+isLeaf+"' class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
                 $(".rangeArrangementArea").append(newLeaf);
-               // console.log("append new leaf to DOM");
                 if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
                     existingRanges.push(newLeaf.attr("rangeID"));
                 }
@@ -149,7 +180,6 @@ function gatherRangesForArrange(){
 
 //Think about sorted vs. unsorted ranges. 
 function organizeRanges(){
-  console.log("Organizing Ranges");
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
@@ -417,11 +447,8 @@ function organizeRanges(){
 //                            }
                         // }); //Must comment this out when doing local demo.
  //                     }); //live 
- console.log(currentCanvasAnnotations);
                         for(var x=0; x<currentCanvasAnnotations.length; x++){
-                            console.log(currentCanvasAnnotations[x]);
                             $.each(currentCanvasAnnotations[x], function(){
-                             console.log(this);
                               var canvas = this.on;
                               var XYWHarray2 = [0,0,0,0];
                               if(canvas.indexOf("#xywh") >= 0){
@@ -525,36 +552,28 @@ function populateAnnoForms(){
         var annos = [];
         if(zeta){
             annos = annoListCollection[2].resources;
-            console.log("POPULATE ANNOS FOR LEAF");
             if(annos.length > 0){
                 annos = JSON.parse(annos);
             }
-            console.log(annos);
         }
         else if(alpha){
             annos = annoListCollection[0].resources;
-            console.log("POPULATE ANNOS FOR Alpha");
             if(annos.length > 0){
                 annos = JSON.parse(annos);
             }
-            console.log(annos);
         }
         else{
             annos = annoListCollection[1].resources;
-            console.log("POPULATE ANNOS FOR Beta");
             if(annos.length > 0){
                 annos = JSON.parse(annos);
             }
-            console.log(annos);
         }
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry1 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel1 = this.label.replace(":", "").trim();
-                console.log(checkLabel1 + " == " +label1);
                 if (checkLabel1 == label1){
-                    console.log("THESE WERE EQUAL");
                     currentEntry1.val(this.resource["cnt:chars"]);
                 }
                 else if(checkLabel1 == "General Metadata"){
@@ -567,9 +586,7 @@ function populateAnnoForms(){
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel2 = this.label.replace(":", "").trim();
-                console.log(checkLabel2 + " == " +label2);
                 if (checkLabel2 == label2){
-                    console.log("THESE WERE EQUAL");
                     currentEntry2.val(this.resource["cnt:chars"]);
                 }
                 else if(checkLabel2 == "General Metadata"){
@@ -582,9 +599,7 @@ function populateAnnoForms(){
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel3 = this.label.replace(":", "").trim();
-                console.log(checkLabel3 + " == " +label3);
                 if (checkLabel3 == label3){
-                    console.log("THESE WERE EQUAL");
                     currentEntry3.val(this.resource["cnt:chars"]);
                 }
                 else if(checkLabel3 == "General Metadata"){
@@ -605,7 +620,6 @@ function populateAnnoForms(){
         $(".content").val(""); //Reset all fields
             //$(".start").show("explode", "500ms");
             if(canvas == 'recto'){
-                console.log("RECTO, ALPHA IS TRUE");
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -614,7 +628,6 @@ function populateAnnoForms(){
                 beta= false;
             }
             else if (canvas == 'verso'){
-                console.log("VERSO, BETA IS TRUE");
                 $("#folioSide2").addClass("selectedFolio");;
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -623,7 +636,6 @@ function populateAnnoForms(){
                 alpha = false;
             }
             else{
-                console.log("LEAF: ALPHA, BETA, ZETA IS TRUE");
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -1101,37 +1113,33 @@ function populateAnnoForms(){
 	}
 
 	function updateAnnotation(annoURI, annoObj){
-		console.log("Update Anno, don't save new one.")
 		var resourceObj = annoObj.resource;
 		var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
 		var paramObj = {"@id":annoURI, "resource": resourceObj};
 		var params = {"content":JSON.stringify(paramObj)};
 		$.post(updateAnnoURL, params, function(data){
-			console.log("Anno updated on server");
 		});
 		if(zeta){
-                    $.each(annoListCollection[2].resources, function(){
-                        if(this["@id"] == annoURI){
-                                this.resource = annoObj.resource;
-                                console.log("Local Anno Updated.");
-                        }
-                    });
+        $.each(annoListCollection[2].resources, function(){
+            if(this["@id"] == annoURI){
+                    this.resource = annoObj.resource;
+            }
+        });
 		}
 		else if (alpha){
-                    $.each(annoListCollection[0].resources, function(){
-                        if(this["@id"] == annoURI){
-                                this.resource = annoObj.resource;
-                                console.log("Local Anno Updated.");
-                        }
-                    });
+      $.each(annoListCollection[0].resources, function(){
+          if(this["@id"] == annoURI){
+                  this.resource = annoObj.resource;
+          }
+      });
 		}
 		else{
-                    $.each(annoListCollection[1].resources, function(){
-                        if(this["@id"] == annoURI){
-                                this.resource = annoObj.resource;
-                                console.log("Local Anno Updated.");
-                        }
-                    });
+        $.each(annoListCollection[1].resources, function(){
+            if(this["@id"] == annoURI){
+                    this.resource = annoObj.resource;
+                    console.log("Local Anno Updated.");
+            }
+        });
 		}
 	}
 
@@ -1143,7 +1151,6 @@ function populateAnnoForms(){
 		annoID ++;
 		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
 		var annoServerID = -1;
-		console.log("Create new anno for "+objectID);
 		annoObject.on = objectID; //set the on property to be what object we are saving to 
 		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
 		var params = {'content':JSON.stringify(annoObject)};
@@ -1173,21 +1180,15 @@ function populateAnnoForms(){
 		$.post(newAnnoUrl, params, function(data){
 			data=JSON.parse(data);
 			annoObject["@id"] = data["@id"];
-                        console.log("NEW ANNO.  ABZ: "+alpha, beta, zeta);
 			if(zeta){
 				annoListCollection[2].resources.push(annoObject); //live
-				console.log("Leaf list is updated");
 			}
 			else if(alpha){
 				annoListCollection[0].resources.push(annoObject); //live
-				console.log("Alpha list is updated");
 			}
 			else{
 				annoListCollection[1].resources.push(annoObject); //live
-				console.log("Beta list is updated")
 			}
-
-			console.log("Starting update of list collection on server")
 			$.each(annoListCollection, function(){
 				if (this.on === objectID){ //this is our annotation list to add the annotation to 
 					//this.resources.push(annoObject); //push the annotation to the appropriate list.
@@ -1204,7 +1205,6 @@ function populateAnnoForms(){
 					var params = {"content":JSON.stringify(paramsObj)};
 					
 					$.post(updateAnnoListURL, params, function(data){
-						console.log("List Updated On Server");
 					});
 				}
 			}); 
@@ -1223,7 +1223,6 @@ function populateAnnoForms(){
 						}
 					})
 					if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
-					console.log("Local Leaf otherContent updated.");
 				}
 			});//local. adds the annotation list uri to the other content field.  
 		}
@@ -1246,7 +1245,6 @@ function populateAnnoForms(){
 						}
 					})
 					if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
-					console.log("local canvas otherContent updated");
 				}
 			});
 		}//local
@@ -1285,14 +1283,11 @@ function populateAnnoForms(){
         	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
         	$.post(listURL, listParams, function(data2){
         		data2 = JSON.parse(data2);
-        		console.log("New Anno List 2");
-        		console.log(data2);
         		annoListCollection[2]["@id"] = data2["@id"];
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
         		var paramObj = {"@id":currentLeafServerID, "otherContent":[data["@id"]]};
         		var params = {"content":JSON.stringify(paramObj)};
         		$.post(updateCanvasURL, params, function(data){
-        			console.log("Leaf otherContent updated live");
         		});
         	});
 		});
@@ -1317,7 +1312,6 @@ function populateAnnoForms(){
 					});
 				}
 				else{
-					console.log('LEAF already in range.');
 					return false;
 				}
 			}
@@ -1414,18 +1408,14 @@ function populateAnnoForms(){
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
         		data = JSON.parse(data);
-        		console.log("New Anno List 1");
-        		console.log(data);
         		annoListCollection[0]["@id"] = data["@id"];
         		//update otherContent of first canvas
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
         		var paramObj = {"@id":newCanvas1["@id"], "otherContent":[data["@id"]]};
         		var params = {"content":JSON.stringify(paramObj)};
         		$.post(updateCanvasURL, params, function(data){
-        			console.log("Canvas 1 otherContent updated live");
         		});
         	});
-      	 	console.log("FIRST CANVAS SAVED ID "+ data["@id"]);
       	 	newCanvas1ServerID = data["@id"];
   	 		canvasID += 1;
       	 	var newCanvas2 = {
@@ -1453,7 +1443,6 @@ function populateAnnoForms(){
 	      	var params2 = {'content': JSON.stringify(newCanvas2)};
 	      	$.post(url, params2, function(data){
 	      		data=JSON.parse(data);
-	      		console.log("Second CANVAS SAVED ID "+ data["@id"]);
 	      		newCanvas2ServerID = data["@id"];
       	 		newCanvas2["@id"] = data["@id"];
       	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+data["@id"]+"','verso');");
@@ -1470,14 +1459,11 @@ function populateAnnoForms(){
 	        	annoListCollection[1].on = data["@id"];
 	        	$.post(listURL2, listParams2, function(data){
 	        		data = JSON.parse(data);
-	        		console.log("New Anno List 2");
-	        		console.log(data);
 	        		annoListCollection[1]["@id"] = data["@id"];
 	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
 	        		var paramObj = {"@id":newCanvas2["@id"], "otherContent":[data["@id"]]};
 	        		var params = {"content":JSON.stringify(paramObj)};
 	        		$.post(updateCanvasURL, params, function(data){
-	        			console.log("Canvas 2 otherContent updated live");
 	        		});
 	        	});
 	  	 	 	rangeID += 1;
@@ -1498,7 +1484,6 @@ function populateAnnoForms(){
 		      		"otherContent" : [annoListCollection[2]["@id"]]
         		}
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
-				console.log("SAVE LEAF");
                                 
 				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
       	 	});
