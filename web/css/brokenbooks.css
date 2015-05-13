@@ -388,6 +388,7 @@ and open the template in the editor.
             .selectedFolio{
                 width: 104% !important;
                 background-color: white !important;
+                color: black !important;
             }
             #initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
                 display: none;

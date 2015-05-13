@@ -845,18 +845,14 @@ function toggleChildren(parentRange){
   var relation = parentRange.attr("rangeID");
   var newArea = $("<div relation='"+relation+"' depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
   var existingInCopy = [];
-  console.log("DEPTH : "+intendedDepth);
   $.each($("div[depth]"),function(){
-      console.log($(this).attr("depth") +" > " + intendedDepth);
       if(parseInt($(this).attr("depth")) > intendedDepth){
-          console.log("yes, remove it");
           $(this).remove();
       }
   });
   $.each(children, function(){
     var rangeID = $(this).attr("rangeID");
     if($.inArray(rangeID, existingInCopy) == -1){
-      console.log("Add to new area.")
        existingInCopy.push(rangeID);
        $(this).clone().appendTo(newArea);
        $("div[relation='bucket']").removeClass("selectedSection");
@@ -1873,6 +1869,7 @@ function populateAnnoForms(){
         });
 
         if(section !== "bucket"){
+            console.log("ADD TO SECTION");
           updateRange(section, currentLeafServerID);
         }
        
@@ -2121,17 +2118,17 @@ function populateAnnoForms(){
 		var currentRange = {};
 		$.each(testManifest.structures, function(){
 			if(this["@id"] === rangeID){
-				if(!$.inArray(leaf, $(this).ranges)){
-					var ranges = this.ranges;
+				if($.inArray(leaf, this.ranges) === -1){
 					this.ranges.push(leaf);
 					var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
-					var paramObj = {"ranges" : ranges};
+					var paramObj = {"ranges" : this.ranges};
 					var params = {"content" : JSON.stringify(paramObj)};
 					$.post(newAnnoUrl, params, function(data){
-
+                                            console.log("Range updated");
 					});
 				}
 				else{
+                                    console.log("Should not update, leaf already in range");
 					return false;
 				}
 			}
