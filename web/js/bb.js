@@ -64,7 +64,6 @@ function toggleChildren(parentRange){
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     $("#placement").append(newArea);
-    newArea.find('.child').not('div[leaf="true"]').show();
     console.log("AREA does not exist.  Append in.");
     parentRange.addClass("selectedSection");
   }
@@ -72,22 +71,23 @@ function toggleChildren(parentRange){
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       console.log("Depth exists, but this is a child of that depth. Remove selection on all children.");
-      $.each(parentRange.parent().find('div'),function(){
+      console.log(parentRange.parent().children('div'));
+      $.each(parentRange.parent().children('div'), function(){
         $(this).removeClass("selectedSection");
-        console.log("removed");
-      })
-      
+      });
       toggleChildren(parentRange);
     }
     else{ //if the area clicked was the one already highlighted
+      parentRange.removeClass("selectedSection");
       console.log("Depth and child exist.  Unselect in ");
       console.log(parentRange);
       $("div[depth='"+intendedDepth+"']").remove(); //just remove the area, this was a true toggle.  
-      $.each(parentRange.find('.arrangeSection'), function(){
-        $(this).removeClass("selectedSection"); //remove selected areas  
-      });
+      // $.each(parentRange.find('.arrangeSection'), function(){
+      //   $(this).removeClass("selectedSection"); //remove selected areas  
+      // });
     }
   }
+  newArea.children('div').not('div[leaf="true"]').show();
 }
 
 function gatherRangesForArrange(){
@@ -139,14 +139,17 @@ function gatherRangesForArrange(){
                         }
                         var embedRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection child' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
-                          existingRanges.push(this["@id"]);
-                        }
-                        if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
-                          existingRangeToUpdate.append(embedRange);
-                        }
-                        else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
-                          currentRange.append(embedRange);
-                          $(".rangeArrangementArea").append(currentRange);
+                          
+                          if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
+                            existingRangeToUpdate.append(embedRange);
+                            existingRanges.push(embedRange.attr("rangeID"));
+                          }
+                          else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
+                            currentRange.append(embedRange);
+                            $(".rangeArrangementArea").append(currentRange);
+                            existingRanges.push(embedRange.attr("rangeID"));
+                            existingRanges.push(currentRange.attr("rangeID"));
+                          }
                         }
                     } //If you didn't find it among the collection, we can't do anything with it.  
                 });
@@ -163,9 +166,9 @@ function gatherRangesForArrange(){
               newLeaf = $("<div onclick='toggleChildren($(this));' leaf='"+isLeaf+"' class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
-                $(".rangeArrangementArea").append(newLeaf);
                 if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
                     existingRanges.push(newLeaf.attr("rangeID"));
+                    $(".rangeArrangementArea").append(newLeaf);
                 }
               }
         }
