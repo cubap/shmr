@@ -507,6 +507,7 @@ and open the template in the editor.
                 position: relative;
                 border: 2px solid black;
                 padding: 2px; 
+                margin: 0px 2px;
             }
             div[leaf="true"]{
                 display: none;
