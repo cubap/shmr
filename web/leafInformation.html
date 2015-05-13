@@ -50,15 +50,17 @@ and open the template in the editor.
                     <div id="contextForm">
                             <table>
                                 <tbody>
+                                    <tr class="contextFormEntry"><td class="formLabel">BB Identifier: </td> <td> <input class="content" type="text"  id="bbIdentifier"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Institution or Repository: </td> <td> <input class="content" type="text"  id="InstOrRepo"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Shelfmark: </td> <td> <input class="content" type="text"  id="contextFolioID"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Nickname:  </td> <td> <input class="content" type="text"  id="nickname" /> </td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Patron (first owner): </td> <td> <input class="content" type="text"  id="contextPatron"/></td></tr>
-                                    <tr class="contextFormEntry"><td class="formLabel">Former Owners Seperated by Semi-colon (;) </td> <td> <textarea class="content" id="previousOwners"/></textarea></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Dedicatee:  </td> <td>  <input type="text" class="content" id="dedicatee" /> </td></tr> 
+                                    <tr class="contextFormEntry"><td class="formLabel">Provenance (separate with ';')</td> <td> <textarea class="content" id="previousOwners"/></textarea></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Insignia (coat of arms, etc.) </td> <td> <input class="content" type="text"  id="insignia"/></td></tr>
-                                    <tr class="contextFormEntry"><td class="formLabel">Sales: </td> <td> <input class="content" type="text"  id="contextAuction" /></textarea</td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Date Sold: </td> <td> <input class="content" type="text"  id="contextAuction" /></textarea</td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Date Acquired: </td> <td> <input class="content" type="text"  id="contextDateAcquired"/></td></tr>
-                                    <tr class="contextFormEntry"><td class="formLabel">Exlibris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Ex libris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input class="content" type="text"  id="libraryStamp"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input class="content" type="text"  id="binding"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input class="content" type="text"  id="frame"/></td></tr>
@@ -156,16 +158,15 @@ and open the template in the editor.
                                     <tbody>
                                             <tr class="contentFormEntry"><td class="formLabel">Language:  </td> <td>  <input class="content" type="text" id="contentLanguage" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Text Author:  </td> <td>  <input class="content" type="text" class="content" id="contentAuthor" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Generic Title:  </td> <td>  <input class="content" type="text" class="content" id="contentTitle" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Title (refers to contents):  </td> <td>  <input class="content" type="text" class="content" id="contentTitle" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Subject:  </td> <td>  <input class="content" type="text" class="contentF" id="contentSubject" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Structure/Section of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentSection" admin="admin" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Structure (Section of Text):  </td> <td>  <input class="content" type="text" class="content" id="contentSection" admin="admin" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Description of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentDescription" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Incipit:  </td> <td>  <input class="content" type="text" class="content" id="incipit" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Explicit:  </td> <td>  <input class="content" type="text" class="content" id="explicit" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Title Page:  </td> <td>  <input class="content" type="text" class="content" id="titlePage" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Prologue:  </td> <td>  <input class="content" type="text" class="content" id="contentPrologue" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Dedication:  </td> <td>  <input class="content" type="text" class="content" id="dedication" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Dedicatee:  </td> <td>  <input class="content" type="text" class="content" id="dedicatee" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Rubrics:  </td> <td>  <input class="content" type="text" class="content" id="rubrics" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Chant:  </td> <td>  <input class="content" type="text" class="content" id="chant" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Gloss:  </td> <td>  <input class="content" type="text" class="conten" id="gloss" /> </td></tr> 
