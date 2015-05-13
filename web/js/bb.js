@@ -846,9 +846,15 @@ function toggleChildren(parentRange){
   var newArea = $("<div relation='"+relation+"' depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
   var existingInCopy = [];
   console.log("DEPTH : "+intendedDepth);
+  $.each($("div[depth]"),function(){
+      console.log($(this).attr("depth") +" > " + intendedDepth);
+      if(parseInt($(this).attr("depth")) > intendedDepth){
+          console.log("yes, remove it");
+          $(this).remove();
+      }
+  });
   $.each(children, function(){
     var rangeID = $(this).attr("rangeID");
-    console.log("has "+rangeID+" already been added to the new area : "+$.inArray(rangeID, existingInCopy));
     if($.inArray(rangeID, existingInCopy) == -1){
       console.log("Add to new area.")
        existingInCopy.push(rangeID);
@@ -859,15 +865,12 @@ function toggleChildren(parentRange){
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     $("#placement").append(newArea);
-    console.log("AREA does not exist.  Append in.");
     parentRange.addClass("selectedSection");
     $("div[relation='bucket']").removeClass("selectedSection");
   }
   else{ //if the are already exists
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
-      console.log("Depth exists, but this is a child of that depth. Remove selection on all children.");
-      console.log(parentRange.parent().children('div'));
       $.each(parentRange.parent().children('div'), function(){
         $(this).removeClass("selectedSection");
       });
@@ -875,8 +878,6 @@ function toggleChildren(parentRange){
     }
     else{ //if the area clicked was the one already highlighted
       parentRange.removeClass("selectedSection");
-      console.log("Depth and child exist.  Unselect in ");
-      console.log(parentRange);
       $("div[depth='"+intendedDepth+"']").remove(); //just remove the area, this was a true toggle. 
       if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
           $("div[relation='bucket']").addClass("selectedSection");
@@ -886,7 +887,6 @@ function toggleChildren(parentRange){
       // });
     }
   }
-  console.log("Show sections in new area");
   newArea.children('div').not('div[leaf="true"]').show(); //only show sections
   if(newArea.children('div').not('div[leaf="true"]').length == 0){
     newArea.append('<div style="color: red;">No Subsections Available</div>');
@@ -1482,7 +1482,6 @@ function populateAnnoForms(){
             }
         });
         var section = "";
-        var bucketURL = $("div[relation='bucket'].attr('rangeID');");
         if($(".selectedSection:last").attr('relation') === 'bucket'){
           section = "bucket";
         }

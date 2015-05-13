@@ -478,7 +478,7 @@ and open the template in the editor.
             .arrangeSection{
                 display: block;
                 position: relative;
-
+                cursor: pointer;
             }
             .arrangeSection.parent{
                 border: 2px solid blue;
