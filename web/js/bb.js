@@ -2136,12 +2136,13 @@ function populateAnnoForms(){
 					var params = {"content" : JSON.stringify(paramObj)};
 					$.post(newAnnoUrl, params, function(data){
               console.log("Range updated");
-              var addedToSection = $("<div rangeID='"+rangeID+"' class='parentSection'>"+sectionName+" <div class=\"removeFromSection('"+leaf+"','"+rangeID+"');\">X</div></div>")
+              var addedToSection = $("<div rangeID='"+rangeID+"' class='parentSection'>"+sectionName+" <div class=\"removeFromSection('"+leaf+"','"+rangeID+"');\">X</div></div>");
+              $("#arrangeCrumb").append(addedToSection);
 
 					});
 				}
 				else{
-                                    console.log("Should not update, leaf already in range");
+          console.log("Should not update, leaf already in range");
 					return false;
 				}
 			}

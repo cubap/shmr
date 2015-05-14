@@ -212,6 +212,7 @@ and open the template in the editor.
                 top: 20px;
                 background-color: gray;
                 display: none;
+                min-height: 540px;
             }
             #arrangeCrumb{
                 position: relative;
