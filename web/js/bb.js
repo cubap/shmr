@@ -2102,30 +2102,37 @@ function populateAnnoForms(){
 		
 	}
   function removeFromSection(leaf, rangeID){
+    console.log("Remove from section and children");
     var trackRangeID = rangeID;
     var relation = trackRangeID;
+
     var trackRangeID1 = rangeID;
     var relation1 = trackRangeID;
-    var actualRemove = "";
+
+    var actualRemove = trackRangeID1;
     while(relation1 !== ""){ //Find all related children selected sections and remove their class.
-      var nextRelator1 = trackRangeID;
+      var nextRelator1 = trackRangeID1;
       var relator1 = $('div[relation="'+nextRelator1+'"]');
       if (relator1.length>0){
-        trackRangeID = relator1.find(".selectedSection").attr("rangeID");
-        relation1 = trackRangeID1;
-        actualRemove = trackRangeID;
+        trackRangeID1 = relator1.find(".selectedSection").attr("rangeID");
+        if(trackRangeID1 !== undefined){
+          relation1 = trackRangeID1;
+          actualRemove = trackRangeID1;
+        }
       }
       else{
         relation1 = "";
       }
     }
-
+    console.log("Got actual: "+actualRemove);
+    console.log("crawl ranges for actual");
     $.each(testManifest.structures, function(){
       if(this["@id"] === actualRemove){
+        console.log("found it");
           var index = this.ranges.indexOf(leaf);
           console.log("old ranges");
           console.log(this.ranges);
-          this.ranges = this.ranges.splice(index, 1);
+          this.ranges.splice(index, 1);
           console.log("new ranges");
           console.log(this.ranges);
           var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
@@ -2154,7 +2161,7 @@ function populateAnnoForms(){
                 savePlacement();
               }
               else{ //You have removed down to the bucket, so no UI changes are necessary, everything is removed and unselected. 
-
+                $("div[relation='bucket']").addClass("selectedFolio");
               }
           });
       }
@@ -2178,12 +2185,14 @@ function populateAnnoForms(){
 					$.post(newAnnoUrl, params, function(data){
               console.log("Range updated");
               var addedToSection = "";
-              $.each($(".selectedSection"),function(){
+              $.each($(".selectedSection"), function(){
+                console.log("add section to arrange crumb.");
                 var thisRangeID = $(this).attr("rangeID");
                 var thisName = $(this).find("div:first").html();
                 addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'>"+thisName+" <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+                $("#arrangeCrumb").append(addedToSection);
               });
-              $("#arrangeCrumb").append(addedToSection);
+              
 					});
 				}
 				else{
