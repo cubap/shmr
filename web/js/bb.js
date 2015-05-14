@@ -2102,8 +2102,26 @@ function populateAnnoForms(){
 		
 	}
   function removeFromSection(leaf, rangeID){
+    var trackRangeID = rangeID;
+    var relation = trackRangeID;
+    var trackRangeID1 = rangeID;
+    var relation1 = trackRangeID;
+    var actualRemove = "";
+    while(relation1 !== ""){ //Find all related children selected sections and remove their class.
+      var nextRelator1 = trackRangeID;
+      var relator1 = $('div[relation="'+nextRelator1+'"]');
+      if (relator1.length>0){
+        trackRangeID = relator1.find(".selectedSection").attr("rangeID");
+        relation1 = trackRangeID1;
+        actualRemove = trackRangeID;
+      }
+      else{
+        relation1 = "";
+      }
+    }
+
     $.each(testManifest.structures, function(){
-      if(this["@id"] === rangeID){
+      if(this["@id"] === actualRemove){
           var index = this.ranges.indexOf(leaf);
           console.log("old ranges");
           console.log(this.ranges);
@@ -2115,10 +2133,33 @@ function populateAnnoForms(){
           var params = {"content" : JSON.stringify(paramObj)};
           $.post(newAnnoUrl, params, function(data){
               console.log("Remove section from crumb");
-              $(".parentSection[rangeID='"+rangeID+"']").remove()
+              while(relation !== ""){ //Find all related children selected sections and remove their class.
+                var nextRelator = trackRangeID;
+                var relator = $('div[relation="'+nextRelator+'"]');
+                if (relator.length>0){
+                  trackRangeID = relator.find(".selectedSection").attr("rangeID");
+                  $('.parentSection[rangeID="'+trackRangeID+'"]').remove();
+                  relation = trackRangeID;
+                  relator.find(".selectedSection").removeClass("selectedSection");
+                }
+                else{
+                  relation = "";
+                }
+              }
+              $(".parentSection[rangeID='"+rangeID+"']").remove();
+              $(".selectedSection[rangeID='"+rangeID+"']").removeClass("selectedSection");
+              //ensure the one clicked is also unselected. 
+              if($('.selectedSection').length > 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
+                $(".parentSection").remove();
+                savePlacement();
+              }
+              else{ //You have removed down to the bucket, so no UI changes are necessary, everything is removed and unselected. 
+
+              }
           });
       }
     });
+    
   }
 	/*
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
@@ -2136,9 +2177,13 @@ function populateAnnoForms(){
 					var params = {"content" : JSON.stringify(paramObj)};
 					$.post(newAnnoUrl, params, function(data){
               console.log("Range updated");
-              var addedToSection = $("<div rangeID='"+rangeID+"' class='parentSection'>"+sectionName+" <div class=\"removeFromSection('"+leaf+"','"+rangeID+"');\">X</div></div>");
+              var addedToSection = "";
+              $.each($(".selectedSection"),function(){
+                var thisRangeID = $(this).attr("rangeID");
+                var thisName = $(this).find("div:first").html();
+                addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'>"+thisName+" <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+              });
               $("#arrangeCrumb").append(addedToSection);
-
 					});
 				}
 				else{
