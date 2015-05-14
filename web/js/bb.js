@@ -1459,34 +1459,12 @@ function populateAnnoForms(){
         var uriToSave = $("#catalogueInfoFor").val(); //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
-        // if(zeta){
-        //     $("#zetaInformation").find('ul').empty();
-        //     otherInfoList = $("#zetaInformation").find(".addedNotes"); //for the notes field
-        // }
-        // else if(alpha){
-        //     $("#alphaInformation").find('ul').empty();
-        //     otherInfoList = $("#alphaInformation").find(".addedNotes"); //for the notes field
-        // }
-        // else if(beta){
-        //     $("#betaInformation").find('ul').empty();
-        //     otherInfoList = $("#betaInformation").find(".addedNotes"); //for the notes field
-        // }
         $.each(testManifest.structures, function(){
             if ($(this)["@id"] === uriToSave){
                 currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
                 return false;
             }
         });
-        var section = "";
-        if($(".selectedSection:last").attr('relation') === 'bucket'){
-          section = "bucket";
-        }
-        else{
-          section = $(".selectedSection:last").attr("rangeID");
-        }
-        
-
-        
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
         $(".contentFormEntry").each(function(){
             var addedInfoList1 = {};
@@ -1868,14 +1846,27 @@ function populateAnnoForms(){
             $("#folioSide1").removeClass("selectedFolio");
         });
 
-        if(section !== "bucket"){
-            console.log("ADD TO SECTION");
-          updateRange(section, currentLeafServerID);
-        }
+        // if(section !== "bucket"){
+        //     console.log("ADD TO SECTION");
+        //   updateRange(section, currentLeafServerID);
+        // }
        
     }
+
+    function savePlacement(){
+        var section = "";
+        if($(".selectedSection:last").attr('relation') === 'bucket'){
+          section = "bucket";
+        }
+        else{
+          section = $(".selectedSection:last").attr("rangeID");
+        }
+        if(section !== "bucket"){
+          updateRange(section, currentLeafServerID);
+        }
+    }
     
-    	function showFullImage(imgContainer){
+	function showFullImage(imgContainer){
 		var imgToShow = $("#"+imgContainer).find('img').attr("src");
 		$("#fullImgContainer").find('img').attr('src', imgToShow);
 		$("#fullImgContainer").show();

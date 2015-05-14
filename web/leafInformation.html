@@ -199,7 +199,7 @@ and open the template in the editor.
                     </div>
                     <div id="placement">
                         <p>Here you can select the section to place this leaf into.</p>
-                        <input type="button" onclick="gatherRangesForArrange();" value="Organize Sections"/><br>
+                        <input type="button" onclick="savePlacement();" value="Save Arrangment"/>
                         <div class="rangeArrangementArea" depth = "1">
                             <div class="arrangeSection parent" relation="bucket">Bucket</div>
                         </div>
@@ -209,6 +209,7 @@ and open the template in the editor.
             <input id="cancelMetadata" type="button" onclick="cancelFolio();" value="Cancel"/>
 </html>
 <script>
+    
     $(function(){
         $('#formTabs ul li i').click(function(){
             console.log("TAB HELPER HOVER");
@@ -227,6 +228,8 @@ and open the template in the editor.
             $("#"+showValue).show();
             //Hide the other ones?
         });
+
+        gatherRangesForArrange();
     });
     
 </script>
