@@ -1865,6 +1865,19 @@ function populateAnnoForms(){
           updateRange(section, currentLeafServerID, 'arrange');
         }
     }
+
+    function resetPlacement(){
+      $(".selectedSection").removeClass("selectedSection");
+      if($(".parentSection").length > 0){
+        $.each($(".parentSection"), function(){
+          var rangeID = $(this).attr("rangeID");
+          $(".arrangeSection[rangeID='"+rangeID+"']").addClass("selectedSection")
+        })
+      }
+      else{
+        $('div[relation="bucket"]').addClass("selectedSection");
+      }
+    }
     
 	function showFullImage(imgContainer){
 		var imgToShow = $("#"+imgContainer).find('img').attr("src");
