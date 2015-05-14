@@ -1881,7 +1881,7 @@ function populateAnnoForms(){
         if($(this).find(".selectedSection").length == 0){
           $(this).remove();
         }
-      }
+      });
     }
     
 	function showFullImage(imgContainer){
@@ -2179,7 +2179,7 @@ function populateAnnoForms(){
                 savePlacement();
               }
               else{ //You have removed down to the bucket, so no UI changes are necessary, everything is removed and unselected. 
-                $("div[relation='bucket']").addClass("selectedFolio");
+                $("div[relation='bucket']").addClass("selectedSection");
               }
           });
       }
