@@ -41,7 +41,7 @@ and open the template in the editor.
                         <i class="helperIcon" helper="general">hlp</i>
                         <div class="helperContent" helper="general">This area is for the general helper text.</div>
                     </li>
-                    <li><a href="#placement">Arrange</a>
+                    <li ><a href="#placement">Arrange</a>
                         <i class="helperIcon" helper="arrange">hlp</i>
                         <div class="helperContent" helper="arrange">This area is for the arrange helper text.</div>
                     </li>
@@ -199,7 +199,7 @@ and open the template in the editor.
                     </div>
                     <div id="placement">
                         <p>Here you can select the section to place this leaf into.</p>
-                        <input type="button" onclick="savePlacement();" value="Save Arrangment"/>
+                        <input type="button" onclick="savePlacement();" value="Save Arrangment"/><br>
                         <div class="rangeArrangementArea" depth = "1">
                             <div class="arrangeSection parent" relation="bucket">Bucket</div>
                         </div>
@@ -209,7 +209,7 @@ and open the template in the editor.
             <input id="cancelMetadata" type="button" onclick="cancelFolio();" value="Cancel"/>
 </html>
 <script>
-    
+
     $(function(){
         $('#formTabs ul li i').click(function(){
             console.log("TAB HELPER HOVER");
@@ -229,7 +229,7 @@ and open the template in the editor.
             //Hide the other ones?
         });
 
-        gatherRangesForArrange();
+        
     });
     
 </script>

@@ -1862,7 +1862,7 @@ function populateAnnoForms(){
           section = $(".selectedSection:last").attr("rangeID");
         }
         if(section !== "bucket"){
-          updateRange(section, currentLeafServerID);
+          updateRange(section, currentLeafServerID, 'arrange');
         }
     }
     
@@ -1920,7 +1920,7 @@ function populateAnnoForms(){
 		return theReturn;
 	}
 
-	function updateAnnotation(annoURI, annoObj){
+	function updateAnnotation(annoURI, annoObj, arrange){
 		var resourceObj = annoObj.resource;
 		var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
 		var paramObj = {"@id":annoURI, "resource": resourceObj};
@@ -2101,6 +2101,25 @@ function populateAnnoForms(){
 		});
 		
 	}
+  function removeFromSection(leaf, rangeID){
+    $.each(testManifest.structures, function(){
+      if(this["@id"] === rangeID){
+          var index = this.ranges.indexOf(leaf);
+          console.log("old ranges");
+          console.log(this.ranges);
+          this.ranges = this.ranges.splice(index, 1);
+          console.log("new ranges");
+          console.log(this.ranges);
+          var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+          var paramObj = {"ranges" : this.ranges};
+          var params = {"content" : JSON.stringify(paramObj)};
+          $.post(newAnnoUrl, params, function(data){
+              console.log("Remove section from crumb");
+              $(".parentSection[rangeID='"+rangeID+"']").remove()
+          });
+      }
+    });
+  }
 	/*
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
 	*/
@@ -2109,13 +2128,16 @@ function populateAnnoForms(){
 		var currentRange = {};
 		$.each(testManifest.structures, function(){
 			if(this["@id"] === rangeID){
+        var sectionName = this.label;
 				if($.inArray(leaf, this.ranges) === -1){
 					this.ranges.push(leaf);
 					var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
 					var paramObj = {"ranges" : this.ranges};
 					var params = {"content" : JSON.stringify(paramObj)};
 					$.post(newAnnoUrl, params, function(data){
-                                            console.log("Range updated");
+              console.log("Range updated");
+              var addedToSection = $("<div rangeID='"+rangeID+"' class='parentSection'>"+sectionName+" <div class=\"removeFromSection('"+leaf+"','"+rangeID+"');\">X</div></div>")
+
 					});
 				}
 				else{
@@ -2293,7 +2315,8 @@ function populateAnnoForms(){
         		}
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                                 
-				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
+    				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
+            gatherRangesForArrange();
       	 	});
   	 	});
       	     	

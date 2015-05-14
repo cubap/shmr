@@ -202,6 +202,21 @@ and open the template in the editor.
                 overflow-x: visible;
                 top: 20px;
             }
+            #sideBarArrange{
+                position: relative;
+                height: auto;
+                width: 27%;
+                z-index: 2;
+                float: left;
+                overflow-x: hidden;
+                top: 20px;
+                background-color: gray;
+                display: none;
+            }
+            #arrangeCrumb{
+                position: relative;
+                border: 1px solid yellow;
+            }
             #whatPiece{
                 position: relative;
                 height:auto;

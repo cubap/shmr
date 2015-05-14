@@ -52,6 +52,14 @@
                     </div>
                 </div>
             </div>
+            <div id="sideBarArrange">
+                <img class="rectoImg" src=""/>
+                <img class="versoImg" src=""/><br>
+                Leaf Label:&nbsp;&nbsp; <input type="text" id="leafLabel"/><br>
+                <div id="arrangeCrumb">
+                    <div>Current Arrangement</div>
+                </div>
+            </div>
             <div class="leaf"></div>
             <div style="clear:both"></div>
             <div id="fullImgContainer"><div onclick='$("#fullImgContainer").hide(); $("#fullImageShade").hide();' class='closeBtn'>X</div><img src=""/></div>
@@ -170,7 +178,19 @@ annoListCollection.push(alphaAnnoList, betaAnnoList, zetaAnnoList);
 		//$(".leaf").load("../brokenBooks/leafTemplate.html"); //This will not exist anymore. 
 		$(".leaf").load("../brokenBooks/leafInformation.html", function(){
                     console.log("SET TABS");
-                    $("#formTabs").tabs();
+                    $("#formTabs").tabs({
+                        activate: function(event ,ui){
+                        //console.log(event);
+                        if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
+                            $(".sideBarInfo").hide();
+                            $("#sideBarArrange").show();
+                        }
+                        else{
+                            $(".sideBarInfo").show();
+                            $("#sideBarArrange").hide();
+                        }
+                    }
+                    });
                 });
                 $('.canvasImageFile').on("change", function(event){
                     //start spinny?
