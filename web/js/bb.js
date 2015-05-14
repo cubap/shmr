@@ -1877,6 +1877,11 @@ function populateAnnoForms(){
       else{
         $('div[relation="bucket"]').addClass("selectedSection");
       }
+      $.each($(".rangeArrangementArea"),function(){
+        if($(this).find(".selectedSection").length == 0){
+          $(this).remove();
+        }
+      }
     }
     
 	function showFullImage(imgContainer){
