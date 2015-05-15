@@ -205,28 +205,45 @@ and open the template in the editor.
             #sideBarArrange{
                 position: relative;
                 height: auto;
-                width: 27%;
+                width: 278px;
                 z-index: 2;
                 float: left;
                 overflow-x: hidden;
                 top: 20px;
                 background-color: gray;
                 display: none;
-                min-height: 540px;
+                min-height: 577px; 
             }
             #arrangeCrumb{
                 position: relative;
                 border: 1px solid yellow;
+                margin: 0px 5px;
+
             }
             #whatPiece{
                 position: relative;
                 height:auto;
             }
+            .selectedI{
+                height: 33px;
+                width: 33px;
+                position: relative;
+                cursor: pointer;
+                display: none;
+                top: 8px;
+            }
+            .unselectedI{
+                height: 25px;
+                width: 33px;
+                display: inline-block;
+                position: relative;
+                cursor: pointer;
+            }
             #folioSide1{
                 position: relative;
                 display: block;
                 height: 170px;
-                width: 155px;
+                width: 165px;
                 margin-right:25px;
                 background-color: black;
                 color: white;
@@ -235,11 +252,17 @@ and open the template in the editor.
                 margin-top: 13px;
                     
             }
+            #folioSide1 .rectoImg{
+                cursor: pointer;
+            }
+            #folioSide2 .versoImg{
+                cursor: pointer;
+            }
             #folioSide2{
                 position: relative;
                 display: block;
                 height: 170px;
-                width: 155px;
+                width: 165px;
                 background-color: black;
                 color: white;
                 border: 1px solid white;
@@ -247,8 +270,8 @@ and open the template in the editor.
             #oneAndtwo{
                 position: relative;
                 display: block;
-                height: 170px;
-                width: 200px;
+                height: 206px;
+                width: 245px;
                 background-color: black;
                 color: white;
                 border: 1px solid white;
@@ -272,28 +295,51 @@ and open the template in the editor.
             #formTabs p{
                 color: black;
             }
-            #formTabs ul li i{
+            #arrangeTrail{
+                position: relative;
+                height: 100%;
+                width: 107%;
+                text-align: left;
+                margin: 8px 0px;
+                overflow: auto;
+                left: -22px;
+                border-top: 1px solid black;
+                padding-top: 5px;
+            }
+            .helperIcon{
                 cursor: help;
+                width: 26px;
+                height: 26px;
             }
             .helperContent{
                 display: none;
                 position: absolute;
-                left: 67%;
+                left: 19%;
                 top: 0px;
                 z-index: 4;
                 background-color: #808080;
                 border: 1px solid #F00;
-                font-size: 10pt;
+                font-size: 9pt;
+                width: 247px;
+                white-space: normal;
             }
             #fullImgContainer{
                 position: absolute;
                 top: 4px;
-                height: 500px;
-                width: 400px;
-                left: 300px;
+                min-height: 500px;
+                max-height: 645px;
+                min-width: 400px;
+                max-width: 600px;
                 background-color: black;
                 display: none;
                 z-index: 3;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+            #fullImgContainer img{
+                max-height: 640px;
+                max-width: 595px;
             }
             #fullImageShade{
                 position: absolute;
@@ -340,12 +386,14 @@ and open the template in the editor.
                 bottom: 0px;
                 left:254px;
                 margin-top: 11px;
+                width: 80px;
             }
             #cancelMetadata{
                 position: relative;
                 display: inline-block;
                 bottom: 0px;
-                left:254px;
+                left:279px;
+                width: 80px;
             }
             *:focus{
                     outline: none;
@@ -374,8 +422,8 @@ and open the template in the editor.
                 
             }
             .ui-tabs-panel{
-                min-height:474px !important; /* Forces content area under tab to have a min height that works with the side area.  */
-                max-height: 474px !important;
+                min-height: 510px !important; /* Forces content area under tab to have a min height that works with the side area.  */
+                max-height: 510px !important;
                 border: none !important;
                 overflow-y: auto;
             }
@@ -405,6 +453,12 @@ and open the template in the editor.
                 width: 104% !important;
                 background-color: white !important;
                 color: black !important;
+            }
+            .selectedFolio .unselectedI{
+                display: none;
+            }
+            .selectedFolio .selectedI{
+                display: inline-block;
             }
             #initials, #borders, #lines, #columns, #leafDim, #tbDim, #lineDim, #inter, #marginal{
                 display: none;
@@ -496,17 +550,20 @@ and open the template in the editor.
                 display: block;
                 position: relative;
                 cursor: pointer;
+                text-align: center;
             }
             .arrangeSection.parent{
-                border: 2px solid blue;
+                border: 2px solid black;
                 padding: 8px;
+                margin-bottom: 8px;
 
             }
 
             .arrangeSection.child{
                 display: none;
-                border: 2px solid red;
-                padding: 5px;
+                border: 2px solid black;
+                padding: 8px;
+                margin-bottom: 8px;
             }
             
             div[relation="bucket"]{
@@ -514,17 +571,17 @@ and open the template in the editor.
                 border: 2px solid green;
             }
 
-            .selectedSection{
+            .selectedSection, .selectedUnassigned{
                 background-color: black;
                 color: white;
             }
 
             .rangeArrangementArea{
-                display: inline-block;
+                display: inline-table;
                 position: relative;
-                border: 2px solid black;
-                padding: 2px; 
-                margin: 0px 2px;
+                border-right: 2px solid black;
+                padding-right: 15px;
+               margin-right: 10px;
             }
             div[leaf="true"]{
                 display: none;

@@ -22,28 +22,28 @@ and open the template in the editor.
                 <ul>
                     <li>
                         <a href="#contextForm">Context</a>
-                        <i class="helperIcon" helper="context">hlp</i>
-                        <div class="helperContent" helper="context">This area is for the context helper text.</div>
+                        <img class="helperIcon" helper="context" src="http://www.lernundenter.com/wp-content/uploads/2012/12/information.jpg" />
+                        <div class="helperContent" helper="context">Context is about the history of the object you are describing.  If the questions listed do not suffice, you can enter information into the 'Other Context Info' area or look through the other tabs for more questions.</div>
                     </li>
                     <li>
                         <a href="#carrierForm">Carrier</a>
-                        <i class="helperIcon" helper="carrier">hlp</i>
-                        <div class="helperContent" helper="carrier">This area is for the carrier helper text. </div>
+                        <img class="helperIcon" helper="carrier" src="http://www.lernundenter.com/wp-content/uploads/2012/12/information.jpg" />
+                        <div class="helperContent" helper="carrier">Carrier information is physical information about the object you are describing.  If the questions listed do not suffice, you can enter information into the 'Other Carrier Info' area or look through the other tabs for more questions.</div>
                         
                     </li>
                     <li>
                         <a href="#contentForm">Content</a>
-                        <i class="helperIcon" helper="content">hlp</i>
-                        <div class="helperContent" helper="content">This area is for the content helper text.</div>
+                        <img class="helperIcon" helper="content" src="http://www.lernundenter.com/wp-content/uploads/2012/12/information.jpg" />
+                        <div class="helperContent" helper="content">Content is about written words on the object you are describing.  If the questions listed do not suffice, you can enter information into the 'Other Content Info' area or look through the other tabs for more questions.</div>
                     </li>
                     <li>
                         <a href="#notesForm">General</a>
-                        <i class="helperIcon" helper="general">hlp</i>
-                        <div class="helperContent" helper="general">This area is for the general helper text.</div>
+                        <img class="helperIcon" helper="general" src="http://www.lernundenter.com/wp-content/uploads/2012/12/information.jpg" />
+                        <div class="helperContent" helper="general">If none of the areas help you describe the object, you can type whatever you would like in the textarea below.  This section can also be for general notes or for interesting information you would like to store with the object you are describing (such as a Digital Scriptorium link to a record for this object)</div>
                     </li>
                     <li ><a href="#placement">Arrange</a>
-                        <i class="helperIcon" helper="arrange">hlp</i>
-                        <div class="helperContent" helper="arrange">This area is for the arrange helper text.</div>
+                        <img class="helperIcon" helper="arrange" src="http://www.lernundenter.com/wp-content/uploads/2012/12/information.jpg" />
+                        <div class="helperContent" helper="arrange">This area shows the sections you can place the leaf into.  By default, the leaf you are creating has already been placed into the "bucket", which is just a collection of all the leaves.  If you would like to put it into a specific section, click on that section to highlight it.  Click "Save Arragement" to save your selection.</div>
                     </li>
                 </ul>
                     <!-- <h3 id="contextHeader">Context</h3> -->
@@ -202,8 +202,10 @@ and open the template in the editor.
                         <input type="button" onclick="savePlacement();" value="Save Arrangement"/>
                         <input type="button" onclick="resetPlacement();" value="Reset to Current Arrangement"/>
                         <br>
-                        <div class="rangeArrangementArea" depth = "1">
-                            <div class="arrangeSection parent" relation="bucket">Bucket</div>
+                        <div id="arrangeTrail">
+                            <div class="rangeArrangementArea" depth = "1">
+                                
+                            </div>
                         </div>
                     </div>
             </div>
@@ -213,17 +215,13 @@ and open the template in the editor.
 <script>
 
     $(function(){
-        $('#formTabs ul li i').click(function(){
+        $('.helperIcon').click(function(event){
             console.log("TAB HELPER HOVER");
-            var helper = $(this).attr("helper");
+            var helper = event.target.getAttribute("helper");
             $('div[helper="'+helper+'"]').fadeIn(400);
         });
-//        .mouseleave(function(){
-//            var helper = $(this).attr("helper");
-//            $('div[helper="'+helper+'"]').hide();
-//        });
         $('#formTabs ul li').mouseleave(function(){
-            $(this).find('div[helper]').hide();
+            $('div[helper]').hide();
         });
         $(".specialFormEntry").on('change', function(){
             var showValue = $(this).val();

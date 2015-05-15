@@ -855,28 +855,28 @@ function toggleChildren(parentRange){
     if($.inArray(rangeID, existingInCopy) == -1){
        existingInCopy.push(rangeID);
        $(this).clone().appendTo(newArea);
-       $("div[relation='bucket']").removeClass("selectedSection");
+       $('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
     
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
-    $("#placement").append(newArea);
+    $("#arrangeTrail").append(newArea);
     parentRange.addClass("selectedSection");
-    $("div[relation='bucket']").removeClass("selectedSection");
+    //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
+    parentRange.parent().children('.unassigned').removeClass("selectedUnassigned");
   }
   else{ //if the are already exists
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
-      $.each(parentRange.parent().children('div'), function(){
-        $(this).removeClass("selectedSection");
-      });
+      parentRange.parent().children('div').removeClass("selectedSection");
       toggleChildren(parentRange);
     }
     else{ //if the area clicked was the one already highlighted
       parentRange.removeClass("selectedSection");
+      parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
       $("div[depth='"+intendedDepth+"']").remove(); //just remove the area, this was a true toggle. 
       if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
-          $("div[relation='bucket']").addClass("selectedSection");
+          $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
       } 
       // $.each(parentRange.find('.arrangeSection'), function(){
       //   $(this).removeClass("selectedSection"); //remove selected areas  
@@ -886,6 +886,12 @@ function toggleChildren(parentRange){
   newArea.children('div').not('div[leaf="true"]').show(); //only show sections
   if(newArea.children('div').not('div[leaf="true"]').length == 0){
     newArea.append('<div style="color: red;">No Subsections Available</div>');
+  }
+  else{
+    newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
+    if(newArea.find('.selectedSection').length == 0){
+      newArea.find('.unassigned').addClass("selectedUnassigned");
+    }
   }
 }
 
@@ -972,7 +978,9 @@ function gatherRangesForArrange(){
               }
         }
     }
-    $("div[relation='bucket']").addClass('selectedSection');
+
+    $(".rangeArrangementArea").append('<div class="arrangeSection parent unassigned">Unassigned</div>');
+    $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection").attr("relation", "bucket");
 }
 
 /*
@@ -1426,6 +1434,11 @@ function populateAnnoForms(){
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
+
+                $("#folioSide1").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
+                $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
+                $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
+
                 $("#catalogueInfoFor").val(canvasID); //alpha
                 alpha = true;
                 beta= false;
@@ -1434,6 +1447,11 @@ function populateAnnoForms(){
                 $("#folioSide2").addClass("selectedFolio");;
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
+
+                $("#folioSide1").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
+                $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
+                $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
+
                 $("#catalogueInfoFor").val(canvasID); //beta
                 beta = true;
                 alpha = false;
@@ -1442,6 +1460,11 @@ function populateAnnoForms(){
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
+
+                $("#folioSide1").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
+                $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
+                $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
+
                 $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                 alpha = beta = zeta = true;
             }
@@ -1875,7 +1898,7 @@ function populateAnnoForms(){
         })
       }
       else{
-        $('div[relation="bucket"]').addClass("selectedSection");
+        $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedUnassigned");
       }
       $.each($(".rangeArrangementArea"),function(){
         if($(this).find(".selectedSection").length == 0){
@@ -2179,7 +2202,7 @@ function populateAnnoForms(){
                 savePlacement();
               }
               else{ //You have removed down to the bucket, so no UI changes are necessary, everything is removed and unselected. 
-                $("div[relation='bucket']").addClass("selectedSection");
+                $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedUnassigned");
               }
           });
       }
@@ -2190,7 +2213,7 @@ function populateAnnoForms(){
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
 	*/
 	function updateRange(rangeID, leaf){
-		//console.log("Updating range "+rangeID+" with leaf "+leaf);
+		console.log("Updating range");
 		var currentRange = {};
 		$.each(testManifest.structures, function(){
 			if(this["@id"] === rangeID){

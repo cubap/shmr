@@ -19,6 +19,7 @@ and open the template in the editor.
                 margin: 16px 5px;
                 display: block;
                 position: relative;
+                color: white;
             }
             .range .range{
                 border: 2px solid purple;
@@ -31,6 +32,10 @@ and open the template in the editor.
             }
             .range .range .range .range{
                 border: 2px solid green;
+                margin: 16px 80px;
+            }
+            .range .range .range .range .range{
+                border: 2px solid gray;
                 margin: 16px 80px;
             }
             .canvas{
@@ -90,16 +95,7 @@ and open the template in the editor.
     </body>
 </html>
 <script>
-//range collection can be looked at like the master range.  If we ever hope to keep these in order, there must be a range that accounts for all of them from which we can change the indexes around.  
 
-//THE LEAF IS THE SMALLEST INDEPENDANT RANGE: pcuba
-
-//we will have to create smaller ranges than leaves to be able to create image fragments.  A new section can start 2/3 down the canvas, so the first page of the next section is the bottom 3rd of that image.  
-
-//atomic/indivisible ranges can have canvases that if you move that canvas, you have to move the range. 
-
-
-//GOAL: Represent the second half of the last page of section 1 to be the start section 2.  
 var annotationLists = [
 //    {
 //      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
@@ -133,7 +129,6 @@ var annotationLists = [
 var pageCanvases = [
 
   {
-      //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1",
           "@type" : "sc:Canvas",
           "label" : "Llang_01_fragment",
@@ -157,7 +152,6 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/2",
           "@type" : "sc:Canvas",
           "label" : "Llang_002",
@@ -179,7 +173,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/3",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -201,7 +195,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/4",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -223,7 +217,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/5",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -245,7 +239,7 @@ var pageCanvases = [
          
    },
     {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/6",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -267,7 +261,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/7",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -289,7 +283,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/8",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -311,7 +305,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/9",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -333,7 +327,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/10",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -355,7 +349,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/11",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -377,7 +371,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/12",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -398,7 +392,7 @@ var pageCanvases = [
           "otherContent":[],      
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/13",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -419,7 +413,7 @@ var pageCanvases = [
           "otherContent":[],       
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/14",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -441,7 +435,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/15",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -462,7 +456,7 @@ var pageCanvases = [
           "otherContent":[],      
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/16",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -484,7 +478,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/17",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -505,7 +499,7 @@ var pageCanvases = [
           "otherContent":[],       
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/18",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -527,7 +521,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/19",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -549,7 +543,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/20",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -571,7 +565,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/21",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -593,7 +587,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/22",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -615,7 +609,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/23",
           "@type" : "sc:Canvas",
           "label" : "Llang_03",
@@ -637,7 +631,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/24",
           "@type" : "sc:Canvas",
           "label" : "Llang_24",
@@ -659,7 +653,7 @@ var pageCanvases = [
          
    },
    {
-      //This will be the anchor canvas in the anchor range
+      
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/25",
           "@type" : "sc:Canvas",
           "label" : "Llang_25",
