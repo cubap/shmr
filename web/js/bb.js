@@ -584,30 +584,8 @@ var testManifest = {
         }]
  	   }], 
 	  "structures" : [
-	  	{
- 		  "@id":"http://www.example.org/iiif/LlangBrev/range/master",
-	      "@type":"sc:Range",
-	      "label":"Llangantock Breviary Page Order",
-	      "ranges" : [
-	          //add leaf ranges here in order for page order
-	      ],
-	      "canvases" :[],
-	      "resources" : [], //NOT IIIF COMPLIANT
-	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-		},
 		
-		{
- 		  "@id":"http://www.example.org/iiif/LlangBrev/range/anchor",
-	      "@type":"sc:Range",
-	      "label":"Llangantock Breviary Anchor",
-	      "ranges" : [
-	      ],
-	      "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1_anchor"],
-	      "resources" : [], //NOT IIIF COMPLIANT
-	      "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-		},
-
-    {
+{
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
   "@type":"sc:Range",
   "label":"Folio 1",
@@ -862,7 +840,7 @@ function toggleChildren(parentRange, admin){
        existingInCopy.push(rangeID);
        var child = $(this).clone();
        var childID = child.attr('id');
-       childID.replace("_tmp", "");
+       childID = childID.replace("_tmp", "");
        child.attr('id', childID);
        newArea.append(child);
        $('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
@@ -956,6 +934,7 @@ function gatherRangesForArrange(which){
         var admin = "";
         
         var dragAttribute = "";
+        var dropAttribute = " ondrop='dropHelp(event);'";
         relation = rangeCollection[i]["@id"];
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
@@ -974,7 +953,7 @@ function gatherRangesForArrange(which){
         }
         
         //Create an html range object that can be added
-        var currentRange = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
+        var currentRange = $("<div "+dropAttribute+" "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
         var canvases = rangeCollection[i].canvases.length;
@@ -985,7 +964,7 @@ function gatherRangesForArrange(which){
           isLeaf = false;
         }
         //obvious
-        if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
+        if(innerRanges.length > 0){ //If there are inner ranges
             var tag2 = "child";
             
             if(which === 2){
@@ -993,7 +972,7 @@ function gatherRangesForArrange(which){
             }
             for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
                 uniqueID += 1;
-                dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
+                dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
                 var thisRange = innerRanges[j];
                 $.each(rangeCollection, function(){ //check each range in the collection
                     if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
@@ -1001,11 +980,13 @@ function gatherRangesForArrange(which){
                         var thisCanvases = this.canvases.length;
                         if(thisCanvases !== 0 && thisCanvases!==undefined){
                           isLeaf = true;
+                          dropAttribute = "";
                         }
                         else{
                           isLeaf = false;
+                          dropAttribute = " ondrop='dropHelp(event);'";
                         }
-                        var embedRange = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                           
                           if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
@@ -1037,11 +1018,12 @@ function gatherRangesForArrange(which){
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
               newLeaf = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
             }
-            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
-                if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
+            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to top section.
+                    console.log("RANDOM LEAF");
+                    console.log(newLeaf);
                     existingRanges.push(newLeaf.attr("rangeID"));
-                    $(".rangeArrangementArea").append(newLeaf);
-                }
+                    $(".rangeArrangementArea:first").append(newLeaf);
+                
               }
         }
     }
