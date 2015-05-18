@@ -166,14 +166,13 @@ and open the template in the editor.
                 width: 300px;
             }
             .formLabel{
-                font-family: "Adobe Caslon Pro", "Hoefler Text", Georgia, Garamond, Times, serif;
+                font-family: helvetica;
                 letter-spacing:0.1em;
                 text-align:center;
-                text-transform: lowercase;
                 line-height: 145%;
                 font-size: 12pt;
-                font-variant: small-caps;
                 padding: 0px 10px;
+                color: gray;
             }
             .Blo{
                 position: relative;
@@ -204,21 +203,50 @@ and open the template in the editor.
             }
             #sideBarArrange{
                 position: relative;
-                height: auto;
                 width: 278px;
                 z-index: 2;
                 float: left;
                 overflow-x: hidden;
-                top: 20px;
-                background-color: gray;
+                top: 53px;
+                background-color: #808080;
                 display: none;
-                min-height: 577px; 
+                min-height: 545px;
             }
             #arrangeCrumb{
                 position: relative;
-                border: 1px solid yellow;
-                margin: 0px 5px;
-
+                margin: 5px 0px;
+            }
+            .parentSection{
+                border: 1px solid black;
+                background-color: gray;
+                padding: 5px;
+                font-size: 10pt;
+                position: relative;
+                margin: 8px 5px;
+            }
+            .parentSectionName{
+                position: relative;
+                display: inline-block
+            }
+            #leafLabel{
+                position: relative;
+                margin: 5px 0px;
+                width: 181px;
+            }
+            #leafTmp{
+                margin: 3px 0px;
+                position: relative;
+                display: block;
+                height: 176px;
+            }
+            .sectionRemove{
+                position: absolute;
+                display: inline-block;
+                border: 1px solid #000;
+                right: 3px;
+                padding: 2px;
+                top: 2px;
+                cursor: pointer;
             }
             #whatPiece{
                 position: relative;
@@ -247,7 +275,6 @@ and open the template in the editor.
                 margin-right:25px;
                 background-color: black;
                 color: white;
-                border: 1px solid white;
                 margin-bottom: 13px;
                 margin-top: 13px;
                     
@@ -265,7 +292,6 @@ and open the template in the editor.
                 width: 165px;
                 background-color: black;
                 color: white;
-                border: 1px solid white;
             }
             #oneAndtwo{
                 position: relative;
@@ -274,7 +300,6 @@ and open the template in the editor.
                 width: 245px;
                 background-color: black;
                 color: white;
-                border: 1px solid white;
                 margin-bottom: 5px;
             }
             .addedInformation{
@@ -295,13 +320,13 @@ and open the template in the editor.
             #formTabs p{
                 color: black;
             }
-            #arrangeTrail{
+            .arrangeTrail{
                 position: relative;
-                height: 100%;
+                min-height: 420px;
                 width: 107%;
                 text-align: left;
                 margin: 8px 0px;
-                overflow: auto;
+                overflow-y: auto;
                 left: -22px;
                 border-top: 1px solid black;
                 padding-top: 5px;
@@ -322,6 +347,7 @@ and open the template in the editor.
                 font-size: 9pt;
                 width: 247px;
                 white-space: normal;
+                padding: 5px;
             }
             #fullImgContainer{
                 position: absolute;
@@ -581,7 +607,9 @@ and open the template in the editor.
                 position: relative;
                 border-right: 2px solid black;
                 padding-right: 15px;
-               margin-right: 10px;
+                margin-right: 10px;
+                height: auto;
+                overflow-y: auto;
             }
             div[leaf="true"]{
                 display: none;

@@ -800,6 +800,8 @@ var testManifest = {
 	  ]
 }
 
+var rangeCollection = testManifest.structures;
+
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
   var properties={"@type" : "sc:Range"};
@@ -837,13 +839,17 @@ function getAllCanvases(){
   });
 }
 
-function toggleChildren(parentRange){
+function toggleChildren(parentRange, admin){
   var children = parentRange.children(".child");
+  var dropAttribute = "";
+  var relation = parentRange.attr("rangeID");
+  if(admin === "admin"){
+      dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+  }
   //var actualDepth = $(".rangeArrangementArea").length;
   var intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
-  var newArea = $("<div depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
-  var relation = parentRange.attr("rangeID");
-  var newArea = $("<div relation='"+relation+"' depth='"+intendedDepth+"' class='rangeArrangementArea'></div>");
+  var newArea = $("<div "+dropAttribute+" depth='"+intendedDepth+"' relation='"+relation+"' class='rangeArrangementArea'></div>");
+  
   var existingInCopy = [];
   $.each($("div[depth]"),function(){
       if(parseInt($(this).attr("depth")) > intendedDepth){
@@ -854,13 +860,17 @@ function toggleChildren(parentRange){
     var rangeID = $(this).attr("rangeID");
     if($.inArray(rangeID, existingInCopy) == -1){
        existingInCopy.push(rangeID);
-       $(this).clone().appendTo(newArea);
+       var child = $(this).clone();
+       var childID = child.attr('id');
+       childID.replace("_tmp", "");
+       child.attr('id', childID);
+       newArea.append(child);
        $('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
     
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
-    $("#arrangeTrail").append(newArea);
+    $(".arrangeTrail").append(newArea);
     parentRange.addClass("selectedSection");
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     parentRange.parent().children('.unassigned').removeClass("selectedUnassigned");
@@ -869,7 +879,8 @@ function toggleChildren(parentRange){
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       parentRange.parent().children('div').removeClass("selectedSection");
-      toggleChildren(parentRange);
+      toggleChildren(parentRange, admin);
+      return false;
     }
     else{ //if the area clicked was the one already highlighted
       parentRange.removeClass("selectedSection");
@@ -878,28 +889,62 @@ function toggleChildren(parentRange){
       if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
           $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
       } 
-      // $.each(parentRange.find('.arrangeSection'), function(){
-      //   $(this).removeClass("selectedSection"); //remove selected areas  
-      // });
     }
   }
-  newArea.children('div').not('div[leaf="true"]').show(); //only show sections
-  if(newArea.children('div').not('div[leaf="true"]').length == 0){
-    newArea.append('<div style="color: red;">No Subsections Available</div>');
+  if(admin === "admin"){
+    newArea.children('div').show(); //show sections and leaves
+    if(newArea.children('div').length == 0){
+      newArea.append('<div style="color: red;">No Subsections Available</div>');
+    }
+    else{
+      newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
+      if(newArea.find('.selectedSection').length == 0){
+        newArea.find('.unassigned').addClass("selectedUnassigned");
+      }
+    }
   }
   else{
-    newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
-    if(newArea.find('.selectedSection').length == 0){
-      newArea.find('.unassigned').addClass("selectedUnassigned");
+    newArea.children('div').not('div[leaf="true"]').show(); //only show sections
+    if(newArea.children('div').not('div[leaf="true"]').length == 0){
+      newArea.append('<div style="color: red;">No Subsections Available</div>');
+    }
+    else{
+      newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
+      if(newArea.find('.selectedSection').length == 0){
+        newArea.find('.unassigned').addClass("selectedUnassigned");
+      }
     }
   }
+  
+}
+function dragHelp(event){
+    console.log("DRAGGING");
+    console.log(event.target.id);
+    event.dataTransfer.setData("text", event.target.id);
+}
+function dropHelp(event){
+    event.preventDefault();
+    console.log("DROPPED");
+    var data = event.dataTransfer.getData("text");
+    console.log(document.getElementById(data));
+    console.log("INTO ");
+    console.log(event.target);
+    var child = document.getElementById(data);
+    child.id = child.id+"_tmp";
+    event.target.appendChild(child);
+    //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
+}
+function dragOverHelp(event){
+    event.preventDefault();
 }
 
-function gatherRangesForArrange(){
+function gatherRangesForArrange(which){
     console.log("Organizing Ranges for arrange tab.");
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
+    var uniqueID = 0;
     for(var i = rangeCollection.length - 1; i>=0; i--){
+        uniqueID += 1;
       //console.log("Building Range");
       //console.log(rangeCollection[i]);
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -908,17 +953,28 @@ function gatherRangesForArrange(){
         var tag = "parent";
         var relation = "";
         var isLeaf = false;
+        var admin = "";
+        
+        var dragAttribute = "";
+        relation = rangeCollection[i]["@id"];
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
+          /* These are the hard set sections and should not be draggable, but should be sortable. */
         }
         else{
+            /* These are the children sections and leaves.  They should be draggable and sortable. */
           existingRangeToUpdate = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]');
-          relation = rangeCollection[i]["@id"];
           tag = "child";
+          dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+        }
+        if(which === 2){
+            tag += " sortOrder";
+            admin = "admin";
+            
         }
         
         //Create an html range object that can be added
-        var currentRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection "+tag+"' relation='"+relation+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
+        var currentRange = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
         var canvases = rangeCollection[i].canvases.length;
@@ -930,7 +986,14 @@ function gatherRangesForArrange(){
         }
         //obvious
         if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
+            var tag2 = "child";
+            
+            if(which === 2){
+                tag2 += " sortOrder";
+            }
             for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
+                uniqueID += 1;
+                dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
                 var thisRange = innerRanges[j];
                 $.each(rangeCollection, function(){ //check each range in the collection
                     if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
@@ -942,7 +1005,7 @@ function gatherRangesForArrange(){
                         else{
                           isLeaf = false;
                         }
-                        var embedRange = $("<div onclick='toggleChildren($(this));' class='arrangeSection child' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                           
                           if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
@@ -961,6 +1024,10 @@ function gatherRangesForArrange(){
             }
         }
         else{ //There are no inner ranges. It could be a section with no children or a leaf.  
+            var tag = "";
+            if(which === 2){
+                tag="sortOrder";
+            }
             var a = false;
             var newLeaf = undefined;
             var existingRange = $(".rangeArrangementArea").find('div[rangeID="'+outerRange['@id']+'"]');
@@ -968,7 +1035,7 @@ function gatherRangesForArrange(){
                 //It already exists, do not append this leaf.
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
-              newLeaf = $("<div onclick='toggleChildren($(this));' leaf='"+isLeaf+"' class='arrangeSection' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
+              newLeaf = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to DOM.
                 if($.inArray(newLeaf.attr("rangeID"), existingRanges) == -1){
@@ -978,8 +1045,11 @@ function gatherRangesForArrange(){
               }
         }
     }
-
-    $(".rangeArrangementArea").append('<div class="arrangeSection parent unassigned">Unassigned</div>');
+    var tag3 = "";
+    if(which === 2){
+        tag3 = "sortOrder";
+    }
+    $(".rangeArrangementArea").append('<div class="arrangeSection parent unassigned '+tag3+'">Unassigned</div>');
     $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection").attr("relation", "bucket");
 }
 
@@ -1011,7 +1081,6 @@ function organizeRanges(){
         var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
-        //obvious
         if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
          //console.log("Working inner ranges.")
             for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
@@ -1034,46 +1103,55 @@ function organizeRanges(){
                 });
             }
         }
-        else if(innerRanges.length ===1 &&  rangeCollection[i].canvases.length === 1){//special case.  These ranges are meant to replace canvases of this leaf with fragments of this canvas.  We have made fragments atomic ranges so that pieces of the same canvas that exist in different ranges can be connected.  They will exist as their own entity on each individual leaf so that they can have their own annotation, but they will be connected by location with the canvas no matter where it exists.  This code will be reached before the code in the else every time because of the ordered array by range field size.  Fortunately, there will only be up to two ranges in here.  Those ranges will be URI's of leaves. Therefore, we can directly grab that leaf from the array.  We can cheat a bit and start from the i we are at since we know it does not come before this one.
-          var canvasToReplace = rangeCollection[i].canvases[0];
-          var subStr = canvasToReplace.substring(0,canvasToReplace.indexOf("#xywh"));
-          for(var x=0; x<i; x++){
-            //we know there is only one
-            var innerRangeSubstring = innerRanges[0];
-            if(innerRanges[0].indexOf("#xywh") > -1) innerRangeSubstring = innerRanges[0].substring(0, innerRanges[0].indexOf("#xywh"));
-            var leafRangeCanvases= rangeCollection[x].canvases;
-            if (rangeCollection[x]["@id"] == innerRangeSubstring){
-              //replace the canvas in the leaf range with the canvas from the inner range
-                var l = -1;
-                $.each(leafRangeCanvases, function(){
-                  l++;
-                  if(this == subStr){
-                    rangeCollection[x].canvases[l] = canvasToReplace;
-                  }
-                  else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.  
-                    if(this.indexOf("#xywh") > -1){
-                      //it could be a fragment
-                      var tmp = this;
-                      if(tmp.indexOf("#xywh") > -1){ //If this is not true, it isn't possible that we are on the correct canvas.
-                        tmp = tmp.substring(0, tmp.indexOf("#xywh")); //It is at least a fragment, but for the right canvas?  Strip #xyhw=.... off the URI
-                        tmp += ""; //cast it to a string.
-                        var tmpCompare = leafRangeCanvases[l].substring(0,leafRangeCanvases[l].indexOf("#xywh")); //Strip #xywh off the canvas we are checking equivalency to
-                        tmpCompare += ""; // cast to a string
-                        if(tmpCompare == tmp && $.inArray(canvasToReplace, leafRangeCanvases) < 0){ //Then it was a new fragment for this canvas, so we can push the fragment to this leaf. 
-                           rangeCollection[x].canvases.splice(l+1, 0, canvasToReplace);
-                           //place canavs in at appropriate location among canvases in case there are multiple fragments.  This will build them out in the order users think they go.  
-                        }
-                        else{
-                          //it was the wrong canvas.  Leave it alone.
-                        }  
-                      }
-                    }
-                  }
-                });
-            }
-            //What we have done is skipped further down into the array and altered a single canvas in a leaf.  When we get to that canvas in this function, it will not have any ranges so it will skip to the code below and build out the leaf.
-          }
-        }
+        /* This has becoming depricated for BB because we will not be connecting data like this.   */
+        // else if(innerRanges.length ===1 &&  rangeCollection[i].canvases.length === 1){
+        // //special case.  These ranges are meant to replace canvases of this leaf with fragments of this canvas.  
+        // //We have made fragments atomic ranges so that pieces of the same canvas that exist in different ranges can be connected.  
+        // //They will exist as their own entity on each individual leaf so that they can have their own annotation, 
+        // //but they will be connected by location with the canvas no matter where it exists.  
+        // //This code will be reached before the code in the else every time because of the ordered array by range field size.  
+        // //Fortunately, there will only be up to two ranges in here.  Those ranges will be URI's of leaves. Therefore, we can directly grab that leaf from the array.  
+        // //We can cheat a bit and start from the i we are at since we know it does not come before this one.
+        //   var canvasToReplace = rangeCollection[i].canvases[0];
+        //   var subStr = canvasToReplace.substring(0,canvasToReplace.indexOf("#xywh"));
+        //   for(var x=0; x<i; x++){
+        //     //we know there is only one
+        //     var innerRangeSubstring = innerRanges[0];
+        //     if(innerRanges[0].indexOf("#xywh") > -1) innerRangeSubstring = innerRanges[0].substring(0, innerRanges[0].indexOf("#xywh"));
+        //     var leafRangeCanvases= rangeCollection[x].canvases;
+        //     if (rangeCollection[x]["@id"] == innerRangeSubstring){
+        //       //replace the canvas in the leaf range with the canvas from the inner range
+        //         var l = -1;
+        //         $.each(leafRangeCanvases, function(){
+        //           l++;
+        //           if(this == subStr){
+        //             rangeCollection[x].canvases[l] = canvasToReplace;
+        //           }
+        //           else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.  
+        //             if(this.indexOf("#xywh") > -1){
+        //               //it could be a fragment
+        //               var tmp = this;
+        //               if(tmp.indexOf("#xywh") > -1){ //If this is not true, it isn't possible that we are on the correct canvas.
+        //                 tmp = tmp.substring(0, tmp.indexOf("#xywh")); //It is at least a fragment, but for the right canvas?  Strip #xyhw=.... off the URI
+        //                 tmp += ""; //cast it to a string.
+        //                 var tmpCompare = leafRangeCanvases[l].substring(0,leafRangeCanvases[l].indexOf("#xywh")); //Strip #xywh off the canvas we are checking equivalency to
+        //                 tmpCompare += ""; // cast to a string
+        //                 if(tmpCompare == tmp && $.inArray(canvasToReplace, leafRangeCanvases) < 0){ //Then it was a new fragment for this canvas, so we can push the fragment to this leaf. 
+        //                    rangeCollection[x].canvases.splice(l+1, 0, canvasToReplace);
+        //                    //place canavs in at appropriate location among canvases in case there are multiple fragments.  This will build them out in the order users think they go.  
+        //                 }
+        //                 else{
+        //                   //it was the wrong canvas.  Leave it alone.
+        //                 }  
+        //               }
+        //             }
+        //           }
+        //         });
+        //     }
+        //     //What we have done is skipped further down into the array and altered a single canvas in a leaf. 
+        // When we get to that canvas in this function, it will not have any ranges so it will skip to the code below and build out the leaf.
+        //   }
+        // }
         else{ //There are no inner ranges, so we must be on a leaf.  It MAY or MAY NOT contain an image or annotation, so account for finding none. 
           //console.log("Working on a leaf");
             var currentCanvases = outerRange.canvases;
@@ -1091,7 +1169,7 @@ function organizeRanges(){
                 //console.log(rangeForCanvases);
               a=true;
             }
-            else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
+            else{ //The leaf is a parent to itself, which means its a random page in the bucket. 
                // console.log("This is a new leaf");
               newLeaf = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
@@ -1120,6 +1198,7 @@ function organizeRanges(){
               }
               else{
                 currentCanvas = originalCanvas;
+                fragment = false;
               }
               if(currentCanvas == firstCanvas){ //we are still on sideA
                 side1 = true;
@@ -1146,118 +1225,124 @@ function organizeRanges(){
                     XYWHarray = [0,0,0,0];
                   }
               }
-              //This part creates chunks and places them in the canvas.  We can show only cropped parts of the canvas
-              // var canvasHTML = $("<div fragment='"+fragment+"' class='canvasinner'> <img class='canvasImg' src='' /></div>");
-              //  $.each(pageCanvases, function(){
-              //      if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
-              //          canvasHTML.find('img').attr('src', this.images[0].resource["@id"]);
-              //          if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
-              //             canvasHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
-              //             canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
-              //             if(side1){ //put it in side1.  
-              //               canvasHolder1.append(canvasHTML);
-              //               holderToAppend = canvasHolder1;
-              //             }
-              //             else{ //maybe we should check if side2 is true, but I'll just assume it
-              //               canvasHolder2.append(canvasHTML);
-              //               holderToAppend = canvasHolder2;
-              //             }
-              //          }
-              //          else{ //the height and width of the fragment piece were not 0.
-              //             canvasHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
-              //             canvasHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
-              //             if(side1){//put it in side1.
-              //               canvasHolder1.append(canvasHTML);
-              //               holderToAppend = canvasHolder1;
-              //             }
-              //             else{//maybe we should check if side2 is true, but I'll just assume it
-              //               canvasHolder2.append(canvasHTML);
-              //               holderToAppend = canvasHolder2;
-              //             }
-              //          }
-              //      }
-              //  });
+              //This part creates chunks and places them in the canvas.
+              if(fragment){
+                var fragmentHTML = $("<div class='fragment canvasinner'><img class='canvasImg' src='' /></div>");
+                 $.each(pageCanvases, function(){
+                     if(this["@id"] == currentCanvas){ // === breaks it.  WHY!
+                         fragmentHTML.find('img').attr('src', this.images[0].resource["@id"]);
+                         if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
+                            fragmentHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
+                            fragmentHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
+                            if(side1){ //put it in side1.  
+                              canvasHolder1.append(fragmentHTML);
+                              holderToAppend = canvasHolder1;
+                            }
+                            else{ //maybe we should check if side2 is true, but I'll just assume it
+                              canvasHolder2.append(fragmentHTML);
+                              holderToAppend = canvasHolder2;
+                            }
+                         }
+                         else{ //the height and width of the fragment piece were not 0.
+                            fragmentHTML.attr("style", "height:"+XYWHarray[3]+"px; width:"+XYWHarray[2]+"px");
+                            fragmentHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px;");
+                            if(side1){//put it in side1.
+                              canvasHolder1.append(fragmentHTML);
+                              holderToAppend = canvasHolder1;
+                            }
+                            else{//maybe we should check if side2 is true, but I'll just assume it
+                              canvasHolder2.append(fragmentHTML);
+                              holderToAppend = canvasHolder2;
+                            }
+                         }
+                     }
+                 });
+              }
 
-             // This part will create the canvas and highlight the fragmental pieces instead of cropping chunks.
-              var fragmentHTML = $("<div class='fragment'></div>");
-              $.each(pageCanvases, function(){
-                   var left = parseInt(XYWHarray[0]);
-                   var top = parseInt(XYWHarray[1]);
-                   var width = parseInt(XYWHarray[2]) - 2; //acount for 2 2px borders
-                   var height = parseInt(XYWHarray[3]) - 2; // account for 2 2px borders
-                   var annotation = $("<div class='annotation'></div>");
-                   if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
-                       //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
-                      // console.log("Working on canvas images");
-                       var currentCanvasAnnotations=[];
-                       var currentCanvasAnnotationLists = [];
-                       if(this["otherContent"]!== undefined && this["otherContent"].length >0){
-                        console.log("Set annotation lists");
-                        currentCanvasAnnotationLists = this.otherContent; //get the canvas annotations. 
-                        currentCanvasAnnotations.push(annotationLists[0].resources); // local.  Comment out when running live
-                       }
-                       if(side1 && this.images.length>0){
-                          canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
-                       }
-                       else if (side2 && this.images.length>0){
-                          canvasHolder4.find('img').attr("src", this.images[0].resource["@id"]);
-                       }
-                       if(fragment){ // if it is a fragment, we want the fragment box drawn in the canvas.
-                          fragmentHTML.attr("style", "left:"+left+"px; top:"+top+"px; height:"+height+"px; width:"+width+"px");
-                          if(side1){
-                            canvasHolder3.append(fragmentHTML);
-                          }
-                          else{
-                            canvasHolder4.append(fragmentHTML);
-                          }
-                       }
-                       
-//                      $.each(currentCanvasAnnotationLists, function(data1){ //get each annotationList's annotations
-//                        console.log("SET Current Canvas ANNOTATIONS");
+            /*
+             // This part will create the canvas and highlight the fragmental pieces instead of cropping chunks.  Depricated.  DO NOT USE.
+               var canvasHTML = $("<div class='canvasinner'> </div>");
+               $.each(pageCanvases, function(){
+                    var left = parseInt(XYWHarray[0]);
+                    var top = parseInt(XYWHarray[1]);
+                    var width = parseInt(XYWHarray[2]) - 2; //acount for 2 2px borders
+                    var height = parseInt(XYWHarray[3]) - 2; // account for 2 2px borders
+                    var annotation = $("<div class='annotation'></div>");
+                    if(this["@id"] == currentCanvas){ // The full canvas onto which to put fragments
+                        //canvasHolder.attr("style", "height:"+this.height+"px; width:"+this.width+"px");
+                       // console.log("Working on canvas images");
+                        var currentCanvasAnnotations=[];
+                        var currentCanvasAnnotationLists = [];
+                        if(this["otherContent"]!== undefined && this["otherContent"].length >0){
+                         console.log("Set annotation lists");
+                         currentCanvasAnnotationLists = this.otherContent; //get the canvas annotations. 
+                         currentCanvasAnnotations.push(annotationLists[0].resources); // local.  Comment out when running live
+                        }
+                        if(side1 && this.images.length>0){
+                           canvasHolder3.find('img').attr("src", this.images[0].resource["@id"]);
+                        }
+                        else if (side2 && this.images.length>0){
+                           canvasHolder4.find('img').attr("src", this.images[0].resource["@id"]);
+                        }
+                        if(fragment){ // if it is a fragment, we want the fragment box drawn in the canvas.
+                           canvasHTML.attr("style", "left:"+left+"px; top:"+top+"px; height:"+height+"px; width:"+width+"px");
+                           if(side1){
+                             canvasHolder3.append(canvasHTML);
+                           }
+                           else{
+                             canvasHolder4.append(canvasHTML);
+                           }
+                        }
+                */
+               
+                /*
+                      $.each(currentCanvasAnnotationLists, function(data1){ //get each annotationList's annotations
+                        console.log("SET Current Canvas ANNOTATIONS");
                         
-                        // $.get(data1["@id"], function(data2){
-                        //   console.log("ANNOLIST GET");
-                        //     data=JSON.parse(data2);
-                        //     currentCanvasAnnotations.push(data2.resources);
-                        // }, function(data2){ //make that annotations are gathered, then run the code to append annos to their location.
-                        //    var canvas = data2.on;
-//                            var XYWHarray2 = [0,0,0,0];
-//                            if(canvas.indexOf("#xywh") >= 0){
-//                              var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
-//                              if(XYWHsubstring.indexOf('=') > -1){ //string must contain data1 to be valid
-//                                  var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
-//                                  if(numberArray.length === 4){ // string must have all 4 to be valid
-//                                      var x = numberArray[0];
-//                                      var y = numberArray[1];
-//                                      var w = numberArray[2];
-//                                      var h = numberArray[3];
-//                                      XYWHarray2 = [x,y,w,h];
-//                                  }
-//                                  else{
-//                                    //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
-//                                    XYWHarray2 = [0,0,0,0];
-//                                  }
-//                              }
-//                              annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;"    );
-//                            }
-//                            if(data1.resource["@type"] == "dctypes:Image"){
-//                              var img = $("<img class='canvasImgFragment' src='"+data1.resource["@id"]+"'/>");
-//                              annotation.addClass("imgFragment").append(img);
-//                            }
-//                            if(data1.resource["@type"] == "cnt:ContentAsText"){
-//                              var text = data1.resource["cnt:chars"];
-//                              annotation.attr("annoText", text);
-//                            }
-//                            if(side1){
-//                              //console.log("Append anno to holder 1");
-//                              canvasHolder3.append(annotation);
-//                            }
-//                            else{
-//                                //console.log("Append anno to holder 2");
-//                              canvasHolder4.append(annotation);
-//                            }
-                        // }); //Must comment this out when doing local demo.
- //                     }); //live 
+                         $.get(data1["@id"], function(data2){
+                           console.log("ANNOLIST GET");
+                             data=JSON.parse(data2);
+                             currentCanvasAnnotations.push(data2.resources);
+                         }, function(data2){ //make that annotations are gathered, then run the code to append annos to their location.
+                            var canvas = data2.on;
+                            var XYWHarray2 = [0,0,0,0];
+                            if(canvas.indexOf("#xywh") >= 0){
+                              var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
+                              if(XYWHsubstring.indexOf('=') > -1){ //string must contain data1 to be valid
+                                  var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
+                                  if(numberArray.length === 4){ // string must have all 4 to be valid
+                                      var x = numberArray[0];
+                                      var y = numberArray[1];
+                                      var w = numberArray[2];
+                                      var h = numberArray[3];
+                                      XYWHarray2 = [x,y,w,h];
+                                  }
+                                  else{
+                                    //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
+                                    XYWHarray2 = [0,0,0,0];
+                                  }
+                              }
+                              annotation.attr("style", "left: "+XYWHarray2[0]+"px; top: "+XYWHarray2[1]+"px; width: "+XYWHarray2[2]+"px; height: "+XYWHarray2[3]+"px;"    );
+                            }
+                            if(data1.resource["@type"] == "dctypes:Image"){
+                              var img = $("<img class='canvasImgFragment' src='"+data1.resource["@id"]+"'/>");
+                              annotation.addClass("imgFragment").append(img);
+                            }
+                            if(data1.resource["@type"] == "cnt:ContentAsText"){
+                              var text = data1.resource["cnt:chars"];
+                              annotation.attr("annoText", text);
+                            }
+                            if(side1){
+                              //console.log("Append anno to holder 1");
+                              canvasHolder3.append(annotation);
+                            }
+                            else{
+                                //console.log("Append anno to holder 2");
+                              canvasHolder4.append(annotation);
+                            }
+                         }); //Must comment this out when doing local demo.
+                        }); //live 
+                    */
                         for(var x=0; x<currentCanvasAnnotations.length; x++){
                             $.each(currentCanvasAnnotations[x], function(){
                               var canvas = this.on;
@@ -1315,12 +1400,11 @@ function organizeRanges(){
                               existingRanges.push(newLeaf.attr("rangeID"));
                           }
                         }
-                   }
-              });
-           });
+                   });
+            }
         }
     }
-}
+
 
 /*
 * Helper function for mergeSort().  It mergest the left and right arrays created when splitting the source array in the middle. 
@@ -2230,7 +2314,7 @@ function populateAnnoForms(){
                 console.log("add section to arrange crumb.");
                 var thisRangeID = $(this).attr("rangeID");
                 var thisName = $(this).find("div:first").html();
-                addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'>"+thisName+" <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+                addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
                 $("#arrangeCrumb").append(addedToSection);
               });
               
@@ -2412,7 +2496,7 @@ function populateAnnoForms(){
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                                 
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
-            gatherRangesForArrange();
+                                gatherRangesForArrange(1);
       	 	});
   	 	});
       	     	

@@ -56,9 +56,11 @@
                 </div>
             </div>
             <div id="sideBarArrange">
-                <img class="rectoImg" src=""/>
-                <img class="versoImg" src=""/><br>
                 Leaf Label:&nbsp;&nbsp; <input type="text" id="leafLabel"/><br>
+                <div id='leafTmp'>
+                    <img style="left: 74px; top:0px;" class="rectoImg" src=""/>
+                    <img style="right: 69px; top: 33px;" class="versoImg" src=""/>
+                </div>
                 <div id="arrangeCrumb">
                     <div>This leaf belongs to: </div>
                 </div>
@@ -87,7 +89,6 @@ var currentLeafServerID = -1;
 var admin = false;
 var contributer = true;
 
-var rangeCollection = testManifest.structures;
 
 function existing(){
     var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545";
@@ -155,25 +156,25 @@ var alphaAnnoList = {
 	"@type":"sc:AnnotationList",
 	"resources" : [],
 	"on" : ""
-}
+};
 var betaAnnoList = {
 	"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", 
 	"@type":"sc:AnnotationList",
 	"resources" : [],
 	"on" : ""
-}
+};
 var zetaAnnoList = {
 	"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", 
 	"@type":"sc:AnnotationList",
 	"resources" : [],
 	"on" : ""
-}
+};
 var anchorAnnoList = {
 	"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", 
 	"@type":"sc:AnnotationList",
 	"resources" : [],
 	"on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
-}
+};
 annoListCollection.push(alphaAnnoList, betaAnnoList, zetaAnnoList);
 
 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
+        <script src="http://localhost:8080/brokenBooks/js/bb.js"></script>  
+        <title>Sort Breviary Order</title>
+        <style>
+            .mainBlock{
+                background-color:white;
+            }
+            p{
+                color: black;
+            }
+            .rangeArrangementArea{ /* Force each area to be the same height in this case. */
+                height: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mainBlock">
+            <p>
+                    This interface allows you to order the breviary.  
+                    Click and drag sections to move them from one place to another.  
+                    You can create new sections and give them labels.  You cannot create leaves here. 
+
+                    You may be able to lock leaves together to force the start or end of a section to allow for content flow. 
+                    For more information about defining a leaf as the start or end of a section <a href="#">click here</a>
+            </p>
+            <div class="arrangeTrail">
+                <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="rangeArrangementArea" depth = "1">
+
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        $(function(){
+            //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
+            gatherRangesForArrange(2);
+            //$( "div" ).disableSelection();
+        });
+    </script>
+</html>
