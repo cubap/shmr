@@ -1978,11 +1978,11 @@ function populateAnnoForms(){
       if($(".parentSection").length > 0){
         $.each($(".parentSection"), function(){
           var rangeID = $(this).attr("rangeID");
-          $(".arrangeSection[rangeID='"+rangeID+"']").addClass("selectedSection")
-        })
+          $(".arrangeSection[rangeID='"+rangeID+"']").addClass("selectedSection");
+        });
       }
       else{
-        $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedUnassigned");
+        $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
       }
       $.each($(".rangeArrangementArea"),function(){
         if($(this).find(".selectedSection").length == 0){
