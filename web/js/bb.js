@@ -934,7 +934,7 @@ function gatherRangesForArrange(which){
         var admin = "";
         
         var dragAttribute = "";
-        var dropAttribute = " ondrop='dropHelp(event);'";
+        var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         relation = rangeCollection[i]["@id"];
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
@@ -984,7 +984,7 @@ function gatherRangesForArrange(which){
                         }
                         else{
                           isLeaf = false;
-                          dropAttribute = " ondrop='dropHelp(event);'";
+                          dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
                         }
                         var embedRange = $("<div "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
@@ -1016,9 +1016,12 @@ function gatherRangesForArrange(which){
                 //It already exists, do not append this leaf.
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
-              newLeaf = $("<div "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
+              tag+= " parent";
+              dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+              //onclick=\"toggleChildren($(this), '"+admin+"');\"  use this if you want to make leaves attempt to toggle its children and return 'no children'
+              newLeaf = $("<div "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
             }
-            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to top section.
+            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to top section for now, we can make a stray leaves section if we want.
                     console.log("RANDOM LEAF");
                     console.log(newLeaf);
                     existingRanges.push(newLeaf.attr("rangeID"));

@@ -23,13 +23,17 @@ and open the template in the editor.
             .rangeArrangementArea{ /* Force each area to be the same height in this case. */
                 height: 400px;
             }
+            div[leaf="true"]{
+                display: block;
+                border: 2px solid black;
+            }
         </style>
     </head>
     <body>
         <div class="mainBlock">
             <p>
                     This interface allows you to order the breviary.  
-                    Click and drag sections to move them from one place to another.  
+                    Click and drag sections to move them from one place to another.
                     You can create new sections and give them labels.  You cannot create leaves here. 
 
                     You may be able to lock leaves together to force the start or end of a section to allow for content flow. 
