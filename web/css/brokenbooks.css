@@ -592,9 +592,7 @@ and open the template in the editor.
                 margin-bottom: 8px;
             }
             
-            .child .child{
-                display: none;
-            }
+            
             
             div[relation="bucket"]{
                 display: block;

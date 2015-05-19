@@ -22,11 +22,28 @@ and open the template in the editor.
             }
             .rangeArrangementArea{ /* Force each area to be the same height in this case. */
                 height: 400px;
+                z-index: 2;
+            }
+            .arrangeSection{
+                z-index: 2;
+            }
+            .arrangeSection div{
+                z-index: 1;
             }
             div[leaf="true"]{
                 display: block;
                 border: 2px solid black;
             }
+            .child .child{
+                display: none;
+            }
+            .parent .child{
+                display: none;
+            }
+            div[relation="bucket"].arrangeSection{ /* This will show leaves in the bucket */
+                display: block !important;
+            }
+            
         </style>
     </head>
     <body>

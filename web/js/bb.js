@@ -826,7 +826,7 @@ function toggleChildren(parentRange, admin){
   }
   //var actualDepth = $(".rangeArrangementArea").length;
   var intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
-  var newArea = $("<div "+dropAttribute+" depth='"+intendedDepth+"' relation='"+relation+"' class='rangeArrangementArea'></div>");
+  var newArea = $("<div "+dropAttribute+" depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'></div>");
   
   var existingInCopy = [];
   $.each($("div[depth]"),function(){
@@ -855,15 +855,32 @@ function toggleChildren(parentRange, admin){
   }
   else{ //if the are already exists
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
+      var childrenToMove = $("div[depth='"+intendedDepth+"']").children('.child');
+      var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       parentRange.parent().children('div').removeClass("selectedSection");
+      sectionToMoveTo.children('.child').remove();
+      $.each(childrenToMove, function(){
+        var id = $(this).attr('id')+"_tmp";
+        $(this).attr("id", id);
+        sectionToMoveTo.append($(this));
+        $(this).hide();
+      })
       toggleChildren(parentRange, admin);
       return false;
     }
     else{ //if the area clicked was the one already highlighted
+      var childrenToMove = $("div[depth='"+intendedDepth+"']").children('.child');
       parentRange.removeClass("selectedSection");
       parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
-      $("div[depth='"+intendedDepth+"']").remove(); //just remove the area, this was a true toggle. 
+      $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
+      parentRange.children('.child').remove();
+      $.each(childrenToMove, function(){
+        var id = $(this).attr('id')+"_tmp";
+        $(this).attr("id", id);
+        parentRange.append($(this));
+        $(this).hide();
+      })
       if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
           $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
       } 
@@ -902,13 +919,23 @@ function dragHelp(event){
 }
 function dropHelp(event){
     event.preventDefault();
-    console.log("DROPPED");
     var data = event.dataTransfer.getData("text");
-    console.log(document.getElementById(data));
-    console.log("INTO ");
-    console.log(event.target);
+    console.log(data);
+    var relation = event.target.getAttribute('rangeid');
+    var targetClass = event.target.className;
     var child = document.getElementById(data);
-    child.id = child.id+"_tmp";
+    child.setAttribute("relation", relation);
+    if(targetClass.indexOf('rangeArrangementArea') > -1){
+      child.style.display = "block";
+    }
+    else{
+      child.id = child.id+"_tmp"; 
+      child.style.display = "none";
+    }
+    console.log("Drop");
+    console.log(child);
+    console.log("into");
+    console.log(event.target);
     event.target.appendChild(child);
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
 }
@@ -1016,8 +1043,8 @@ function gatherRangesForArrange(which){
                 //It already exists, do not append this leaf.
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
-              tag+= " parent";
-              dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+              tag+= " child";
+              dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
               //onclick=\"toggleChildren($(this), '"+admin+"');\"  use this if you want to make leaves attempt to toggle its children and return 'no children'
               newLeaf = $("<div "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
             }
