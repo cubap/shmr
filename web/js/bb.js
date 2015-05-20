@@ -834,7 +834,7 @@ function toggleChildren(parentRange, admin){
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
   
-  var newArea = $("<div "+dropAttribute+" depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div class='notBucket'></div></div>");
+  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
   newArea.append(newAreaBucket);
   var existingInCopy = [];

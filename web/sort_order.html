@@ -65,7 +65,7 @@ and open the template in the editor.
             </p>
             <div class="arrangeTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
-                   <div class="notBucket"></div>
+                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
                    <div rangeID="bucket" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' onclick='toggleChildren($(this), "admin");' class="arrangeSection parent unassigned sortOrder">Unassigned</div>
                 </div>
             </div>
