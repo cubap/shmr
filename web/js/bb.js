@@ -821,13 +821,22 @@ function toggleChildren(parentRange, admin){
   var children = parentRange.children(".child");
   var dropAttribute = "";
   var relation = parentRange.attr("rangeID");
+  var unassigned = parentRange.hasClass('unassigned');
+  var intendedDepth = -1;
   if(admin === "admin"){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
   }
   //var actualDepth = $(".rangeArrangementArea").length;
-  var intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
-  var newArea = $("<div "+dropAttribute+" depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'></div>");
+  if(unassigned){
+    intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
+  }
+  else{
+    intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
+  }
   
+  var newArea = $("<div "+dropAttribute+" depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div class='notBucket'></div></div>");
+  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
+  newArea.append(newAreaBucket);
   var existingInCopy = [];
   $.each($("div[depth]"),function(){
       if(parseInt($(this).attr("depth")) > intendedDepth){
@@ -836,13 +845,19 @@ function toggleChildren(parentRange, admin){
   });
   $.each(children, function(){
     var rangeID = $(this).attr("rangeID");
+    var leaf = $(this).attr("leaf");
     if($.inArray(rangeID, existingInCopy) == -1){
        existingInCopy.push(rangeID);
        var child = $(this).clone();
        var childID = child.attr('id');
        childID = childID.replace("_tmp", "");
        child.attr('id', childID);
-       newArea.append(child);
+       if(leaf == "true"){ //put leaves in the bucket for now.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
+         newAreaBucket.append(child);
+       }
+       else{
+         newArea.find('.notBucket').append(child);
+       }
        $('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
     
@@ -851,14 +866,26 @@ function toggleChildren(parentRange, admin){
     $(".arrangeTrail").append(newArea);
     parentRange.addClass("selectedSection");
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
-    parentRange.parent().children('.unassigned').removeClass("selectedUnassigned");
+    if(unassigned){
+       parentRange.parent().children('.unassigned').removeClass("selectedUnassigned");
+    }
+    else{
+       parentRange.parent().parent().children('.unassigned').removeClass("selectedUnassigned");
+    }
+   
   }
   else{ //if the are already exists
+    console.log("area already exists.  Depth: "+intendedDepth);
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
-      var childrenToMove = $("div[depth='"+intendedDepth+"']").children('.child');
+      var childrenToMove = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
       var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
-      parentRange.parent().children('div').removeClass("selectedSection");
+      if(unassigned){
+        parentRange.parent().find('.notBucket').children('div').removeClass("selectedSection");
+      }
+      else{
+        parentRange.parent().parent().find('.notBucket').children('div').removeClass("selectedSection");
+      }
       sectionToMoveTo.children('.child').remove();
       $.each(childrenToMove, function(){
         var id = $(this).attr('id')+"_tmp";
@@ -870,9 +897,15 @@ function toggleChildren(parentRange, admin){
       return false;
     }
     else{ //if the area clicked was the one already highlighted
-      var childrenToMove = $("div[depth='"+intendedDepth+"']").children('.child');
+      console.log("Area already highlighted.  Depth:" +intendedDepth);
+      var childrenToMove = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
       parentRange.removeClass("selectedSection");
-      parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
+      if(unassigned){
+        parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
+      }
+      else{
+        parentRange.parent().parent().children('.unassigned').addClass("selectedUnassigned");
+      }
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       parentRange.children('.child').remove();
       $.each(childrenToMove, function(){
@@ -882,29 +915,28 @@ function toggleChildren(parentRange, admin){
         $(this).hide();
       })
       if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
-          $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
+          $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
       } 
     }
   }
   if(admin === "admin"){
-    newArea.children('div').show(); //show sections and leaves
-    if(newArea.children('div').length == 0){
+    newArea.find('.notBucket').children('div').show(); //show sections and leaves
+    if(newArea.find('.notBucket').children('div').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
     }
     else{
-      newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
+      //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
       if(newArea.find('.selectedSection').length == 0){
         newArea.find('.unassigned').addClass("selectedUnassigned");
       }
     }
   }
   else{
-    newArea.children('div').not('div[leaf="true"]').show(); //only show sections
+    newArea.find('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     if(newArea.children('div').not('div[leaf="true"]').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
     }
     else{
-      newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
       if(newArea.find('.selectedSection').length == 0){
         newArea.find('.unassigned').addClass("selectedUnassigned");
       }
@@ -918,6 +950,11 @@ function dragHelp(event){
     event.dataTransfer.setData("text", event.target.id);
 }
 function dropHelp(event){
+  /* TODO:
+   If the target is arrangeSection that is not expanded, it should go into that section.
+  if the target is an arrangeSection that is expanded, it should not appear because it should be in that expanded section's bucket.
+  if the target is rangeArrangementArea of an expanded arrangeSection, it should go into that section ordered at the end of the ordered pieces.  It can then be sorted from there.  
+   */
     event.preventDefault();
     var data = event.dataTransfer.getData("text");
     console.log(data);
@@ -944,14 +981,11 @@ function dragOverHelp(event){
 }
 
 function gatherRangesForArrange(which){
-    console.log("Organizing Ranges for arrange tab.");
     rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
     var uniqueID = 0;
     for(var i = rangeCollection.length - 1; i>=0; i--){
         uniqueID += 1;
-      //console.log("Building Range");
-      //console.log(rangeCollection[i]);
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
         var existingRangeToUpdate = ""; 
@@ -959,12 +993,16 @@ function gatherRangesForArrange(which){
         var relation = "";
         var isLeaf = false;
         var admin = "";
+        var isOrdered = ""; //NEED TO DESIGN THIS TAG IN THE OBJECT
         
         var dragAttribute = "";
         var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         relation = rangeCollection[i]["@id"];
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
+          /* These are the only sections that I cannot detect their explicit order.  There may need to be a tag added to these to force the order, or a super range containing all
+          ranges to use this algorithm to build from. */
+
           /* These are the hard set sections and should not be draggable, but should be sortable. */
         }
         else{
@@ -976,12 +1014,9 @@ function gatherRangesForArrange(which){
         if(which === 2){
             tag += " sortOrder";
             admin = "admin";
-            
         }
-        
         //Create an html range object that can be added
-        var currentRange = $("<div "+dropAttribute+" "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
-        //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
+        var currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"<br></div>");
         var innerRanges = rangeCollection[i].ranges;
         var canvases = rangeCollection[i].canvases.length;
         if(canvases !== 0 && canvases!==undefined){
@@ -990,7 +1025,6 @@ function gatherRangesForArrange(which){
         else{
           isLeaf = false;
         }
-        //obvious
         if(innerRanges.length > 0){ //If there are inner ranges
             var tag2 = "child";
             
@@ -1005,6 +1039,7 @@ function gatherRangesForArrange(which){
                     if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
                         var thisLabel = this.label;
                         var thisCanvases = this.canvases.length;
+                        var thisIsOrdered = "";
                         if(thisCanvases !== 0 && thisCanvases!==undefined){
                           isLeaf = true;
                           dropAttribute = "";
@@ -1013,7 +1048,7 @@ function gatherRangesForArrange(which){
                           isLeaf = false;
                           dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
                         }
-                        var embedRange = $("<div "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><div>"+thisLabel+"</div></div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+"<br></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                           
                           if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
@@ -1021,8 +1056,9 @@ function gatherRangesForArrange(which){
                             existingRanges.push(embedRange.attr("rangeID"));
                           }
                           else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
+                            //This will be the first 6 super sections that the admin creates. 
                             currentRange.append(embedRange);
-                            $(".rangeArrangementArea").append(currentRange);
+                            $(".rangeArrangementArea").find('.notBucket').append(currentRange);
                             existingRanges.push(embedRange.attr("rangeID"));
                             existingRanges.push(currentRange.attr("rangeID"));
                           }
@@ -1033,6 +1069,7 @@ function gatherRangesForArrange(which){
         }
         else{ //There are no inner ranges. It could be a section with no children or a leaf.  
             var tag = "";
+            isOrdered = "";
             if(which === 2){
                 tag="sortOrder";
             }
@@ -1046,23 +1083,16 @@ function gatherRangesForArrange(which){
               tag+= " child";
               dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
               //onclick=\"toggleChildren($(this), '"+admin+"');\"  use this if you want to make leaves attempt to toggle its children and return 'no children'
-              newLeaf = $("<div "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'><div>"+outerRangeLabel+"</div></div>");
+              newLeaf = $("<div isOrdred='"+isOrdered+"' "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'>"+outerRangeLabel+"<br></div>");
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to top section for now, we can make a stray leaves section if we want.
                     console.log("RANDOM LEAF");
-                    console.log(newLeaf);
                     existingRanges.push(newLeaf.attr("rangeID"));
-                    $(".rangeArrangementArea:first").append(newLeaf);
+                    $(".rangeArrangementArea:first").find('.unassigned').append(newLeaf);
                 
               }
         }
     }
-    var tag3 = "";
-    if(which === 2){
-        tag3 = "sortOrder";
-    }
-    $(".rangeArrangementArea").append('<div class="arrangeSection parent unassigned '+tag3+'">Unassigned</div>');
-    $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection").attr("relation", "bucket");
 }
 
 /*
@@ -1081,14 +1111,15 @@ function organizeRanges(){
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
         var existingRangeToUpdate = ""; 
-
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
+          //The initial hard set super ranges.
+           /* These are the only sections that I cannot detect their explicit order.  There may need to be a tag added to these to force the order, or a super range containing all
+          ranges to use this algorithm to build from. */
         }
         else{
           existingRangeToUpdate = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]'); // get it.
         }
-        
         //Create an html range object that can be added
         var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 

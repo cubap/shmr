@@ -40,8 +40,15 @@ and open the template in the editor.
             .parent .child{
                 display: none;
             }
-            div[relation="bucket"].arrangeSection{ /* This will show leaves in the bucket */
-                display: block !important;
+            .unassigned .child{ /* This will hide leaves sitting in the unassigned areas. */
+                display: none !important;
+            }
+            div[relation="bucket"] {
+                display: inline-table;
+                border-right: 2px solid black;
+                border-left: transparent;
+                border-top: transparent;
+                border-bottom: transparent;
             }
             
         </style>
@@ -57,8 +64,9 @@ and open the template in the editor.
                     For more information about defining a leaf as the start or end of a section <a href="#">click here</a>
             </p>
             <div class="arrangeTrail">
-                <div class="rangeArrangementArea" depth = "1">
-
+                <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
+                   <div class="notBucket"></div>
+                   <div rangeID="bucket" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' onclick='toggleChildren($(this), "admin");' class="arrangeSection parent unassigned sortOrder">Unassigned</div>
                 </div>
             </div>
         </div>
