@@ -1052,7 +1052,7 @@ function gatherRangesForArrange(which){
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
-          $(".rangeArrangementArea").append(currentRange);
+          $(".rangeArrangementArea").find('.notBucket').append(currentRange);
         }
         else{
           dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
@@ -1123,7 +1123,13 @@ function gatherRangesForArrange(which){
               }
         }
     }
-    //moveOrphanLeavesToBucket();
+    //get leaves into the bucket
+    var objectsForBucket = $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
+    $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]').remove();
+    $(".unassigned").append(objectsForBucket);
+    var pAggrChildren = $('.pAggr').children('div');
+    $('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
+    $('.pAggr').remove();
 }
 
 /*
