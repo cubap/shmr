@@ -592,7 +592,11 @@ and open the template in the editor.
                 margin-bottom: 8px;
             }
             
-            
+            .arrangeSection.pAggr{ /* Parent sections aggregator */
+                border: transparent;
+                padding: 0px;
+                margin-bottom: 0px;
+            }
             
             div[relation="bucket"]{
                 display: block;

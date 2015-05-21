@@ -584,7 +584,18 @@ var testManifest = {
         }]
  	   }], 
 	  "structures" : [
-		
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/parent_aggr",
+  "@type":"sc:Range",
+  "label":"Parent Aggr",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/11",
+      "http://www.example.org/iiif/LlangBrev/range/106"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},		
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
   "@type":"sc:Range",
@@ -739,7 +750,7 @@ var testManifest = {
   "@id":"http://www.example.org/iiif/LlangBrev/range/10",
   "@type":"sc:Range",
   "label":"Section 3",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/5", "http://www.example.org/iiif/LlangBrev/range/6"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/5", "http://www.example.org/iiif/LlangBrev/range/6", "http://www.example.org/iiif/LlangBrev/range/112", "http://www.example.org/iiif/LlangBrev/range/113"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -774,6 +785,26 @@ var testManifest = {
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 }
+// {
+//   "@id":"http://www.example.org/iiif/LlangBrev/range/112",
+//   "@type":"sc:Range",
+//   "label":"Folio test 1",
+//   "ranges" : [
+//       //add leaf ranges here in order for page order
+//   ],
+//   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+//   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+// },
+// {
+//   "@id":"http://www.example.org/iiif/LlangBrev/range/113",
+//   "@type":"sc:Range",
+//   "label":"Folio test 2",
+//   "ranges" : [
+//       //add leaf ranges here in order for page order
+//   ],
+//   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+//   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+// }
 
 	  ]
 }
@@ -853,7 +884,7 @@ function toggleChildren(parentRange, admin){
        childID = childID.replace("_tmp", "");
        child.attr('id', childID);
        if(leaf == "true"){ //put leaves in the bucket for now.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
-         newAreaBucket.append(child);
+         newArea.find('.unassigned').append(child);
        }
        else{
          newArea.find('.notBucket').append(child);
@@ -877,7 +908,9 @@ function toggleChildren(parentRange, admin){
   else{ //if the are already exists
     console.log("area already exists.  Depth: "+intendedDepth);
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
-      var childrenToMove = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
+      var childrenToMove1 = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
+      var childrenToMove2 = $("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child');
+      var childrenToMove = childrenToMove1 + childrenToMove2;
       var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       if(unassigned){
@@ -898,7 +931,9 @@ function toggleChildren(parentRange, admin){
     }
     else{ //if the area clicked was the one already highlighted
       console.log("Area already highlighted.  Depth:" +intendedDepth);
-      var childrenToMove = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
+      var childrenToMove1 = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
+      var childrenToMove2 = $("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child');
+      var childrenToMove = childrenToMove1 + childrenToMove2;
       parentRange.removeClass("selectedSection");
       if(unassigned){
         parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
@@ -981,43 +1016,23 @@ function dragOverHelp(event){
 }
 
 function gatherRangesForArrange(which){
-    rangeCollection = mergeSort(rangeCollection);
+    //rangeCollection = mergeSort(rangeCollection);
+    //http://www.example.org/iiif/LlangBrev/range/parent_aggr
     var existingRanges = [];
     var uniqueID = 0;
     for(var i = rangeCollection.length - 1; i>=0; i--){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
-        var outerRangeLabel = rangeCollection[i].label;
+        var outerRangeLabel = rangeCollection[i].label+" <br>";
         var existingRangeToUpdate = ""; 
         var tag = "parent";
         var relation = "";
         var isLeaf = false;
         var admin = "";
         var isOrdered = ""; //NEED TO DESIGN THIS TAG IN THE OBJECT
-        
+        var currentRange = "";
         var dragAttribute = "";
         var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-        relation = rangeCollection[i]["@id"];
-        if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
-          existingRanges.push(rangeCollection[i]["@id"]);
-          /* These are the only sections that I cannot detect their explicit order.  There may need to be a tag added to these to force the order, or a super range containing all
-          ranges to use this algorithm to build from. */
-
-          /* These are the hard set sections and should not be draggable, but should be sortable. */
-        }
-        else{
-            /* These are the children sections and leaves.  They should be draggable and sortable. */
-          existingRangeToUpdate = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]');
-          tag = "child";
-          dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
-        }
-        if(which === 2){
-            tag += " sortOrder";
-            admin = "admin";
-        }
-        //Create an html range object that can be added
-        var currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"<br></div>");
-        var innerRanges = rangeCollection[i].ranges;
         var canvases = rangeCollection[i].canvases.length;
         if(canvases !== 0 && canvases!==undefined){
           isLeaf = true;
@@ -1025,9 +1040,29 @@ function gatherRangesForArrange(which){
         else{
           isLeaf = false;
         }
+        relation = rangeCollection[i]["@id"];
+        if(which === 2){
+            tag += " sortOrder";
+            admin = "admin";
+        }
+        if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){
+          tag += " pAggr";
+          outerRangeLabel = "";
+        }
+        currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
+        if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
+          existingRanges.push(rangeCollection[i]["@id"]);
+          $(".rangeArrangementArea").append(currentRange);
+        }
+        else{
+          dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+          currentRange = $(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
+        }
+        //Create an html range object that can be added
+        var innerRanges = rangeCollection[i].ranges;
+       
         if(innerRanges.length > 0){ //If there are inner ranges
             var tag2 = "child";
-            
             if(which === 2){
                 tag2 += " sortOrder";
             }
@@ -1050,20 +1085,17 @@ function gatherRangesForArrange(which){
                         }
                         var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+"<br></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
-                          
-                          if(existingRangeToUpdate !== ""){ // If it is an existing range, then embed this range in the existing range.
-                            existingRangeToUpdate.append(embedRange);
-                            existingRanges.push(embedRange.attr("rangeID"));
-                          }
-                          else{ //otherwise, it is a new range that this embedded range goes into.  Embed it, then add the parent/child structure to the DOM. 
-                            //This will be the first 6 super sections that the admin creates. 
                             currentRange.append(embedRange);
-                            $(".rangeArrangementArea").find('.notBucket').append(currentRange);
+                            //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
                             existingRanges.push(embedRange.attr("rangeID"));
                             existingRanges.push(currentRange.attr("rangeID"));
-                          }
                         }
-                    } //If you didn't find it among the collection, we can't do anything with it.  
+                        else{
+                          var rangeToMove = $(".arrangeSection[rangeID='"+this["@id"]+"']");
+                          currentRange.append(rangeToMove);
+                          //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
+                        }
+                    } 
                 });
             }
         }
@@ -1075,24 +1107,23 @@ function gatherRangesForArrange(which){
             }
             var a = false;
             var newLeaf = undefined;
-            var existingRange = $(".rangeArrangementArea").find('div[rangeID="'+outerRange['@id']+'"]');
+            var existingRange = $('div[rangeID="'+outerRange['@id']+'"]');
             if(existingRange.length > 0){ //if the range exists in a section
                 //It already exists, do not append this leaf.
             }
             else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
               tag+= " child";
               dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
-              //onclick=\"toggleChildren($(this), '"+admin+"');\"  use this if you want to make leaves attempt to toggle its children and return 'no children'
-              newLeaf = $("<div isOrdred='"+isOrdered+"' "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'>"+outerRangeLabel+"<br></div>");
+              //newLeaf = $("<div isOrdred='"+isOrdered+"' "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'>"+outerRangeLabel+"<br></div>");
             }
             if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to top section for now, we can make a stray leaves section if we want.
-                    console.log("RANDOM LEAF");
-                    existingRanges.push(newLeaf.attr("rangeID"));
-                    $(".rangeArrangementArea:first").find('.unassigned').append(newLeaf);
-                
+                    //console.log("RANDOM LEAF");
+                    //existingRanges.push(newLeaf.attr("rangeID"));
+                    //$(".rangeArrangementArea:first").find('.unassigned').append(newLeaf);
               }
         }
     }
+    //moveOrphanLeavesToBucket();
 }
 
 /*
