@@ -842,6 +842,7 @@ var annotationLists = [
     ]
   }
 ];
+
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
   var properties={"@type" : "sc:Range"};
@@ -938,8 +939,6 @@ function toggleChildren(parentRange, admin){
    
   }
   else{ //if the are already exists
-    console.log("area already exists.  Depth: "+intendedDepth);
-    console.log($("div[depth='"+intendedDepth+"']").attr("relation") +" !== "+ relation+"?");
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       var objectArray1 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
@@ -947,9 +946,7 @@ function toggleChildren(parentRange, admin){
       });
       $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'),function(){
         objectArray1.append($(this));
-      });
-      
-      
+      });     
       var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       if(unassigned){
@@ -959,35 +956,24 @@ function toggleChildren(parentRange, admin){
         parentRange.parent().parent().find('.notBucket').children('div').removeClass("selectedSection");
       }
       sectionToMoveTo.children('.child').remove();
-      console.log("move these children1:");
-      console.log(objectArray1);
       for(var y=0; y<objectArrray1.length; y++){
-        console.log("move child1");
         var thisChild1 = objectArray1[y];
         var id1 = thisChild.attr('id')+"_tmp";
         thisChild1.attr("id", id1);
-        console.log(thisChild1);
-        console.log("moved into1");
-        console.log(sectionToMoveTo);
         sectionToMoveTo.append(thisChild1);
-        //thisChild.hide();
+        thisChild1.hide();
       }
       toggleChildren(parentRange, admin);
       return false;
     }
     else{ //if the area clicked was the one already highlighted
-      console.log("Area already highlighted.  Depth:" +intendedDepth);
       var objectArray2 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
         objectArray2.push($(this));
       });
       $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'), function(){
         objectArray2.push($(this));
-      });
-      // var childrenToMove4 = $("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child')
-      // var childrenToMove5 = $("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child');
-      // var childrenToMove6 = $.extend({}, childrenToMove4, childrenToMove5);
-      
+      });      
       parentRange.removeClass("selectedSection");
       if(unassigned){
         parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
@@ -997,14 +983,10 @@ function toggleChildren(parentRange, admin){
       }
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       parentRange.children('.child').remove();
-      console.log("move these children2:");
-      console.log(objectArray2);
       for(var x=0; x<objectArray2.length; x++){
-        console.log("move child2");
         var thisChild2 = $(objectArray2[x]);
         var id2 = thisChild2.attr('id')+"_tmp";
         thisChild2.attr("id", id2);
-        console.log(thisChild2);
         parentRange.append(thisChild2);
         thisChild2.hide();
       }
@@ -1051,7 +1033,6 @@ function dropHelp(event){
    */
     event.preventDefault();
     var data = event.dataTransfer.getData("text");
-    console.log(data);
     var relation = event.target.getAttribute('rangeid');
     var targetClass = event.target.className;
     var child = document.getElementById(data);
@@ -1063,10 +1044,6 @@ function dropHelp(event){
       child.id = child.id+"_tmp"; 
       child.style.display = "none";
     }
-    console.log("Drop");
-    console.log(child);
-    console.log("into");
-    console.log(event.target);
     event.target.appendChild(child);
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
 }
@@ -1112,8 +1089,7 @@ function gatherRangesForArrange(which){
         if(which === 2){
             tag += " sortOrder";
             admin = "admin";
-        }
-        
+        }        
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
@@ -1341,8 +1317,7 @@ function organizeRanges(){
                   /* Must gather this canvases annotations */
                   $.each(pageCanvases, function(){
                       if(this["@id"] == currentCanvas){
-                          currentCanvasAnnotationsLists = this.otherContent;
-                          
+                          currentCanvasAnnotationsLists = this.otherContent;                         
                           canvasImg = this.images[0].resource["@id"];
                           $.each(currentCanvasAnnotationsLists, function(){
                               var annoListID = String(this);
@@ -1466,8 +1441,6 @@ function organizeRanges(){
                              }); //Must comment this out when doing local demo.
                             }); //live 
                         */
-                            console.log("ANNOTATIONS");
-                            console.log(currentCanvasAnnotations);
                             for(var x=0; x<currentCanvasAnnotations.length; x++){
                                 var annotation = $("<div class='annotation'></div>");
                                 $.each(currentCanvasAnnotations[x], function(){
@@ -1531,7 +1504,7 @@ function organizeRanges(){
                             // }
                        });
                 }
-                else{ // this is an empty section, do nothing.
+                else{ // this is an empty section, do nothing, it is already appended.
 
                 }
             }
