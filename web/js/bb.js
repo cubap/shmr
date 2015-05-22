@@ -784,27 +784,27 @@ var testManifest = {
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/112",
+  "@type":"sc:Range",
+  "label":"Folio test 1",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/113",
+  "@type":"sc:Range",
+  "label":"Folio test 2",
+  "ranges" : [
+      //add leaf ranges here in order for page order
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 }
-// {
-//   "@id":"http://www.example.org/iiif/LlangBrev/range/112",
-//   "@type":"sc:Range",
-//   "label":"Folio test 1",
-//   "ranges" : [
-//       //add leaf ranges here in order for page order
-//   ],
-//   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
-//   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-// },
-// {
-//   "@id":"http://www.example.org/iiif/LlangBrev/range/113",
-//   "@type":"sc:Range",
-//   "label":"Folio test 2",
-//   "ranges" : [
-//       //add leaf ranges here in order for page order
-//   ],
-//   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
-//   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-// }
 
 	  ]
 }
@@ -889,13 +889,12 @@ function toggleChildren(parentRange, admin){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
   }
   //var actualDepth = $(".rangeArrangementArea").length;
-  intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
-  // if(unassigned){
-  //   intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
-  // }
-  // else{
-  //   intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
-  // }
+  if(unassigned){
+    intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
+  }
+  else{
+    intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
+  }
   
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
@@ -926,6 +925,7 @@ function toggleChildren(parentRange, admin){
     
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
+    console.log("Depth "+intendedDepth+" does not exist");
     $(".arrangeTrail").append(newArea);
     parentRange.addClass("selectedSection");
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
@@ -939,10 +939,17 @@ function toggleChildren(parentRange, admin){
   }
   else{ //if the are already exists
     console.log("area already exists.  Depth: "+intendedDepth);
+    console.log($("div[depth='"+intendedDepth+"']").attr("relation") +" !== "+ relation+"?");
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
-      var childrenToMove1 = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
-      var childrenToMove2 = $("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child');
-      var childrenToMove = childrenToMove1 + childrenToMove2;
+      var objectArray1 = [];
+      $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
+        objectArray1.append($(this));
+      });
+      $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'),function(){
+        objectArray1.append($(this));
+      });
+      
+      
       var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       if(unassigned){
@@ -952,36 +959,55 @@ function toggleChildren(parentRange, admin){
         parentRange.parent().parent().find('.notBucket').children('div').removeClass("selectedSection");
       }
       sectionToMoveTo.children('.child').remove();
-      $.each(childrenToMove, function(){
-        var id = $(this).attr('id')+"_tmp";
-        $(this).attr("id", id);
-        sectionToMoveTo.append($(this));
-        $(this).hide();
-      })
+      console.log("move these children1:");
+      console.log(objectArray1);
+      for(var y=0; y<objectArrray1.length; y++){
+        console.log("move child1");
+        var thisChild1 = objectArray1[y];
+        var id1 = thisChild.attr('id')+"_tmp";
+        thisChild1.attr("id", id1);
+        console.log(thisChild1);
+        console.log("moved into1");
+        console.log(sectionToMoveTo);
+        sectionToMoveTo.append(thisChild1);
+        //thisChild.hide();
+      }
       toggleChildren(parentRange, admin);
       return false;
     }
     else{ //if the area clicked was the one already highlighted
       console.log("Area already highlighted.  Depth:" +intendedDepth);
-      var childrenToMove1 = $("div[depth='"+intendedDepth+"']").find('.notBucket').children('.child');
-      var childrenToMove2 = $("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child');
-      var childrenToMove = childrenToMove1 + childrenToMove2;
+      var objectArray2 = [];
+      $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
+        objectArray2.push($(this));
+      });
+      $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'), function(){
+        objectArray2.push($(this));
+      });
+      // var childrenToMove4 = $("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child')
+      // var childrenToMove5 = $("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child');
+      // var childrenToMove6 = $.extend({}, childrenToMove4, childrenToMove5);
+      
       parentRange.removeClass("selectedSection");
-      parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
-      // if(unassigned){
-      //   parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
-      // }
-      // else{
-      //   parentRange.parent().parent().children('.unassigned').addClass("selectedUnassigned");
-      // }
+      if(unassigned){
+        parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
+      }
+      else{
+        parentRange.parent().parent().children('.unassigned').addClass("selectedUnassigned");
+      }
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       parentRange.children('.child').remove();
-      $.each(childrenToMove, function(){
-        var id = $(this).attr('id')+"_tmp";
-        $(this).attr("id", id);
-        parentRange.append($(this));
-        $(this).hide();
-      })
+      console.log("move these children2:");
+      console.log(objectArray2);
+      for(var x=0; x<objectArray2.length; x++){
+        console.log("move child2");
+        var thisChild2 = $(objectArray2[x]);
+        var id2 = thisChild2.attr('id')+"_tmp";
+        thisChild2.attr("id", id2);
+        console.log(thisChild2);
+        parentRange.append(thisChild2);
+        thisChild2.hide();
+      }
       if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
           $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
       } 
@@ -1067,21 +1093,27 @@ function gatherRangesForArrange(which){
         var dragAttribute = "";
         var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         var canvases = rangeCollection[i].canvases.length;
+        if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){
+          tag = "parent pAggr";
+          outerRangeLabel = "";
+        }
         if(canvases !== 0 && canvases!==undefined){
           isLeaf = true;
+          tag="child";
+          dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+          dropAttribute = "";
         }
         else{
           isLeaf = false;
+          dragAttribute = "";
+          dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         }
         relation = rangeCollection[i]["@id"];
         if(which === 2){
             tag += " sortOrder";
             admin = "admin";
         }
-        if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){
-          tag += " pAggr";
-          outerRangeLabel = "";
-        }
+        
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
