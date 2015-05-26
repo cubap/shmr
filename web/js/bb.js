@@ -1018,6 +1018,11 @@ function toggleChildren(parentRange, admin){
       }
     }
   }
+
+  if(admin === "recurse"){
+    console.log("Toggle Child Recurse");
+    selectInTree(recurseID);
+  }
   
 }
 function dragHelp(event){

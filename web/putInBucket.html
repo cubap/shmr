@@ -151,39 +151,48 @@ function existing(){
     annoListCollection[2] = testLists[2];
     $("#folioSide1").click();
     gatherRangesForArrange(1);
-    selectInTree(leafIsIn);
+    setTimeout(selectInTree(leafIsIn),1000);
 }
 
+var test = 0;
 function selectInTree(child){
-    console.log("select is > 0 -------> "+$(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']").length);
-    if($(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']").length ==0){
+    test+=1;
+    var depth = $(".rangeArrangementArea").length;
+    console.log("Last area at depth "+depth+".  Test is "+test);
+    var lastArrangeArea = $('.rangeArrangementArea[depth="'+depth+'"]');
+    if(test > 3){
+        //clearInterval(newInterval);
         return false;
     }
-    var childToFindParents = $(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']");
-    var parentToClick = childToFindParents.parents().find('.arrangeSection').eq(0);
-    if(parentToClick.length>0){
-        console.log("parent click");
-        parentToClick.click();
+    var childToFindParents = lastArrangeArea.find(".arrangeSection[rangeID='"+child+"']");
+    var theParent = childToFindParents.parent();
+    var control = true;
+    if(childToFindParents.length === 0){
+        return false;
+    }
+    if(theParent.attr("class") == "notBucket" || theParent.attr("class").indexOf('unassigned') > -1 ){
+        childToFindParents.addClass('selectedSection');
+        toggleChildren(childToFindParents, "recurse");
     }
     else{
-        console.log("child click");
-        childToFindParents.click();
+        while(control){
+            if(theParent.attr("class") == "notBucket" || theParent.attr("class").indexOf('unassigned') > -1 ){
+                control = false;
+            }
+            else{
+                if(theParent.parent().attr("class") == "notBucket" || theParent.parent().attr("class").indexOf('unassigned') > -1 ){
+                    //do nothing
+                }
+                else{
+                    theParent = theParent.parent();
+                }
+            }
+        }
+        recurseID = child;
+        theParent.addClass('selectedSection');
+        toggleChildren(theParent, "recurse");
     }
-    selectInTree(child);
-    // while($(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']").length > 0){
-    //     //get back to the most parent where you found it
-    //     var childToFindParents = $(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']");
-    //     var parentToClick = childToFindParents.parents().find('.arrangeSection').eq(0);
-    //     console.log(child+" is in the last rangeArrangementArea  Click it.");
-    //     if(parentToClick.length>0){
-    //         console.log("parent click");
-    //         parentToClick.click();
-    //     }
-    //     else{
-    //         console.log("child click");
-    //         childToFindParents.click();
-    //     }
-    // }
+
 }
 
 //Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
