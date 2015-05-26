@@ -95,6 +95,8 @@ function existing(){
     var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547";
     var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
 
+    var leafIsIn = "http://www.example.org/iiif/LlangBrev/range/8";
+
     var testLists = [
         {
             "@type" : "sc:AnnotationList",
@@ -148,6 +150,40 @@ function existing(){
     annoListCollection[1] = testLists[1];
     annoListCollection[2] = testLists[2];
     $("#folioSide1").click();
+    gatherRangesForArrange(1);
+    selectInTree(leafIsIn);
+}
+
+function selectInTree(child){
+    console.log("select is > 0 -------> "+$(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']").length);
+    if($(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']").length ==0){
+        return false;
+    }
+    var childToFindParents = $(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']");
+    var parentToClick = childToFindParents.parents().find('.arrangeSection').eq(0);
+    if(parentToClick.length>0){
+        console.log("parent click");
+        parentToClick.click();
+    }
+    else{
+        console.log("child click");
+        childToFindParents.click();
+    }
+    selectInTree(child);
+    // while($(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']").length > 0){
+    //     //get back to the most parent where you found it
+    //     var childToFindParents = $(".rangeArrangementArea:last").find(".arrangeSection[rangeID='"+child+"']");
+    //     var parentToClick = childToFindParents.parents().find('.arrangeSection').eq(0);
+    //     console.log(child+" is in the last rangeArrangementArea  Click it.");
+    //     if(parentToClick.length>0){
+    //         console.log("parent click");
+    //         parentToClick.click();
+    //     }
+    //     else{
+    //         console.log("child click");
+    //         childToFindParents.click();
+    //     }
+    // }
 }
 
 //Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  

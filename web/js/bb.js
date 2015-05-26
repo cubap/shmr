@@ -2602,7 +2602,7 @@ function populateAnnoForms(){
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                                 
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
-                                gatherRangesForArrange(1);
+            gatherRangesForArrange(1);
       	 	});
   	 	});
       	     	
