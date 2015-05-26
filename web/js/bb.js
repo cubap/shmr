@@ -899,6 +899,7 @@ function toggleChildren(parentRange, admin){
   
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
+
   newArea.append(newAreaBucket);
   var existingInCopy = [];
   $.each($("div[depth]"),function(){
@@ -942,10 +943,10 @@ function toggleChildren(parentRange, admin){
     if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       var objectArray1 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
-        objectArray1.append($(this));
+        objectArray1.push($(this));
       });
       $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'),function(){
-        objectArray1.append($(this));
+        objectArray1.push($(this));
       });     
       var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
@@ -956,9 +957,9 @@ function toggleChildren(parentRange, admin){
         parentRange.parent().parent().find('.notBucket').children('div').removeClass("selectedSection");
       }
       sectionToMoveTo.children('.child').remove();
-      for(var y=0; y<objectArrray1.length; y++){
+      for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
-        var id1 = thisChild.attr('id')+"_tmp";
+        var id1 = thisChild1.attr('id')+"_tmp";
         thisChild1.attr("id", id1);
         sectionToMoveTo.append(thisChild1);
         thisChild1.hide();
@@ -966,6 +967,10 @@ function toggleChildren(parentRange, admin){
       toggleChildren(parentRange, admin);
       return false;
     }
+    // else if (){
+    //   //if the area clicked was one from a different depth and we are doing sort_order...go to the most open depth, then go back one and click the highlighted child,
+    //   //repeat until you are at the depth you clicked the area in.  Once there, toggleChildren on the target.  
+    // }
     else{ //if the area clicked was the one already highlighted
       var objectArray2 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
@@ -999,6 +1004,7 @@ function toggleChildren(parentRange, admin){
     newArea.find('.notBucket').children('div').show(); //show sections and leaves
     if(newArea.find('.notBucket').children('div').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
+      newAreaBucket.attr("onclick", "");
     }
     else{
       //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
@@ -1011,6 +1017,7 @@ function toggleChildren(parentRange, admin){
     newArea.find('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     if(newArea.children('div').not('div[leaf="true"]').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
+      newAreaBucket.attr("onclick", "");
     }
     else{
       if(newArea.find('.selectedSection').length == 0){
