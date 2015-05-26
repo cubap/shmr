@@ -167,30 +167,41 @@ function selectInTree(child){
     var childToFindParents = lastArrangeArea.find(".arrangeSection[rangeID='"+child+"']");
     var theParent = childToFindParents.parent();
     var control = true;
-    if(childToFindParents.length === 0){
+    console.log("Does range exist? :"+childToFindParents.length);
+    console.log("IS IT THE UNASSIGNED? : "+childToFindParents.attr("class").indexOf("unassigned"));
+    if(childToFindParents.length === 0 || childToFindParents.attr("class").indexOf("unassigned") > -1){
         return false;
     }
-    if(theParent.attr("class") == "notBucket" || theParent.attr("class").indexOf('unassigned') > -1 ){
-        childToFindParents.addClass('selectedSection');
-        toggleChildren(childToFindParents, "recurse");
+    console.log("Check the parents.  First Class: "+theParent.attr("class"));
+    if(theParent.attr("class").indexOf("notBucket") > -1 || theParent.attr("class").indexOf('unassigned') > -1 ){
+        childToFindParents.click();
+        selectInTree(child);
+        // childToFindParents.addClass('selectedSection');
+        // toggleChildren(childToFindParents, "recurse");
     }
     else{
-        while(control){
-            if(theParent.attr("class") == "notBucket" || theParent.attr("class").indexOf('unassigned') > -1 ){
+        while(control == true){
+            console.log("In while.  Class: "+theParent.attr("class"));
+            if(theParent.attr("class").indexOf("notBucket") > -1 || theParent.attr("class").indexOf('unassigned') > -1 ){
                 control = false;
             }
             else{
                 if(theParent.parent().attr("class") == "notBucket" || theParent.parent().attr("class").indexOf('unassigned') > -1 ){
                     //do nothing
+                    console.log("control is false");
+                    control = false;
                 }
                 else{
+                    console.log("parent parent");
                     theParent = theParent.parent();
                 }
             }
         }
         recurseID = child;
-        theParent.addClass('selectedSection');
-        toggleChildren(theParent, "recurse");
+        theParent.click();
+        selectInTree(child);
+        // theParent.addClass('selectedSection');
+        // toggleChildren(theParent, "recurse");
     }
 
 }
