@@ -1004,7 +1004,8 @@ function toggleChildren(parentRange, admin){
     newArea.find('.notBucket').children('div').show(); //show sections and leaves
     if(newArea.find('.notBucket').children('div').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
-      newAreaBucket.attr("onclick", "");
+      //newAreaBucket.attr("onclick", "");
+      newAreaBucket.remove();
     }
     else{
       //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
@@ -1017,7 +1018,8 @@ function toggleChildren(parentRange, admin){
     newArea.find('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     if(newArea.children('div').not('div[leaf="true"]').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
-      newAreaBucket.attr("onclick", "");
+      newAreaBucket.remove();
+      //newAreaBucket.attr("onclick", "");
     }
     else{
       if(newArea.find('.selectedSection').length == 0){
