@@ -960,7 +960,7 @@ function toggleChildren(parentRange, admin){
    
   }
   else{ //if the are already exists
-    if(intendedDepth == acutalDepth && $("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
+    if(intendedDepth == actualDepth && $("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       console.log("Child from deepest");
       var objectArray1 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
@@ -1223,10 +1223,6 @@ function gatherRangesForArrange(which){
                         else{
                           rangesMoved += 1;
                           var rangeToMove = $(".arrangeSection[rangeID='"+this["@id"]+"']");
-                          console.log("Range to move "+rangesMoved+":");
-                          console.log(rangeToMove);
-                          console.log("Into");
-                          console.log(currentRange);
                           currentRange.append(rangeToMove);
                           /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
                           rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
