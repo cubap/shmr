@@ -918,17 +918,15 @@ function toggleChildren(parentRange, admin){
   else{
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
+
+  var actualDepth = (".rangeArrangementArea").length;
   
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
 
   newArea.append(newAreaBucket);
   var existingInCopy = [];
-  $.each($("div[depth]"),function(){
-      if(parseInt($(this).attr("depth")) > intendedDepth){
-          $(this).remove();
-      }
-  });
+  
   $.each(children, function(){
     var rangeID = $(this).attr("rangeID");
     var leaf = $(this).attr("leaf");
@@ -962,7 +960,8 @@ function toggleChildren(parentRange, admin){
    
   }
   else{ //if the are already exists
-    if($("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
+    if(intendedDepth == acutalDepth && $("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
+      console.log("Child from deepest");
       var objectArray1 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
         objectArray1.push($(this));
@@ -989,11 +988,52 @@ function toggleChildren(parentRange, admin){
       toggleChildren(parentRange, admin);
       return false;
     }
-    // else if (){
-    //   //if the area clicked was one from a different depth and we are doing sort_order...go to the most open depth, then go back one and click the highlighted child,
-    //   //repeat until you are at the depth you clicked the area in.  Once there, toggleChildren on the target.  
-    // }
-    else{ //if the area clicked was the one already highlighted
+    else if (intendedDepth < actualDepth && admin == "admin"){
+      console.log("admin and selected from not the deepest");
+      for(var i = actualDepth; i > intendedDepth-1; i--){
+        var deepest = $("div[depth='"+i+"']");
+        var children = [];
+        if(i == intendedDepth - 1){
+          parentRange.click();
+          console.log("At the level where the actual item clicked needs to be clicked");
+        }
+        else{
+          if(deepest.find(".arrangeSection").length == 0){ //a leaf is highlighted in the previous section
+            // do nothing
+            console.log("Leaf highlighted at depth "+ i-1 +".  Do nothing");
+          }
+          else if (deepest.find(".arrangeSection").not('.unassigned').length == 0){ //The only thing here is unassigned. 
+            console.log("Only found unassigned");
+            if(deepest.child(".selectedSection").length > 0){//unassigned is highlighted.  Click it.
+              console.log('unassigned hightlighted, click it.');
+              deepest.child(".selectedSection").click();
+            }
+            else{ //unassigned is not highlighted, which means we dont have to click it.
+              console.log("unassigned is not highlighted.  Do nothing")
+              //do nothing
+            }
+
+          }
+          else if(deepest.find(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
+            console.log("Depth "+ i-1 +" is a highlighted unassigned, do nothing now.")
+            //do nothing
+          }
+          else{ //a normal open section.  
+            console.log("Depth "+ i +" is a normal section.");
+            if(deepest.find(".selectedSection").className.indexOf("unassigned") > -1){ //the bucket is highlighted.
+              console.log("unassigned is highlighted.")
+              //do nothing
+            }
+            else{// it is an open section.  Click it.
+              deepest.find(".selectedSection").click();
+            }
+          }
+        }
+      } // end for
+
+    }
+    else{ //if the area clicked was the one already highlighted or the admin interface is not necessary
+      console.log("area already highlighted OR not an admin");
       var objectArray2 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
         objectArray2.push($(this));
@@ -1008,7 +1048,11 @@ function toggleChildren(parentRange, admin){
       else{
         parentRange.parent().parent().children('.unassigned').addClass("selectedUnassigned");
       }
-      $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
+      $.each($("div[depth]"),function(){
+        if(parseInt($(this).attr("depth")) >= intendedDepth){//remove the depth and the greater ones open.
+            $(this).remove();
+        }
+      });
       parentRange.children('.child').remove();
       for(var x=0; x<objectArray2.length; x++){
         var thisChild2 = $(objectArray2[x]);
@@ -1023,25 +1067,28 @@ function toggleChildren(parentRange, admin){
     }
   }
 
-  if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
-    var moveUP = newArea.find('.unassigned').children("div");
-    newArea.find('.notBucket').append(moveUP);
-    newArea.find(".unassigned").remove();
-  }
-
   if(admin === "admin"){
     newArea.find('.notBucket').children('div').show(); //show sections and leaves
+    if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
+      var moveUP = newArea.find('.unassigned').children("div");
+      newArea.find('.notBucket').append(moveUP);
+      newArea.find(".unassigned").remove();
+    }
     if(newArea.find('.notBucket').children('div').length == 0){
-      newArea.append('<div style="color: red;">No Subsections Available</div>');
+      
       //newAreaBucket.attr("onclick", "");
       if(newArea.find('.unassigned').children('div').length === 0){
+        newArea.append('<div style="color: red;">No Subsections Available</div>');
         newAreaBucket.remove();
+      }
+      else{
+        newArea.find('.unassigned').addClass("selectedSection");
       }
     }
     else{
       //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
       if(newArea.find('.selectedSection').length == 0){
-        newArea.find('.unassigned').addClass("selectedUnassigned");
+        newArea.find('.unassigned').addClass("selectedSection");
       }
     }
   }
