@@ -759,7 +759,7 @@ var testManifest = {
   "@id":"http://www.example.org/iiif/LlangBrev/range/11",
   "@type":"sc:Range",
   "label":"Table Of Contents",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/8", "http://www.example.org/iiif/LlangBrev/range/9", "http://www.example.org/iiif/LlangBrev/range/10"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/114", "http://www.example.org/iiif/LlangBrev/range/115"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -803,6 +803,28 @@ var testManifest = {
       //add leaf ranges here in order for page order
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/114",
+  "@type":"sc:Range",
+  "label":"Ch. 1",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/8",
+      "http://www.example.org/iiif/LlangBrev/range/9",
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/115",
+  "@type":"sc:Range",
+  "label":"Ch. 2",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/10",
+  ],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 }
 
@@ -1000,12 +1022,21 @@ function toggleChildren(parentRange, admin){
       } 
     }
   }
+
+  if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
+    var moveUP = newArea.find('.unassigned').children("div");
+    newArea.find('.notBucket').append(moveUP);
+    newArea.find(".unassigned").remove();
+  }
+
   if(admin === "admin"){
     newArea.find('.notBucket').children('div').show(); //show sections and leaves
     if(newArea.find('.notBucket').children('div').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
       //newAreaBucket.attr("onclick", "");
-      newAreaBucket.remove();
+      if(newArea.find('.unassigned').children('div').length === 0){
+        newAreaBucket.remove();
+      }
     }
     else{
       //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
@@ -1015,8 +1046,10 @@ function toggleChildren(parentRange, admin){
     }
   }
   else{
+    newArea.find('.notBucket').children('div').hide();
     newArea.find('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
-    if(newArea.children('div').not('div[leaf="true"]').length == 0){
+    //do not show items in the unassigned area
+    if(newArea.find('.notBucket').children('div').not('div[leaf="true"]').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
       newAreaBucket.remove();
       //newAreaBucket.attr("onclick", "");
@@ -1027,11 +1060,6 @@ function toggleChildren(parentRange, admin){
       }
     }
   }
-
-  // if(admin === "recurse"){
-  //   console.log("Toggle Child Recurse");
-  //   selectInTree(recurseID);
-  // }
   
 }
 function dragHelp(event){
@@ -1070,6 +1098,7 @@ function gatherRangesForArrange(which){
     //http://www.example.org/iiif/LlangBrev/range/parent_aggr
     var existingRanges = [];
     var uniqueID = 0;
+    var rangesMoved = 0;
     for(var i = rangeCollection.length - 1; i>=0; i--){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -1081,23 +1110,22 @@ function gatherRangesForArrange(which){
         var admin = "";
         var isOrdered = ""; //NEED TO DESIGN THIS TAG IN THE OBJECT
         var currentRange = "";
-        var dragAttribute = "";
+        var dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
         var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         var canvases = rangeCollection[i].canvases.length;
-        if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){
+        if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ //MUST BE FIRST IN THE RANGES ARRAY
           tag = "parent pAggr";
           outerRangeLabel = "";
         }
         if(canvases !== 0 && canvases!==undefined){
           isLeaf = true;
           tag="child";
-          dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
           dropAttribute = "";
         }
         else{
           isLeaf = false;
-          dragAttribute = "";
-          dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+          // dragAttribute = "";
+          // dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         }
         relation = rangeCollection[i]["@id"];
         if(which === 2){
@@ -1110,7 +1138,7 @@ function gatherRangesForArrange(which){
           $(".rangeArrangementArea").find('.notBucket').append(currentRange);
         }
         else{
-          dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+          //dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
           currentRange = $(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
         }
         //Create an html range object that can be added
@@ -1143,12 +1171,18 @@ function gatherRangesForArrange(which){
                             currentRange.append(embedRange);
                             //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
                             existingRanges.push(embedRange.attr("rangeID"));
-                            existingRanges.push(currentRange.attr("rangeID"));
+                            //existingRanges.push(currentRange.attr("rangeID"));
                         }
                         else{
+                          rangesMoved += 1;
                           var rangeToMove = $(".arrangeSection[rangeID='"+this["@id"]+"']");
+                          console.log("Range to move "+rangesMoved+":");
+                          console.log(rangeToMove);
+                          console.log("Into");
+                          console.log(currentRange);
                           currentRange.append(rangeToMove);
-                          //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
+                          /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
+                          rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
                         }
                     } 
                 });
@@ -1180,10 +1214,16 @@ function gatherRangesForArrange(which){
     }
     //get leaves into the bucket
     var objectsForBucket = $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
-    $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]').remove();
     $(".unassigned").append(objectsForBucket);
+    $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]').remove();
+    
     var pAggrChildren = $('.pAggr').children('div');
     $('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
+    /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
+    pAggrChildren.removeClass("child").addClass("parent");
+
+    //pAggrChildren.attr("draggable", "false");
+   // paggrChildren.attr("ondragstart", "");
     $('.pAggr').remove();
 }
 
