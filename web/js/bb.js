@@ -908,19 +908,16 @@ function toggleChildren(parentRange, admin){
   var relation = parentRange.attr("rangeID");
   var unassigned = parentRange.hasClass('unassigned');
   var intendedDepth = -1;
+  var actualDepth = parseInt($(".rangeArrangementArea").length);
   if(admin === "admin"){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
   }
-  //var actualDepth = $(".rangeArrangementArea").length;
   if(unassigned){
     intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
   }
   else{
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
-
-  var actualDepth = (".rangeArrangementArea").length;
-  
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
 
@@ -1066,18 +1063,19 @@ function toggleChildren(parentRange, admin){
       } 
     }
   }
-
   if(admin === "admin"){
-    newArea.find('.notBucket').children('div').show(); //show sections and leaves
+    console.log("show not bucket in new area");
+    newArea.find('.notBucket').children('.child').show(); //show sections and leaves
     if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
-      var moveUP = newArea.find('.unassigned').children("div");
+      console.log("Unassigned was clicked");
+      var moveUP = newArea.find('.unassigned').children(".child");
       newArea.find('.notBucket').append(moveUP);
+      newArea.find('.notBucket').children(".child").show();
       newArea.find(".unassigned").remove();
     }
-    if(newArea.find('.notBucket').children('div').length == 0){
-      
+    if(newArea.find('.notBucket').children('.child').length == 0){
       //newAreaBucket.attr("onclick", "");
-      if(newArea.find('.unassigned').children('div').length === 0){
+      if(newArea.find('.unassigned').children('.child').length === 0){
         newArea.append('<div style="color: red;">No Subsections Available</div>');
         newAreaBucket.remove();
       }
@@ -1093,6 +1091,7 @@ function toggleChildren(parentRange, admin){
     }
   }
   else{
+      console.log("NOT AN ADMIN");
     newArea.find('.notBucket').children('div').hide();
     newArea.find('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     //do not show items in the unassigned area
@@ -1109,11 +1108,13 @@ function toggleChildren(parentRange, admin){
   }
   
 }
+
 function dragHelp(event){
     console.log("DRAGGING");
     console.log(event.target.id);
     event.dataTransfer.setData("text", event.target.id);
 }
+
 function dropHelp(event){
   /* TODO:
    If the target is arrangeSection that is not expanded, it should go into that section.
