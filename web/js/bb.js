@@ -1024,8 +1024,12 @@ function toggleChildren(parentRange, admin){
 
           }
           else if(deepest.children(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
-            console.log("Depth "+ i +" -1 is a highlighted unassigned, do nothing now.")
-            //do nothing
+            console.log("Depth "+ i +" -1 is a highlighted unassigned. ");
+            //THIS CAUSES ERRORS.  
+            if(deepest.find(".selectedSection").length > 0){
+              console.log("Leaf from unassigned area is highlighted.  Click it.");
+              deepest.find(".selectedSection").click();
+            }
           }
           else{ //a normal open section.  
             console.log("Depth "+ i +" is a normal section.");
@@ -1034,6 +1038,7 @@ function toggleChildren(parentRange, admin){
             }
             else if(deepest.find(".selectedSection").attr("class").indexOf("unassigned") > -1){ //the bucket is highlighted.
               console.log("unassigned is highlighted.")
+              deepest.find(".selectedSection").click();
               //do nothing
             }
             else{// it is an open section.  Click it.
