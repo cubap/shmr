@@ -652,7 +652,7 @@ and open the template in the editor.
             }
             div[leaf="true"]{
                 display: none;
-                padding: 8px 8px 8px 8px;
+                padding: 8px 8px 8px 8px !important;
             }
 
             

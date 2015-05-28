@@ -909,8 +909,10 @@ function toggleChildren(parentRange, admin){
   var unassigned = parentRange.hasClass('unassigned');
   var intendedDepth = -1;
   var actualDepth = parseInt($(".rangeArrangementArea").length);
+  var sortOrder = "";
   if(admin === "admin"){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+      sortOrder = " sortOrder";
   }
   if(unassigned){
     intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
@@ -919,11 +921,11 @@ function toggleChildren(parentRange, admin){
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
-  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned">Unassigned</div>');
+  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>');
 
   newArea.append(newAreaBucket);
   var existingInCopy = [];
-  
+  var leafCount = 0;
   $.each(children, function(){
     var rangeID = $(this).attr("rangeID");
     var leaf = $(this).attr("leaf");
@@ -934,6 +936,7 @@ function toggleChildren(parentRange, admin){
        childID = childID.replace("_tmp", "");
        child.attr('id', childID);
        if(leaf == "true"){ //put leaves in the bucket for now.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
+         leafCount += 1;
          newArea.find('.unassigned').append(child);
        }
        else{
@@ -941,8 +944,9 @@ function toggleChildren(parentRange, admin){
        }
        //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
-    
   });
+  var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
+   newArea.children(".unassigned").append(leafCountHTML);
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     $(".arrangeTrail").append(newArea);
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
@@ -1023,7 +1027,7 @@ function toggleChildren(parentRange, admin){
             if(deepest.find(".selectedSection").length == 0){
               //do nothing
             }
-            else if(deepest.find(".selectedSection").className.indexOf("unassigned") > -1){ //the bucket is highlighted.
+            else if(deepest.find(".selectedSection").attr("class").indexOf("unassigned") > -1){ //the bucket is highlighted.
               console.log("unassigned is highlighted.")
               //do nothing
             }
