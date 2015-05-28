@@ -949,10 +949,10 @@ function toggleChildren(parentRange, admin){
     parentRange.addClass("selectedSection");
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     if(unassigned){
-       parentRange.parent().children('.unassigned').removeClass("selectedUnassigned");
+       parentRange.parent().children('.unassigned').removeClass("selectedUnassigned").removeClass("selectedSection");
     }
     else{
-       parentRange.parent().parent().children('.unassigned').removeClass("selectedUnassigned");
+       parentRange.parent().parent().children('.unassigned').removeClass("selectedUnassigned").removeClass("selectedSection");
     }
    
   }
@@ -1039,12 +1039,6 @@ function toggleChildren(parentRange, admin){
         objectArray2.push($(this));
       });      
       parentRange.removeClass("selectedSection");
-      if(unassigned){
-        parentRange.parent().children('.unassigned').addClass("selectedUnassigned");
-      }
-      else{
-        parentRange.parent().parent().children('.unassigned').addClass("selectedUnassigned");
-      }
       $.each($("div[depth]"),function(){
         if(parseInt($(this).attr("depth")) >= intendedDepth){//remove the depth and the greater ones open.
             $(this).remove();
@@ -1058,9 +1052,7 @@ function toggleChildren(parentRange, admin){
         parentRange.append(thisChild2);
         thisChild2.hide();
       }
-      if($(".rangeArrangementArea").length == 1 && $(".selectedSection").length == 0){
-          $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
-      } 
+      
     }
   }
   if(admin === "admin"){
@@ -1080,14 +1072,14 @@ function toggleChildren(parentRange, admin){
         newAreaBucket.remove();
       }
       else{
-        newArea.find('.unassigned').addClass("selectedSection");
+        //newArea.find('.unassigned').addClass("selectedSection");
       }
     }
     else{
       //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
-      if(newArea.find('.selectedSection').length == 0){
-        newArea.find('.unassigned').addClass("selectedSection");
-      }
+      // if(newArea.find('.selectedSection').length == 0){
+      //   newArea.find('.unassigned').addClass("selectedSection");
+      // }
     }
   }
   else{
@@ -1105,6 +1097,9 @@ function toggleChildren(parentRange, admin){
         newArea.find('.unassigned').addClass("selectedUnassigned");
       }
     }
+    if($(".rangeArrangementArea:last").children($(".selectedSection")).length == 0){
+          $('.rangeArrangementArea:last').find('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
+      } 
   }
   
 }
@@ -1135,6 +1130,13 @@ function dropHelp(event){
       child.style.display = "none";
     }
     event.target.appendChild(child);
+    //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
+    $.each($(".arrangeSection").not("div[leaf='true']"), function(){
+      $(this).children(".folioCount").remove();
+       var folioCount = $(this).find("div[leaf='true']").length;
+       var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+       $(this).append(folioCountHTML);
+     });
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
 }
 function dragOverHelp(event){
@@ -1228,47 +1230,37 @@ function gatherRangesForArrange(which){
                           /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
                           rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
                         }
+
                     } 
                 });
             }
         }
         else{ //There are no inner ranges. It could be a section with no children or a leaf.  
-            var tag = "";
-            isOrdered = "";
-            if(which === 2){
-                tag="sortOrder";
-            }
-            var a = false;
-            var newLeaf = undefined;
-            var existingRange = $('div[rangeID="'+outerRange['@id']+'"]');
-            if(existingRange.length > 0){ //if the range exists in a section
-                //It already exists, do not append.
-            }
-            else{ //The leaf is  parent to itself, which means its a random page in the bucket. 
-              tag+= " child";
-              dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
-              //newLeaf = $("<div isOrdred='"+isOrdered+"' "+dragAttribute+"  leaf='"+isLeaf+"' class='arrangeSection "+tag+"' relation='bucket' rangeID='"+outerRange['@id']+"'>"+outerRangeLabel+"<br></div>");
-            }
-            if(newLeaf){ //If its a random page from the bucket, it needs to listed as a parent range.  Append to top section for now, we can make a stray leaves section if we want.
-                    //console.log("RANDOM LEAF");
-                    //existingRanges.push(newLeaf.attr("rangeID"));
-                    //$(".rangeArrangementArea:first").find('.unassigned').append(newLeaf);
-              }
         }
     }
-    //get leaves into the bucket
+    //get leaves into the bucket.  This is just for now.  This makes leaves unordered and I TODO: need to put in an isOrdered tag with these ranges.  
     var objectsForBucket = $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
+    objectsForBucket.attr("isordered", "false");
     $(".unassigned").append(objectsForBucket);
-    $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]').remove();
+    //$('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]').remove();
     
+    //Undo the parent aggregator wrapper.
     var pAggrChildren = $('.pAggr').children('div');
     $('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
     /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
     pAggrChildren.removeClass("child").addClass("parent");
-
-    //pAggrChildren.attr("draggable", "false");
-   // paggrChildren.attr("ondragstart", "");
     $('.pAggr').remove();
+    
+    //set folio counts for all sections in the admin interface, ignore leaves.
+    if(which == 2){
+      $.each($(".arrangeSection").not("div[leaf='true']"), function(){
+         console.log("set folio count");
+         var folioCount = $(this).find("div[leaf='true']").length;
+         var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+         $(this).append(folioCountHTML);
+       });
+    }
+
 }
 
 /*
