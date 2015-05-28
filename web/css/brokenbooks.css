@@ -594,7 +594,13 @@ and open the template in the editor.
                 padding: 8px 8px 8px 8px;
                 margin-bottom: 8px;
                 border: 2px solid black;
-                user-select: none; /* cannot select text. */
+                /* user cannot select text */
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                 user-select: none;
             }
 
             .arrangeSection.sortOrder{

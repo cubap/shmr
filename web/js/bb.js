@@ -1214,7 +1214,7 @@ function gatherRangesForArrange(which){
             admin = "admin";
         }
         else{
-          dragAttribute = "";
+          dragAttribute = "id='drag_"+uniqueID+"_tmp'";
           dropAttribute = "";
         }        
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+"</div>");
@@ -1252,8 +1252,8 @@ function gatherRangesForArrange(which){
                           dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
                         }
                         if(which == 1){
-                          dragAttribute = "";
                           dropAttribute = "";
+                          dragAttrubute = "id='drag_"+uniqueID+"_tmp'";
                         }
                         var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+"<br></div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
