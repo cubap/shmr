@@ -946,15 +946,19 @@ function toggleChildren(parentRange, admin){
     }
   });
   var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
-   newArea.children(".unassigned").append(leafCountHTML);
+  if(admin == "admin"){
+     newArea.children(".unassigned").append(leafCountHTML);
+  }
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     $(".arrangeTrail").append(newArea);
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     if(unassigned){
-       parentRange.parent().children('.arrangeSection').removeClass("selectedUnassigned").removeClass("selectedSection");
+        parentRange.parent().find(".selectedSection").removeClass("selectedSection");
+        parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     else{
-       parentRange.parent().parent().children('.arrangeSection').removeClass("selectedUnassigned").removeClass("selectedSection");
+       parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
+        parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     parentRange.addClass("selectedSection");
    
@@ -971,12 +975,12 @@ function toggleChildren(parentRange, admin){
       });     
       var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").children('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
-      if(unassigned){
-        parentRange.parent().children('.notBucket').children('div').removeClass("selectedSection");
-      }
-      else{
-        parentRange.parent().parent().children('.notBucket').children('div').removeClass("selectedSection");
-      }
+        if(unassigned){
+            parentRange.parent().find(".selectedSection").removeClass("selectedSection");
+        }
+        else{
+            parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
+        }
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
@@ -1048,8 +1052,20 @@ function toggleChildren(parentRange, admin){
       });
       $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'), function(){
         objectArray2.push($(this));
-      });      
-      parentRange.removeClass("selectedSection");
+      });
+      if(parentRange.hasClass("selectedSection")){
+          parentRange.removeClass("selectedSection");
+      }
+      else{
+        if(unassigned){
+            parentRange.parent().find(".selectedSection").removeClass("selectedSection");
+        }
+        else{
+           parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
+        }
+        parentRange.addClass("selectedSection");
+      }
+     
       $.each($("div[depth]"),function(){
         if(parseInt($(this).attr("depth")) >= intendedDepth){//remove the depth and the greater ones open.
             $(this).remove();
