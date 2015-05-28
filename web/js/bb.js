@@ -990,12 +990,14 @@ function toggleChildren(parentRange, admin){
     }
     else if (intendedDepth < actualDepth && admin == "admin"){
       console.log("admin and selected from not the deepest");
-      for(var i = actualDepth; i > intendedDepth-1; i--){
-        console.log("deepest at depth "+i);
+      console.log("Run function to depth "+(intendedDepth-1));
+      for(var i = actualDepth; i > intendedDepth-2; i--){
+        //console.log("deepest at depth "+i);
         var deepest = $("div[depth='"+i+"']");
-        console.log("Deepest arrange sections: "+deepest.children(".notBucket").children(".arrangeSection").length);
-        console.log("Deepest unassigned? "+deepest.children(".unassigned").length);
+        //console.log("Deepest arrange sections: "+deepest.children(".notBucket").children(".arrangeSection").length);
+        //console.log("Deepest unassigned? "+deepest.children(".unassigned").length);
         var children = [];
+        console.log("Is "+ i +" equal to "+(intendedDepth-1));
         if(i == intendedDepth - 1){
           parentRange.click();
           console.log("At the level where the actual item clicked needs to be clicked");
@@ -1009,7 +1011,7 @@ function toggleChildren(parentRange, admin){
             console.log("Only found unassigned");
             if(deepest.children(".selectedSection").length > 0){//unassigned is highlighted.  Click it.
               console.log('unassigned hightlighted, click it.');
-              deepest.children(".selectedSection").click();
+              deepest.find(".selectedSection").click();
             }
             else{ //unassigned is not highlighted, which means we dont have to click it.
               console.log("unassigned is not highlighted.  Do nothing")
