@@ -939,21 +939,20 @@ function toggleChildren(parentRange, admin){
        else{
          newArea.find('.notBucket').append(child);
        }
-       $('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
+       //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
     
   });
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
-    console.log("Depth "+intendedDepth+" does not exist");
     $(".arrangeTrail").append(newArea);
-    parentRange.addClass("selectedSection");
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     if(unassigned){
-       parentRange.parent().children('.unassigned').removeClass("selectedUnassigned").removeClass("selectedSection");
+       parentRange.parent().children('.arrangeSection').removeClass("selectedUnassigned").removeClass("selectedSection");
     }
     else{
-       parentRange.parent().parent().children('.unassigned').removeClass("selectedUnassigned").removeClass("selectedSection");
+       parentRange.parent().parent().children('.arrangeSection').removeClass("selectedUnassigned").removeClass("selectedSection");
     }
+    parentRange.addClass("selectedSection");
    
   }
   else{ //if the are already exists
@@ -988,6 +987,7 @@ function toggleChildren(parentRange, admin){
     else if (intendedDepth < actualDepth && admin == "admin"){
       console.log("admin and selected from not the deepest");
       for(var i = actualDepth; i > intendedDepth-1; i--){
+        console.log("deepest at depth "+i);
         var deepest = $("div[depth='"+i+"']");
         var children = [];
         if(i == intendedDepth - 1){
@@ -995,6 +995,9 @@ function toggleChildren(parentRange, admin){
           console.log("At the level where the actual item clicked needs to be clicked");
         }
         else{
+          console.log("Deepest arrange sections: "+$(".arrangeSection").length);
+          console.log("Deepest unassigned? "+deepest.find(".unassigned").length);
+
           if(deepest.find(".arrangeSection").length == 0){ //a leaf is highlighted in the previous section
             // do nothing
             console.log("Leaf highlighted at depth "+ i-1 +".  Do nothing");
@@ -1017,7 +1020,10 @@ function toggleChildren(parentRange, admin){
           }
           else{ //a normal open section.  
             console.log("Depth "+ i +" is a normal section.");
-            if(deepest.find(".selectedSection").className.indexOf("unassigned") > -1){ //the bucket is highlighted.
+            if(deepest.find(".selectedSection").length == 0){
+              //do nothing
+            }
+            else if(deepest.find(".selectedSection").className.indexOf("unassigned") > -1){ //the bucket is highlighted.
               console.log("unassigned is highlighted.")
               //do nothing
             }
@@ -1056,7 +1062,6 @@ function toggleChildren(parentRange, admin){
     }
   }
   if(admin === "admin"){
-    console.log("show not bucket in new area");
     newArea.find('.notBucket').children('.child').show(); //show sections and leaves
     if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
       console.log("Unassigned was clicked");

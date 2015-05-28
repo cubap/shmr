@@ -591,9 +591,38 @@ and open the template in the editor.
                 position: relative;
                 cursor: pointer;
                 text-align: center;
-                padding: 8px 32px 8px 8px;
+                padding: 8px 8px 8px 8px;
                 margin-bottom: 8px;
                 border: 2px solid black;
+            }
+
+            .arrangeSection.sortOrder{
+                padding: 8px 32px 8px 8px;
+            }
+
+            .arrangeSection.parent{
+                border: 2px solid black;
+            }
+
+            .arrangeSection.child{
+                display: none;
+                border: 2px solid black;
+            }
+            
+            .arrangeSection.pAggr{ /* Parent sections aggregator */
+                border: transparent;
+                padding: 0px;
+                margin-bottom: 0px;
+            }
+            
+            div[relation="bucket"]{
+                display: block;
+                border: 2px solid green;
+            }
+
+            .selectedSection, .selectedUnassigned{
+                background-color: black;
+                color: white;
             }
             
             .arrangeSection.pAggr{ /* Parent sections aggregator */
