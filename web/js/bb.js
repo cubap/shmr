@@ -966,16 +966,16 @@ function toggleChildren(parentRange, admin){
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
         objectArray1.push($(this));
       });
-      $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'),function(){
+      $.each($("div[depth='"+intendedDepth+"']").children('.unassigned').children('.child'),function(){
         objectArray1.push($(this));
       });     
-      var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").find('.selectedSection');
+      var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").children('.selectedSection');
       $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       if(unassigned){
-        parentRange.parent().find('.notBucket').children('div').removeClass("selectedSection");
+        parentRange.parent().children('.notBucket').children('div').removeClass("selectedSection");
       }
       else{
-        parentRange.parent().parent().find('.notBucket').children('div').removeClass("selectedSection");
+        parentRange.parent().parent().children('.notBucket').children('div').removeClass("selectedSection");
       }
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
@@ -993,24 +993,23 @@ function toggleChildren(parentRange, admin){
       for(var i = actualDepth; i > intendedDepth-1; i--){
         console.log("deepest at depth "+i);
         var deepest = $("div[depth='"+i+"']");
+        console.log("Deepest arrange sections: "+deepest.children(".notBucket").children(".arrangeSection").length);
+        console.log("Deepest unassigned? "+deepest.children(".unassigned").length);
         var children = [];
         if(i == intendedDepth - 1){
           parentRange.click();
           console.log("At the level where the actual item clicked needs to be clicked");
         }
         else{
-          console.log("Deepest arrange sections: "+$(".arrangeSection").length);
-          console.log("Deepest unassigned? "+deepest.find(".unassigned").length);
-
           if(deepest.find(".arrangeSection").length == 0){ //a leaf is highlighted in the previous section
             // do nothing
-            console.log("Leaf highlighted at depth "+ i-1 +".  Do nothing");
+            console.log("Leaf highlighted at depth "+ i +"-1.  Do nothing");
           }
-          else if (deepest.find(".arrangeSection").not('.unassigned').length == 0){ //The only thing here is unassigned. 
+          else if (deepest.children(".notBucket").children(".arrangeSection").length ==0 && deepest.children(".unassigned").length == 1){ //The only thing here is unassigned. 
             console.log("Only found unassigned");
-            if(deepest.child(".selectedSection").length > 0){//unassigned is highlighted.  Click it.
+            if(deepest.children(".selectedSection").length > 0){//unassigned is highlighted.  Click it.
               console.log('unassigned hightlighted, click it.');
-              deepest.child(".selectedSection").click();
+              deepest.children(".selectedSection").click();
             }
             else{ //unassigned is not highlighted, which means we dont have to click it.
               console.log("unassigned is not highlighted.  Do nothing")
@@ -1018,8 +1017,8 @@ function toggleChildren(parentRange, admin){
             }
 
           }
-          else if(deepest.find(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
-            console.log("Depth "+ i-1 +" is a highlighted unassigned, do nothing now.")
+          else if(deepest.children(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
+            console.log("Depth "+ i +" -1 is a highlighted unassigned, do nothing now.")
             //do nothing
           }
           else{ //a normal open section.  
@@ -1066,17 +1065,17 @@ function toggleChildren(parentRange, admin){
     }
   }
   if(admin === "admin"){
-    newArea.find('.notBucket').children('.child').show(); //show sections and leaves
+    newArea.children('.notBucket').children('.child').show(); //show sections and leaves
     if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
       console.log("Unassigned was clicked");
       var moveUP = newArea.find('.unassigned').children(".child");
-      newArea.find('.notBucket').append(moveUP);
-      newArea.find('.notBucket').children(".child").show();
-      newArea.find(".unassigned").remove();
+      newArea.children('.notBucket').append(moveUP);
+      newArea.children('.notBucket').children(".child").show();
+      newArea.children(".unassigned").remove();
     }
-    if(newArea.find('.notBucket').children('.child').length == 0){
+    if(newArea.children('.notBucket').children('.child').length == 0){
       //newAreaBucket.attr("onclick", "");
-      if(newArea.find('.unassigned').children('.child').length === 0){
+      if(newArea.children('.unassigned').children('.child').length === 0){
         newArea.append('<div style="color: red;">No Subsections Available</div>');
         newAreaBucket.remove();
       }
@@ -1093,21 +1092,21 @@ function toggleChildren(parentRange, admin){
   }
   else{
       console.log("NOT AN ADMIN");
-    newArea.find('.notBucket').children('div').hide();
-    newArea.find('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
+    newArea.children('.notBucket').children('div').hide();
+    newArea.children('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     //do not show items in the unassigned area
-    if(newArea.find('.notBucket').children('div').not('div[leaf="true"]').length == 0){
+    if(newArea.children('.notBucket').children('div').not('div[leaf="true"]').length == 0){
       newArea.append('<div style="color: red;">No Subsections Available</div>');
       newAreaBucket.remove();
       //newAreaBucket.attr("onclick", "");
     }
     else{
-      if(newArea.find('.selectedSection').length == 0){
-        newArea.find('.unassigned').addClass("selectedUnassigned");
+      if(newArea.children('.selectedSection').length == 0){
+        newArea.children('.unassigned').addClass("selectedUnassigned");
       }
     }
     if($(".rangeArrangementArea:last").children($(".selectedSection")).length == 0){
-          $('.rangeArrangementArea:last').find('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
+          $('.rangeArrangementArea:last').children('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
       } 
   }
   
