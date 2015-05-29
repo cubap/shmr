@@ -954,11 +954,11 @@ function toggleChildren(parentRange, admin){
     //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     if(unassigned){
         parentRange.parent().find(".selectedSection").removeClass("selectedSection");
-        parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
+        //parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     else{
        parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
-        parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
+       // parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     parentRange.addClass("selectedSection");
    
@@ -992,7 +992,7 @@ function toggleChildren(parentRange, admin){
       toggleChildren(parentRange, admin);
       return false;
     }
-    else if (intendedDepth < actualDepth && admin == "admin"){
+    else if (intendedDepth < actualDepth){
       console.log("admin and selected from not the deepest");
       console.log("Run function to depth "+(intendedDepth-1));
       for(var i = actualDepth; i > intendedDepth-2; i--){
@@ -1125,14 +1125,15 @@ function toggleChildren(parentRange, admin){
     }
     else{
       if(newArea.children('.selectedSection').length == 0){
-        newArea.children('.unassigned').addClass("selectedUnassigned");
+        newArea.children('.unassigned').addClass("selectedSection");
       }
     }
-    if($(".rangeArrangementArea:last").children($(".selectedSection")).length == 0){
-          $('.rangeArrangementArea:last').children('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
+    if($(".rangeArrangementArea").children((".selectedSection")).length == 0){
+          $('.rangeArrangementArea').children('.unassigned').addClass("selectedSection"); //needs to be selected section so that this area will never be deleted
       } 
+    
   }
-  
+ 
 }
 
 function dragHelp(event){
@@ -2521,7 +2522,7 @@ function populateAnnoForms(){
                 savePlacement();
               }
               else{ //You have removed down to the bucket, so no UI changes are necessary, everything is removed and unselected. 
-                $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedUnassigned");
+                $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
               }
           });
       }
