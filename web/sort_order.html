@@ -46,6 +46,11 @@ and open the template in the editor.
             .unassigned .parent{ /* This will hide leaves sitting in the unassigned areas. */
                 display: none !important;
             }
+            .unassinged{
+                margin-top: 50px;
+                padding: 8px 8px 8px 8px !important;
+            }
+
             div[relation="bucket"] {
                 display: inline-table;
                 border-right: 2px solid black;
@@ -70,11 +75,13 @@ and open the template in the editor.
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
                    <div rangeID="bucket" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' onclick='toggleChildren($(this), "admin");' class="arrangeSection parent unassigned sortOrder">Bucket</div>
+                   <input class="makeGroup" value="Make Group" type="button" onclick="askForNewTitle($(this).parent());"/>
                 </div>
             </div>
         </div>
     </body>
     <script>
+
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
             gatherRangesForArrange(2);
