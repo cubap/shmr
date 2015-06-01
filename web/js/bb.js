@@ -1069,7 +1069,10 @@ function toggleChildren(parentRange, admin){
             }
             else{
                 console.log("normal unselect selected 2");
-               parentRange.parent().parent().find(".unassigned").addClass("selectedSection");
+                if(admin !== "admin"){
+                   parentRange.parent().parent().find(".unassigned").addClass("selectedSection");
+                }
+              
                // parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
             }
         }
@@ -1227,6 +1230,17 @@ function gatherRangesForArrange(which){
           tag = "parent pAggr";
           outerRangeLabel = "";
         }
+        relation = rangeCollection[i]["@id"];
+        if(which === 2){
+            tag += " sortOrder";
+            admin = "admin";
+            checkbox = "<input class='putInGroup' type='checkbox' />";
+        }
+        else{
+          dragAttribute = "id='drag_"+uniqueID+"_tmp'";
+          dropAttribute = "";
+          checkbox = "";
+        }
         if(canvases !== 0 && canvases!==undefined){
           isLeaf = true;
           tag="child";
@@ -1237,15 +1251,6 @@ function gatherRangesForArrange(which){
           isLeaf = false;
           // dragAttribute = "";
           // dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-        }
-        relation = rangeCollection[i]["@id"];
-        if(which === 2){
-            tag += " sortOrder";
-            admin = "admin";
-        }
-        else{
-          dragAttribute = "id='drag_"+uniqueID+"_tmp'";
-          dropAttribute = "";
         }        
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+" "+checkbox+"  </div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
@@ -1273,21 +1278,23 @@ function gatherRangesForArrange(which){
                         var thisLabel = this.label;
                         var thisCanvases = this.canvases.length;
                         var thisIsOrdered = "";
+                        var checkbox2 = "<input class='putInGroup' type='checkbox' />";
                         if(thisCanvases !== 0 && thisCanvases!==undefined){
                           isLeaf = true;
                           dropAttribute = "";
-                          checkbox = "<input class='putInGroup' type='checkbox' />";
+                          checkbox2 = "";
                         }
                         else{
                           isLeaf = false;
                           dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-                          checkbox = "";
+                          
                         }
                         if(which == 1){
                           dropAttribute = "";
                           dragAttrubute = "id='drag_"+uniqueID+"_tmp'";
+                          checkbox2 = "";
                         }
-                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+" "+checkbox+"</div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+" "+checkbox2+"</div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                             currentRange.append(embedRange);
                             //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
@@ -2554,8 +2561,6 @@ function populateAnnoForms(){
         relation1 = "";
       }
     }
-    console.log("Got actual: "+actualRemove);
-    console.log("crawl ranges for actual");
     $.each(testManifest.structures, function(){
       if(this["@id"] === actualRemove){
         console.log("found it");
