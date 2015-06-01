@@ -920,10 +920,15 @@ function toggleChildren(parentRange, admin){
   else{
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
-  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
+  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>');
 
   newArea.append(newAreaBucket);
+  if(admin == "admin"){
+    //newArea.children('.notBucket').sortable({helper:'clone', connectWith:'.notBucket'}); //should connect all open sortables.
+  }
+  
+  //newArea.disableSelection();
   var existingInCopy = [];
   var leafCount = 0;
   $.each(children, function(){
@@ -1123,6 +1128,7 @@ function toggleChildren(parentRange, admin){
       else{
         //newArea.find('.unassigned').addClass("selectedSection");
       }
+      newArea.children('.notBucket').hide();
     }
     else{
       //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
@@ -1153,8 +1159,6 @@ function toggleChildren(parentRange, admin){
 }
 
 function dragHelp(event){
-    console.log("DRAGGING");
-    console.log(event.target.id);
     event.dataTransfer.setData("text", event.target.id);
 }
 
@@ -1167,12 +1171,13 @@ function dropHelp(event){
    */
     console.log("Drop help called");
     event.preventDefault();
-    var data = event.dataTransfer.getData("text");
+    var data = "";
+    data = event.dataTransfer.getData("text");
     var relation = event.target.getAttribute('rangeid');
     var targetClass = event.target.className;
     var child = document.getElementById(data);
     console.log("get child of this ID: "+data);
-    child.setAttribute("relation", relation);
+    
     if(targetClass.indexOf('rangeArrangementArea') > -1){
       child.style.display = "block";
     }
@@ -1182,13 +1187,28 @@ function dropHelp(event){
     }
 
     var append = true;
-    for (var i = 0; i < event.target.childNodes.length; i++) {
-      if (event.target.childNodes[i].id == child.id) {
-        append = false
-        
-      }    
-    } 
+    if(event.target.id == data){//dont append to self or if child already exists 
+      console.log("target is self");
+      append = false;
+    }
+    else{
+      for (var i = 0; i < event.target.childNodes.length; i++) {
+        console.log(event.target.childNodes[i].id+"_tmp" + " == " +child.id);
+        if(event.target.childNodes[i].id+"_tmp" == child.id || event.target.childNodes[i].id == child.id ) { //prevent dropping into same column or on self
+          console.log("child already here");
+          append = false;
+          child.id = child.id.replace("_tmp", "");
+          child.style.display = "block";
+          return false;
+        }    
+      } 
+    }
     if(append){
+      console.log("append");
+      console.log(child);
+      consolo.log("to");
+      console.log(event.target);
+      child.setAttribute("relation", relation);
       event.target.appendChild(child);
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
       $.each($(".arrangeSection").not("div[leaf='true']"), function(){
@@ -1197,6 +1217,9 @@ function dropHelp(event){
          var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
          $(this).append(folioCountHTML);
        });
+    }
+    else{
+      event.preventDefault();
     }
     
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.

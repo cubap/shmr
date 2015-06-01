@@ -46,9 +46,13 @@ and open the template in the editor.
             .unassigned .parent{ /* This will hide leaves sitting in the unassigned areas. */
                 display: none !important;
             }
-            .unassinged{
-                margin-top: 50px;
-                padding: 8px 8px 8px 8px !important;
+            .unassigned{
+                padding: 8px 32px 8px 8px !important;
+            }
+            .notBucket{
+                padding: 4px 4px 45px 4px;
+                border: 1px solid red;
+                margin-bottom: 50px;
             }
 
             div[relation="bucket"] {
@@ -74,18 +78,37 @@ and open the template in the editor.
             <div class="arrangeTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div rangeID="bucket" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' onclick='toggleChildren($(this), "admin");' class="arrangeSection parent unassigned sortOrder">Bucket</div>
+                   <div rangeID="bucket" onclick='toggleChildren($(this), "admin");' class="arrangeSection parent unassigned sortOrder">Bucket</div>
                    <input class="makeGroup" value="Make Group" type="button" onclick="askForNewTitle($(this).parent());"/>
+                   <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/>
                 </div>
             </div>
         </div>
     </body>
     <script>
 
+    function makeSortable(column){
+        //Will sortable overrule draggable? 
+        column.children('.notBucket').sortable({helper:'clone'});
+        var overDiv = $("<div class='areaCover'></div>");
+        $.each($(".rangeArrangementArea").not(column), function(){
+            $(this).append(overDiv);
+        });
+        column.children(".makeSortable").hide();
+        column.children(".doneSortable").show();
+    }
+    function stopSorting(column){
+        column.children(".notBucket").sortable("destroy");
+        $(".areaCover").remove();
+        column.children(".makeSortable").show();
+        column.children(".doneSortable").hide();
+    }
+
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
             gatherRangesForArrange(2);
-            //$( "div" ).disableSelection();
+            
+            
         });
     </script>
 </html>
