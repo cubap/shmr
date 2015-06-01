@@ -1193,7 +1193,7 @@ function dropHelp(event){
     }
     else{
       for (var i = 0; i < event.target.childNodes.length; i++) {
-        console.log(event.target.childNodes[i].id+"_tmp" + " == " +child.id);
+        console.log(event.target.childNodes[i].id+"_tmp == " +child.id);
         if(event.target.childNodes[i].id+"_tmp" == child.id || event.target.childNodes[i].id == child.id ) { //prevent dropping into same column or on self
           console.log("child already here");
           append = false;
@@ -1206,7 +1206,7 @@ function dropHelp(event){
     if(append){
       console.log("append");
       console.log(child);
-      consolo.log("to");
+      console.log("to");
       console.log(event.target);
       child.setAttribute("relation", relation);
       event.target.appendChild(child);

@@ -52,7 +52,7 @@ and open the template in the editor.
             .notBucket{
                 padding: 4px 4px 45px 4px;
                 border: 1px solid red;
-                margin-bottom: 50px;
+                margin-bottom: 5px;
             }
 
             div[relation="bucket"] {
@@ -89,9 +89,12 @@ and open the template in the editor.
 
     function makeSortable(column){
         //Will sortable overrule draggable? 
+        var columnDepth = column.attr("depth");
         column.children('.notBucket').sortable({helper:'clone'});
-        var overDiv = $("<div class='areaCover'></div>");
-        $.each($(".rangeArrangementArea").not(column), function(){
+        $.each($(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
+            var overDiv = $("<div class='areaCover'></div>");
+            console.log("Append over div to");
+            console.log($(this));
             $(this).append(overDiv);
         });
         column.children(".makeSortable").hide();
