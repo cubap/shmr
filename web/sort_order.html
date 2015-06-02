@@ -47,7 +47,7 @@ and open the template in the editor.
                 display: none !important;
             }
             .unassigned{
-                padding: 8px 32px 8px 8px !important;
+                padding: 8px 32px 8px 21px !important;
             }
             .notBucket{
                 padding: 4px 4px 45px 4px;
@@ -56,7 +56,7 @@ and open the template in the editor.
             }
 
             div[relation="bucket"] {
-                display: inline-table;
+                display: inline-block;
                 border-right: 2px solid black;
                 border-left: transparent;
                 border-top: transparent;
@@ -78,7 +78,7 @@ and open the template in the editor.
             <div class="arrangeTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div rangeID="bucket" onclick='toggleChildren($(this), "admin");' class="arrangeSection parent unassigned sortOrder">Bucket</div>
+                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin");'  class="arrangeSection parent unassigned sortOrder">Bucket</div>
                    <input class="makeGroup" value="Make Group" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/>
                 </div>

@@ -910,6 +910,9 @@ function toggleChildren(parentRange, admin){
   var intendedDepth = -1;
   var actualDepth = parseInt($(".rangeArrangementArea").length);
   var sortOrder = "";
+  var extraButtons = '<input class="makeGroup" value="Make Group" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
+                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/>\n\
+                    <input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/>';
   if(admin === "admin"){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
       sortOrder = " sortOrder";
@@ -920,13 +923,10 @@ function toggleChildren(parentRange, admin){
   else{
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
-  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div class='notBucket'></div></div>");
-  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>');
+  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
+  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>'+extraButtons);
 
   newArea.append(newAreaBucket);
-  if(admin == "admin"){
-    //newArea.children('.notBucket').sortable({helper:'clone', connectWith:'.notBucket'}); //should connect all open sortables.
-  }
   
   //newArea.disableSelection();
   var existingInCopy = [];
@@ -960,6 +960,7 @@ function toggleChildren(parentRange, admin){
     if(unassigned){
         console.log("unassigned unselect selected 1")
         parentRange.parent().find(".selectedSection").removeClass("selectedSection");
+
         //parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     else{
@@ -1069,28 +1070,25 @@ function toggleChildren(parentRange, admin){
             parentRange.removeClass("selectedSection");
             if(unassigned){
                 console.log("unassigned unselect selected 2")
-                parentRange.parent().find(".unassigned").addClass("selectedSection");
-        //parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
+                if(admin !== "admin"){
+                  parentRange.parent().find(".unassigned").addClass("selectedSection");
+                }
             }
             else{
                 console.log("normal unselect selected 2");
                 if(admin !== "admin"){
                    parentRange.parent().parent().find(".unassigned").addClass("selectedSection");
                 }
-              
-               // parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
             }
         }
         else{
             if(unassigned){
                 console.log("unassigned unselect selected 2")
                 parentRange.parent().find(".selectedSection").removeClass("selectedSection");
-            //parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
             }
             else{
                 console.log("normal unselect selected 2");
                parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
-               // parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
             }
             parentRange.addClass("selectedSection");
         }
@@ -1118,28 +1116,30 @@ function toggleChildren(parentRange, admin){
       newArea.children('.notBucket').append(moveUP);
       newArea.children('.notBucket').children(".child").show();
       newArea.children(".unassigned").remove();
+      newArea.children(".makeSortable").hide();
+      newArea.children(".doneSortable").hide();
     }
     if(newArea.children('.notBucket').children('.child').length == 0){
       //newAreaBucket.attr("onclick", "");
       if(newArea.children('.unassigned').children('.child').length === 0){
         newArea.append('<div style="color: red;">No Subsections Available</div>');
-        newAreaBucket.remove();
+        newAreaBucket.hide();
       }
       else{
-        //newArea.find('.unassigned').addClass("selectedSection");
+        newAreaBucket.show();
       }
-      newArea.children('.notBucket').hide();
+      //newArea.children('.notBucket').hide();
+      newArea.children(".makeSortable").hide();
+      newArea.children(".doneSortable").hide();
+      newArea.children(".makeGroup").hide();
     }
     else{
-      //newArea.append('<div class="arrangeSection parent unassigned">Unassigned</div>');
-      // if(newArea.find('.selectedSection').length == 0){
-      //   newArea.find('.unassigned').addClass("selectedSection");
-      // }
     }
   }
   else{
       console.log("NOT AN ADMIN");
     newArea.children('.notBucket').children('div').hide();
+    newArea.find('input[type="button"]').remove();
     newArea.children('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     //do not show items in the unassigned area
     if(newArea.children('.notBucket').children('div').not('div[leaf="true"]').length == 0){
@@ -1151,15 +1151,13 @@ function toggleChildren(parentRange, admin){
       if(newArea.children('.selectedSection').length == 0){
         newArea.children('.unassigned').addClass("selectedSection");
       }
-    }
-    
-    
-  }
- 
+    }    
+  } 
 }
 
 function dragHelp(event){
     event.dataTransfer.setData("text", event.target.id);
+    
 }
 
 function dropHelp(event){
@@ -1173,13 +1171,17 @@ function dropHelp(event){
     event.preventDefault();
     var data = "";
     data = event.dataTransfer.getData("text");
+    var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
     var relation = event.target.getAttribute('rangeid');
     var targetClass = event.target.className;
+    var areaDroppedTo = $(event.target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
     console.log("get child of this ID: "+data);
+    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);
     
-    if(targetClass.indexOf('rangeArrangementArea') > -1){
+    if(targetClass.indexOf('notBucket') > -1){
       child.style.display = "block";
+
     }
     else{
       child.id = child.id+"_tmp"; 
@@ -1187,7 +1189,7 @@ function dropHelp(event){
     }
 
     var append = true;
-    if(event.target.id == data){//dont append to self or if child already exists 
+    if(event.target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
       console.log("target is self");
       append = false;
     }
@@ -1204,10 +1206,6 @@ function dropHelp(event){
       } 
     }
     if(append){
-      console.log("append");
-      console.log(child);
-      console.log("to");
-      console.log(event.target);
       child.setAttribute("relation", relation);
       event.target.appendChild(child);
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
@@ -1221,6 +1219,14 @@ function dropHelp(event){
     else{
       event.preventDefault();
     }
+    if(areaTakenFrom.children(".notBucket").children(".child").length == 0){
+      areaTakenFrom.children(".makeSortable").hide();
+      areaTakenFrom.children(".doneSortable").hide();
+    }
+    else{
+      areaTakenFrom.children(".makeSortable").show();
+      areaTakenFrom.children(".doneSortable").show();
+    }
     
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
 }
@@ -1229,8 +1235,6 @@ function dragOverHelp(event){
 }
 
 function gatherRangesForArrange(which){
-    //rangeCollection = mergeSort(rangeCollection);
-    //http://www.example.org/iiif/LlangBrev/range/parent_aggr
     var existingRanges = [];
     var uniqueID = 0;
     var rangesMoved = 0;
@@ -1268,7 +1272,7 @@ function gatherRangesForArrange(which){
           isLeaf = true;
           tag="child";
           dropAttribute = "";
-          checkbox = "";
+          //checkbox = "";
         }
         else{
           isLeaf = false;
@@ -1305,7 +1309,7 @@ function gatherRangesForArrange(which){
                         if(thisCanvases !== 0 && thisCanvases!==undefined){
                           isLeaf = true;
                           dropAttribute = "";
-                          checkbox2 = "";
+                          //checkbox2 = "";
                         }
                         else{
                           isLeaf = false;
@@ -2555,6 +2559,7 @@ function populateAnnoForms(){
           var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
           var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
           var newGroup = $("<div class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+">"+title+"</div>");
+          newGroup.append(childrenForGroup);
           areaForNewGroup.append(newGroup);
           $('#newGroupTitleArea').remove();
         }
