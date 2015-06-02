@@ -904,7 +904,7 @@ function getAllCanvases(){
 
 function toggleChildren(parentRange, admin, event){
   console.log("Target class: "+event.target.className);
-  if(event.target.className.indexOf("putInGroup") > -1){ //detect if they clicked the checkbox.
+  if(event !== undefined && event.target.className.indexOf("putInGroup") > -1){ //detect if they clicked the checkbox.
     return false;
   }
   var children = parentRange.children(".child");
@@ -959,25 +959,22 @@ function toggleChildren(parentRange, admin, event){
      newArea.children(".unassigned").append(leafCountHTML);
   }
   if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
+    console.log("add new area");
     $(".arrangeTrail").append(newArea);
-    //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     if(unassigned){
         console.log("unassigned unselect selected 1")
         parentRange.parent().find(".selectedSection").removeClass("selectedSection");
-
-        //parentRange.parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     else{
-        console.log("normal unselect selected 1");
+       console.log("normal unselect selected 1");
        parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
-       // parentRange.parent().parent().find(".selectedUnassigned").removeClass("selectedUnassigned");
     }
     parentRange.addClass("selectedSection");
    
   }
   else{ //if the are already exists
     if(intendedDepth == actualDepth && $("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
-      console.log("Child from deepest");
+      console.log("Child from same depth");
       var objectArray1 = [];
       $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
         objectArray1.push($(this));
@@ -993,6 +990,7 @@ function toggleChildren(parentRange, admin, event){
         else{
             parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
         }
+
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
@@ -1001,12 +999,11 @@ function toggleChildren(parentRange, admin, event){
         sectionToMoveTo.append(thisChild1);
         thisChild1.hide();
       }
-      toggleChildren(parentRange, admin);
-      return false;
+      toggleChildren(parentRange, admin, event);
+      //return false;
     }
     else if (intendedDepth < actualDepth){
-      console.log("admin and selected from not the deepest");
-      console.log("Run function to depth "+(intendedDepth-1));
+      console.log("Child from different depth.")
       for(var i = actualDepth; i > intendedDepth-2; i--){
         //console.log("deepest at depth "+i);
         var deepest = $("div[depth='"+i+"']");
@@ -1272,7 +1269,7 @@ function gatherRangesForArrange(which){
           dropAttribute = "";
           checkbox = "";
         }
-        if(canvases !== 0 && canvases!==undefined){
+        if(canvases!==undefined && canvases !== 0){
           isLeaf = true;
           tag="child";
           dropAttribute = "";
@@ -1310,7 +1307,7 @@ function gatherRangesForArrange(which){
                         var thisCanvases = this.canvases.length;
                         var thisIsOrdered = "";
                         var checkbox2 = "<input class='putInGroup' type='checkbox' />";
-                        if(thisCanvases !== 0 && thisCanvases!==undefined){
+                        if(thisCanvases!==undefined && thisCanvases !== 0){
                           isLeaf = true;
                           dropAttribute = "";
                           //checkbox2 = "";
@@ -1886,7 +1883,7 @@ function populateAnnoForms(){
             var entryID = $(this).find(".content").attr("id");
             var entryValue = $(this).find(".content").val();
             var range = $(this).find(".content").attr("range");
-            range = (range !== "" && range !== undefined);
+            range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
             var special = $(this).attr("special");
             var annotationObject = {
@@ -1914,7 +1911,7 @@ function populateAnnoForms(){
                 //console.log("Special Annos");
                 var inter = $("#interlinearAnnos").val();
                 var marginal = $("#marginalAnnos").val();
-                if(inter!=="" && inter!==undefined){
+                if(inter!==undefined && inter!==""){
                     var annoCopy1 = jQuery.extend({}, annotationObject);
                     annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annoCopy1.label = "Interlinear Annotations";
@@ -1923,7 +1920,7 @@ function populateAnnoForms(){
                     createNewAnno(annoCopy1, "Interlinear Annotations", inter, addedInfoList1);
                     // addedInfoList1.append("<li><span class='formLabel'>Annotations - Interlinear: </span> "+inter+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                 }
-                if(marginal!=="" && marginal!==undefined){
+                if(marginal!==undefined && marginal!==""){
                     var annoCopy2 = jQuery.extend({}, annotationObject);
                     annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annoCopy2.label = "Marginal Annotations";
@@ -1932,7 +1929,7 @@ function populateAnnoForms(){
                     // addedInfoList1.append("<li local ><span class='formLabel'>Annotations - Marginal: </span>"+marginal+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
                 }
             }
-            else if(entryValue !== "" && entryValue !== undefined ){
+            else if(entryValue !== undefined && entryValue !== ""){
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                 var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
                 //console.log("Anno Object @ID is being set to :" + newAnnoURI)
@@ -1981,7 +1978,7 @@ function populateAnnoForms(){
             var entryID = $(this).find(".content").attr("id");
             var entryValue = $(this).find(".content").val();
             var range = $(this).find(".content").attr("range");
-            range = (range !== "" && range !== undefined);
+            range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
             //console.log(entryID, entryValue, range, addedInfoLabel);
             var annotationObject = {
@@ -2005,7 +2002,7 @@ function populateAnnoForms(){
                 "resources" : [],
                 "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
             };
-            if(entryValue !== "" && entryValue !== undefined ){
+            if(entryValue !== undefined && entryValue !== ""){
                 //console.log('HELLO')
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                 var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
@@ -2057,7 +2054,7 @@ function populateAnnoForms(){
             var entryID = $(this).find(".content").attr("id");
             var entryValue = $(this).find(".content").val();
             var range = $(this).find(".content").attr("range");
-            range = (range !== "" && range !== undefined);
+            range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
 
             ////console.log("RANGE T/F: "+range);
@@ -2084,7 +2081,7 @@ function populateAnnoForms(){
                 "resources" : [],
                 "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
             };
-            if(special !== "" && special !== undefined){
+            if(special !== undefined && special !== ""){
                 //console.log(special);
                 if(special === "dimensions"){
                     //console.log("DIMENSIONS")
@@ -2150,7 +2147,7 @@ function populateAnnoForms(){
                     //console.log("LAYOUT");
                     var lines = $("#layoutLines").val();
                     var columns = $("#layoutColumns").val();
-                    if(lines!=="" && lines!==undefined){
+                    if(lines!==undefined && lines!==""){
                         //console.log("LINES");
                         var annoCopy1 = jQuery.extend({}, annotationObject);;
                         annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
@@ -2159,7 +2156,7 @@ function populateAnnoForms(){
                         createNewAnno(annoCopy1, "Lines", lines, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Layout - Lines: </span> "+lines+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                     }
-                    if(columns!=="" && columns!==undefined){
+                    if(columns!==undefined && columns!==""){
                         //console.log("COLUMNS");
                         var annoCopy2 = jQuery.extend({}, annotationObject);;
                         annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
@@ -2173,7 +2170,7 @@ function populateAnnoForms(){
                     //console.log("DECORATIONS")
                     var initials = $("#carrierInitials").val();
                     var border = $("#carrierBorder").val();
-                    if(initials!=="" && initials!==undefined){
+                    if(initials!==undefined && initials!==""){
                         //console.log("INITIALS")
                         var annoCopy1 = jQuery.extend({}, annotationObject);
                         annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
@@ -2182,7 +2179,7 @@ function populateAnnoForms(){
                         createNewAnno(annoCopy1, "Initials", initials, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Decorations - Initials: </span> "+initials+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                     }
-                    if(border!=="" && border!==undefined){
+                    if(border!==undefined && border!==""){
                         //console.log("BORDER")
                         var annoCopy2 = jQuery.extend({}, annotationObject);
                         annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
@@ -2193,7 +2190,7 @@ function populateAnnoForms(){
                     }
                 }
             }
-            else if(entryValue !== "" && entryValue !== undefined ){
+            else if(entryValue !== undefined && entryValue !== ""){
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                 var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
                 annotationObject["@id"] = newAnnoURI;
