@@ -902,7 +902,11 @@ function getAllCanvases(){
   });
 }
 
-function toggleChildren(parentRange, admin){
+function toggleChildren(parentRange, admin, event){
+  console.log("Target class: "+event.target.className);
+  if(event.target.className.indexOf("putInGroup") > -1){ //detect if they clicked the checkbox.
+    return false;
+  }
   var children = parentRange.children(".child");
   var dropAttribute = "";
   var relation = parentRange.attr("rangeID");
@@ -924,7 +928,7 @@ function toggleChildren(parentRange, admin){
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
-  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin");\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>'+extraButtons);
+  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin", event);\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>'+extraButtons);
 
   newArea.append(newAreaBucket);
   
@@ -1279,7 +1283,7 @@ function gatherRangesForArrange(which){
           // dragAttribute = "";
           // dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         }        
-        currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+" "+checkbox+"  </div>");
+        currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+" "+checkbox+"  </div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
           $(".rangeArrangementArea").find('.notBucket').append(currentRange);
@@ -1321,7 +1325,7 @@ function gatherRangesForArrange(which){
                           dragAttrubute = "id='drag_"+uniqueID+"_tmp'";
                           checkbox2 = "";
                         }
-                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"');\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+" "+checkbox2+"</div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+" "+checkbox2+"</div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                             currentRange.append(embedRange);
                             //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
