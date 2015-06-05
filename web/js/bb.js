@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 var pageCanvases = [];
+var allLeaves = [];
 var testManifest = {
 	  "@context" : "http://iiif.io/api/presentation/2/context.json",
 	  "@id" : "",
@@ -914,7 +915,8 @@ function toggleChildren(parentRange, admin, event){
   var intendedDepth = -1;
   var actualDepth = parseInt($(".rangeArrangementArea").length);
   var sortOrder = "";
-  var extraButtons = '<input class="makeGroup" value="Make Group" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
+  var extraButtons = '<input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
+                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>\n\
                     <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/>\n\
                     <input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/>';
   if(admin === "admin"){
@@ -982,15 +984,13 @@ function toggleChildren(parentRange, admin, event){
       $.each($("div[depth='"+intendedDepth+"']").children('.unassigned').children('.child'),function(){
         objectArray1.push($(this));
       });     
-      var sectionToMoveTo = $("div[depth='"+intendedDepth+"']").children('.selectedSection');
-      $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
-        if(unassigned){
-            parentRange.parent().find(".selectedSection").removeClass("selectedSection");
-        }
-        else{
-            parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
-        }
-
+      var thisDepth = intendedDepth - 1;
+      var sectionToMoveTo = $("div[depth='"+ thisDepth +"']").children('.selectedSection');
+      console.log("Move children from");
+      console.log($("div[depth='"+intendedDepth+"']"));
+      console.log("to");
+      console.log(sectionToMoveTo);
+      //TODO: not functioning correctly
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
@@ -998,6 +998,13 @@ function toggleChildren(parentRange, admin, event){
         thisChild1.attr("id", id1);
         sectionToMoveTo.append(thisChild1);
         thisChild1.hide();
+      }
+      $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
+      if(unassigned){
+          parentRange.parent().find(".selectedSection").removeClass("selectedSection");
+      }
+      else{
+          parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
       }
       toggleChildren(parentRange, admin, event);
       //return false;
@@ -1123,7 +1130,7 @@ function toggleChildren(parentRange, admin, event){
     if(newArea.children('.notBucket').children('.child').length == 0){
       //newAreaBucket.attr("onclick", "");
       if(newArea.children('.unassigned').children('.child').length === 0){
-        newArea.append('<div style="color: red;">No Subsections Available</div>');
+        newArea.children(".notBucket").append('<div style="color: red;">No Subsections Available</div>');
         newAreaBucket.hide();
       }
       else{
@@ -1144,7 +1151,7 @@ function toggleChildren(parentRange, admin, event){
     newArea.children('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     //do not show items in the unassigned area
     if(newArea.children('.notBucket').children('div').not('div[leaf="true"]').length == 0){
-      newArea.append('<div style="color: red;">No Subsections Available</div>');
+      newArea.children(".notBucket").append('<div style="color: red;">No Subsections Available</div>');
       newAreaBucket.remove();
       //newAreaBucket.attr("onclick", "");
     }
@@ -1168,18 +1175,28 @@ function dropHelp(event){
   if the target is rangeArrangementArea of an expanded arrangeSection, it should go into that section ordered at the end of the ordered pieces.  It can then be sorted from there.  
   Figure out why this runs twice on a drop.
    */
+  var targetTag = event.target.tagName;
+  var target = undefined;
+    if(targetTag == "SPAN"){
+        console.log("Change target");
+        var eventParent = event.target.parentNode;
+        target = eventParent;
+    }
+    else{
+        target = event.target;
+    }
     console.log("Drop help called");
     event.preventDefault();
     var data = "";
     data = event.dataTransfer.getData("text");
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
-    var relation = event.target.getAttribute('rangeid');
-    var targetClass = event.target.className;
-    var areaDroppedTo = $(event.target).closest(".rangeArrangementArea").attr("rangeID");
+    var relation = target.getAttribute('rangeid');
+    var targetClass = target.className;
+    
+    var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
     console.log("get child of this ID: "+data);
-    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);
-    
+    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);     
     if(targetClass.indexOf('notBucket') > -1){
       child.style.display = "block";
 
@@ -1188,16 +1205,15 @@ function dropHelp(event){
       child.id = child.id+"_tmp"; 
       child.style.display = "none";
     }
-
     var append = true;
-    if(event.target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
+    if(target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
       console.log("target is self");
       append = false;
     }
     else{
-      for (var i = 0; i < event.target.childNodes.length; i++) {
-        console.log(event.target.childNodes[i].id+"_tmp == " +child.id);
-        if(event.target.childNodes[i].id+"_tmp" == child.id || event.target.childNodes[i].id == child.id ) { //prevent dropping into same column or on self
+      for (var i = 0; i < target.childNodes.length; i++) {
+        console.log(target.childNodes[i].id+"_tmp == " +child.id);
+        if(target.childNodes[i].id+"_tmp" == child.id || target.childNodes[i].id == child.id ) { //prevent dropping into same column or on self
           console.log("child already here");
           append = false;
           child.id = child.id.replace("_tmp", "");
@@ -1208,7 +1224,7 @@ function dropHelp(event){
     }
     if(append){
       child.setAttribute("relation", relation);
-      event.target.appendChild(child);
+      target.appendChild(child);
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
       $.each($(".arrangeSection").not("div[leaf='true']"), function(){
         $(this).children(".folioCount").remove();
@@ -1254,6 +1270,7 @@ function gatherRangesForArrange(which){
         var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         var canvases = rangeCollection[i].canvases.length;
         var checkbox = "<input class='putInGroup' type='checkbox' />";
+        var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
         if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ //MUST BE FIRST IN THE RANGES ARRAY
           tag = "parent pAggr";
           outerRangeLabel = "";
@@ -1280,10 +1297,13 @@ function gatherRangesForArrange(which){
           // dragAttribute = "";
           // dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
         }        
-        currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'>"+outerRangeLabel+" "+checkbox+"  </div>");
+        currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" "+rightClick+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'><span>"+outerRangeLabel+"</span> "+checkbox+"  </div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
           $(".rangeArrangementArea").find('.notBucket').append(currentRange);
+          if(isLeaf){
+            allLeaves.push(rangeCollection[i]);
+          }
         }
         else{
           //dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
@@ -1322,11 +1342,14 @@ function gatherRangesForArrange(which){
                           dragAttrubute = "id='drag_"+uniqueID+"_tmp'";
                           checkbox2 = "";
                         }
-                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'>"+thisLabel+" "+checkbox2+"</div>"); //Create an html range object for the inner range.
+                        var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><span>"+thisLabel+"</span> "+checkbox2+"</div>"); //Create an html range object for the inner range.
                         if($.inArray(this["@id"], existingRanges) == -1){
                             currentRange.append(embedRange);
                             //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
                             existingRanges.push(embedRange.attr("rangeID"));
+                            if(isLeaf){
+                              allLeaves.push(this);
+                            }
                             //existingRanges.push(currentRange.attr("rangeID"));
                         }
                         else{
@@ -2532,21 +2555,27 @@ function populateAnnoForms(){
   function askForNewTitle(inThisArea){
     var newTitleRequest = 
     $("<div id='newGroupTitleArea'><h1>Create New Group</h1><br>\n\
-    <div class='newGroupCenter'>New Group Title<input id='newGroupTitle' type='text'/><div id='noTitleWarning'>You must supply a title to make a group.</div></div>\n\
-        <input onclick=\"makeAgroup("+inThisArea+", $('#newGroupTitle').val());\" type='button' value='Submit'/><input onclick=\"$('#newGroupTitleArea').remove();\" type='button' value='Cancel'/>\n\
+    <div class='newGroupCenter'>New Group Title<input id='newGroupTitle' type='text'/><div class='noTitleWarning'>You must supply a title to make a group.</div></div>\n\
+        <input onclick=\"makeAgroup($('#newGroupTitle').val());\" type='button' value='Submit'/><input onclick=\"$('#newGroupTitleArea').remove();  $('#mainBlockCover').hide();\" type='button' value='Cancel'/>\n\
     </div>");
     $('body').append(newTitleRequest);
+    $("#mainBlockCover").show();
+    theArea = inThisArea;
     
   }
 
-  function makeAgroup(inThisArea, title){
+  function makeAgroup(title){
         if(title===""){
-          $("#noTitleWarning").show();
-          setTimeOut($('#noTitleWarning').fadeOut(1000), 2000);
+          $(".noTitleWarning").show();
+          setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
         }
         else{
+          var childrenForGroup = [];
+          $.each(theArea.find("input:checked"), function(){
+            childrenForGroup.push($(this).parent());
+          });
           var uniqueID = $(".arrangeSection").length + 1;
-          var depthToCheck = parseInt(inThisArea.attr("depth")) - 1;
+          var depthToCheck = parseInt(theArea.attr("depth")) - 1;
           var inABucket = false;
           var areaForNewGroup = "";
           if($("div[depth='"+depthToCheck+"']").children(".unassigned").hasClass("selectedSection")){
@@ -2554,88 +2583,67 @@ function populateAnnoForms(){
               areaForNewGroup = $("div[depth='"+depthToCheck+"']");
           }
           else{
-              areaForNewGroup = inThisArea;
-          }
-          var childrenForGroup = inThisArea.find("checkbox:checked").parent(); //get each arrange section to group
-          var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
-          var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-          var newGroup = $("<div class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+">"+title+"</div>");
-          newGroup.append(childrenForGroup);
-          areaForNewGroup.append(newGroup);
-          $('#newGroupTitleArea').remove();
-        }
+            areaForNewGroup = theArea;
+          //TODO: create the new range to get its rangeID and, on success, store within the newGroup object.  Toggle children will not work unless the rangeID is an attribute.
+            var mockID = "http://www.example.org/iiif/LlangBrev/range/"+$(".arrangeSection").length;
+            var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
+            var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+            var newGroup = $("<div rangeID='"+mockID+"' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" leaf='false' onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
+            $.each(childrenForGroup, function(){
+              newGroup.append($(this));
+            });
+            areaForNewGroup.children(".notBucket").append(newGroup);
+            areaForNewGroup.children(".notBucket").children(".child").show();
+            newGroup.children(".child").hide();
+            //newGroup.show();
+            $('#newGroupTitleArea').remove();
+            $("#mainBlockCover").hide();
+            areaForNewGroup.children(".selectedSection").click();
+            }
         //TODO: createNewRange for the new group, updateRange of range that got the new group.  
+        }
     }
 
   function removeFromSection(leaf, rangeID){
-    console.log("Remove from section and children");
-    var trackRangeID = rangeID;
-    var relation = trackRangeID;
-
-    var trackRangeID1 = rangeID;
-    var relation1 = trackRangeID;
-
-    var actualRemove = trackRangeID1;
-    while(relation1 !== ""){ //Find all related children selected sections and remove their class.
-      var nextRelator1 = trackRangeID1;
-      var relator1 = $('div[relation="'+nextRelator1+'"]');
-      if (relator1.length>0){
-        trackRangeID1 = relator1.find(".selectedSection").attr("rangeID");
-        if(trackRangeID1 !== undefined){
-          relation1 = trackRangeID1;
-          actualRemove = trackRangeID1;
-        }
-      }
-      else{
-        relation1 = "";
-      }
-    }
     $.each(testManifest.structures, function(){
-      if(this["@id"] === actualRemove){
-        console.log("found it");
+      if(this["@id"] === rangeID){
+          console.log("found it");
           var index = this.ranges.indexOf(leaf);
-          console.log("old ranges");
-          console.log(this.ranges);
           this.ranges.splice(index, 1);
-          console.log("new ranges");
-          console.log(this.ranges);
-          var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
-          var paramObj = {"ranges" : this.ranges};
-          var params = {"content" : JSON.stringify(paramObj)};
-          $.post(newAnnoUrl, params, function(data){
-              console.log("Remove section from crumb");
-              while(relation !== ""){ //Find all related children selected sections and remove their class.
-                var nextRelator = trackRangeID;
-                var relator = $('div[relation="'+nextRelator+'"]');
-                if (relator.length>0){
-                  trackRangeID = relator.find(".selectedSection").attr("rangeID");
-                  $('.parentSection[rangeID="'+trackRangeID+'"]').remove();
-                  relation = trackRangeID;
-                  relator.find(".selectedSection").removeClass("selectedSection");
-                }
-                else{
-                  relation = "";
-                }
-              }
-              $(".parentSection[rangeID='"+rangeID+"']").remove();
-              $(".selectedSection[rangeID='"+rangeID+"']").removeClass("selectedSection");
-              //ensure the one clicked is also unselected. 
-              if($('.selectedSection').length > 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
-                $(".parentSection").remove();
-                savePlacement();
-              }
-              else{ //You have removed down to the bucket, so no UI changes are necessary, everything is removed and unselected. 
-                $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
-              }
-          });
       }
     });
+    console.log("Remove section from crumb");
+    $(".parentSection").remove();
+    $(".selectedSection[rangeID='"+rangeID+"']").click();
+    savePlacement();
+    //ensure the one clicked is also unselected. 
+    if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
+      $(".parentSection").remove();
+      $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
+    }
+    //^^ local
+
+    //Get the ranges of the rangeID we are updating and remove the leaf from it, then update to make this work live!
+    // var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+    // var paramObj = {"@id":rangeID, "ranges" : this.ranges};
+    // var params = {"content" : JSON.stringify(paramObj)};
+    // $.post(newAnnoUrl, params, function(data){
+    //     console.log("Remove section from crumb");
+    //     $(".parentSection").remove();
+    //     $(".selectedSection[rangeID='"+rangeID+"']").click();
+    //     savePlacement();
+    //     //ensure the one clicked is also unselected. 
+    //     if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
+    //       $(".parentSection").remove();
+    //       $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
+    //     }
+    // });
     
   }
 	/*
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
 	*/
-	function updateRange(rangeID, leaf){
+	function updateRange(rangeID, leaf, arrange){
 		console.log("Updating range");
 		var currentRange = {};
 		$.each(testManifest.structures, function(){
@@ -2643,21 +2651,20 @@ function populateAnnoForms(){
         var sectionName = this.label;
 				if($.inArray(leaf, this.ranges) === -1){
 					this.ranges.push(leaf);
-					var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
-					var paramObj = {"ranges" : this.ranges};
-					var params = {"content" : JSON.stringify(paramObj)};
-					$.post(newAnnoUrl, params, function(data){
-              console.log("Range updated");
-              var addedToSection = "";
-              $.each($(".selectedSection"), function(){
-                console.log("add section to arrange crumb.");
-                var thisRangeID = $(this).attr("rangeID");
-                var thisName = $(this).find("div:first").html();
+          if(arrange == "arrange"){
+           $.each($(".selectedSection"), function(){
+              var thisRangeID = $(this).attr("rangeID");
+              var thisName = $(this).children("span").html();
+              console.log("add section "+thisName+" to arrange crumb.");
+              if($(this).hasClass("unassigned")){
+                //do not add this to the crumb.
+              }
+              else{
                 addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
                 $("#arrangeCrumb").append(addedToSection);
-              });
-              
-					});
+              }
+            });
+          }
 				}
 				else{
           console.log("Should not update, leaf already in range");
@@ -2665,9 +2672,29 @@ function populateAnnoForms(){
 				}
 			}
 		});
-		//var url = "http://localhost:8080/brokenBooks/updateRangeServlet";
-		//I have a new leaf URL to add to a range, so I want to pass the rangeID and leafURL.  
-		//$.post(url, newRangeObject);
+
+    //^^ local
+
+    //To make this work live get the ranges of rangeID, make sure the leaf is not already a part of the ranges, push the leaf to the ranges if not, then update on the server.
+    // var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+    // var paramObj = {"@id":rangeID, "ranges" : this.ranges};
+    // var params = {"content" : JSON.stringify(paramObj)};
+    // $.post(newAnnoUrl, params, function(data){
+    //     console.log("Range updated");
+    //     var addedToSection = "";
+    //     $.each($(".selectedSection"), function(){
+    //       var thisRangeID = $(this).attr("rangeID");
+    //       var thisName = $(this).children("span").html();
+    //       console.log("add section "+thisName+" to arrange crumb.");
+    //       if($(this).hasClass("unassigned")){
+    //         //do not add this to the crumb.
+    //       }
+    //       else{
+    //         addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+    //         $("#arrangeCrumb").append(addedToSection);
+    //       }
+    //     });
+    // });
 	}
 	
 	function resolveImageURI(rv){
@@ -2865,19 +2892,124 @@ function populateAnnoForms(){
 		$("#beContributer").hide();
 	}
         
-        function updateImageAnno(which){
-            if(which === "alpha"){
-                    var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-                    var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[$('textarea[rv="recto"]').val()]};
-                    var params = {"content":JSON.stringify(paramObj)};
-                    $.post(updateCanvasURL, params, function(data){
-                    });
-            }
-            else{
-                    var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-                    var paramObj = {"@id": $("#folioSide2").attr("canvas"), "images":[$('textarea[rv="verso"]').val()]};
-                    var params = {"content":JSON.stringify(paramObj)};
-                    $.post(updateCanvasURL, params, function(data){
-                    });
-            }
-        }
+  function updateImageAnno(which){
+      if(which === "alpha"){
+              var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+              var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[$('textarea[rv="recto"]').val()]};
+              var params = {"content":JSON.stringify(paramObj)};
+              $.post(updateCanvasURL, params, function(data){
+              });
+      }
+      else{
+              var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+              var paramObj = {"@id": $("#folioSide2").attr("canvas"), "images":[$('textarea[rv="verso"]').val()]};
+              var params = {"content":JSON.stringify(paramObj)};
+              $.post(updateCanvasURL, params, function(data){
+              });
+      }
+  }
+
+  function breakUpConfirm(event){
+      var tagName = event.target.tagName;
+      var className = event.target.className;
+      targetToBreak = undefined;
+      if(tagName == "SPAN" || tagName == "INPUT" || className.indexOf("folioCount") > -1){
+          console.log("change event target.")
+          var parent = event.target.parentNode;
+          targetToBreak = parent;
+      }
+      else{
+          targetToBreak = event.target;
+      }
+      var targetID= targetToBreak.getAttribute("rangeID");
+      var confirm = $("<div class='breakConfirm'><span>Break?</span><br>\n\
+                      <input value='Yes' type='button' onclick=\"breakUp('"+targetID+"');\" /><input value='No' type='button' onclick='$(this).parent().remove()'/></div>");
+      var x = event.pageX;
+      var y = event.pageY;
+      if($(".breakConfirm").length == 0){
+        $('body').append(confirm);
+        confirm.css({
+          "left" : x+"px",
+          "top" : y+"px"
+        });
+      }
+  }
+
+  function breakUp(targetID){
+      var group = $(targetToBreak);
+      $(".breakConfirm").remove();
+      var childrenToBringUp = undefined;
+      var depth = -1;
+      if(group.attr("leaf") == "true"){
+          group.remove();
+      }
+      else{
+          console.log("It is not a leaf.  Break it.");
+          childrenToBringUp = group.children(".child");
+          depth = parseInt(group.parent().parent().attr("depth"));
+          $.each(childrenToBringUp, function(){
+              console.log("moveing child");
+              console.log($(this));
+              console.log("into");
+              console.log($("div[depth='"+depth+"']").children(".unassigned"));
+              $("div[depth='"+depth+"']").children(".notBucket").append($(this));
+          });
+          console.log("children moved.  Remove group.");
+          group.remove();
+      }
+        
+  }
+
+  function newGroupForm(column){
+      $("#newGroupForm").show();
+      $("#mainBlockCover").show();
+      var columnDepth = parseInt(column.attr("depth"));
+      $("#saveGroupForm").attr("onclick", "saveNewGroupForm("+columnDepth+");");
+      if($("#allLeaves").children().length == 0){
+          for(var i = 0; i<allLeaves.length; i++){
+              var rangeID = allLeaves[i]["@id"];
+              var leafLabel = allLeaves[i].label;
+              var htmlLeaf = $("<div class='areaLeaf'><input label='"+leafLabel+"' rangeID='"+rangeID+"' class='areaLeafBox' type='checkbox'/>"+leafLabel+"</div>");
+              $("#allLeaves").append(htmlLeaf);
+          }
+      }
+      else{
+          //do not populate, they are already there
+      }
+      
+  }
+
+  function saveNewGroupForm(depth){
+      var uniqueID = $(".arrangeSection").length + 1;
+      var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
+      var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+      var title=$("#groupTitle").val();
+      if(title == ""){
+          $(".noTitleWarning").show();
+          setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
+      }
+      else{
+          var childrenForGroup = [];
+          var checkedLeaves = $("#allLeaves").find("input:checked");
+          var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
+          var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
+          var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
+          $.each(checkedLeaves, function(){
+              var leafID = $(this).attr("rangeID");
+              var leafLabel = $(this).attr("label");
+              $(allLeaves, function(){
+                  if(this["@id"] == leafID){
+                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+leafLaabel+"</span><input class='putInGroup' type='checkbox' /></div>");
+                      newGroup.append(newLeaf);
+                      uniqueID += 1;
+                  }
+              })
+          });
+          $("div[depth='"+depth+"']").append(newGroup);
+      }
+  }
+
+  function cancelNewGroup(){
+    $("#groupTitle").val("");
+    $("#newGroupForm").hide();
+  }
