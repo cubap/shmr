@@ -2978,8 +2978,9 @@ function populateAnnoForms(){
               console.log("moveing child");
               console.log($(this));
               console.log("into");
-              console.log($("div[depth='"+depth+"']").children(".unassigned"));
+              console.log($("div[depth='"+depth+"']").children(".notBucket"));
               $("div[depth='"+depth+"']").children(".notBucket").append($(this));
+              $(this).show();
           });
           console.log("children moved.  Remove group.");
           group.remove();
