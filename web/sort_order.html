@@ -141,14 +141,12 @@ and open the template in the editor.
         if($(".rangeArrangementArea:first").find(".selectedSection").length > 0){
             $(".rangeArrangementArea:first").find(".selectedSection").click();
         }
-        else{
-            $.each($(".arrangeSection").not("div[leaf='true']"), function(){
-                $(this).children(".folioCount").remove();
-                var folioCount = $(this).find("div[leaf='true']").length;
-                var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
-                $(this).append(folioCountHTML);
-           });
-        }
+        $.each($(".arrangeSection").not("div[leaf='true']"), function(){
+            $(this).children(".folioCount").remove();
+            var folioCount = $(this).find("div[leaf='true']").length;
+            var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+            $(this).append(folioCountHTML);
+       });
     }
 
         $(function(){
