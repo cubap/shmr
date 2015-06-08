@@ -56,13 +56,13 @@ and open the template in the editor.
                 margin-bottom: 5px;
             }
 
-            /*div[relation="bucket"] {
+            div[relation="bucket"] {
                 display: inline-block;
                 border-right: 2px solid black;
                 border-left: transparent;
                 border-top: transparent;
                 border-bottom: transparent;
-            }*/
+            }
 
             
             
@@ -75,7 +75,7 @@ and open the template in the editor.
                     This interface allows you to order the breviary.  When you drag and drop, you are specifically moving one area into the other.  The orginal positioning will be removed.
                     You can drop into any area and into any column.
                     <br>
-                    You can add create a new area in any column.  You will be given a list of leaves to add to the area and a field to enter a label.  
+                    You can create a new area in any column.  You will be given a list of leaves to add to the area and a field to enter a label.  
                     <br>
                     If you want to remove a group, you can "break" it.  Removing an area would mean you also want to remove all of its children.  Breaking an area removes the area to break and brings up all the children.  If you break a leaf or an empty group, you delete it.  Right click on an area to be given the option to break it.  
                     <br>
@@ -87,15 +87,19 @@ and open the template in the editor.
                     <br>
                     You can double click any listed area's title to change it. *NOT YET WORKING*
                     <br>
+                    The number of leaves in an area are shown in a blue box.  If you have made changes, the leaf count may not be accurate.  You can click 'Reset Folio Count' to get an accurate leaf count for each section.  It will save all changes and close everything to do this.
+                    <br>
                     You cannot add leaves in this interface, only sections.
             </p>
             <div class="arrangeTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
+                   <div class="rAreaLabel">Parent Level</div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder">Bucket</div>
                    <input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>
-                   <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/>
+                   <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
+                   <input class="resetCounts" value="Reset Folio Count" type="button" onclick="resetFolioCount();"/>
                 </div>
             </div>
         </div>
@@ -132,6 +136,19 @@ and open the template in the editor.
         $(".areaCover").remove();
         column.children(".makeSortable").show();
         column.children(".doneSortable").hide();
+    }
+    function resetFolioCount(){
+        if($(".rangeArrangementArea:first").find(".selectedSection").length > 0){
+            $(".rangeArrangementArea:first").find(".selectedSection").click();
+        }
+        else{
+            $.each($(".arrangeSection").not("div[leaf='true']"), function(){
+                $(this).children(".folioCount").remove();
+                var folioCount = $(this).find("div[leaf='true']").length;
+                var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+                $(this).append(folioCountHTML);
+           });
+        }
     }
 
         $(function(){

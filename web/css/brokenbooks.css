@@ -700,7 +700,7 @@ and open the template in the editor.
                 left: 0;
                 top: 0;    
             }
-            #noTitleWarning{
+            .noTitleWarning{
                 display: none;
                 color: red;
                 position: relative;
@@ -728,6 +728,15 @@ and open the template in the editor.
                 text-align: center;
                 border: 2px solid black;
                 height: 53px;
+            }
+            .rAreaLabel{
+                display: block;
+                position: relative;
+                text-align: center;
+                border: 1px solid gray;
+                padding: 5px;
+                margin-bottom: 9px;
+                color: gray;
             }
 
             

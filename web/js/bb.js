@@ -760,7 +760,7 @@ var testManifest = {
   "@id":"http://www.example.org/iiif/LlangBrev/range/11",
   "@type":"sc:Range",
   "label":"Table Of Contents",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/114", "http://www.example.org/iiif/LlangBrev/range/115"],
+  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/114", "http://www.example.org/iiif/LlangBrev/range/115", "http://www.example.org/iiif/LlangBrev/range/116"],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -824,6 +824,16 @@ var testManifest = {
   "label":"Ch. 2",
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/10",
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/116",
+  "@type":"sc:Range",
+  "label":"Ch. 3",
+  "ranges" : [
+      
   ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
@@ -913,6 +923,12 @@ function toggleChildren(parentRange, admin, event){
   var relation = parentRange.attr("rangeID");
   var unassigned = parentRange.hasClass('unassigned');
   var intendedDepth = -1;
+  var newAreaLabel = parentRange.children("span:first").html();
+  if(newAreaLabel == "Unassigned"){
+    var extra = parentRange.parent().children(".rAreaLabel").html();
+    newAreaLabel = "Unordered Leaves From <br>"+extra;
+  }
+  var labelHTML = '<div class="rAreaLabel">'+newAreaLabel+'</div>';
   var actualDepth = parseInt($(".rangeArrangementArea").length);
   var sortOrder = "";
   var extraButtons = '<input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
@@ -929,8 +945,8 @@ function toggleChildren(parentRange, admin, event){
   else{
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
-  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'><div "+dropAttribute+" class='notBucket'></div></div>");
-  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin", event);\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'">Unassigned</div>'+extraButtons);
+  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'>"+labelHTML+"<div "+dropAttribute+" class='notBucket'></div></div>");
+  var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin", event);\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'"><span>Unassigned</span></div>'+extraButtons);
 
   newArea.append(newAreaBucket);
   
@@ -1126,17 +1142,25 @@ function toggleChildren(parentRange, admin, event){
       newArea.children(".unassigned").remove();
       newArea.children(".makeSortable").hide();
       newArea.children(".doneSortable").hide();
+      newArea.children(".addGroup").hide();
     }
     if(newArea.children('.notBucket').children('.child').length == 0){
       //newAreaBucket.attr("onclick", "");
       if(newArea.children('.unassigned').children('.child').length === 0){
         newArea.children(".notBucket").append('<div style="color: red;">No Subsections Available</div>');
         newAreaBucket.hide();
+        if(parentRange.attr("leaf") !== "true" && !unassigned ){
+          console.log("yes");
+          newArea.children(".addGroup").attr("style", "display: inline-block;");
+        }
+        else{
+          console.log("no");
+          newArea.children(".addGroup").hide();
+        }
       }
       else{
         newAreaBucket.show();
       }
-      //newArea.children('.notBucket').hide();
       newArea.children(".makeSortable").hide();
       newArea.children(".doneSortable").hide();
       newArea.children(".makeGroup").hide();
@@ -1190,6 +1214,7 @@ function dropHelp(event){
     var data = "";
     data = event.dataTransfer.getData("text");
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
+    var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
     var targetClass = target.className;
     
@@ -1236,13 +1261,15 @@ function dropHelp(event){
     else{
       event.preventDefault();
     }
-    if(areaTakenFrom.children(".notBucket").children(".child").length == 0){
-      areaTakenFrom.children(".makeSortable").hide();
-      areaTakenFrom.children(".doneSortable").hide();
+    if($("div[depth='"+areaTakenFromDepth+"']").children(".notBucket").children(".child").length == 0){
+      $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").hide();
+      $("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").hide();
+       newArea.children(".addGroup").hide();
     }
     else{
-      areaTakenFrom.children(".makeSortable").show();
-      areaTakenFrom.children(".doneSortable").show();
+      $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").show();
+      //$("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").show();
+       newArea.children(".addGroup").show();
     }
     
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
@@ -2980,6 +3007,7 @@ function populateAnnoForms(){
   }
 
   function saveNewGroupForm(depth){
+    console.log("Make new group at depth "+depth);
       var uniqueID = $(".arrangeSection").length + 1;
       var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
       var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
@@ -2989,7 +3017,6 @@ function populateAnnoForms(){
           setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
       }
       else{
-          var childrenForGroup = [];
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
@@ -2997,19 +3024,29 @@ function populateAnnoForms(){
           $.each(checkedLeaves, function(){
               var leafID = $(this).attr("rangeID");
               var leafLabel = $(this).attr("label");
-              $(allLeaves, function(){
+              $.each(allLeaves, function(){
                   if(this["@id"] == leafID){
-                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+leafLaabel+"</span><input class='putInGroup' type='checkbox' /></div>");
-                      newGroup.append(newLeaf);
                       uniqueID += 1;
+                      dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
+                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' /></div>");
+                      newGroup.append(newLeaf);
                   }
               })
           });
-          $("div[depth='"+depth+"']").append(newGroup);
+          $("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
+          newGroup.show();
+          $("div[depth='"+depth+"']").children(".makeSortable").show();
+          $("div[depth='"+depth+"']").children(".makeGroup").show();
+          if($("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
+            $("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
+          }
+          cancelNewGroupForm();
       }
   }
 
-  function cancelNewGroup(){
-    $("#groupTitle").val("");
+  function cancelNewGroupForm(){
+    $("#newGroupForm").find('input[type=checkbox]:checked').removeAttr('checked');
     $("#newGroupForm").hide();
+    $("#mainBlockCover").hide();
+    $("#groupTitle").val("");
   }
