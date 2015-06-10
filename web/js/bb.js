@@ -1614,11 +1614,12 @@ function toggleChildren(parentRange, admin, event){
       $.each($("div[depth='"+intendedDepth+"']").children('.unassigned').children('.child'),function(){
         objectArray1.push($(this));
       });     
-      var thisDepth = intendedDepth - 1;
-      var sectionToMoveTo = $("div[depth='"+ thisDepth +"']").children('.selectedSection');
+      var thisDepth = parseInt(intendedDepth) - 1;
+      
+      var sectionToMoveTo = $("div[depth='"+ thisDepth +"']").find('.selectedSection');
       console.log("Move children from");
       console.log($("div[depth='"+intendedDepth+"']"));
-      console.log("to");
+      console.log("to depth "+thisDepth);
       console.log(sectionToMoveTo);
       //TODO: not functioning correctly
       sectionToMoveTo.children('.child').remove();
