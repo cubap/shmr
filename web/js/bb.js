@@ -1452,7 +1452,6 @@ var testManifest = {
 ]
 };
 
-
 var rangeCollection = testManifest.structures;
 var pageCanvases = testManifest.sequences[0].canvases;
 var annotationLists = [
@@ -1558,9 +1557,7 @@ function toggleChildren(parentRange, admin, event){
   }
   var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'>"+labelHTML+"<div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin", event);\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'"><span>Unassigned</span></div>'+extraButtons);
-
   newArea.append(newAreaBucket);
-  
   //newArea.disableSelection();
   var existingInCopy = [];
   var leafCount = 0;
@@ -1581,9 +1578,7 @@ function toggleChildren(parentRange, admin, event){
 //         
 //       }
        newArea.find('.notBucket').append(child);
-       
-       
-       //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
+//$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
   });
   var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
@@ -1621,7 +1616,6 @@ function toggleChildren(parentRange, admin, event){
       console.log($("div[depth='"+intendedDepth+"']"));
       console.log("to depth "+thisDepth);
       console.log(sectionToMoveTo);
-      //TODO: not functioning correctly
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
@@ -1694,7 +1688,6 @@ function toggleChildren(parentRange, admin, event){
           }
         }
       } // end for
-
     }
     else{ //if the area clicked was the one already highlighted or the admin interface is not necessary
         console.log("area already highlighted OR not an admin");
@@ -1804,7 +1797,6 @@ function toggleChildren(parentRange, admin, event){
 
 function dragHelp(event){
     event.dataTransfer.setData("text", event.target.id);
-    
 }
 
 function dropHelp(event){
@@ -1883,12 +1875,12 @@ function dropHelp(event){
     if($("div[depth='"+areaTakenFromDepth+"']").children(".notBucket").children(".child").length == 0){
       $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").hide();
       $("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").hide();
-       newArea.children(".addGroup").hide();
+       //newArea.children(".addGroup").hide();
     }
     else{
       $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").show();
       //$("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").show();
-       newArea.children(".addGroup").show();
+       //newArea.children(".addGroup").show();
     }
     
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
@@ -1956,8 +1948,7 @@ function gatherRangesForArrange(which){
           currentRange = $(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
         }
         //Create an html range object that can be added
-        var innerRanges = rangeCollection[i].ranges;
-       
+        var innerRanges = rangeCollection[i].ranges;       
         if(innerRanges.length > 0){ //If there are inner ranges
             var tag2 = "child";
             if(which === 2){
@@ -1976,12 +1967,10 @@ function gatherRangesForArrange(which){
                         if(thisCanvases!==undefined && thisCanvases !== 0){
                           isLeaf = true;
                           dropAttribute = "";
-                          //checkbox2 = "";
                         }
                         else{
                           isLeaf = false;
                           dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-                          
                         }
                         if(which == 1){
                           dropAttribute = "";
@@ -1996,7 +1985,6 @@ function gatherRangesForArrange(which){
                             if(isLeaf){
                               allLeaves.push(this);
                             }
-                            //existingRanges.push(currentRange.attr("rangeID"));
                         }
                         else{
                           rangesMoved += 1;
@@ -2005,7 +1993,6 @@ function gatherRangesForArrange(which){
                           /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
                           rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
                         }
-
                     } 
                 });
             }
@@ -2017,15 +2004,12 @@ function gatherRangesForArrange(which){
     var objectsForBucket = $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
     objectsForBucket.attr("isordered", "false");
     $(".unassigned").append(objectsForBucket);
-    
-    
     //Undo the parent aggregator wrapper.
     var pAggrChildren = $('.pAggr').children('div');
     $('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
     /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
     pAggrChildren.removeClass("child").addClass("parent");
-    $('.pAggr').remove();
-    
+    $('.pAggr').remove();    
     //set folio counts for all sections in the admin interface, ignore leaves.
     if(which == 2){
       $.each($(".arrangeSection"), function(){
@@ -2038,7 +2022,6 @@ function gatherRangesForArrange(which){
             $(this).append(folioCountHTML);
        });
     }
-
 }
 
 /*
@@ -2049,24 +2032,18 @@ function gatherRangesForArrange(which){
 
 //Think about sorted vs. unsorted ranges. 
 function organizeRanges(){
-    //rangeCollection = mergeSort(rangeCollection);
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
-      //console.log("Building Range");
-      //console.log(rangeCollection[i]);
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
         var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");        
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
           $("#focusedRange").append(currentRange);
-          //The initial hard set super ranges.
         }
         else{
           currentRange = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]'); // get it.
         }
-        //Create an html range object that can be added
-        
         //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
         var innerRanges = rangeCollection[i].ranges;
         if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
@@ -2155,17 +2132,12 @@ function organizeRanges(){
                // console.log("This is a new leaf");
               rangeForCanvases = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
-
             var canvasHolder1 = $("<div sideA='' class='canvas'> </div>");
             var canvasHolder2 = $("<div sideB='' class='canvas'> </div>");
-
             var canvasHolder3 = $("<div sideA='' class='canvas'> <img class='canvasImg' src='http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png' /> </div>");
             var canvasHolder4 = $("<div sideB='' class='canvas'> <img class='canvasImg' src='http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png' /> </div>");
-
-
             var side1 = true;
             var side2 = false;
-
             var holderToAppend = $("");
             if(currentCanvases.length > 0){
                 $.each(currentCanvases, function(){ //for whatever canvases there are, if any, or many fragments
@@ -2193,8 +2165,7 @@ function organizeRanges(){
                           }
                           else{
                               canvasImg = "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png";
-                          }
-                          
+                          }                         
                           $.each(currentCanvasAnnotationsLists, function(){
                               var annoListID = String(this);
                               console.log("Anno list to get annos: "+annoListID);
@@ -2221,7 +2192,6 @@ function organizeRanges(){
                           }
                       }
                   });
-
                   var XYWHarray = [0,0,0,0];
                   var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
                   if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
@@ -2391,8 +2361,6 @@ function organizeRanges(){
             }
         }
     }
-
-
 /*
 * Helper function for mergeSort().  It mergest the left and right arrays created when splitting the source array in the middle. 
 */
