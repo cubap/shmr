@@ -22,7 +22,7 @@ and open the template in the editor.
                 color: black;
             }
             .rangeArrangementArea{ /* Force each area to be the same height in this case. */
-                height: 400px;
+                height: 512px;
                 z-index: 2;
             }
             .arrangeSection{
@@ -47,8 +47,8 @@ and open the template in the editor.
             .unassigned .parent{ /* This will hide leaves sitting in the unassigned areas. */
                 display: none !important;
             }
-            .unassigned{
-                padding: 8px 32px 8px 21px !important;
+            .arrangeSection, .unassigned{
+                padding: 8px 50px 8px 21px !important;
             }
             .notBucket{
                 padding: 4px 4px 45px 4px;
@@ -97,7 +97,7 @@ and open the template in the editor.
                     You can click 'Reset Folio Count' to get an accurate leaf count for each section.  
                     It will save all changes and close everything to do this.
                     <br>
-                    You cannot add leaves in this interface, only sections.
+                    You cannot add leaves in this interface.  You can add a new section and define what leaves are in it.
             </p>
             <div class="arrangeTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
@@ -149,19 +149,20 @@ and open the template in the editor.
         if($(".rangeArrangementArea:first").find(".selectedSection").length > 0){
             $(".rangeArrangementArea:first").find(".selectedSection").click();
         }
-        $.each($(".arrangeSection").not("div[leaf='true']"), function(){
+        $.each($(".arrangeSection"), function(){
             $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
-            $(this).append(folioCountHTML);
+            if($(this).attr("leaf") === "true"){
+                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+            }      
+         $(this).append(folioCountHTML);
        });
     }
 
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
             gatherRangesForArrange(2);
-            
-            
         });
     </script>
 </html>

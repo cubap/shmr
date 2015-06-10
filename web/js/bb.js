@@ -6,40 +6,40 @@
 var pageCanvases = [];
 var allLeaves = [];
 var testManifest = {
-	  "@context" : "http://iiif.io/api/presentation/2/context.json",
-	  "@id" : "",
-	  "@type" : "sc:Manifest",
-	  "label" : "Llang Binder",
-	  "sequences" : [{
+    "@context" : "http://iiif.io/api/presentation/2/context.json",
+    "@id" : "",
+    "@type" : "sc:Manifest",
+    "label" : "Llang Binder",
+    "sequences" : [{
             "@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
-	    "@type" : "sc:Sequence",
-	    "label" : "Llangantock Bucket",
-	    "canvases" : [{
-	    //This will be the anchor canvas in the anchor range
-	        "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor",
-	        "@type" : "sc:Canvas",
-	        "label" : "Llang_001",
-	        "height" : 1000,
-	        "width" : 667,
-	        "images" : [{
-		          "@type" : "oa:Annotation",
-		          "motivation" : "sc:painting",
-		          "resource" : {
-		            "@id" : "http://www.example.org/iiif/LlangBrev/image_001",
-		            "@type" : "dctypes:Image",
-		            "format" : "image/jpeg",
-		            "height" : 2365,
-		            "width" : 1579
-		          },
-		          "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
-        	}],
-        	"otherContent":[],
-      	 },
+      "@type" : "sc:Sequence",
+      "label" : "Llangantock Bucket",
+      "canvases" : [{
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor",
+          "@type" : "sc:Canvas",
+          "label" : "Llang_001",
+          "height" : 1000,
+          "width" : 667,
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://www.example.org/iiif/LlangBrev/image_001",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                "height" : 2365,
+                "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
+          }],
+          "otherContent":[],
+         },
          {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1",
           "@type" : "sc:Canvas",
-          "label" : "Llang_01_fragment",
+          "label" : "January Text_r",
           "height" : 300,
           "width" : 200,
           "images" : [
@@ -63,7 +63,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/2",
           "@type" : "sc:Canvas",
-          "label" : "Llang_002",
+          "label" : "January Text_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -85,7 +85,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/3",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "February Text_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -107,7 +107,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/4",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "February Text_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -129,7 +129,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/5",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "March Text_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -151,7 +151,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/6",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "March Text_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -173,7 +173,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/7",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "April Text_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -195,7 +195,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/8",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "April Text_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -217,7 +217,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/9",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "May Text_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -239,7 +239,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/10",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "May Text_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -261,7 +261,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/11",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "June Text_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -283,7 +283,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/12",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "June Text_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -304,7 +304,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/13",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Advent_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -325,7 +325,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/14",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Advent_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -347,7 +347,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/15",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Epiphany_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -368,7 +368,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/16",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Epiphany_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -390,7 +390,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/17",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Pre-Lent_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -411,7 +411,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/18",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Pre-Lent_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -433,7 +433,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/19",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Ascension_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -455,7 +455,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/20",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Ascension_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -477,7 +477,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/21",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Pentecost_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -499,7 +499,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/22",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Pentecost_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -521,7 +521,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/23",
           "@type" : "sc:Canvas",
-          "label" : "Llang_03",
+          "label" : "Pentecost After Advent_r",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -543,7 +543,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/24",
           "@type" : "sc:Canvas",
-          "label" : "Llang_24",
+          "label" : "Pentecost After Advent_v",
           "height" : 300,
           "width" : 200,
           "images" : [{
@@ -565,67 +565,380 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/25",
           "@type" : "sc:Canvas",
-          "label" : "Llang_25",
+          "label" : "Psalms 1-6",
           "height" : 300,
           "width" : 200,
-          "images" : [{
-              "@type" : "oa:Annotation",
-              "motivation" : "sc:painting",
-              "resource" : {
-                "@id" : "http://webjazba.com/sw-store/images/wallpapers/webjazba.com-297742013.jpg",
-                "@type" : "dctypes:Image",
-                "format" : "image/jpeg",
-                // "height" : 2365,
-                // "width" : 1579
-              },
-              "on" : "http://www.example.org/iiif/LlangBrev/canvas/25"
-          }],
+          "images" : [],
           "otherContent":[]
          
-        }]
- 	   }], 
-	  "structures" : [
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/27",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 6-11",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/28",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 41-46",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/29",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 46-50",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/30",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 51-56",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/31",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 56-61",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/32",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 91-100",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/33",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 101-106",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/34",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 106-110",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/35",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 141-146",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/36",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 146-150",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/37",
+          "@type" : "sc:Canvas",
+          "label" : "Apostles_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/38",
+          "@type" : "sc:Canvas",
+          "label" : "Apostles_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/39",
+          "@type" : "sc:Canvas",
+          "label" : "Virgins_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/40",
+          "@type" : "sc:Canvas",
+          "label" : "Virgins_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/41",
+          "@type" : "sc:Canvas",
+          "label" : "Andrew_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/42",
+          "@type" : "sc:Canvas",
+          "label" : "Andrew_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/43",
+          "@type" : "sc:Canvas",
+          "label" : "Petronilla_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/44",
+          "@type" : "sc:Canvas",
+          "label" : "Pertonilla_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/45",
+          "@type" : "sc:Canvas",
+          "label" : "Marcellinus_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/46",
+          "@type" : "sc:Canvas",
+          "label" : "Marcellinus_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/45",
+          "@type" : "sc:Canvas",
+          "label" : "Saturinus_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/46",
+          "@type" : "sc:Canvas",
+          "label" : "Saturinus_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/47",
+          "@type" : "sc:Canvas",
+          "label" : "OOV_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/48",
+          "@type" : "sc:Canvas",
+          "label" : "OOV_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/49",
+          "@type" : "sc:Canvas",
+          "label" : "OOD_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/50",
+          "@type" : "sc:Canvas",
+          "label" : "OOD_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/51",
+          "@type" : "sc:Canvas",
+          "label" : "misc_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/52",
+          "@type" : "sc:Canvas",
+          "label" : "misc_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    }]
+}], 
+"structures" : [
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/parent_aggr",
   "@type":"sc:Range",
-  "label":"Parent Aggr",
+  "label":"Llangantock Breviary Structure",
   "ranges" : [
-      "http://www.example.org/iiif/LlangBrev/range/11",
-      "http://www.example.org/iiif/LlangBrev/range/106"
+      "http://www.example.org/iiif/LlangBrev/range/1",
+      "http://www.example.org/iiif/LlangBrev/range/2",
+      "http://www.example.org/iiif/LlangBrev/range/3",
+      "http://www.example.org/iiif/LlangBrev/range/4",
+      "http://www.example.org/iiif/LlangBrev/range/21",
+      "http://www.example.org/iiif/LlangBrev/range/5"
   ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},		
+},    
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
   "@type":"sc:Range",
-  "label":"Folio 1",
+  "label":"Calendar",
   "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/7",
+      "http://www.example.org/iiif/LlangBrev/range/8",
+      "http://www.example.org/iiif/LlangBrev/range/9",
+      "http://www.example.org/iiif/LlangBrev/range/10",
+      "http://www.example.org/iiif/LlangBrev/range/11",
+      "http://www.example.org/iiif/LlangBrev/range/12"
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/4", "http://www.example.org/iiif/LlangBrev/canvas/5"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 { //A connection of content can be made like this, but not fragments
   "@id":"http://www.example.org/iiif/LlangBrev/range/2",
   "@type":"sc:Range",
-  "label":"Folio 2",
+  "label":"Temporale",
   "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/13",
+      "http://www.example.org/iiif/LlangBrev/range/14",
+      "http://www.example.org/iiif/LlangBrev/range/15"
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1", "http://www.example.org/iiif/LlangBrev/canvas/2"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {//A connection of content can be made like this, but not fragments
   "@id":"http://www.example.org/iiif/LlangBrev/range/3",
   "@type":"sc:Range",
-  "label":"Folio 3",
+  "label":"Psalter",
   "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/16",
+      "http://www.example.org/iiif/LlangBrev/range/17",
+      "http://www.example.org/iiif/LlangBrev/range/18"
       //add leaf ranges here in order for page order
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/2", "http://www.example.org/iiif/LlangBrev/canvas/3"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
@@ -633,116 +946,57 @@ var testManifest = {
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/4",
   "@type":"sc:Range",
-  "label":"Folio 4",
+  "label":"Sanctorale",
   "ranges" : [
-      //add leaf ranges here in order for page order
+      "http://www.example.org/iiif/LlangBrev/range/19",
+      "http://www.example.org/iiif/LlangBrev/range/20",
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/24", "http://www.example.org/iiif/LlangBrev/canvas/25"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/5",
   "@type":"sc:Range",
-  "label":"Folio 5",
+  "label":"Auxilary Texts",
   "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/22",
+      "http://www.example.org/iiif/LlangBrev/range/23",
+      "http://www.example.org/iiif/LlangBrev/range/24"
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/6", "http://www.example.org/iiif/LlangBrev/canvas/7"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/6",
-  "@type":"sc:Range",
-  "label":"Folio 6",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/8", "http://www.example.org/iiif/LlangBrev/canvas/9"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/7",
   "@type":"sc:Range",
-  "label":"Folio 7: What do you think?",
+  "label":"January",
   "ranges" : [
+    "http://www.example.org/iiif/LlangBrev/range/25"
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/10", "http://www.example.org/iiif/LlangBrev/canvas/11"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/102",
-  "@type":"sc:Range",
-  "label":"First Folio, Last Secion",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/12", "http://www.example.org/iiif/LlangBrev/canvas/13"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/103",
-  "@type":"sc:Range",
-  "label":"Last Folio, Last Secion",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/14","http://www.example.org/iiif/LlangBrev/canvas/15"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/104",
-  "@type":"sc:Range",
-  "label":"Unknown Folio X, Last Secion",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/16","http://www.example.org/iiif/LlangBrev/canvas/17"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/105",
-  "@type":"sc:Range",
-  "label":"Unknown Folio Y, Last Secion",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/18", "http://www.example.org/iiif/LlangBrev/canvas/19"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/106",
-  "@type":"sc:Range",
-  "label":"Last Section",
-  "ranges" : [
-     "http://www.example.org/iiif/LlangBrev/range/102",
-     "http://www.example.org/iiif/LlangBrev/range/103",
-     "http://www.example.org/iiif/LlangBrev/range/105",
-     "http://www.example.org/iiif/LlangBrev/range/104",
-   ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-}, //EX: we know this is the last section.  Here are 4 pages we know are in it.  It is not inside the table of contents array.
+},
 
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/8",
   "@type":"sc:Range",
-  "label":"Section 1",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/1", "http://www.example.org/iiif/LlangBrev/range/2"],
+  "label":"February",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/26"
+  ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
-
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/9",
   "@type":"sc:Range",
-  "label":"Section 2",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/3", "http://www.example.org/iiif/LlangBrev/range/4"],
+  "label":"March",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/27"
+  ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -750,8 +1004,10 @@ var testManifest = {
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/10",
   "@type":"sc:Range",
-  "label":"Section 3",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/5", "http://www.example.org/iiif/LlangBrev/range/6", "http://www.example.org/iiif/LlangBrev/range/112", "http://www.example.org/iiif/LlangBrev/range/113"],
+  "label":"April",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/28"
+  ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
@@ -759,121 +1015,476 @@ var testManifest = {
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/11",
   "@type":"sc:Range",
-  "label":"Table Of Contents",
-  "ranges" : ["http://www.example.org/iiif/LlangBrev/range/114", "http://www.example.org/iiif/LlangBrev/range/115", "http://www.example.org/iiif/LlangBrev/range/116"],
+  "label":"May",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/29"
+  ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/110",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/12",
   "@type":"sc:Range",
-  "label":"SLU Folio, unknown section",
+  "label":"June",
   "ranges" : [
-      //add leaf ranges here in order for page order
+      "http://www.example.org/iiif/LlangBrev/range/30"
+   ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+}, //EX: we know this is the last section.  Here are 4 pages we know are in it.  It is not inside the table of contents array.
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/13",
+  "@type":"sc:Range",
+  "label":"Advent - Epiphany",
+  "ranges" : [
+    "http://www.example.org/iiif/LlangBrev/range/31", 
+    "http://www.example.org/iiif/LlangBrev/range/32"
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/20", "http://www.example.org/iiif/LlangBrev/canvas/21"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/111",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/14",
   "@type":"sc:Range",
-  "label":"Not sure if this is in this project.",
+  "label":"Pre-Lent through Ascension",
   "ranges" : [
-      //add leaf ranges here in order for page order
+    "http://www.example.org/iiif/LlangBrev/range/33", 
+    "http://www.example.org/iiif/LlangBrev/range/34"
   ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/112",
-  "@type":"sc:Range",
-  "label":"Folio test 1",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-},
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/113",
-  "@type":"sc:Range",
-  "label":"Folio test 2",
-  "ranges" : [
-      //add leaf ranges here in order for page order
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/22", "http://www.example.org/iiif/LlangBrev/canvas/23"],
+  "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/114",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/15",
   "@type":"sc:Range",
-  "label":"Ch. 1",
+  "label":"Pentecost to Advent",
   "ranges" : [
-      "http://www.example.org/iiif/LlangBrev/range/8",
-      "http://www.example.org/iiif/LlangBrev/range/9",
+    "http://www.example.org/iiif/LlangBrev/range/35", 
+    "http://www.example.org/iiif/LlangBrev/range/36"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/16",
+  "@type":"sc:Range",
+  "label":"Psalms 1-50",
+  "ranges" : [
+    "http://www.example.org/iiif/LlangBrev/range/37", 
+    "http://www.example.org/iiif/LlangBrev/range/38"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/17",
+  "@type":"sc:Range",
+  "label":"Psalms 51-100",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/39", 
+      "http://www.example.org/iiif/LlangBrev/range/40"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/18",
+  "@type":"sc:Range",
+  "label":"Psalms 101-150",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/41", 
+      "http://www.example.org/iiif/LlangBrev/range/42"
   ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/115",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/19",
   "@type":"sc:Range",
-  "label":"Ch. 2",
+  "label":"Andrew (Nov 30)-Petronilla(May31)",
   "ranges" : [
-      "http://www.example.org/iiif/LlangBrev/range/10",
+      "http://www.example.org/iiif/LlangBrev/range/46",
+      "http://www.example.org/iiif/LlangBrev/range/47"
   ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 },
 {
-  "@id":"http://www.example.org/iiif/LlangBrev/range/116",
+  "@id":"http://www.example.org/iiif/LlangBrev/range/20",
   "@type":"sc:Range",
-  "label":"Ch. 3",
+  "label":"Marcellinus (June 2)–Satirinus(Nov 29)",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/48",
+      "http://www.example.org/iiif/LlangBrev/range/49"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/21",
+  "@type":"sc:Range",
+  "label":"Common of Saints",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/43"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/22",
+  "@type":"sc:Range",
+  "label":"Office of the Virgin",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/50"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/23",
+  "@type":"sc:Range",
+  "label":"Office of the Dead",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/51"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/24",
+  "@type":"sc:Range",
+  "label":"Miscellaneous",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/52"
+  ],
+  "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/25",
+  "@type":"sc:Range",
+  "label":"January Text",
   "ranges" : [
       
   ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1","http://www.example.org/iiif/LlangBrev/canvas/2"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/26",
+  "@type":"sc:Range",
+  "label":"February Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/3","http://www.example.org/iiif/LlangBrev/canvas/4"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/27",
+  "@type":"sc:Range",
+  "label":"March Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/5","http://www.example.org/iiif/LlangBrev/canvas/6"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/28",
+  "@type":"sc:Range",
+  "label":"April Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/7","http://www.example.org/iiif/LlangBrev/canvas/8"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/29",
+  "@type":"sc:Range",
+  "label":"May Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/9","http://www.example.org/iiif/LlangBrev/canvas/10"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/30",
+  "@type":"sc:Range",
+  "label":"June Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/11","http://www.example.org/iiif/LlangBrev/canvas/12"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/31",
+  "@type":"sc:Range",
+  "label":"Advent Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/13","http://www.example.org/iiif/LlangBrev/canvas/14"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/32",
+  "@type":"sc:Range",
+  "label":"Epiphany Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/15","http://www.example.org/iiif/LlangBrev/canvas/16"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/33",
+  "@type":"sc:Range",
+  "label":"Pre-Lent Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/17","http://www.example.org/iiif/LlangBrev/canvas/18"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/34",
+  "@type":"sc:Range",
+  "label":"Ascension Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/19","http://www.example.org/iiif/LlangBrev/canvas/20"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/35",
+  "@type":"sc:Range",
+  "label":"Pentecost Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/21","http://www.example.org/iiif/LlangBrev/canvas/22"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/36",
+  "@type":"sc:Range",
+  "label":"Advent After Pentecost Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/23","http://www.example.org/iiif/LlangBrev/canvas/24"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/37",
+  "@type":"sc:Range",
+  "label":"Psalms 1-11 Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/25","http://www.example.org/iiif/LlangBrev/canvas/26"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/38",
+  "@type":"sc:Range",
+  "label":"Psalms 41-50 Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/27","http://www.example.org/iiif/LlangBrev/canvas/28"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/39",
+  "@type":"sc:Range",
+  "label":"Psalms 51-61 Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/29","http://www.example.org/iiif/LlangBrev/canvas/30"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/40",
+  "@type":"sc:Range",
+  "label":"Psalms 91-100 Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/31","http://www.example.org/iiif/LlangBrev/canvas/32"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/41",
+  "@type":"sc:Range",
+  "label":"Psalms 101-111 Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/33","http://www.example.org/iiif/LlangBrev/canvas/34"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/42",
+  "@type":"sc:Range",
+  "label":"Psalms 141-150 Text",
+  "ranges" : [
+      
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/35","http://www.example.org/iiif/LlangBrev/canvas/36"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/43",
+  "@type":"sc:Range",
+  "label":"Apostles, Martyrs, Confessors, Virgins",
+  "ranges" : [
+      "http://www.example.org/iiif/LlangBrev/range/44",
+      "http://www.example.org/iiif/LlangBrev/range/45"
+  ],
   "canvases" :[],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/44",
+  "@type":"sc:Range",
+  "label":"Apostles Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/37","http://www.example.org/iiif/LlangBrev/canvas/38"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/45",
+  "@type":"sc:Range",
+  "label":"Virgins Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/39","http://www.example.org/iiif/LlangBrev/canvas/40"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/46",
+  "@type":"sc:Range",
+  "label":"Andrew Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/41","http://www.example.org/iiif/LlangBrev/canvas/42"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/47",
+  "@type":"sc:Range",
+  "label":"Petronilla Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/43","http://www.example.org/iiif/LlangBrev/canvas/44"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/48",
+  "@type":"sc:Range",
+  "label":"Marcellinus Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/45","http://www.example.org/iiif/LlangBrev/canvas/46"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/49",
+  "@type":"sc:Range",
+  "label":"Saturinus Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/47","http://www.example.org/iiif/LlangBrev/canvas/48"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/50",
+  "@type":"sc:Range",
+  "label":"Office of the Virgin Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/49","http://www.example.org/iiif/LlangBrev/canvas/50"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/51",
+  "@type":"sc:Range",
+  "label":"Office of the Dead Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/51","http://www.example.org/iiif/LlangBrev/canvas/52"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/52",
+  "@type":"sc:Range",
+  "label":"Miscellaneous Text",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/53","http://www.example.org/iiif/LlangBrev/canvas/54"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
 }
 
-	  ]
-}
+]
+};
+
 
 var rangeCollection = testManifest.structures;
 var pageCanvases = testManifest.sequences[0].canvases;
 var annotationLists = [
-    {
-      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
-      "@type" : "sc:AnnotationLists",
-      "label" : "Fragments",
-      "resources" : [ {
-        "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
-        "@type" : "oa:Annotation",
-        "motivation" : "sc:painting",
-        "resource" : {
-          "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
-          "@type" : "dctypes:Image",
-          "format" : "image/jpeg",
-          "height" : 50,
-          "width" : 150
-        },
-        "on" : "http://www.example.org/iiif/LlangBrev/canvas/1#xywh=10,15,150,50"
-      },
-      {
-          "@id" : "http://www.example.org/iiif/LlangBrev/anno/2",
-        "@type" : "oa:Annotation",
-        "motivation" : "sc:painting",
-        "resource" : {
-          "@type" : "cnt:ContentAsText",
-          "cnt:chars" : "This is an image fragment."
-        },
-        "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
-      }
-    ]
-  }
+  //   {
+  //     "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
+  //     "@type" : "sc:AnnotationLists",
+  //     "label" : "Fragments",
+  //     "resources" : [ {
+  //       "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
+  //       "@type" : "oa:Annotation",
+  //       "motivation" : "sc:painting",
+  //       "resource" : {
+  //         "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
+  //         "@type" : "dctypes:Image",
+  //         "format" : "image/jpeg",
+  //         "height" : 50,
+  //         "width" : 150
+  //       },
+  //       "on" : "http://www.example.org/iiif/LlangBrev/canvas/1#xywh=10,15,150,50"
+  //     },
+  //     {
+  //         "@id" : "http://www.example.org/iiif/LlangBrev/anno/2",
+  //       "@type" : "oa:Annotation",
+  //       "motivation" : "sc:painting",
+  //       "resource" : {
+  //         "@type" : "cnt:ContentAsText",
+  //         "cnt:chars" : "This is an image fragment."
+  //       },
+  //       "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+  //     }
+  //   ]
+  // }
 ];
 
 function getAllRanges(){
@@ -962,13 +1573,16 @@ function toggleChildren(parentRange, admin, event){
        var childID = child.attr('id');
        childID = childID.replace("_tmp", "");
        child.attr('id', childID);
-       if(leaf == "true"){ //put leaves in the bucket for now.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
-         leafCount += 1;
-         newArea.find('.unassigned').append(child);
-       }
-       else{
-         newArea.find('.notBucket').append(child);
-       }
+//       if(leaf == "true"){ //put leaves into the bucket.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
+//            leafCount += 1;
+//            newArea.find('.unassigned').append(child);
+//       }
+//       else{
+//         
+//       }
+       newArea.find('.notBucket').append(child);
+       
+       
        //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
   });
@@ -1251,12 +1865,16 @@ function dropHelp(event){
       child.setAttribute("relation", relation);
       target.appendChild(child);
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
-      $.each($(".arrangeSection").not("div[leaf='true']"), function(){
-        $(this).children(".folioCount").remove();
-         var folioCount = $(this).find("div[leaf='true']").length;
-         var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+      $.each($(".arrangeSection"), function(){
+          $(this).children(".folioCount").remove();
+            var folioCount = $(this).find("div[leaf='true']").length;
+            var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+            if($(this).attr("leaf") === "true"){
+                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+            }      
          $(this).append(folioCountHTML);
        });
+       
     }
     else{
       event.preventDefault();
@@ -1398,7 +2016,7 @@ function gatherRangesForArrange(which){
     var objectsForBucket = $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
     objectsForBucket.attr("isordered", "false");
     $(".unassigned").append(objectsForBucket);
-    //$('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]').remove();
+    
     
     //Undo the parent aggregator wrapper.
     var pAggrChildren = $('.pAggr').children('div');
@@ -1409,11 +2027,14 @@ function gatherRangesForArrange(which){
     
     //set folio counts for all sections in the admin interface, ignore leaves.
     if(which == 2){
-      $.each($(".arrangeSection").not("div[leaf='true']"), function(){
-         console.log("set folio count");
-         var folioCount = $(this).find("div[leaf='true']").length;
-         var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
-         $(this).append(folioCountHTML);
+      $.each($(".arrangeSection"), function(){
+         $(this).children(".folioCount").remove();
+            var folioCount = $(this).find("div[leaf='true']").length;
+            var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+            if($(this).attr("leaf") === "true"){
+               folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+            }      
+            $(this).append(folioCountHTML);
        });
     }
 
@@ -1518,6 +2139,8 @@ function organizeRanges(){
         // }
         else{ //There are no inner ranges, so we must be on a leaf or a empty sections. 
             var currentCanvases = outerRange.canvases;
+           console.log("Current Range");
+           console.log(outerRange);
             var firstCanvas = currentCanvases[0];
             if(firstCanvas.indexOf("#xywh") >=0){
               firstCanvas = firstCanvas.substring(0, firstCanvas.indexOf("#xywh"));
@@ -1563,8 +2186,14 @@ function organizeRanges(){
                   /* Must gather this canvases annotations */
                   $.each(pageCanvases, function(){
                       if(this["@id"] == currentCanvas){
-                          currentCanvasAnnotationsLists = this.otherContent;                         
-                          canvasImg = this.images[0].resource["@id"];
+                          currentCanvasAnnotationsLists = this.otherContent;   
+                          if(this.images.length > 0){
+                              canvasImg = this.images[0].resource["@id"];
+                          }
+                          else{
+                              canvasImg = "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png";
+                          }
+                          
                           $.each(currentCanvasAnnotationsLists, function(){
                               var annoListID = String(this);
                               console.log("Anno list to get annos: "+annoListID);
@@ -1613,7 +2242,12 @@ function organizeRanges(){
                     var fragmentHTML = $("<div class='fragment canvasinner'><img class='canvasImg' src='"+canvasImg+"' /></div>");
                      $.each(pageCanvases, function(){
                          if(this["@id"] == currentCanvas){
-                             fragmentHTML.find('img').attr('src', this.images[0].resource["@id"]);
+                            if(this.images.length > 0){
+                              fragmentHTML.find('img').attr('src', this.images[0].resource["@id"]);
+                            }
+                            else{
+                               fragmentHTML.find('img').attr('src', "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png"); 
+                            }
                              if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
                                 fragmentHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
                                 fragmentHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
