@@ -20,7 +20,7 @@ var testLists = [
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546",
-        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"}]"
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"}]"
     },
     {
         "@type" : "sc:AnnotationList",
@@ -30,7 +30,7 @@ var testLists = [
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548",
-        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547\"}]"
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/1\"}]"
     },
     {
         "@type" : "sc:AnnotationList",
@@ -40,7 +40,7 @@ var testLists = [
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a",
-        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549\"}]"
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
     }       
 ];
 annoListCollection[0] = testLists[0];
@@ -2056,6 +2056,7 @@ function gatherRangesForArrange(which){
         else{
           dragAttribute = "";
           dropAttribute = "";
+          rightClick = "";
           checkbox = "";
         }
         if(canvases!==undefined && canvases !== 0){
@@ -2109,6 +2110,7 @@ function gatherRangesForArrange(which){
                         if(which == 1){
                           dropAttribute = "";
                           dragAttribute = "";
+                          rightClick = "";
                           checkbox2 = "";
                         }
                         var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><span>"+thisLabel+"</span> "+checkbox2+"</div>"); //Create an html range object for the inner range.
@@ -2545,19 +2547,36 @@ function populateAnnoForms(){
         if(zeta){
             annos = annoListCollection[2].resources;
             if(annos.length > 0){
-                annos = JSON.parse(annos);
+                if($.parseJSON(annos) == "object"){
+                    
+                }
+                else{
+                    annos = JSON.parse(annos);
+                }
             }
         }
         else if(alpha){
             annos = annoListCollection[0].resources;
+            console.log(annos);
             if(annos.length > 0){
-                annos = JSON.parse(annos);
+                if($.parseJSON(annos) == "object"){
+                    
+                }
+                else{
+                    annos = JSON.parse(annos);
+                }
             }
         }
         else{
             annos = annoListCollection[1].resources;
+            console.log(annos);
             if(annos.length > 0){
-                annos = JSON.parse(annos);
+                if($.parseJSON(annos) == "object"){
+                    
+                }
+                else{
+                    annos = JSON.parse(annos);
+                }
             }
         }
         $.each($(".contextFormEntry"), function(){
@@ -3505,7 +3524,6 @@ function populateAnnoForms(){
             if(test === "testEdit"){
                 return false;
             }
-            
             var newCanvas1ServerID = -1;
             var newCanvas2ServerID = -1;
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
@@ -3634,7 +3652,7 @@ function populateAnnoForms(){
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                                 
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
-            gatherRangesForArrange(1);
+                    gatherRangesForArrange(1);
       	 	});
   	 	});
       	     	
@@ -3757,6 +3775,7 @@ function populateAnnoForms(){
       var uniqueID = $(".arrangeSection").length + 1;
       var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
       var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+      var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
       var title=$("#groupTitle").val();
       if(title == ""){
           $(".noTitleWarning").show();
@@ -3766,7 +3785,6 @@ function populateAnnoForms(){
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
-          var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
           $.each(checkedLeaves, function(){
               var leafID = $(this).attr("rangeID");
               var leafLabel = $(this).attr("label");

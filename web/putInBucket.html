@@ -42,11 +42,12 @@
 var admin = false;
 var contributer = true;
 function existing(leaf, leafIsIn){
-        var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545";
-        var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547";
+        var alphaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/1";
+        var betaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/2";
         //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
         
     if(leaf !== undefined){
+        console.log("LEAF is not undefined");
         var leafObject = undefined;
         currentLeafServerID = leaf;
         $.each(testManifest.structures, function(){
@@ -83,10 +84,12 @@ function existing(leaf, leafIsIn){
         });       
     }
     else{ //for the tester from the creation intro set of buttons. 
-        leafIsIn = "http://www.example.org/iiif/LlangBrev/range/8";
-        leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
+        console.log("Test existing.");
+        leafIsIn = "http://www.example.org/iiif/LlangBrev/range/7";
+        leaf = "http://www.example.org/iiif/LlangBrev/range/25";
         currentLeafServerID = leaf;
     }
+    gatherRangesForArrange(1);
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);
     $("#folioSide1").addClass("selectedFolio");
@@ -103,9 +106,12 @@ function existing(leaf, leafIsIn){
 }
 
 function selectInTree(child){
-    var depth = $(".rangeArrangementArea").length;
-    var lastArrangeArea = $('.rangeArrangementArea[depth="'+depth+'"]');
+    var depth = $(".popoverTrail").find(".rangeArrangementArea").length;
+    var lastArrangeArea = $(".popoverTrail").find('.rangeArrangementArea[depth="'+depth+'"]');
+    console.log(lastArrangeArea);
+    console.log("Find "+child);
     var childToFindParents = lastArrangeArea.find(".arrangeSection[rangeID='"+child+"']");
+    console.log(childToFindParents);
     var theParent = childToFindParents.parent();
     var control = true;
     console.log("Does range exist? :"+childToFindParents.length);
@@ -146,35 +152,6 @@ function selectInTree(child){
     }
 
 }
-
-//Below is a typical starter object from a project manager creating the manifest and the ancho leaf in that manifest.  This anchor leaf only had one canvas, which I assume we are allowing as a worse case scenario so I am accounting for it that way.  
-var alphaAnnoList = {
-	"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", 
-	"@type":"sc:AnnotationList",
-	"resources" : [],
-	"on" : ""
-};
-var betaAnnoList = {
-	"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", 
-	"@type":"sc:AnnotationList",
-	"resources" : [],
-	"on" : ""
-};
-var zetaAnnoList = {
-	"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", 
-	"@type":"sc:AnnotationList",
-	"resources" : [],
-	"on" : ""
-};
-var anchorAnnoList = {
-	"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", 
-	"@type":"sc:AnnotationList",
-	"resources" : [],
-	"on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
-};
-annoListCollection.push(alphaAnnoList, betaAnnoList, zetaAnnoList);
-
-
 	$(function(){
 		$(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
                     $(".leaf").load("../brokenBooks/leafInformation.html", function(){
