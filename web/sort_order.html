@@ -135,7 +135,7 @@ and open the template in the editor.
         //Will sortable overrule draggable? 
         var columnDepth = column.attr("depth");
         column.children('.notBucket').sortable({helper:'clone'});
-        $.each($(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
+        $.each($(".adminTrail").find(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
             var overDiv = $("<div class='areaCover'></div>");
             console.log("Append over div to");
             console.log($(this));

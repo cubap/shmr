@@ -3386,11 +3386,13 @@ function populateAnnoForms(){
   }
 
   function makeAgroup(title){
+      console.log("MAKE GROUP");
         if(title===""){
           $(".noTitleWarning").show();
           setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
         }
         else{
+            console.log("TITLE IS GOOD");
           var childrenForGroup = [];
           $.each(theArea.find("input:checked"), function(){
             childrenForGroup.push($(this).parent());
@@ -3399,12 +3401,15 @@ function populateAnnoForms(){
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
           var inABucket = false;
           var areaForNewGroup = "";
-          if($("div[depth='"+depthToCheck+"']").children(".unassigned").hasClass("selectedSection")){
+          if($(".adminTrail").find("div[depth='"+depthToCheck+"']").children(".unassigned").hasClass("selectedSection")){
               inABucket = true;
-              areaForNewGroup = $("div[depth='"+depthToCheck+"']");
+              console.log("From unassigned")
+              areaForNewGroup = $(".adminTrail").find("div[depth='"+depthToCheck+"']");
           }
           else{
-            areaForNewGroup = theArea;
+              console.log("not from unassigned");
+                areaForNewGroup = theArea;
+          }
           //TODO: create the new range to get its rangeID and, on success, store within the newGroup object.  Toggle children will not work unless the rangeID is an attribute.
             var mockID = "http://www.example.org/iiif/LlangBrev/range/"+$(".arrangeSection").length;
             var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
@@ -3420,9 +3425,8 @@ function populateAnnoForms(){
             $('#newGroupTitleArea').remove();
             $("#mainBlockCover").hide();
             areaForNewGroup.children(".selectedSection").click();
-            }
-        //TODO: createNewRange for the new group, updateRange of range that got the new group.  
         }
+        //TODO: createNewRange for the new group, updateRange of range that got the new group.  
     }
 
   function removeFromSection(leaf, rangeID){
@@ -3807,7 +3811,7 @@ function populateAnnoForms(){
 
   function saveNewGroupForm(depth){
     console.log("Make new group at depth "+depth);
-      var uniqueID = $(".arrangeSection").length + 1;
+      var uniqueID = $(".adminTrail").find(".arrangeSection").length + 1;
       var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
       var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
       var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
@@ -3832,12 +3836,12 @@ function populateAnnoForms(){
                   }
               })
           });
-          $("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
+          $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
           newGroup.show();
-          $("div[depth='"+depth+"']").children(".makeSortable").show();
-          $("div[depth='"+depth+"']").children(".makeGroup").show();
-          if($("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
-            $("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
+          $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
+          $(".adminTrail").find("div[depth='"+depth+"']").children(".makeGroup").show();
+          if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
+            $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
           }
           cancelNewGroupForm();
       }
