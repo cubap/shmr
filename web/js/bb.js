@@ -1645,7 +1645,14 @@ function toggleChildren(parentRange, admin, event){
   if(event !== undefined && event.target.className.indexOf("putInGroup") > -1){ //detect if they clicked the checkbox.
     return false;
   }
-  var children = parentRange.children(".child");
+  var children = [];
+  if(parentRange.children(".parent").length > 0){ //if they are moving from the first set, they are parents and not children
+      children = parentRange.children(".parent");
+  }
+  else{
+      children = parentRange.children(".child");
+  }
+  
   var dropAttribute = "";
   var relation = parentRange.attr("rangeID");
   var unassigned = parentRange.hasClass('unassigned');
@@ -1953,17 +1960,21 @@ function dropHelp(event){
     
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
-    console.log("get child of this ID: "+data);
-    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);     
+    
     if(targetClass.indexOf('notBucket') > -1){
       child.style.display = "block";
-
+      areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     }
     else{
       child.id = child.id+"_tmp"; 
       child.style.display = "none";
+      if(targetClass.indexOf('unassigned') > -1){
+          areaDroppedTo = "unassigned";
+      }
     }
     var append = true;
+    console.log("get child of this ID: "+data);
+    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);     
     if(target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
       console.log("target is self");
       append = false;
@@ -1983,6 +1994,8 @@ function dropHelp(event){
     if(append){
       child.setAttribute("relation", relation);
       target.appendChild(child);
+      child.className = child.className.replace(/\bparent\b/,'');
+      if(!child.className.indexOf("child") > -1)child.className = child.className+" child";
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
       $.each($(".arrangeSection"), function(){
           $(this).children(".folioCount").remove();
@@ -2079,7 +2092,7 @@ function gatherRangesForArrange(which){
           }
         }
         else{
-          //dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
+          //dragAttribute = "id='drag_"+uniqueID+"165.134.241.141' draggable='true' ondragstart='dragHelp(event);'";
           currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
         }
         //Create an html range object that can be added
@@ -2145,6 +2158,12 @@ function gatherRangesForArrange(which){
     outer.find('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
     /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
     pAggrChildren.removeClass("child").addClass("parent");
+    $.each(pAggrChildren,function(){
+        if($(this).attr("id") !== undefined){
+            var newID = $(this).attr("id").replace("_tmp", "");
+            $(this).attr("id", newID);
+        }
+    });
     $('.pAggr').remove();    
     //set folio counts for all sections in the admin interface, ignore leaves.
     if(which == 2){
@@ -2546,7 +2565,7 @@ function populateAnnoForms(){
         var annos = [];
         console.log("populate anno form");
         if(zeta){
-            cosnole.log("For leaf");
+            console.log("For leaf");
             annos = annoListCollection[2].resources;
             console.log(typeof annos + "    1");
             if(annos.length > 0){
@@ -2647,6 +2666,7 @@ function populateAnnoForms(){
                 $("#catalogueInfoFor").val(canvasID); //alpha
                 alpha = true;
                 beta= false;
+                zeta = false;
             }
             else if (canvas == 'verso'){
                 $("#folioSide2").addClass("selectedFolio");;
@@ -2660,6 +2680,7 @@ function populateAnnoForms(){
                 $("#catalogueInfoFor").val(canvasID); //beta
                 beta = true;
                 alpha = false;
+                zeta = false;
             }
             else{
                 $("#oneAndtwo").addClass("selectedFolio");
