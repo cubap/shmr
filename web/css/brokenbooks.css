@@ -351,12 +351,13 @@ and open the template in the editor.
                 left: 19%;
                 top: 0px;
                 z-index: 4;
-                background-color: #808080;
+                background-color: black;
                 border: 1px solid #F00;
                 font-size: 9pt;
                 width: 247px;
                 white-space: normal;
                 padding: 5px;
+                color: wheat;
             }
             #fullImgContainer{
                 position: absolute;

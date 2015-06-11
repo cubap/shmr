@@ -3,6 +3,53 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var rangeID = 1;
+var canvasID = 1;
+var annoID = 1;
+var imageID = 1;
+var annoListID = 5;
+var currentLeaf = "";
+var alpha, beta, zeta = false;
+var annoListCollection = [];
+var testLists = [
+    {
+        "@type" : "sc:AnnotationList",
+        "on" : "http://www.example.org/iiif/LlangBrev/range/25", //January leaf
+        "originalAnnoID" : "",
+        "version" : 1,
+        "permission" : 0,
+        "forkFromID" : "",
+        "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546",
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"}]"
+    },
+    {
+        "@type" : "sc:AnnotationList",
+        "on" : "http://www.example.org/iiif/LlangBrev/canvas/1", //january leaf canvas 1
+        "originalAnnoID" : "",
+        "version" : 1,
+        "permission" : 0,
+        "forkFromID" : "",
+        "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548",
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547\"}]"
+    },
+    {
+        "@type" : "sc:AnnotationList",
+        "on" : "http://www.example.org/iiif/LlangBrev/canvas/2", //january leaf canvas 2
+        "originalAnnoID" : "",
+        "version" : 1,
+        "permission" : 0,
+        "forkFromID" : "",
+        "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a",
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549\"}]"
+    }       
+];
+annoListCollection[0] = testLists[0];
+annoListCollection[1] = testLists[1];
+annoListCollection[2] = testLists[2];
+var serverCanvasID = -1;
+var serverAnnoID = -1;
+var currentLeafServerID = -1;
+
 var pageCanvases = [];
 var allLeaves = [];
 var testManifest = {
@@ -11,7 +58,7 @@ var testManifest = {
     "@type" : "sc:Manifest",
     "label" : "Llang Binder",
     "sequences" : [{
-            "@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
+      "@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
       "@type" : "sc:Sequence",
       "label" : "Llangantock Bucket",
       "canvases" : [{
@@ -56,7 +103,7 @@ var testManifest = {
                "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
           }
           ],
-          "otherContent":[]
+          "otherContent":["http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548"]
          
    },
    {
@@ -78,8 +125,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
           }],
-          "otherContent":[]
-         
+          "otherContent":["http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a"]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -574,7 +620,7 @@ var testManifest = {
     },
     {
       //This will be the anchor canvas in the anchor range
-          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/27",
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/26",
           "@type" : "sc:Canvas",
           "label" : "Psalms 6-11",
           "height" : 300,
@@ -585,7 +631,7 @@ var testManifest = {
     },
     {
       //This will be the anchor canvas in the anchor range
-          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/28",
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/27",
           "@type" : "sc:Canvas",
           "label" : "Psalms 41-46",
           "height" : 300,
@@ -596,7 +642,7 @@ var testManifest = {
     },
     {
       //This will be the anchor canvas in the anchor range
-          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/29",
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/28",
           "@type" : "sc:Canvas",
           "label" : "Psalms 46-50",
           "height" : 300,
@@ -607,7 +653,7 @@ var testManifest = {
     },
     {
       //This will be the anchor canvas in the anchor range
-          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/30",
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/29",
           "@type" : "sc:Canvas",
           "label" : "Psalms 51-56",
           "height" : 300,
@@ -618,7 +664,7 @@ var testManifest = {
     },
     {
       //This will be the anchor canvas in the anchor range
-          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/31",
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/30",
           "@type" : "sc:Canvas",
           "label" : "Psalms 56-61",
           "height" : 300,
@@ -629,9 +675,20 @@ var testManifest = {
     },
     {
       //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/31",
+          "@type" : "sc:Canvas",
+          "label" : "Psalms 91-96",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/32",
           "@type" : "sc:Canvas",
-          "label" : "Psalms 91-100",
+          "label" : "Psalms 96-100",
           "height" : 300,
           "width" : 200,
           "images" : [],
@@ -642,7 +699,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/33",
           "@type" : "sc:Canvas",
-          "label" : "Psalms 101-106",
+          "label" : "Psalms 101-107",
           "height" : 300,
           "width" : 200,
           "images" : [],
@@ -653,7 +710,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/34",
           "@type" : "sc:Canvas",
-          "label" : "Psalms 106-110",
+          "label" : "Psalms 106-111",
           "height" : 300,
           "width" : 200,
           "images" : [],
@@ -664,7 +721,7 @@ var testManifest = {
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/35",
           "@type" : "sc:Canvas",
-          "label" : "Psalms 141-146",
+          "label" : "Psalms 141-14150",
           "height" : 300,
           "width" : 200,
           "images" : [],
@@ -896,7 +953,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/5"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },    
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
@@ -912,7 +970,8 @@ var testManifest = {
       //add leaf ranges here in order for page order
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 { //A connection of content can be made like this, but not fragments
@@ -925,7 +984,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/15"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {//A connection of content can be made like this, but not fragments
@@ -939,7 +999,8 @@ var testManifest = {
       //add leaf ranges here in order for page order
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 
@@ -952,7 +1013,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/20",
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -965,7 +1027,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/24"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 
@@ -977,7 +1040,8 @@ var testManifest = {
     "http://www.example.org/iiif/LlangBrev/range/25"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -988,7 +1052,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/26"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/9",
@@ -998,7 +1063,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/27"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1009,7 +1075,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/28"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1020,7 +1087,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/29"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1031,7 +1099,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/30"
    ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 }, //EX: we know this is the last section.  Here are 4 pages we know are in it.  It is not inside the table of contents array.
 
 {
@@ -1043,7 +1112,8 @@ var testManifest = {
     "http://www.example.org/iiif/LlangBrev/range/32"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1055,7 +1125,8 @@ var testManifest = {
     "http://www.example.org/iiif/LlangBrev/range/34"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1067,7 +1138,8 @@ var testManifest = {
     "http://www.example.org/iiif/LlangBrev/range/36"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1079,7 +1151,8 @@ var testManifest = {
     "http://www.example.org/iiif/LlangBrev/range/38"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1091,7 +1164,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/40"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 
 {
@@ -1103,7 +1177,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/42"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/19",
@@ -1114,7 +1189,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/47"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/20",
@@ -1125,7 +1201,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/49"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/21",
@@ -1135,7 +1212,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/43"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/22",
@@ -1145,7 +1223,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/50"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/23",
@@ -1155,7 +1234,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/51"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/24",
@@ -1165,7 +1245,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/52"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/25",
@@ -1175,7 +1256,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1","http://www.example.org/iiif/LlangBrev/canvas/2"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : ["http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546"]
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/26",
@@ -1185,7 +1267,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/3","http://www.example.org/iiif/LlangBrev/canvas/4"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/27",
@@ -1195,7 +1278,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/5","http://www.example.org/iiif/LlangBrev/canvas/6"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/28",
@@ -1205,7 +1289,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/7","http://www.example.org/iiif/LlangBrev/canvas/8"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/29",
@@ -1215,7 +1300,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/9","http://www.example.org/iiif/LlangBrev/canvas/10"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/30",
@@ -1225,7 +1311,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/11","http://www.example.org/iiif/LlangBrev/canvas/12"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/31",
@@ -1235,7 +1322,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/13","http://www.example.org/iiif/LlangBrev/canvas/14"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/32",
@@ -1245,7 +1333,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/15","http://www.example.org/iiif/LlangBrev/canvas/16"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/33",
@@ -1255,7 +1344,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/17","http://www.example.org/iiif/LlangBrev/canvas/18"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/34",
@@ -1265,7 +1355,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/19","http://www.example.org/iiif/LlangBrev/canvas/20"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/35",
@@ -1275,7 +1366,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/21","http://www.example.org/iiif/LlangBrev/canvas/22"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/36",
@@ -1285,7 +1377,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/23","http://www.example.org/iiif/LlangBrev/canvas/24"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/37",
@@ -1295,7 +1388,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/25","http://www.example.org/iiif/LlangBrev/canvas/26"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/38",
@@ -1305,7 +1399,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/27","http://www.example.org/iiif/LlangBrev/canvas/28"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/39",
@@ -1315,7 +1410,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/29","http://www.example.org/iiif/LlangBrev/canvas/30"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/40",
@@ -1325,7 +1421,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/31","http://www.example.org/iiif/LlangBrev/canvas/32"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/41",
@@ -1335,7 +1432,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/33","http://www.example.org/iiif/LlangBrev/canvas/34"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/42",
@@ -1345,7 +1443,8 @@ var testManifest = {
       
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/35","http://www.example.org/iiif/LlangBrev/canvas/36"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/43",
@@ -1356,7 +1455,8 @@ var testManifest = {
       "http://www.example.org/iiif/LlangBrev/range/45"
   ],
   "canvases" :[],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/44",
@@ -1366,7 +1466,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/37","http://www.example.org/iiif/LlangBrev/canvas/38"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/45",
@@ -1376,7 +1477,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/39","http://www.example.org/iiif/LlangBrev/canvas/40"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/46",
@@ -1386,7 +1488,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/41","http://www.example.org/iiif/LlangBrev/canvas/42"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/47",
@@ -1396,7 +1499,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/43","http://www.example.org/iiif/LlangBrev/canvas/44"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/48",
@@ -1406,7 +1510,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/45","http://www.example.org/iiif/LlangBrev/canvas/46"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/49",
@@ -1416,7 +1521,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/47","http://www.example.org/iiif/LlangBrev/canvas/48"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/50",
@@ -1426,7 +1532,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/49","http://www.example.org/iiif/LlangBrev/canvas/50"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/51",
@@ -1436,7 +1543,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/51","http://www.example.org/iiif/LlangBrev/canvas/52"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/52",
@@ -1446,7 +1554,8 @@ var testManifest = {
 
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/53","http://www.example.org/iiif/LlangBrev/canvas/54"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 }
 
 ]
@@ -2185,6 +2294,8 @@ function organizeRanges(){
                   $.each(pageCanvases, function(){
                       if(this["@id"] == currentCanvas){
                           currentCanvasAnnotationsLists = this.otherContent;   
+                          var canvasLabel = this.label;
+                          var canvasID = this["@id"];
                           if(this.images.length > 0){
                               canvasImg = this.images[0].resource["@id"];
                           }
@@ -2206,7 +2317,10 @@ function organizeRanges(){
                             side2 = false;
                             if(!fragment){
                                 canvasHolder3.find('img').attr('src', canvasImg);
+                                
                             }
+                            canvasHolder3.prepend("<div class='canvasLabel'>"+canvasLabel+"</div>");
+                            canvasHolder3.attr("canvasID", canvasID);
                           }
                           else{ //we are on sideB
                             side1=false;
@@ -2214,9 +2328,12 @@ function organizeRanges(){
                             if(!fragment){
                                 canvasHolder4.find('img').attr('src', canvasImg);
                             }
+                            canvasHolder4.prepend("<div class='canvasLabel'>"+canvasLabel+"</div>");
+                            canvasHolder4.attr("canvasID", canvasID);
                           }
                       }
                   });
+                  
                   var XYWHarray = [0,0,0,0];
                   var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
                   if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid

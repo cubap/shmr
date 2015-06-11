@@ -39,97 +39,72 @@
 	</body>
 </html>
 <script>
-
-//Here we have the "binder" to add our pieces into.  Notice that right now I have defined an anchor object and the master sequence range.
-var rangeID = 1;
-var canvasID = 1;
-var annoID = 1;
-var imageID = 1;
-var annoListID = 5;
-var currentLeaf = "";
-var alpha, beta, zeta = false;
-var annoListCollection = [];
-var serverCanvasID = -1;
-var serverAnnoID = -1;
-var currentLeafServerID = -1;
 var admin = false;
 var contributer = true;
-
-
-function existing(){
-    var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545";
-    var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547";
-    var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
-
-    var leafIsIn = "http://www.example.org/iiif/LlangBrev/range/8";
-
-    var testLists = [
-        {
-            "@type" : "sc:AnnotationList",
-            "on" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545",
-            "originalAnnoID" : "",
-            "version" : 1,
-            "permission" : 0,
-            "forkFromID" : "",
-            "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546",
-            "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545\"}]"
-        },
-        {
-            "@type" : "sc:AnnotationList",
-            "on" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547",
-            "originalAnnoID" : "",
-            "version" : 1,
-            "permission" : 0,
-            "forkFromID" : "",
-            "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548",
-            "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547\"}]"
-        },
-        {
-            "@type" : "sc:AnnotationList",
-            "on" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549",
-            "originalAnnoID" : "",
-            "version" : 1,
-            "permission" : 0,
-            "forkFromID" : "",
-            "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a",
-            "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549\"}]"
-        }
+function existing(leaf, leafIsIn){
+        var alphaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a545";
+        var betaCanvas = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a547";
+        //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
         
-
-    ];
-    //already included, full object, in the resources field.
-       
-    
+    if(leaf !== undefined){
+        var leafObject = undefined;
+        currentLeafServerID = leaf;
+        $.each(testManifest.structures, function(){
+            //For the demo, you can cheat and not make the calls by making a mock list above and using it.  
+            if(this["@id"] == leaf){
+                leafObject = this;
+                alphaCanvas = this.canvases[0];
+                betaCanvas = this.canvases[1];
+                var alphaAnnoList = alphaCanvas.otherContent;
+                $.ajax({
+                    "url":alphaAnnoList,
+                    success: function(annoList1){
+                        annoList1 = JSON.parse(annoList1);
+                        annoListCollection[0] = annoList1;
+                    }
+                }); //live
+                var betaAnnoList = betaCanvas.otherContent;
+                $.ajax({
+                    "url":betaAnnoList,
+                    success: function(annoList2){
+                        annoList2 = JSON.parse(annoList2);
+                        annoListCollection[1] = annoList2;
+                    }
+                });//live
+                var leafAnnoList = this.otherContent; //anno list URIS
+                $.ajax({
+                    "url":leafAnnoList,
+                    success: function(annoList3){
+                        annoList3 = JSON.parse(annoList3);
+                        annoListCollection[2] = annoList3;
+                    }
+                });//live
+            }
+        });       
+    }
+    else{ //for the tester from the creation intro set of buttons. 
+        leafIsIn = "http://www.example.org/iiif/LlangBrev/range/8";
+        leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
+        currentLeafServerID = leaf;
+    }
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);
     $("#folioSide1").addClass("selectedFolio");
-
     $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvas+"', 'verso');"); 
-    $("#folioSide2").attr("canvas", betaCanvas);
-    
+    $("#folioSide2").attr("canvas", betaCanvas);   
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-    currentLeafServerID = leaf;
+    $(".leafPopover").show();
+    $("#mainBlockCover").show();
     submitIntro('testEdit');
     alpha = true;
-    annoListCollection[0] = testLists[0];
-    annoListCollection[1] = testLists[1];
-    annoListCollection[2] = testLists[2];
     $("#folioSide1").click();
-    gatherRangesForArrange(1);
-    setTimeout(selectInTree(leafIsIn),1000);
+    selectInTree(leafIsIn);
 }
 
-var test = 0;
 function selectInTree(child){
-    test+=1;
     var depth = $(".rangeArrangementArea").length;
-    console.log("Last area at depth "+depth+".  Test is "+test);
     var lastArrangeArea = $('.rangeArrangementArea[depth="'+depth+'"]');
-    if(test > 3){
-        //clearInterval(newInterval);
-        return false;
-    }
     var childToFindParents = lastArrangeArea.find(".arrangeSection[rangeID='"+child+"']");
     var theParent = childToFindParents.parent();
     var control = true;
