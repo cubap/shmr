@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div class="mainBlock imgAdditionArea">
+    <div id="leafAdditionLabel">
+            Llangantock Leaf Addition
+    </div>
+    <div class="sideBarInfo">
+        <div id="whatPiece">
+            <div id="oneAndtwo">
+                <div style="margin-bottom: 17px;" id="oneAndtwoLabel">LEAF LABEL</div><img style="z-index:2; left: 10px; top:10px;" class="rectoImg" src=""/><img style="right: 60px; top: -10px; z-index: 1;" class="versoImg" src=""/>
+                        <img class="unselectedI" style="left: 34px; top:-11px;" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('oneAndtwo');"/>
+                <img class="selectedI" style="right: 109px; top: 22px;" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('oneAndtwo');"/>
+                </div>
+            <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+                <div id="folio1Label">Folio 1 Label</div>
+                <img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/>
+                <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide1');"/>
+                <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide1');"/>
+                </div>
+            <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
+                <div id="folio1Label">Folio 2 Label</div>
+                <img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/>
+                                        <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide2');"/>
+                <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide2');"/>
+
+            </div>
+        </div>
+    </div>
+    <div id="sideBarArrange">
+        Leaf Label:&nbsp;&nbsp; <input type="text" id="leafLabel"/><br>
+        <div id='leafTmp'>
+            <img style="left: 74px; top:0px;" class="rectoImg" src=""/>
+            <img style="right: 69px; top: 33px;" class="versoImg" src=""/>
+        </div>
+        <div id="arrangeCrumb">
+            <div>This leaf belongs to: </div>
+        </div>
+    </div>
+    <div class="leaf"></div>
+    <div style="clear:both"></div>
+    <div id="fullImgContainer"><div onclick='$("#fullImgContainer").hide(); $("#fullImageShade").hide();' class='closeBtn'>X</div><img src=""/></div>
+    <div id="fullImageShade"></div>
+</div>	

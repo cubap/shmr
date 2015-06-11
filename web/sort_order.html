@@ -14,7 +14,14 @@ and open the template in the editor.
         <script src="http://localhost:8080/brokenBooks/js/bb.js"></script>  
         <title>Sort Breviary Order</title>
         <style>
-
+            .leafPopover{
+                position: absolute;
+                display: none;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                top: 25px;
+            }
             .mainBlock{
                 background-color:white;
             }
@@ -55,17 +62,13 @@ and open the template in the editor.
                 border: 1px solid red;
                 margin-bottom: 5px;
             }
-
             div[relation="bucket"] {
                 display: inline-block;
                 border-right: 2px solid black;
                 border-left: transparent;
                 border-top: transparent;
                 border-bottom: transparent;
-            }
-
-            
-            
+            }           
         </style>
     </head>
     <body>
@@ -99,7 +102,7 @@ and open the template in the editor.
                     <br>
                     You cannot add leaves in this interface.  You can add a new section and define what leaves are in it.
             </p>
-            <div class="arrangeTrail">
+            <div class="arrangeTrail adminTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
                    <div class="rAreaLabel">Llangantock Subsections</div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
@@ -121,6 +124,8 @@ and open the template in the editor.
             <input id="saveGroupForm" type="button" onclick="saveNewGroupForm();" value="Save"/>
             <input type="button" onclick="cancelNewGroupForm();" value="Cancel"/>
         </div>
+        <div class="leafPopover"></div>
+        
     </body>
     <script>
 
@@ -162,7 +167,68 @@ and open the template in the editor.
 
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
-            gatherRangesForArrange(2);
+            $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
+                $(".leaf").load("../brokenBooks/leafInformation.html", function(){
+                        console.log("SET TABS");
+                        $("#formTabs").tabs({
+                            activate: function(event ,ui){
+                            //console.log(event);
+                            if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
+                                $(".sideBarInfo").hide();
+                                $("#sideBarArrange").show();
+                            }
+                            else{
+                                $(".sideBarInfo").show();
+                                $("#sideBarArrange").hide();
+                            }
+                        }
+                        });
+                        $('.canvasImageFile').on("change", function(event){
+                            var target = event.target;
+                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
+                            var files = !!this.files ? this.files : [];
+                            var canvasURI = $(this).parent().attr("canvas"); //local
+                            var canvasServerURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvasServerID"); //live
+                            if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
+
+                            if (/^image/.test( files[0].type)){ // only image file
+                                    var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
+                                var reader = new FileReader(); // instance of the FileReader
+                                reader.readAsDataURL(files[0]); // read the local file
+                                reader.onloadend = function(){ // set image data as background of div
+                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                                    var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
+                                    var annotationObject = {
+                                                            "@id" : newAnnoURI,
+                                                    "@type" : "oa:Annotation",
+                                                    "motivation" : "sc:painting",
+                                                    "label" : "Canvas Image",
+                                                    "resource" : {
+                                                            "@id" : newImageURI,
+                                                            "@type" : "dctypes:Image",
+                                                            "format" : "image/jpeg",
+                                                            "height" : 2365,
+                                                            "width" : 1579
+                                                            },
+                                                            "on" : canvasServerURI
+                                                    };
+                                                    //$("#catalogueInfoFor").val(canvasURI);
+                                    //(annotationObject, canvasURI); // local
+                                    addImage(annotationObject, canvasServerURI); // live\
+                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                        target.click();
+                                    };
+                                };
+                            }
+                        });
+                        gatherRangesForArrange(1); //populate the popover
+                    });
+            });
+            gatherRangesForArrange(2); //populate the admin interface
         });
     </script>
 </html>

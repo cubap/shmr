@@ -16,65 +16,26 @@
             </style>
 	</head>
 	<body>
-		<div class="mainBlock intro">
-			<p>
-				Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  If your data is accurate, your leaf will be placed with the other LLangantock Breviary leaves. 
-			</p>
-			<p>You will prepare this leaf as <span id="whoCreates">a contriubter</span></p>
+            <div class="mainBlock intro">
+                    <p>
+                            Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  If your data is accurate, your leaf will be placed with the other LLangantock Breviary leaves. 
+                    </p>
+                    <p>You will prepare this leaf as <span id="whoCreates">a contriubter</span></p>
 
-			<!-- TESTED. SUCCESSFUL.  
-			<div id="serverLogin">
-				<iframe id="serverLoginFrame" src="http://localhost/image_console.php" WIDTH=650 HEIGHT=400 >
-						TEST TEST TEST
-				</iframe>
-			</div> -->
-			
-			<input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
-			<input type="button" id="editLeaf" value="View Existing Leaf" onclick="existing();"/>
- 			<input id="beAdmin" type="button" value="Be Project Admin" onclick="admin();"/>
-			<input id="beContributer" type="button" value="Be A Contributer" onclick="contributer();"/>
-		</div>
-		<div class="mainBlock imgAdditionArea">
-			<div id="leafAdditionLabel">
-				Llangantock Leaf Addition
-			</div>
-            <div class="sideBarInfo">
-                <div id="whatPiece">
-                    <div id="oneAndtwo">
-                    	<div style="margin-bottom: 17px;" id="oneAndtwoLabel">LEAF LABEL</div><img style="z-index:2; left: 10px; top:10px;" class="rectoImg" src=""/><img style="right: 60px; top: -10px; z-index: 1;" class="versoImg" src=""/>
-                   	 	<img class="unselectedI" style="left: 34px; top:-11px;" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('oneAndtwo');"/>
-                        <img class="selectedI" style="right: 109px; top: 22px;" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('oneAndtwo');"/>
-                	</div>
-                    <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
-                    	<div id="folio1Label">Folio 1 Label</div>
-                    	<img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/>
-                        <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide1');"/>
-                    	<img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide1');"/>
-                	</div>
-                    <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
-                    	<div id="folio1Label">Folio 2 Label</div>
-                    	<img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/>
-						<img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide2');"/>
-                        <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide2');"/>
+                    <!-- TESTED. SUCCESSFUL.  
+                    <div id="serverLogin">
+                            <iframe id="serverLoginFrame" src="http://localhost/image_console.php" WIDTH=650 HEIGHT=400 >
+                                            TEST TEST TEST
+                            </iframe>
+                    </div> -->
 
-                    </div>
-                </div>
+                    <input type="button" id="beginLeafCreation" value="Begin Preparing A Leaf" onclick="submitIntro();"/>
+                    <input type="button" id="editLeaf" value="View Existing Leaf" onclick="existing();"/>
+                    <input id="beAdmin" type="button" value="Be Project Admin" onclick="admin();"/>
+                    <input id="beContributer" type="button" value="Be A Contributer" onclick="contributer();"/>
             </div>
-            <div id="sideBarArrange">
-                Leaf Label:&nbsp;&nbsp; <input type="text" id="leafLabel"/><br>
-                <div id='leafTmp'>
-                    <img style="left: 74px; top:0px;" class="rectoImg" src=""/>
-                    <img style="right: 69px; top: 33px;" class="versoImg" src=""/>
-                </div>
-                <div id="arrangeCrumb">
-                    <div>This leaf belongs to: </div>
-                </div>
-            </div>
-            <div class="leaf"></div>
-            <div style="clear:both"></div>
-            <div id="fullImgContainer"><div onclick='$("#fullImgContainer").hide(); $("#fullImageShade").hide();' class='closeBtn'>X</div><img src=""/></div>
-            <div id="fullImageShade"></div>
-        </div>				
+            <div class="leafPopover"></div>
+					
 	</body>
 </html>
 <script>
@@ -240,67 +201,65 @@ annoListCollection.push(alphaAnnoList, betaAnnoList, zetaAnnoList);
 
 
 	$(function(){
-		//$(".leaf").load("../brokenBooks/leafTemplate.html"); //This will not exist anymore. 
-		$(".leaf").load("../brokenBooks/leafInformation.html", function(){
-                    console.log("SET TABS");
-                    $("#formTabs").tabs({
-                        activate: function(event ,ui){
-                        //console.log(event);
-                        if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
-                            $(".sideBarInfo").hide();
-                            $("#sideBarArrange").show();
+		$(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
+                    $(".leaf").load("../brokenBooks/leafInformation.html", function(){
+                        console.log("SET TABS");
+                        $("#formTabs").tabs({
+                            activate: function(event ,ui){
+                            //console.log(event);
+                            if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
+                                $(".sideBarInfo").hide();
+                                $("#sideBarArrange").show();
+                            }
+                            else{
+                                $(".sideBarInfo").show();
+                                $("#sideBarArrange").hide();
+                            }
                         }
-                        else{
-                            $(".sideBarInfo").show();
-                            $("#sideBarArrange").hide();
-                        }
-                    }
+                        });
+                        $('.canvasImageFile').on("change", function(event){
+                            var target = event.target;
+                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
+                            var files = !!this.files ? this.files : [];
+                            var canvasURI = $(this).parent().attr("canvas"); //local
+                            var canvasServerURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvasServerID"); //live
+                            if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
+
+                            if (/^image/.test( files[0].type)){ // only image file
+                                    var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
+                                var reader = new FileReader(); // instance of the FileReader
+                                reader.readAsDataURL(files[0]); // read the local file
+                                reader.onloadend = function(){ // set image data as background of div
+                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                                    var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
+                                    var annotationObject = {
+                                                            "@id" : newAnnoURI,
+                                                    "@type" : "oa:Annotation",
+                                                    "motivation" : "sc:painting",
+                                                    "label" : "Canvas Image",
+                                                    "resource" : {
+                                                            "@id" : newImageURI,
+                                                            "@type" : "dctypes:Image",
+                                                            "format" : "image/jpeg",
+                                                            "height" : 2365,
+                                                            "width" : 1579
+                                                            },
+                                                            "on" : canvasServerURI
+                                                    };
+                                                    //$("#catalogueInfoFor").val(canvasURI);
+                                    //(annotationObject, canvasURI); // local
+                                    addImage(annotationObject, canvasServerURI); // live\
+                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                        target.click();
+                                    };
+                                };
+                            }
+                        });
                     });
-                });
-                $('.canvasImageFile').on("change", function(event){
-                    //start spinny?
-                    var target = event.target;
-                    var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
-                    var files = !!this.files ? this.files : [];
-                    var canvasURI = $(this).parent().attr("canvas"); //local
-                    var canvasServerURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvasServerID"); //live
-                    if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
-
-                    if (/^image/.test( files[0].type)){ // only image file
-                            var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
-                        var reader = new FileReader(); // instance of the FileReader
-                        reader.readAsDataURL(files[0]); // read the local file
-                        reader.onloadend = function(){ // set image data as background of div
-                            $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                            $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                            $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                            var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                            var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
-                            var annotationObject = {
-                                                    "@id" : newAnnoURI,
-                                            "@type" : "oa:Annotation",
-                                            "motivation" : "sc:painting",
-                                            "label" : "Canvas Image",
-                                            "resource" : {
-                                                    "@id" : newImageURI,
-                                                    "@type" : "dctypes:Image",
-                                                    "format" : "image/jpeg",
-                                                    "height" : 2365,
-                                                    "width" : 1579
-                                                    },
-                                                    "on" : canvasServerURI
-                                            };
-                                            //$("#catalogueInfoFor").val(canvasURI);
-                            //(annotationObject, canvasURI); // local
-                            addImage(annotationObject, canvasServerURI); // live\
-                            target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
-                                target.click();
-                            };
-                            
-                        };
-
-                    }
                 });
 	});
 		

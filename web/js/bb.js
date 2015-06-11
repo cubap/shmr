@@ -1525,6 +1525,14 @@ function getAllCanvases(){
 
 function toggleChildren(parentRange, admin, event){
   console.log("Target class: "+event.target.className);
+  var outer= '';
+    if(admin == "admin"){
+        outer = $(".adminTrail");
+    }
+    else{
+        outer = $(".popoverTrail");
+
+    }
   if(event !== undefined && event.target.className.indexOf("putInGroup") > -1){ //detect if they clicked the checkbox.
     return false;
   }
@@ -1539,7 +1547,7 @@ function toggleChildren(parentRange, admin, event){
     newAreaLabel = "Unordered Leaves From <br>"+extra;
   }
   var labelHTML = '<div class="rAreaLabel">'+newAreaLabel+'</div>';
-  var actualDepth = parseInt($(".rangeArrangementArea").length);
+  var actualDepth = parseInt(outer.find(".rangeArrangementArea").length);
   var sortOrder = "";
   var extraButtons = '<input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
                     <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>\n\
@@ -1548,6 +1556,10 @@ function toggleChildren(parentRange, admin, event){
   if(admin === "admin"){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
       sortOrder = " sortOrder";
+  }
+  else{
+      sortOrder = "";
+      dropAttribute = "";
   }
   if(unassigned){
     intendedDepth = parseInt(parentRange.parent().attr("depth")) + 1;
@@ -1565,11 +1577,16 @@ function toggleChildren(parentRange, admin, event){
     var rangeID = $(this).attr("rangeID");
     var leaf = $(this).attr("leaf");
     if($.inArray(rangeID, existingInCopy) == -1){
-       existingInCopy.push(rangeID);
-       var child = $(this).clone();
-       var childID = child.attr('id');
-       childID = childID.replace("_tmp", "");
-       child.attr('id', childID);
+        existingInCopy.push(rangeID);
+        var child = $(this).clone();
+        if (admin == "admin"){
+            var childID = child.attr('id');
+            childID = childID.replace("_tmp", "");
+            child.attr('id', childID);
+        }
+      
+      
+       
 //       if(leaf == "true"){ //put leaves into the bucket.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
 //            leafCount += 1;
 //            newArea.find('.unassigned').append(child);
@@ -1585,9 +1602,9 @@ function toggleChildren(parentRange, admin, event){
   if(admin == "admin"){
      newArea.children(".unassigned").append(leafCountHTML);
   }
-  if($("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
+  if(outer.find("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     console.log("add new area");
-    $(".arrangeTrail").append(newArea);
+    outer.append(newArea);
     if(unassigned){
         console.log("unassigned unselect selected 1")
         parentRange.parent().find(".selectedSection").removeClass("selectedSection");
@@ -1600,18 +1617,18 @@ function toggleChildren(parentRange, admin, event){
    
   }
   else{ //if the are already exists
-    if(intendedDepth == actualDepth && $("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
+    if(intendedDepth == actualDepth && outer.find("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
       console.log("Child from same depth");
       var objectArray1 = [];
-      $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
+      $.each(outer.find("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
         objectArray1.push($(this));
       });
-      $.each($("div[depth='"+intendedDepth+"']").children('.unassigned').children('.child'),function(){
+      $.each(outer.find("div[depth='"+intendedDepth+"']").children('.unassigned').children('.child'),function(){
         objectArray1.push($(this));
       });     
       var thisDepth = parseInt(intendedDepth) - 1;
       
-      var sectionToMoveTo = $("div[depth='"+ thisDepth +"']").find('.selectedSection');
+      var sectionToMoveTo = outer.find("div[depth='"+ thisDepth +"']").find('.selectedSection');
       console.log("Move children from");
       console.log($("div[depth='"+intendedDepth+"']"));
       console.log("to depth "+thisDepth);
@@ -1624,7 +1641,7 @@ function toggleChildren(parentRange, admin, event){
         sectionToMoveTo.append(thisChild1);
         thisChild1.hide();
       }
-      $("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
+      outer.find("div[depth='"+intendedDepth+"']").remove(); //remove the depth and call again to add the new area
       if(unassigned){
           parentRange.parent().find(".selectedSection").removeClass("selectedSection");
       }
@@ -1638,7 +1655,7 @@ function toggleChildren(parentRange, admin, event){
       console.log("Child from different depth.")
       for(var i = actualDepth; i > intendedDepth-2; i--){
         //console.log("deepest at depth "+i);
-        var deepest = $("div[depth='"+i+"']");
+        var deepest = outer.find("div[depth='"+i+"']");
         //console.log("Deepest arrange sections: "+deepest.children(".notBucket").children(".arrangeSection").length);
         //console.log("Deepest unassigned? "+deepest.children(".unassigned").length);
         var children = [];
@@ -1692,10 +1709,10 @@ function toggleChildren(parentRange, admin, event){
     else{ //if the area clicked was the one already highlighted or the admin interface is not necessary
         console.log("area already highlighted OR not an admin");
         var objectArray2 = [];
-        $.each($("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
+        $.each(outer.find("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
           objectArray2.push($(this));
         });
-        $.each($("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'), function(){
+        $.each(outer.find("div[depth='"+intendedDepth+"']").find('.unassigned').children('.child'), function(){
           objectArray2.push($(this));
         });
         if(parentRange.hasClass("selectedSection")){
@@ -1725,7 +1742,7 @@ function toggleChildren(parentRange, admin, event){
             parentRange.addClass("selectedSection");
         }
      
-        $.each($("div[depth]"),function(){
+        $.each(outer.find("div[depth]"),function(){
           if(parseInt($(this).attr("depth")) >= intendedDepth){//remove the depth and the greater ones open.
               $(this).remove();
           }
@@ -1893,6 +1910,14 @@ function gatherRangesForArrange(which){
     var existingRanges = [];
     var uniqueID = 0;
     var rangesMoved = 0;
+    var outer = "";
+    if(which == 1){
+        outer = $(".popoverTrail");
+    }
+    else if (which == 2){
+        outer = $(".adminTrail");
+    }
+    
     for(var i = rangeCollection.length - 1; i>=0; i--){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -1920,7 +1945,7 @@ function gatherRangesForArrange(which){
             checkbox = "<input class='putInGroup' type='checkbox' />";
         }
         else{
-          dragAttribute = "id='drag_"+uniqueID+"_tmp'";
+          dragAttribute = "";
           dropAttribute = "";
           checkbox = "";
         }
@@ -1938,14 +1963,14 @@ function gatherRangesForArrange(which){
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" "+rightClick+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+rangeCollection[i]["@id"]+"'><span>"+outerRangeLabel+"</span> "+checkbox+"  </div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
-          $(".rangeArrangementArea").find('.notBucket').append(currentRange);
+          outer.find(".rangeArrangementArea").find('.notBucket').append(currentRange);
           if(isLeaf){
             allLeaves.push(rangeCollection[i]);
           }
         }
         else{
           //dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);'";
-          currentRange = $(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
+          currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
         }
         //Create an html range object that can be added
         var innerRanges = rangeCollection[i].ranges;       
@@ -1974,7 +1999,7 @@ function gatherRangesForArrange(which){
                         }
                         if(which == 1){
                           dropAttribute = "";
-                          dragAttrubute = "id='drag_"+uniqueID+"_tmp'";
+                          dragAttribute = "";
                           checkbox2 = "";
                         }
                         var embedRange = $("<div isOrdred='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf+"' relation='"+relation+"' rangeID='"+this['@id']+"'><span>"+thisLabel+"</span> "+checkbox2+"</div>"); //Create an html range object for the inner range.
@@ -1988,7 +2013,7 @@ function gatherRangesForArrange(which){
                         }
                         else{
                           rangesMoved += 1;
-                          var rangeToMove = $(".arrangeSection[rangeID='"+this["@id"]+"']");
+                          var rangeToMove = outer.find(".arrangeSection[rangeID='"+this["@id"]+"']");
                           currentRange.append(rangeToMove);
                           /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
                           rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
@@ -2001,18 +2026,18 @@ function gatherRangesForArrange(which){
         }
     }
     //get leaves into the bucket.  This is just for now.  This makes leaves unordered and I TODO: need to put in an isOrdered tag with these ranges.  
-    var objectsForBucket = $('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
-    objectsForBucket.attr("isordered", "false");
-    $(".unassigned").append(objectsForBucket);
+    //var objectsForBucket = outer.find('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
+    //objectsForBucket.attr("isordered", "false");
+    //$(".unassigned").append(objectsForBucket);
     //Undo the parent aggregator wrapper.
-    var pAggrChildren = $('.pAggr').children('div');
-    $('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
+    var pAggrChildren = outer.find('.pAggr').children('div');
+    outer.find('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
     /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
     pAggrChildren.removeClass("child").addClass("parent");
     $('.pAggr').remove();    
     //set folio counts for all sections in the admin interface, ignore leaves.
     if(which == 2){
-      $.each($(".arrangeSection"), function(){
+      $.each(outer.find(".arrangeSection"), function(){
          $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");

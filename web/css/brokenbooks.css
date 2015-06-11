@@ -41,6 +41,11 @@ and open the template in the editor.
                 position: relative;
                 width: 1000px;
             }
+            .leafPopover{
+                position: relative;
+                margin: 0 auto;
+                
+            }
             .intro{
                 display: block;
             }
