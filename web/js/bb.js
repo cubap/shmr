@@ -10,7 +10,7 @@ var imageID = 1;
 var annoListID = 5;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
-var annoListCollection = [];
+var annoListCollection = new Array(3);
 var testLists = [
     {
         "@type" : "sc:AnnotationList",
@@ -2544,10 +2544,13 @@ function mergeSort(items){
 
 function populateAnnoForms(){
         var annos = [];
+        console.log("populate anno form");
         if(zeta){
+            cosnole.log("For leaf");
             annos = annoListCollection[2].resources;
+            console.log(typeof annos + "    1");
             if(annos.length > 0){
-                if($.parseJSON(annos) == "object"){
+                if(typeof annos == "object"){
                     
                 }
                 else{
@@ -2556,10 +2559,11 @@ function populateAnnoForms(){
             }
         }
         else if(alpha){
+            console.log("for alpha");
             annos = annoListCollection[0].resources;
-            console.log(annos);
+             console.log(typeof annos + "    2");
             if(annos.length > 0){
-                if($.parseJSON(annos) == "object"){
+                if(typeof annos == "object"){
                     
                 }
                 else{
@@ -2568,10 +2572,11 @@ function populateAnnoForms(){
             }
         }
         else{
+            console.log("For beta");
             annos = annoListCollection[1].resources;
-            console.log(annos);
+             console.log(typeof annos + "    3");
             if(annos.length > 0){
-                if($.parseJSON(annos) == "object"){
+                if(typeof annos == "object"){
                     
                 }
                 else{
@@ -3314,9 +3319,9 @@ function populateAnnoForms(){
 			testManifest.structures.push(newRangeObject); //live
 			if(current === 'currentLeaf'){
 				currentLeafServerID = data["@id"];
-				annoListCollection[2].on = data["@id"];
+                                
 				currentLeaf = currentLeafServerID;
-        $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
+                            $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
 			}
 			else{
 				//list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
@@ -3332,7 +3337,11 @@ function populateAnnoForms(){
         	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
         	$.post(listURL, listParams, function(data2){
         		data2 = JSON.parse(data2);
-        		annoListCollection[2]["@id"] = data2["@id"];
+                        if(current = "currentLeaf"){
+                            annoListCollection[2] = newRangeAnnoList;
+                            annoListCollection[2]["@id"] = data;
+                        }
+                        
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
         		var paramObj = {"@id":currentLeafServerID, "otherContent":[data["@id"]]};
         		var params = {"content":JSON.stringify(paramObj)};
@@ -3526,6 +3535,7 @@ function populateAnnoForms(){
             }
             var newCanvas1ServerID = -1;
             var newCanvas2ServerID = -1;
+            annoListCollection = new Array(3);
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
             canvasID += 1;
             var newCanvas1 = {
@@ -3535,7 +3545,7 @@ function populateAnnoForms(){
                 "height" : 1000,
                 "width" : 667,
                 "images" : [],
-                "otherContent": [annoListCollection[0]["@id"]]
+                "otherContent": []
             }
    //    	 var newCanvas1AnnoList = {
 			// "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
@@ -3543,26 +3553,23 @@ function populateAnnoForms(){
 			// "resources" : [],
 			// "on" : newCanvas1["@id"]
    //      } //local
-        //annoListCollection.push(newCanvas1AnnoList);
         annoListID++;
         //testManifest.sequences[0].canvases.push(newCanvas1);
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'recto');"); //local
       	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
-      	 //annoListCollection[0].on = "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID; //local
       	 testManifest.sequences[0].canvases.push(newCanvas1); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
       	 $.post(url, params1, function(data){ //save first new canvas
       	 	data = JSON.parse(data);
-
       	 	newCanvas1["@id"] = data["@id"];
       	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');"); 
       	 	$("#folioSide1").attr("canvas", data["@id"]); 
-                $("#folioSide1").click();
+                
       	 	testManifest.sequences[0].canvases.push(newCanvas1); //live
  	   	 	
         	//annoListCollection.push(newCanvas1AnnoList);
-        	annoListCollection[0].on = data["@id"];
+        	
         	//save anno list for new canvas
         	var newCanvas1AnnoList = {
 				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
@@ -3570,20 +3577,24 @@ function populateAnnoForms(){
 				"resources" : [],
 				"on" : data["@id"]
        	 	} //local
+                annoListCollection[0] = newCanvas1AnnoList;
         	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
+                    console.log("Save first anno list");
         		data = JSON.parse(data);
-        		annoListCollection[0]["@id"] = data["@id"];
+        		annoListCollection[0]["@id"] = data;
         		//update otherContent of first canvas
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
         		var paramObj = {"@id":newCanvas1["@id"], "otherContent":[data["@id"]]};
         		var params = {"content":JSON.stringify(paramObj)};
         		$.post(updateCanvasURL, params, function(data){
+                            $("#folioSide1").click();
         		});
         	});
       	 	newCanvas1ServerID = data["@id"];
   	 		canvasID += 1;
+                        
       	 	var newCanvas2 = {
       	 		"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID,
 		        "@type" : "sc:Canvas",
@@ -3591,8 +3602,8 @@ function populateAnnoForms(){
 		        "height" : 1000,
 		        "width" : 667,
 		        "images" : [],
-		        "otherContent" : [annoListCollection[1]["@id"]]
-	      	 }
+		        "otherContent" : []
+	      	 };
    	  //    	 	var newCanvas2AnnoList = {
 	  //               "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	  //               "@type":"sc:AnnotationList",
@@ -3610,22 +3621,24 @@ function populateAnnoForms(){
 	      	$.post(url, params2, function(data){
 	      		data=JSON.parse(data);
 	      		newCanvas2ServerID = data["@id"];
-      	 		newCanvas2["@id"] = data["@id"];
+                        newCanvas2["@id"] = data["@id"];
       	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+data["@id"]+"','verso');");
       	 		$("#folioSide2").attr("canvas", data["@id"]);
       	 		testManifest.sequences[0].canvases.push(newCanvas2); //live
- 		   	 	var newCanvas2AnnoList = {
+                        var newCanvas2AnnoList = {
 	                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
 	                "on" : data["@id"]
-	        	}
+	        	};
+                        annoListCollection[1] = newCanvas2AnnoList;
 				var listURL2 = "http://localhost:8080/brokenBooks/saveNewRange";
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
-	        	annoListCollection[1].on = data["@id"];
+	        	
 	        	$.post(listURL2, listParams2, function(data){
+                            console.log("Save second anno list");
 	        		data = JSON.parse(data);
-	        		annoListCollection[1]["@id"] = data["@id"];
+	        		annoListCollection[1]["@id"] = data;
 	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
 	        		var paramObj = {"@id":newCanvas2["@id"], "otherContent":[data["@id"]]};
 	        		var params = {"content":JSON.stringify(paramObj)};
@@ -3647,13 +3660,14 @@ function populateAnnoForms(){
 			      	"resources" : [],
 			      	"ranges" : [],
 		      		"isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-		      		"otherContent" : [annoListCollection[2]["@id"]]
+		      		"otherContent" : ""
         		}
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                                 
+                                
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
-                    gatherRangesForArrange(1);
-      	 	});
+                                gatherRangesForArrange(1);
+                    });
   	 	});
       	     	
 	}
