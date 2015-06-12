@@ -19,7 +19,7 @@ var testLists = [
         "version" : 1,
         "permission" : 0,
         "forkFromID" : "",
-        "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546",
+        "@id" :"http://www.example.org/iiif/LlangBrev/annoList/3",
         "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"}]"
     },
     {
@@ -29,7 +29,7 @@ var testLists = [
         "version" : 1,
         "permission" : 0,
         "forkFromID" : "",
-        "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548",
+        "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
         "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/1\"}]"
     },
     {
@@ -39,7 +39,7 @@ var testLists = [
         "version" : 1,
         "permission" : 0,
         "forkFromID" : "",
-        "@id" : "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a",
+        "@id" : "http://www.example.org/iiif/LlangBrev/annoList/2",
         "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
     }       
 ];
@@ -103,7 +103,7 @@ var testManifest = {
                "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
           }
           ],
-          "otherContent":["http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a548"]
+          "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/1"]
          
    },
    {
@@ -125,7 +125,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
           }],
-          "otherContent":["http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a54a"]
+          "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/2"]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -1257,7 +1257,7 @@ var testManifest = {
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1","http://www.example.org/iiif/LlangBrev/canvas/2"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-  "otherContent" : ["http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a546"]
+  "otherContent" : ["http://www.example.org/iiif/LlangBrev/annoList/3"]
 },
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/26",
@@ -1564,36 +1564,133 @@ var testManifest = {
 var rangeCollection = testManifest.structures;
 var pageCanvases = testManifest.sequences[0].canvases;
 var annotationLists = [
-  //   {
-  //     "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
-  //     "@type" : "sc:AnnotationLists",
-  //     "label" : "Fragments",
-  //     "resources" : [ {
-  //       "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
-  //       "@type" : "oa:Annotation",
-  //       "motivation" : "sc:painting",
-  //       "resource" : {
-  //         "@id" : "http://www.yoyowall.com/wp-content/uploads/2013/03/Abstract-Colourful-Cool.jpg",
-  //         "@type" : "dctypes:Image",
-  //         "format" : "image/jpeg",
-  //         "height" : 50,
-  //         "width" : 150
-  //       },
-  //       "on" : "http://www.example.org/iiif/LlangBrev/canvas/1#xywh=10,15,150,50"
-  //     },
-  //     {
-  //         "@id" : "http://www.example.org/iiif/LlangBrev/anno/2",
-  //       "@type" : "oa:Annotation",
-  //       "motivation" : "sc:painting",
-  //       "resource" : {
-  //         "@type" : "cnt:ContentAsText",
-  //         "cnt:chars" : "This is an image fragment."
-  //       },
-  //       "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
-  //     }
-  //   ]
-  // }
-];
+    {
+      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
+      "@type" : "sc:AnnotationLists",
+      "label" : "Fragments",
+      "resources" : [ 
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "BB Identifier",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "BB_LLang_01"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/2",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Nickname",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Bryan's test"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/3",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Date Acquired",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "6/12/15"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/1"
+        }
+      ],
+      "on" :  "http://www.example.org/iiif/LlangBrev/canvas/1"//end resources
+  },
+
+  {
+      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/2",
+      "@type" : "sc:AnnotationLists",
+      "label" : "Fragments",
+      "resources" : [ 
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/4",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Place Of Origin",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "St. Louis"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/5",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Condition",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Deplorable"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/6",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Illustrations",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Smiley Face Doodles"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
+        }
+      ], //end resources
+      "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
+  },
+
+  {
+      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/3",
+      "@type" : "sc:AnnotationLists",
+      "label" : "Fragments",
+      "resources" : [ 
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/7",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "General Metadata",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "This is the very first leaf in the breviary.  An interesting face is that Leonardo da Vinci created it, which makes no sense."
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/range/25"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/8",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Title",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Suspected da Vinci Writings"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/range/25"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/9",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Other Content Info",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "It takes up a much smaller portion of the page than usual."
+          },
+         "on" : "http://www.example.org/iiif/LlangBrev/range/25"
+        }
+      ], //end resources
+      "on" : "http://www.example.org/iiif/LlangBrev/range/25"
+  }
+  //Everything above this fits into the January leaf (and its canvases.)
+] // end lists;
 
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
@@ -1633,7 +1730,6 @@ function getAllCanvases(){
 }
 
 function toggleChildren(parentRange, admin, event){
-  console.log("Target class: "+event.target.className);
   var outer= '';
     if(admin == "admin"){
         outer = $(".adminTrail");
@@ -1642,7 +1738,7 @@ function toggleChildren(parentRange, admin, event){
         outer = $(".popoverTrail");
 
     }
-  if(event !== undefined && event.target.className.indexOf("putInGroup") > -1){ //detect if they clicked the checkbox.
+  if(event !== undefined && event.target.className.indexOf("putInGroup") > -1 || event.target.className.indexOf("leafIcon") > -1){ //detect if they clicked the checkbox or leaf icon.
     return false;
   }
   var children = [];
@@ -1719,14 +1815,11 @@ function toggleChildren(parentRange, admin, event){
      newArea.children(".unassigned").append(leafCountHTML);
   }
   if(outer.find("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
-    console.log("add new area");
     outer.append(newArea);
     if(unassigned){
-        console.log("unassigned unselect selected 1")
         parentRange.parent().find(".selectedSection").removeClass("selectedSection");
     }
     else{
-       console.log("normal unselect selected 1");
        parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
     }
     parentRange.addClass("selectedSection");
@@ -1734,7 +1827,6 @@ function toggleChildren(parentRange, admin, event){
   }
   else{ //if the are already exists
     if(intendedDepth == actualDepth && outer.find("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
-      console.log("Child from same depth");
       var objectArray1 = [];
       $.each(outer.find("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'),function(){
         objectArray1.push($(this));
@@ -1745,10 +1837,7 @@ function toggleChildren(parentRange, admin, event){
       var thisDepth = parseInt(intendedDepth) - 1;
       
       var sectionToMoveTo = outer.find("div[depth='"+ thisDepth +"']").find('.selectedSection');
-      console.log("Move children from");
-      console.log($("div[depth='"+intendedDepth+"']"));
-      console.log("to depth "+thisDepth);
-      console.log(sectionToMoveTo);
+      
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
@@ -1768,37 +1857,26 @@ function toggleChildren(parentRange, admin, event){
       //return false;
     }
     else if (intendedDepth < actualDepth){
-      console.log("Child from different depth.")
       for(var i = actualDepth; i > intendedDepth-2; i--){
-        //console.log("deepest at depth "+i);
         var deepest = outer.find("div[depth='"+i+"']");
-        //console.log("Deepest arrange sections: "+deepest.children(".notBucket").children(".arrangeSection").length);
-        //console.log("Deepest unassigned? "+deepest.children(".unassigned").length);
         var children = [];
-        console.log("Is "+ i +" equal to "+(intendedDepth-1));
         if(i == intendedDepth - 1){
           parentRange.click();
-          console.log("At the level where the actual item clicked needs to be clicked");
         }
         else{
           if(deepest.find(".arrangeSection").length == 0){ //a leaf is highlighted in the previous section
             // do nothing
-            console.log("Leaf highlighted at depth "+ i +"-1.  Do nothing");
           }
           else if (deepest.children(".notBucket").children(".arrangeSection").length ==0 && deepest.children(".unassigned").length == 1){ //The only thing here is unassigned. 
-            console.log("Only found unassigned");
             if(deepest.children(".selectedSection").length > 0){//unassigned is highlighted.  Click it.
-              console.log('unassigned hightlighted, click it.');
               deepest.find(".selectedSection").click();
             }
             else{ //unassigned is not highlighted, which means we dont have to click it.
-              console.log("unassigned is not highlighted.  Do nothing")
               //do nothing
             }
 
           }
           else if(deepest.children(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
-            console.log("Depth "+ i +" -1 is a highlighted unassigned. ");
             //THIS CAUSES ERRORS.  
             if(deepest.find(".selectedSection").length > 0){
               console.log("Leaf from unassigned area is highlighted.  Click it.");
@@ -1806,12 +1884,10 @@ function toggleChildren(parentRange, admin, event){
             }
           }
           else{ //a normal open section.  
-            console.log("Depth "+ i +" is a normal section.");
             if(deepest.find(".selectedSection").length == 0){
               //do nothing
             }
             else if(deepest.find(".selectedSection").attr("class").indexOf("unassigned") > -1){ //the bucket is highlighted.
-              console.log("unassigned is highlighted.")
               deepest.find(".selectedSection").click();
               //do nothing
             }
@@ -1823,7 +1899,6 @@ function toggleChildren(parentRange, admin, event){
       } // end for
     }
     else{ //if the area clicked was the one already highlighted or the admin interface is not necessary
-        console.log("area already highlighted OR not an admin");
         var objectArray2 = [];
         $.each(outer.find("div[depth='"+intendedDepth+"']").children('.notBucket').children('.child'), function(){
           objectArray2.push($(this));
@@ -1834,13 +1909,11 @@ function toggleChildren(parentRange, admin, event){
         if(parentRange.hasClass("selectedSection")){
             parentRange.removeClass("selectedSection");
             if(unassigned){
-                console.log("unassigned unselect selected 2")
                 if(admin !== "admin"){
                   parentRange.parent().find(".unassigned").addClass("selectedSection");
                 }
             }
             else{
-                console.log("normal unselect selected 2");
                 if(admin !== "admin"){
                    parentRange.parent().parent().find(".unassigned").addClass("selectedSection");
                 }
@@ -1848,11 +1921,9 @@ function toggleChildren(parentRange, admin, event){
         }
         else{
             if(unassigned){
-                console.log("unassigned unselect selected 2")
                 parentRange.parent().find(".selectedSection").removeClass("selectedSection");
             }
             else{
-                console.log("normal unselect selected 2");
                parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
             }
             parentRange.addClass("selectedSection");
@@ -1876,7 +1947,6 @@ function toggleChildren(parentRange, admin, event){
   if(admin === "admin"){
     newArea.children('.notBucket').children('.child').show(); //show sections and leaves
     if(unassigned){ /* Its a special situation if we clicked the bucket of an area.  We want to show the children from the bucket outside of an unassigned object.   */
-      console.log("Unassigned was clicked");
       var moveUP = newArea.find('.unassigned').children(".child");
       newArea.children('.notBucket').append(moveUP);
       newArea.children('.notBucket').children(".child").show();
@@ -1891,11 +1961,9 @@ function toggleChildren(parentRange, admin, event){
         newArea.children(".notBucket").append('<div style="color: red;">No Subsections Available</div>');
         newAreaBucket.hide();
         if(parentRange.attr("leaf") !== "true" && !unassigned ){
-          console.log("yes");
           newArea.children(".addGroup").attr("style", "display: inline-block;");
         }
         else{
-          console.log("no");
           newArea.children(".addGroup").hide();
         }
       }
@@ -1910,7 +1978,6 @@ function toggleChildren(parentRange, admin, event){
     }
   }
   else{
-      console.log("NOT AN ADMIN");
     newArea.children('.notBucket').children('div').hide();
     newArea.find('input[type="button"]').remove();
     newArea.children('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
@@ -1973,7 +2040,6 @@ function dropHelp(event){
       }
     }
     var append = true;
-    console.log("get child of this ID: "+data);
     console.log("from "+areaTakenFrom+" to"+areaDroppedTo);     
     if(target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
       console.log("target is self");
@@ -1981,7 +2047,6 @@ function dropHelp(event){
     }
     else{
       for (var i = 0; i < target.childNodes.length; i++) {
-        console.log(target.childNodes[i].id+"_tmp == " +child.id);
         if(target.childNodes[i].id+"_tmp" == child.id || target.childNodes[i].id == child.id ) { //prevent dropping into same column or on self
           console.log("child already here");
           append = false;
@@ -2001,8 +2066,10 @@ function dropHelp(event){
           $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+            var leafURL = child.getAttribute("rangeID");
+            var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
             if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
             }      
          $(this).append(folioCountHTML);
        });
@@ -2171,9 +2238,11 @@ function gatherRangesForArrange(which){
          $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+            var leafURL = $(this).attr("rangeID");
             if($(this).attr("leaf") === "true"){
-               folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
-            }      
+                var leafIsInURL = $(this).parent().attr("rangeID");
+                folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+            }     
             $(this).append(folioCountHTML);
        });
     }
@@ -2272,8 +2341,6 @@ function organizeRanges(){
         // }
         else{ //There are no inner ranges, so we must be on a leaf or a empty sections. 
             var currentCanvases = outerRange.canvases;
-           console.log("Current Range");
-           console.log(outerRange);
             var firstCanvas = currentCanvases[0];
             if(firstCanvas.indexOf("#xywh") >=0){
               firstCanvas = firstCanvas.substring(0, firstCanvas.indexOf("#xywh"));
@@ -2325,10 +2392,8 @@ function organizeRanges(){
                           }                         
                           $.each(currentCanvasAnnotationsLists, function(){
                               var annoListID = String(this);
-                              console.log("Anno list to get annos: "+annoListID);
                               $.each(annotationLists, function(){
                                   if(annoListID == this["@id"]){
-                                    console.log("pushing resources");
                                     currentCanvasAnnotations.push(this.resources);
                                   }
                               });
@@ -2459,7 +2524,6 @@ function organizeRanges(){
                                 var annotation = $("<div class='annotation'></div>");
                                 $.each(currentCanvasAnnotations[x], function(){
                                   var canvas = this.on;
-                                  console.log("annotation on "+canvas);
                                   var XYWHarray2 = [0,0,0,0];
                                   if(canvas.indexOf("#xywh") >= 0){
                                     var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
@@ -2603,11 +2667,13 @@ function populateAnnoForms(){
                 }
             }
         }
+        console.log("annos are");
+        console.log(annos);
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry1 = $(this).find(".content");
             $.each(annos, function(){
-                var checkLabel1 = this.label.replace(":", "").trim();
+                var checkLabel1 = this.resource.label.replace(":", "").trim();
                 if (checkLabel1 == label1){
                     currentEntry1.val(this.resource["cnt:chars"]);
                 }
@@ -2620,7 +2686,7 @@ function populateAnnoForms(){
             var label2 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
-                var checkLabel2 = this.label.replace(":", "").trim();
+                var checkLabel2 = this.resource.label.replace(":", "").trim();
                 if (checkLabel2 == label2){
                     currentEntry2.val(this.resource["cnt:chars"]);
                 }
@@ -2633,7 +2699,7 @@ function populateAnnoForms(){
             var label3 = $(this).find('.formLabel').html().replace(":", "").trim();
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
-                var checkLabel3 = this.label.replace(":", "").trim();
+                var checkLabel3 = this.resource.label.replace(":", "").trim();
                 if (checkLabel3 == label3){
                     currentEntry3.val(this.resource["cnt:chars"]);
                 }
@@ -2650,6 +2716,7 @@ function populateAnnoForms(){
     */
    
     function enterCatalogueInfo(canvasID, canvas){
+        console.log("cat info");
         var previewImgSrc = $("."+canvas+"Img").attr("src");
         $(".imgPreview").attr("src",previewImgSrc);
         $(".content").val(""); //Reset all fields
@@ -2694,6 +2761,7 @@ function populateAnnoForms(){
                 $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                 alpha = beta = zeta = true;
             }
+            console.log("cat info pop anno forms");
             populateAnnoForms();
             // $("#start").attr("onclick", "submitStart('"+canvas+"');");
         
@@ -3469,7 +3537,6 @@ function populateAnnoForms(){
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
 	*/
 	function updateRange(rangeID, leaf, arrange){
-		console.log("Updating range");
 		var currentRange = {};
 		$.each(testManifest.structures, function(){
 			if(this["@id"] === rangeID){
@@ -3480,7 +3547,6 @@ function populateAnnoForms(){
            $.each($(".selectedSection"), function(){
               var thisRangeID = $(this).attr("rangeID");
               var thisName = $(this).children("span").html();
-              console.log("add section "+thisName+" to arrange crumb.");
               if($(this).hasClass("unassigned")){
                 //do not add this to the crumb.
               }
@@ -3492,7 +3558,6 @@ function populateAnnoForms(){
           }
 				}
 				else{
-          console.log("Should not update, leaf already in range");
 					return false;
 				}
 			}
@@ -3606,7 +3671,6 @@ function populateAnnoForms(){
         	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
-                    console.log("Save first anno list");
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data;
         		//update otherContent of first canvas
@@ -3661,7 +3725,6 @@ function populateAnnoForms(){
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
 	        	
 	        	$.post(listURL2, listParams2, function(data){
-                            console.log("Save second anno list");
 	        		data = JSON.parse(data);
 	        		annoListCollection[1]["@id"] = data;
 	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
@@ -3743,7 +3806,6 @@ function populateAnnoForms(){
       var className = event.target.className;
       targetToBreak = undefined;
       if(tagName == "SPAN" || tagName == "INPUT" || className.indexOf("folioCount") > -1){
-          console.log("change event target.")
           var parent = event.target.parentNode;
           targetToBreak = parent;
       }
@@ -3773,7 +3835,6 @@ function populateAnnoForms(){
           group.remove();
       }
       else{
-          console.log("It is not a leaf.  Break it.");
           childrenToBringUp = group.children(".child");
           depth = parseInt(group.parent().parent().attr("depth"));
           $.each(childrenToBringUp, function(){
@@ -3853,3 +3914,139 @@ function populateAnnoForms(){
     $("#mainBlockCover").hide();
     $("#groupTitle").val("");
   }
+
+  function existing(leaf, leafIsIn){
+        var alphaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/1";
+        var betaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/2";
+        //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
+    if(leaf !== undefined){
+        var leafObject = undefined;
+        currentLeafServerID = leaf;
+        $.each(testManifest.structures, function(){
+            //For the demo, you can cheat and not make the calls by making a mock list above and using it.  
+            if(this["@id"] == leaf){
+                leafObject = this;
+                alphaCanvas = this.canvases[0];
+                var leafAnnoList = this.otherContent[0]; //anno list URIS
+                var alphaAnnoList = [];
+                $.each(testManifest.sequences[0].canvases, function(){
+                  if(this["@id"] == alphaCanvas){
+                    alphaAnnoList = this.otherContent[0];
+                  }
+                });
+                betaCanvas = this.canvases[1];
+                var betaAnnoList = [];
+                $.each(testManifest.sequences[0].canvases, function(){
+                  if(this["@id"] == betaCanvas){
+                    betaAnnoList = this.otherContent[0];
+                  }
+                });
+
+                $.each(annotationLists, function(){
+                  if(this["@id"] == alphaAnnoList){
+                    annoListCollection[0] = this;
+                  }
+                });
+                $.each(annotationLists, function(){
+                  if(this["@id"] == betaAnnoList){
+                    annoListCollection[1] = this;
+                  }
+                });
+                
+                 $.each(annotationLists, function(){
+                  if(this["@id"] == leafAnnoList){
+                    annoListCollection[2] = this;
+                  }
+                });
+                /*
+                $.ajax({
+                    "url":alphaAnnoList,
+                    success: function(annoList1){
+                        annoList1 = JSON.parse(annoList1);
+                        annoListCollection[0] = annoList1;
+                    }
+                }); //live
+                var betaAnnoList = betaCanvas.otherContent;
+                $.ajax({
+                    "url":betaAnnoList,
+                    success: function(annoList2){
+                        annoList2 = JSON.parse(annoList2);
+                        annoListCollection[1] = annoList2;
+                    }
+                });//live
+                var leafAnnoList = this.otherContent; //anno list URIS
+                $.ajax({
+                    "url":leafAnnoList,
+                    success: function(annoList3){
+                        annoList3 = JSON.parse(annoList3);
+                        annoListCollection[2] = annoList3;
+                    }
+                });//live
+                */
+            }
+        });       
+    }
+    else{ //for the tester from the creation intro set of buttons. 
+        leafIsIn = "http://www.example.org/iiif/LlangBrev/range/7";
+        leaf = "http://www.example.org/iiif/LlangBrev/range/25";
+        currentLeafServerID = leaf;
+    }
+    gatherRangesForArrange(1);
+    $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
+    $("#folioSide1").attr("canvas", alphaCanvas);
+    $("#folioSide1").addClass("selectedFolio");
+    $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvas+"', 'verso');"); 
+    $("#folioSide2").attr("canvas", betaCanvas);   
+    $("#oneAndtwo").attr("canvas", leaf);
+    $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
+    $(".leafPopover").show();
+    $(".imgAdditionArea").show();
+    $("#mainBlockCover").show();
+    submitIntro('testEdit');
+    alpha = true;
+    beta = false;
+    zeta = false;
+    selectInTree(leafIsIn);
+    $("#folioSide1").click();
+
+}
+
+function selectInTree(child){
+    var depth = $(".popoverTrail").find(".rangeArrangementArea").length;
+    var lastArrangeArea = $(".popoverTrail").find('.rangeArrangementArea[depth="'+depth+'"]');
+  
+    var childToFindParents = lastArrangeArea.find(".arrangeSection[rangeID='"+child+"']");
+    var theParent = childToFindParents.parent();
+    var control = true;
+    if(childToFindParents.length === 0 || childToFindParents.attr("class").indexOf("unassigned") > -1){
+        return false;
+    }
+    if(theParent.attr("class").indexOf("notBucket") > -1 || theParent.attr("class").indexOf('unassigned') > -1 ){
+        childToFindParents.click();
+        selectInTree(child);
+        // childToFindParents.addClass('selectedSection');
+        // toggleChildren(childToFindParents, "recurse");
+    }
+    else{
+        while(control == true){
+            if(theParent.attr("class").indexOf("notBucket") > -1 || theParent.attr("class").indexOf('unassigned') > -1 ){
+                control = false;
+            }
+            else{
+                if(theParent.parent().attr("class") == "notBucket" || theParent.parent().attr("class").indexOf('unassigned') > -1 ){
+                    //do nothing
+                    control = false;
+                }
+                else{
+                    theParent = theParent.parent();
+                }
+            }
+        }
+        recurseID = child;
+        theParent.click();
+        selectInTree(child);
+        // theParent.addClass('selectedSection');
+        // toggleChildren(theParent, "recurse");
+    }
+
+}

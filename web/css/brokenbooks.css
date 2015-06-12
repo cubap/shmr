@@ -44,7 +44,7 @@ and open the template in the editor.
             .leafPopover{
                 position: relative;
                 margin: 0 auto;
-                
+                background-color: #000;
             }
             .intro{
                 display: block;
