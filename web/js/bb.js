@@ -3841,8 +3841,8 @@ function populateAnnoForms(){
               console.log("moveing child");
               console.log($(this));
               console.log("into");
-              console.log($("div[depth='"+depth+"']").children(".notBucket"));
-              $("div[depth='"+depth+"']").children(".notBucket").append($(this));
+              console.log($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket"));
+              $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append($(this));
               $(this).show();
           });
           console.log("children moved.  Remove group.");
@@ -3991,7 +3991,6 @@ function populateAnnoForms(){
         leaf = "http://www.example.org/iiif/LlangBrev/range/25";
         currentLeafServerID = leaf;
     }
-    gatherRangesForArrange(1);
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);
     $("#folioSide1").addClass("selectedFolio");
@@ -3999,16 +3998,35 @@ function populateAnnoForms(){
     $("#folioSide2").attr("canvas", betaCanvas);   
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
+
     $(".leafPopover").show();
+    var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
+    var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
     $(".imgAdditionArea").show();
+    if($(".imgAdditionArea").children(".leafPopClose").length == 0){
+      $(".imgAdditionArea").append(buttonToClose);
+    }
     $("#mainBlockCover").show();
+    $("#placement").children("input[type='button']").hide();
+    $("#saveMetadata").hide();
+    $("#cancelMetadata").hide();
+    $(".content").attr("readonly", "readonly");
+    $("#placement").children("p:first").html("This area shows where the leaf is positioned in the structure.  This cannot be altered here.  If you want to move your leaf to a new section \n\
+      close this and use the drag and drop interface.")
     submitIntro('testEdit');
     alpha = true;
     beta = false;
     zeta = false;
     selectInTree(leafIsIn);
     $("#folioSide1").click();
+    $(".popoverTrail").children(".rangeArrangementArea").append(arrangeAreaCover);
 
+}
+
+function closeLeafPopover(){
+  $(".popoverTrail").children(".rangeArrangementArea:first").find(".selectedSection").click();
+  $(".imgAdditionArea").hide();
+  $("#mainBlockCover").hide();
 }
 
 function selectInTree(child){
