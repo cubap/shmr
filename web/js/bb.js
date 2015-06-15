@@ -3483,7 +3483,8 @@ function populateAnnoForms(){
             var mockID = "http://www.example.org/iiif/LlangBrev/range/"+$(".arrangeSection").length;
             var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
             var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-            var newGroup = $("<div rangeID='"+mockID+"' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" leaf='false' onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
+            var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
+            var newGroup = $("<div rangeID='"+mockID+"' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" leaf='false' onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
             $.each(childrenForGroup, function(){
               var newChild = $(this);
               if(newChild.hasClass("parent")){
