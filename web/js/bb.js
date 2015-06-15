@@ -3880,6 +3880,8 @@ function populateAnnoForms(){
       }
       else{
           var checkedLeaves = $("#allLeaves").find("input:checked");
+          var leafCount = checkedLeaves.length;
+          var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           $.each(checkedLeaves, function(){
@@ -3894,6 +3896,7 @@ function populateAnnoForms(){
                   }
               })
           });
+          newGroup.append(leafCountHTML);
           $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
           newGroup.show();
           $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
