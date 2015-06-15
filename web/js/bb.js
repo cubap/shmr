@@ -3452,6 +3452,7 @@ function populateAnnoForms(){
 
   function makeAgroup(title){
       console.log("MAKE GROUP");
+      var leafCount = 0;
         if(title===""){
           $(".noTitleWarning").show();
           setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
@@ -3461,7 +3462,10 @@ function populateAnnoForms(){
           var childrenForGroup = [];
           $.each(theArea.find("input:checked"), function(){
             childrenForGroup.push($(this).parent());
+            var leaves = parseInt($(this).parent().find(".folioCount").html());
+            leafCount += leaves;
           });
+          var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var uniqueID = $(".arrangeSection").length + 1;
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
           var inABucket = false;
@@ -3483,6 +3487,7 @@ function populateAnnoForms(){
             $.each(childrenForGroup, function(){
               newGroup.append($(this));
             });
+            newGroup.append(folioCountHTML);
             areaForNewGroup.children(".notBucket").append(newGroup);
             areaForNewGroup.children(".notBucket").children(".child").show();
             newGroup.children(".child").hide();
