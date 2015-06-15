@@ -3444,7 +3444,7 @@ function populateAnnoForms(){
     <div class='newGroupCenter'>New Group Title<input id='newGroupTitle' type='text'/><div class='noTitleWarning'>You must supply a title to make a group.</div></div>\n\
         <input onclick=\"makeAgroup($('#newGroupTitle').val());\" type='button' value='Submit'/><input onclick=\"$('#newGroupTitleArea').remove();  $('#mainBlockCover').hide();\" type='button' value='Cancel'/>\n\
     </div>");
-    $('body').append(newTitleRequest);
+    $('.adminTrail').append(newTitleRequest);
     $("#mainBlockCover").show();
     theArea = inThisArea;
     

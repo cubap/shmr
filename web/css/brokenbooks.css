@@ -717,12 +717,15 @@ and open the template in the editor.
                 position: relative;
             }
             #newGroupForm{
-                position: absolute;
-                background-color: #FFF;
-                z-index: 5;
-                left: 38%;
-                top: 13%;
-                display: none;
+              position: fixed;
+              background-color: #FFF;
+              z-index: 5;
+              top: 13%;
+              display: none;
+              margin: 0 auto;
+              left: 0;
+              right: 0;
+              width: 80%;
             }
             #allLeaves{
                 position: relative;
