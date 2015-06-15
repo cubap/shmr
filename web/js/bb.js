@@ -3485,6 +3485,11 @@ function populateAnnoForms(){
             var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
             var newGroup = $("<div rangeID='"+mockID+"' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" leaf='false' onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
             $.each(childrenForGroup, function(){
+              var newChild = $(this);
+              if(newChild.hasClass("parent")){
+                newChild.removeClass("parent").addClass("child");
+                newGroup.removeClass("child").addClass("parent");
+              }
               newGroup.append($(this));
             });
             newGroup.append(leafCountHTML);
@@ -3889,6 +3894,9 @@ function populateAnnoForms(){
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
+          if(depth ===1){
+            newGroup.removeClass("child").addClass("parent");
+          }
           $.each(checkedLeaves, function(){
               var leafID = $(this).attr("rangeID");
               var leafLabel = $(this).attr("label");
