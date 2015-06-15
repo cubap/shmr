@@ -933,7 +933,30 @@ var testManifest = {
           "images" : [],
           "otherContent":[]
          
-    }]
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/55",
+          "@type" : "sc:Canvas",
+          "label" : "SLU_VFL_MS_002_fol_b_r",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    {
+      //This will be the anchor canvas in the anchor range
+          "@id" : "http://www.example.org/iiif/LlangBrev/canvas/56",
+          "@type" : "sc:Canvas",
+          "label" : "SLU_VFL_MS_002_fol_b_v",
+          "height" : 300,
+          "width" : 200,
+          "images" : [],
+          "otherContent":[]
+         
+    },
+    ]
 }], 
 "structures" : [
 
@@ -978,7 +1001,8 @@ var testManifest = {
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/13",
       "http://www.example.org/iiif/LlangBrev/range/14",
-      "http://www.example.org/iiif/LlangBrev/range/15"
+      "http://www.example.org/iiif/LlangBrev/range/15",
+      "http://www.example.org/iiif/LlangBrev/range/53"
   ],
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1553,6 +1577,17 @@ var testManifest = {
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/53","http://www.example.org/iiif/LlangBrev/canvas/54"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
   "otherContent" : []
+},
+{
+  "@id":"http://www.example.org/iiif/LlangBrev/range/53",
+  "@type":"sc:Range",
+  "label":"Demo Test Leaf",
+  "ranges" : [
+
+  ],
+  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/55","http://www.example.org/iiif/LlangBrev/canvas/56"],
+  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+  "otherContent" : []
 }
 
 ]
@@ -1644,7 +1679,6 @@ var annotationLists = [
       ], //end resources
       "on" : "http://www.example.org/iiif/LlangBrev/canvas/2"
   },
-
   {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/3",
       "@type" : "sc:AnnotationLists",
@@ -1685,9 +1719,462 @@ var annotationLists = [
         }
       ], //end resources
       "on" : "http://www.example.org/iiif/LlangBrev/range/25"
-  }
+  },
+  {
+      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/4",
+      "@type" : "sc:AnnotationLists",
+      "label" : "Fragments",
+      "resources" : [ 
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/10",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "BB Identifier",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "BB_Llang_003_r"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+         {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/11",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Institution or Repository",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Saint Louis University"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/12",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Shelfmark",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "SLU VFL MS 002, fol. b, recto"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/13",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Date Acquired",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "1962"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/14",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Provenance",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Milton& Gail Fischmann, 1962"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/15",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Bibliography",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Evans, E.S. \"Medieval manuscripts at Saint Louis University: a catalogue,\" in Manuscripta 47/48 (2003/2004), p. 56-64."
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/16",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Language",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Latin"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/17",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Subject",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Catholic Church, Liturgy"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/18",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Title (refers to contents)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Feast of Holy Innocents (Dec 28), Matins, Lessons 4-7"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/19",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Incipit",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "[Et ideo dignum...fuit causa]//p[o]ene, qui extitit et corone, ip[s]e odii c[aus]a qui p[rae]mii ..."
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/19",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Date",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "1441-1448"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/20",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Place Of Origin",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Ferrara, Italy"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/21",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Format (single leaf, half bifolium, fragment)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Single leaf"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/22",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Dimensions",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "275 x 200 (170 x 130) mm"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/23",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Columns",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "2"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/24",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Lines",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "30"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/25",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Script",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Gothic textualis rotunda"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/26",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Decorations",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "4 two-line initials, two vertical bar extensions terminating in floral and foliate forms"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/27",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Artist(s)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+         {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/28",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Artist(s)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        }
+      ], //end resources
+      "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+  },
+  {
+      "@id" : "http://www.example.org/iiif/LlangBrev/annoList/5",
+      "@type" : "sc:AnnotationLists",
+      "label" : "Fragments",
+      "resources" : [ 
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/29",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "BB Identifier",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "BB_Llang_003_v"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+         {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/30",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Institution or Repository",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Saint Louis University"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/31",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Shelfmark",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "SLU VFL MS 002, fol. b, verso"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/32",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Date Acquired",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "1962"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/33",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Provenance",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Milton& Gail Fischmann, 1962"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/34",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Bibliography",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Evans, E.S. \"Medieval manuscripts at Saint Louis University: a catalogue,\" in Manuscripta 47/48 (2003/2004), p. 56-64."
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/35",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Language",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Latin"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/36",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Subject",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Catholic Church, Liturgy"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/37",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Title (refers to contents)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Feast of Holy Innocents (Dec 28), Matins, Lessons 7-9, Laud"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/38",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Explicit",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Cum rel[iquis] a[n]t[iphona]. A bymatu et infra occidit multos pueros hero//[des propter "
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/39",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Date",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "1441-1448"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/40",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Place Of Origin",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Ferrara, Italy"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/41",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Format (single leaf, half bifolium, fragment)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Single leaf"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/42",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Dimensions",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "275 x 200 (170 x 130) mm"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/43",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Columns",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "2"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/44",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Lines",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "30"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/45",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Script",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Gothic textualis rotunda"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/46",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Decorations",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "2 two-line initials, two vertical bar extensions terminating in floral and foliate forms"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        },
+        {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/47",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Artist(s)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        },
+         {
+          "@id" : "http://www.example.org/iiif/LlangBrev/anno/48",
+          "@type" : "oa:Annotation",
+          "motivation" : "sc:painting",
+          "resource" : {
+            "label" : "Artist(s)",
+            "@type" : "cnt:ContentAsText",
+            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
+          },
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
+        }]
   //Everything above this fits into the January leaf (and its canvases.)
-] // end lists;
+        }] // end lists;
 
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
