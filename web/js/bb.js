@@ -942,7 +942,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/4"]
          
     },
     {
@@ -953,7 +953,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/5"]
          
     },
     ]
