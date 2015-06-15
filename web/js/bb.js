@@ -3462,7 +3462,7 @@ function populateAnnoForms(){
           var childrenForGroup = [];
           $.each(theArea.find("input:checked"), function(){
             childrenForGroup.push($(this).parent());
-            var leaves = parseInt($(this).parent().find(".folioCount").html());
+            var leaves = parseInt($(this).parent().children(".folioCount").html());
             leafCount += leaves;
           });
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
@@ -3487,10 +3487,10 @@ function populateAnnoForms(){
             $.each(childrenForGroup, function(){
               newGroup.append($(this));
             });
-            newGroup.append(folioCountHTML);
+            newGroup.append(leafCountHTML);
             areaForNewGroup.children(".notBucket").append(newGroup);
-            areaForNewGroup.children(".notBucket").children(".child").show();
-            newGroup.children(".child").hide();
+            areaForNewGroup.children(".notBucket").children(".arrangeSection").show();
+            newGroup.children(".arrangeSection").hide();
             //newGroup.show();
             $('#newGroupTitleArea').remove();
             $("#mainBlockCover").hide();
