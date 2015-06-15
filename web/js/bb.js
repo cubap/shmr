@@ -3,10 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var rangeID = 1;
-var canvasID = 1;
-var annoID = 1;
-var imageID = 1;
+var rangeID, canvasID, annoID, imageID = 1;
 var annoListID = 5;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
