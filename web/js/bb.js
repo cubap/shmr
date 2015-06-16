@@ -2493,7 +2493,9 @@ function dropHelp(event){
    */
   var targetTag = event.target.tagName;
   var target = undefined;
-    if(targetTag == "SPAN"){
+  console.log("this is the target");
+  console.log(event.target);
+    if(targetTag == "SPAN" || targetTag.indexOf("INPUT")>-1){
         console.log("Change target");
         var eventParent = event.target.parentNode;
         target = eventParent;
@@ -2501,10 +2503,11 @@ function dropHelp(event){
     else{
         target = event.target;
     }
-    console.log("Drop help called");
     event.preventDefault();
     var data = "";
     data = event.dataTransfer.getData("text");
+    console.log("Drop help called w/ data ========== "+data);
+
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
     var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
@@ -2512,7 +2515,9 @@ function dropHelp(event){
     
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
-    
+    console.log("This is the child");
+    console.log(child);
+    if(child === null || child === undefined) return false;
     if(targetClass.indexOf('notBucket') > -1){
       child.style.display = "block";
       areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
@@ -2525,10 +2530,16 @@ function dropHelp(event){
       }
     }
     var append = true;
-    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);     
-    if(target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
-      console.log("target is self");
-      append = false;
+    if(target.id === data || target.id === data+"_tmp"){
+        console.log("Target is self");
+        child.id = child.id.replace("_tmp", "");
+        child.style.display = "block";
+        append = false;
+    }   
+    else if(areaDroppedTo == areaTakenFrom){//dont append to self or same section
+      if(target.className.indexOf("notBucket") > -1){
+        append = false;
+      }
     }
     else{
       for (var i = 0; i < target.childNodes.length; i++) {
@@ -2537,7 +2548,6 @@ function dropHelp(event){
           append = false;
           child.id = child.id.replace("_tmp", "");
           child.style.display = "block";
-          return false;
         }    
       } 
     }
@@ -2558,21 +2568,22 @@ function dropHelp(event){
             }      
          $(this).append(folioCountHTML);
        });
-       
+       if($("div[depth='"+areaTakenFromDepth+"']").children(".notBucket").children(".child").length == 0){
+        $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").hide();
+        $("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").hide();
+         //newArea.children(".addGroup").hide();
+      }
+      else{
+        $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").show();
+        //$("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").show();
+         //newArea.children(".addGroup").show();
+      }
     }
     else{
       event.preventDefault();
+      return false;
     }
-    if($("div[depth='"+areaTakenFromDepth+"']").children(".notBucket").children(".child").length == 0){
-      $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").hide();
-      $("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").hide();
-       //newArea.children(".addGroup").hide();
-    }
-    else{
-      $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").show();
-      //$("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").show();
-       //newArea.children(".addGroup").show();
-    }
+    
     
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
 }
