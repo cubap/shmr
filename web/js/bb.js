@@ -4524,10 +4524,10 @@ function populateAnnoForms(){
     $(".versoImg").attr("src", betaImage);
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-    $("#folio1Label").val(alphaLabel);
-    $("#folio2Label").cal(betaLabel);
+    $("#folio1Label").html(alphaLabel);
+    $("#folio2Label").html(betaLabel);
     $("#leafLabel").val(leafLabel);
-    $("#oneAndTwoLabel").val(leafLabel);
+    $("#oneAndtwoLabel").html(leafLabel);
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
