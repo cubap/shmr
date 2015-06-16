@@ -164,6 +164,10 @@ and open the template in the editor.
                 position: relative;
                 height: auto;
             }
+            #notes{
+                width: 475px;
+                height: 325px;
+            }
             .infoPart{
                 margin: 10px 0px;
             }

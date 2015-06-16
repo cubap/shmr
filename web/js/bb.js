@@ -4420,8 +4420,11 @@ function populateAnnoForms(){
   function existing(leaf, leafIsIn){
         var alphaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/1";
         var betaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/2";
-        var alphaImage, betaImage = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
-        var leafLabel = "";
+        var alphaImage  = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
+        var betaImage = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
+        var alphaLabel = "Folio 1 Label"
+        var betaLabel = "Folio 2 Label";
+        var leafLabel = "Leaf Label";
         //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
     if(leaf !== undefined){
         var leafObject = undefined;
@@ -4431,13 +4434,18 @@ function populateAnnoForms(){
             if(this["@id"] == leaf){
                 leafObject = this;
                 alphaCanvas = this.canvases[0];
-                leafLabel = this.label;
+                if(this.label !== ""){
+                  leafLabel = this.label;
+                }
+                
                 var leafAnnoList = this.otherContent[0]; //anno list URIS
                 var alphaAnnoList = [];
                 $.each(testManifest.sequences[0].canvases, function(){
                   if(this["@id"] == alphaCanvas){
                     alphaAnnoList = this.otherContent[0];
-                    console.log("alpha img length "+this.images.length)
+                    if(this.label !== ""){
+                      alphaLabel = this.label;
+                    }
                     if(this.images.length > 0){
                       alphaImage = this.images[0].resource["@id"];
                     }
@@ -4448,7 +4456,9 @@ function populateAnnoForms(){
                 $.each(testManifest.sequences[0].canvases, function(){
                   if(this["@id"] == betaCanvas){
                     betaAnnoList = this.otherContent[0];
-                    console.log("beta img length "+this.images.length)
+                    if(this.label!== ""){
+                      betaLabel = this.label;
+                    }
                     if(this.images.length > 0){
                       betaImage = this.images[0].resource["@id"];
                     }
@@ -4514,7 +4524,10 @@ function populateAnnoForms(){
     $(".versoImg").attr("src", betaImage);
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
+    $("#folio1Label").val(alphaLabel);
+    $("#folio2Label").cal(betaLabel);
     $("#leafLabel").val(leafLabel);
+    $("#oneAndTwoLabel").val(leafLabel);
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
