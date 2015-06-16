@@ -941,7 +941,18 @@ var testManifest = {
           "label" : "SLU_VFL_MS_002_fol_b_r",
           "height" : 300,
           "width" : 200,
-          "images" : [],
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                "height" : 2365,
+                "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
+          }],
           "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/4"]
          
     },
@@ -952,7 +963,18 @@ var testManifest = {
           "label" : "SLU_VFL_MS_002_fol_b_v",
           "height" : 300,
           "width" : 200,
-          "images" : [],
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                "height" : 2365,
+                "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
+          }],
           "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/5"]
          
     },
@@ -1933,17 +1955,6 @@ var annotationLists = [
             "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
           },
           "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
-        },
-         {
-          "@id" : "http://www.example.org/iiif/LlangBrev/anno/28",
-          "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
-          "resource" : {
-            "label" : "Artist(s)",
-            "@type" : "cnt:ContentAsText",
-            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
-          },
-          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
         }
       ], //end resources
       "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
@@ -2160,19 +2171,9 @@ var annotationLists = [
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
           },
-          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
-        },
-         {
-          "@id" : "http://www.example.org/iiif/LlangBrev/anno/48",
-          "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
-          "resource" : {
-            "label" : "Artist(s)",
-            "@type" : "cnt:ContentAsText",
-            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
-          },
-          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
-        }]
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        }],
+        "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
   //Everything above this fits into the January leaf (and its canvases.)
         }] // end lists;
 
@@ -4419,6 +4420,8 @@ function populateAnnoForms(){
   function existing(leaf, leafIsIn){
         var alphaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/1";
         var betaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/2";
+        var alphaImage, betaImage = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
+        var leafLabel = "";
         //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
     if(leaf !== undefined){
         var leafObject = undefined;
@@ -4428,11 +4431,16 @@ function populateAnnoForms(){
             if(this["@id"] == leaf){
                 leafObject = this;
                 alphaCanvas = this.canvases[0];
+                leafLabel = this.label;
                 var leafAnnoList = this.otherContent[0]; //anno list URIS
                 var alphaAnnoList = [];
                 $.each(testManifest.sequences[0].canvases, function(){
                   if(this["@id"] == alphaCanvas){
                     alphaAnnoList = this.otherContent[0];
+                    console.log("alpha img length "+this.images.length)
+                    if(this.images.length > 0){
+                      alphaImage = this.images[0].resource["@id"];
+                    }
                   }
                 });
                 betaCanvas = this.canvases[1];
@@ -4440,6 +4448,10 @@ function populateAnnoForms(){
                 $.each(testManifest.sequences[0].canvases, function(){
                   if(this["@id"] == betaCanvas){
                     betaAnnoList = this.otherContent[0];
+                    console.log("beta img length "+this.images.length)
+                    if(this.images.length > 0){
+                      betaImage = this.images[0].resource["@id"];
+                    }
                   }
                 });
 
@@ -4494,12 +4506,15 @@ function populateAnnoForms(){
     }
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);
+    console.log("alpha image "+alphaImage+".  Beta Image "+betaImage+".");
+    $(".rectoImg").attr("src", alphaImage);
     $("#folioSide1").addClass("selectedFolio");
     $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvas+"', 'verso');"); 
     $("#folioSide2").attr("canvas", betaCanvas);   
+    $(".versoImg").attr("src", betaImage);
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-
+    $("#leafLabel").val(leafLabel);
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
