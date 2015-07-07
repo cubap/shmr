@@ -23,30 +23,28 @@ and open the template in the editor.
                     <li>
                         <a href="#contextForm">Context</a>
                         <img class="helperIcon" helper="context" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
-                        <div class="helperContent" helper="context">Attributes that concern the history of the manuscript, including shelfmarks, current location, patronage, provenance, additions to the manuscript 
-                            that point to function and ownership, including the binding, ex libris plates, library stamps, insignia, frames and other evidence of use.</div>
+                        <div class="helperContent" helper="context">Attributes that concern the history of the manuscript, including shelfmarks, current location, patronage, provenance, additions to the manuscript that point to function and ownership, including the binding, ex libris plates, library stamps, insignia, frames and other evidence of use.</div>
                     </li>
                     <li>
                         <a href="#carrierForm">Carrier</a>
                         <img class="helperIcon" helper="carrier" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
-                        <div class="helperContent" helper="carrier">Attributes that concern the description of the manuscript as a physical
-                            artifact, including date, place of origin, support, dimensions, script, layout, decoration, scribes, and artists.</div>
+                        <div class="helperContent" helper="carrier">Attributes that concern the description of the manuscript as a physical artifact, including date, place of origin, support, dimensions, script, layout, decoration, scribes, and artists.</div>
                         
                     </li>
                     <li>
                         <a href="#contentForm">Content</a>
                         <img class="helperIcon" helper="content" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
                         <div class="helperContent" helper="content">Attributes that concern the text or verbal information of the manuscript,
-                            including author, title, subject, language, translation, translators, preface, incipits, explicits, colophons, and indices.</div>
+                            including author, title, subject, language, translator, prologue, incipits, explicits, colophons, and indices.</div>
                     </li>
                     <li>
                         <a href="#notesForm">General</a>
                         <img class="helperIcon" helper="general" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
-                        <div class="helperContent" helper="general">Attributes that the contributor does not wish to assign to any category.  This section can also be for general notes or for interesting information you would like to store with the object you are describing (such as a Digital Scriptorium link to a record for this object)</div>
+                        <div class="helperContent" helper="general">Attributes that the Contributor does not wish to assign to any category.  This section can also be for general notes or for interesting information you would like to store with the object you are describing (such as a Digital Scriptorium link to a record for this object)</div>
                     </li>
                     <li ><a href="#placement">Arrange</a>
                         <img class="helperIcon" helper="arrange" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
-                        <div class="helperContent" helper="arrange">This area shows the sections you can place the leaf into.  By default, the leaf you are creating has already been placed into the "bucket", which is just a collection of all the leaves.  If you would like to put it into a specific section, click on that section to highlight it.  Click "Save Arragement" to save your selection.</div>
+                        <div class="helperContent" helper="arrange">This area shows the sections into which you can place the leaf.  By default, the leaf you are creating has already been placed into the "bucket", which is just a collection of all the leaves contributed thus far.  If you would like to put it into a specific section, click on that section to highlight it.  Click "Save Arrangement" to save your selection.</div>
                     </li>
                 </ul>
                     <!-- <h3 id="contextHeader">Context</h3> -->
@@ -54,7 +52,9 @@ and open the template in the editor.
                             <table>
                                 <tbody>
                                     <tr class="contextFormEntry"><td class="formLabel">BB Identifier: </td> <td> <input class="content" type="text"  id="bbIdentifier"/></td></tr>
-                                    <tr class="contextFormEntry"><td class="formLabel">Institution or Repository: </td> <td> <input class="content" type="text"  id="InstOrRepo"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Current Location: </td> <td> <input class="content" type="text"  id="currentLoc"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Institution: </td> <td> <input class="content" type="text"  id="inst"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Repository: </td> <td> <input class="content" type="text"  id="repo"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Shelfmark: </td> <td> <input class="content" type="text"  id="contextFolioID"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Nickname:  </td> <td> <input class="content" type="text"  id="nickname" /> </td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Patron (first owner): </td> <td> <input class="content" type="text"  id="contextPatron"/></td></tr>
@@ -63,7 +63,7 @@ and open the template in the editor.
                                     <tr class="contextFormEntry"><td class="formLabel">Insignia (coat of arms, etc.) </td> <td> <input class="content" type="text"  id="insignia"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Date Sold: </td> <td> <input class="content" type="text"  id="contextAuction" /></textarea</td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Date Acquired: </td> <td> <input class="content" type="text"  id="contextDateAcquired"/></td></tr>
-                                    <tr class="contextFormEntry"><td class="formLabel">Ex libris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Ex Libris: </td> <td> <input class="content" type="text"  id="exlibris"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Library Stamp: </td> <td> <input class="content" type="text"  id="libraryStamp"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input class="content" type="text"  id="binding"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input class="content" type="text"  id="frame"/></td></tr>
@@ -78,8 +78,10 @@ and open the template in the editor.
                     <div id="carrierForm">
                             <table>
                                     <tbody>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Century: </td> <td> <input class="content" type="text" class="content" id="carrierCentury"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Date: </td> <td> <input class="content" type="text" class="content" id="carrierDate"/></td></tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Place Of Origin: </td> <td> <input class="content" type="text" class="content" id="carrierOrigin"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Country Of Origin: </td> <td> <input class="content" type="text" class="content" id="carrierOrigin"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">City Of Origin: </td> <td> <input class="content" type="text" class="content" id="carrierOrigin2"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Format (single leaf, half bifolium, fragment): </td> <td> <input class="content" type="text" class="content" id="carrierFormat"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Material Support: </td> <td> <input class="content" type="text" class="content" id="support"/></td></tr>
                                             <tr class="carrierFormEntry" special="dimensions">
@@ -126,30 +128,15 @@ and open the template in the editor.
                                             <tr class="carrierFormEntry"><td class="formLabel">Prickings: </td> <td> <input class="content" type="text" id="carrierPrickings" /> </td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Script: </td> <td> <input class="content" type="text" id="carrierScript"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Music Notation: </td> <td> <input class="content" type="text" id="musicNotation"/></td></tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Scribe (who wrote the script): </td> <td> <input class="content" type="text" class="carrierFormEntry" id="scribe"/></td></tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Colophon: </td> <td> <input class="content" type="text"  id="colophon"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Scribe: </td> <td> <input class="content" type="text" class="carrierFormEntry" id="scribe"/></td></tr>
                                             <tr class="carrierFormEntry" special="decorations">
-                                                    <td class="formLabel ">Decorations: </td>
-                                                    <td>
-                                                            <select class="specialFormEntry">
-                                                                    <option value="0">Type</option>
-                                                                    <option value="initials">Initials</option>
-                                                                    <option value="borders">Border</option>
-                                                            </select>
-                                                            <div id="initials">
-                                                                    <span class="formLabel">Initials:<input class="content" id="carrierInitials" type="text"/></span>
-                                                            </div>
-                                                            <div id="borders">
-                                                                    <span class="formLabel">Borders:<input class="content" id="carrierBorder" type="text"/></span>
-                                                            </div>
-                                                    </td>
-                                            </tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Illustrations: </td> <td> <input class="content" type="text" id="carrierIllustrations"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Decoration: </td> <td> <input class="content" type="text" id="carrierDecorations"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Illustration: </td> <td> <input class="content" type="text" id="carrierIllustrations"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Catch Words: </td> <td> <input class="content" type="text" id="catchWords"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Quire Signatures: </td> <td> <input class="content" type="text" id="carrierSignatures"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Artist(s)</td> <td> <textarea class="content" id="carrierArtists"></textarea></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Folio Number: </td> <td> <input class="content" type="text" id="carrierFolioNum"/></td></tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Related Manuscripts by Carrier: </td><td><input class="content" type="text"  id="carrierRelated"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Manuscripts Related by Carrier: </td><td><input class="content" type="text"  id="carrierRelated"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Recto or Verso: </td> <td> <input class="content" type="text" id="carrierRV"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Other Carrier Info: </td> <td> <textarea class="content" type="text" id="carrierOther"></textarea></td></tr>
                                     </tbody>
@@ -160,19 +147,20 @@ and open the template in the editor.
                             <table>
                                     <tbody>
                                             <tr class="contentFormEntry"><td class="formLabel">Language:  </td> <td>  <input class="content" type="text" id="contentLanguage" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Text Author:  </td> <td>  <input class="content" type="text" class="content" id="contentAuthor" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Title (refers to contents):  </td> <td>  <input class="content" type="text" class="content" id="contentTitle" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Subject:  </td> <td>  <input class="content" type="text" class="contentF" id="contentSubject" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Structure (Section of Text):  </td> <td>  <input class="content" type="text" class="content" id="contentSection" admin="admin" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Description of Text:  </td> <td>  <input class="content" type="text" class="content" id="contentDescription" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Incipit:  </td> <td>  <input class="content" type="text" class="content" id="incipit" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Explicit:  </td> <td>  <input class="content" type="text" class="content" id="explicit" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Title Page:  </td> <td>  <input class="content" type="text" class="content" id="titlePage" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Prologue:  </td> <td>  <input class="content" type="text" class="content" id="contentPrologue" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Dedication:  </td> <td>  <input class="content" type="text" class="content" id="dedication" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Rubrics:  </td> <td>  <input class="content" type="text" class="content" id="rubrics" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Chant:  </td> <td>  <input class="content" type="text" class="content" id="chant" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Gloss:  </td> <td>  <input class="content" type="text" class="conten" id="gloss" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Author (refer to contents on leaf):  </td> <td>  <input class="content" type="text"  id="contentAuthor" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Translator:  </td> <td>  <input class="content" type="text"  id="contentTranslator" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Title (refer to contents on leaf):  </td> <td>  <input class="content" type="text"  id="contentTitle" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Subject:  </td> <td>  <input class="content" type="text" class="content" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Structure (section of text):  </td> <td>  <input class="content" type="text" id="contentSection" admin="admin" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Abstract (description of text):  </td> <td>  <input class="content" type="text"  id="contentDescription" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Incipit:  </td> <td>  <input class="content" type="text"  id="incipit" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Explicit:  </td> <td>  <input class="content" type="text"  id="explicit" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Title Page:  </td> <td>  <input class="content" type="text"  id="titlePage" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Prologue:  </td> <td>  <input class="content" type="text" id="contentPrologue" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Dedication:  </td> <td>  <input class="content" type="text" id="dedication" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Rubrics:  </td> <td>  <input class="content" type="text" id="rubrics" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Chant:  </td> <td>  <input class="content" type="text" id="chant" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Gloss:  </td> <td>  <input class="content" type="text" id="gloss" /> </td></tr> 
                                             <tr class="contentFormEntry" special="annotations">
                                                     <td class="formLabel ">Annotations: </td>
                                                     <td>
@@ -181,16 +169,16 @@ and open the template in the editor.
                                                                     <option value="inter">Interlinear</option>
                                                                     <option value="marginal">Marginal</option>
                                                             </select>
-                                                            <div id="inter">
+<!--                                                            <div id="inter">
                                                                     <span class="formLabel">Interlinear Annotations:<input class="content" id="interlinearAnnos" type="text"/></span>
                                                             </div>
                                                             <div id="marginal">
                                                                     <span class="formLabel">Marginal Annotations:<input class="content" id="marginalAnnos" type="text"/></span>
-                                                            </div>
+                                                            </div>-->
                                                     </td>
                                             </tr>
                                             <tr><td class="formLabel">Other Transcription :  </td> <td>  file upload here </td> </tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Related Manuscripts by Carrier: </td> <td>  <input class="content" type="text" class="contextFormEntry" id="contentRelated"/></td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Manuscripts related by Content: </td> <td>  <input class="content" type="text" id="contentRelated"/></td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Other Content Info: </td> <td> <textarea class="content" id="contentOther"></textarea></td></tr>
                                     </tbody>
                             </table>
@@ -201,9 +189,9 @@ and open the template in the editor.
                             <textarea class="notesFormEntry content" id="notes"></textarea>
                     </div>
                     <div id="placement">
-                        <p>Here you can select the section to place this leaf into.</p>
+                        <p>Here you can select the section of the breviary where you think the leaf belongs.</p>
                         <input type="button" onclick="savePlacement();" value="Save Arrangement"/>
-                        <input type="button" onclick="resetPlacement();" value="Reset to Current Arrangement"/>
+                        <input type="button" onclick="resetPlacement();" value="Reset"/>
                         <br>
                         <div class="arrangeTrail popoverTrail">
                             <div class="rangeArrangementArea" depth = "1">

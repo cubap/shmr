@@ -164,6 +164,10 @@ and open the template in the editor.
                 position: relative;
                 height: auto;
             }
+            #notes{
+                width: 475px;
+                height: 325px;
+            }
             .infoPart{
                 margin: 10px 0px;
             }
@@ -366,16 +370,18 @@ and open the template in the editor.
                 max-height: 645px;
                 min-width: 400px;
                 max-width: 600px;
-                background-color: black;
-                display: none;
+/*                background-color: black;
+*/                display: none;
                 z-index: 3;
                 left: 0;
                 right: 0;
                 margin: 0 auto;
             }
             #fullImgContainer img{
-                max-height: 640px;
-                max-width: 595px;
+                top: 20px;
+                position: relative;
+                max-width: 555px;
+                max-height: 600px;
             }
             #fullImageShade{
                 position: absolute;
@@ -383,7 +389,7 @@ and open the template in the editor.
                 width: 100%;
                 z-index: 2;
                 background-color: black;
-                opacity: .4;
+                opacity: .9;
                 top: 0px;
                 left: 0px;
                 display: none;
@@ -404,12 +410,7 @@ and open the template in the editor.
                 padding: 2px;
                 position: absolute;
             }
-            #fullImgContainer img{
-                max-height: 480px;
-                top: 20px;
-                position: relative;
-                max-width: 400px;
-            }
+
             .content{
                 border: 2px solid black;
             }

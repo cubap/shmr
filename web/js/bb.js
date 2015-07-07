@@ -11,33 +11,36 @@ var annoListCollection = new Array(3);
 var testLists = [
     {
         "@type" : "sc:AnnotationList",
+        "context" : "http://www.shared-canvas.org/ns/context.json",
         "on" : "http://www.example.org/iiif/LlangBrev/range/25", //January leaf
         "originalAnnoID" : "",
         "version" : 1,
         "permission" : 0,
         "forkFromID" : "",
         "@id" :"http://www.example.org/iiif/LlangBrev/annoList/3",
-        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"}]"
+        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"}]"
     },
     {
         "@type" : "sc:AnnotationList",
+        "context" : "http://www.shared-canvas.org/ns/context.json",
         "on" : "http://www.example.org/iiif/LlangBrev/canvas/1", //january leaf canvas 1
         "originalAnnoID" : "",
         "version" : 1,
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
-        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/1\"}]"
+        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/1\"}]"
     },
     {
         "@type" : "sc:AnnotationList",
+        "context" : "http://www.shared-canvas.org/ns/context.json",
         "on" : "http://www.example.org/iiif/LlangBrev/canvas/2", //january leaf canvas 2
         "originalAnnoID" : "",
         "version" : 1,
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://www.example.org/iiif/LlangBrev/annoList/2",
-        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"sc:painting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
+        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
     }       
 ];
 annoListCollection[0] = testLists[0];
@@ -53,6 +56,7 @@ var testManifest = {
     "@context" : "http://iiif.io/api/presentation/2/context.json",
     "@id" : "",
     "@type" : "sc:Manifest",
+    "context" : "http://www.shared-canvas.org/ns/context.json",
     "label" : "Llang Binder",
     "sequences" : [{
       "@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -77,7 +81,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
           }],
-          "otherContent":[],
+          "otherContent":[]
          },
          {
       //This will be the anchor canvas in the anchor range
@@ -253,7 +257,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -275,7 +279,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -297,7 +301,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -319,7 +323,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -341,7 +345,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/12"
           }],
-          "otherContent":[],      
+          "otherContent":[]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -362,7 +366,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
           }],
-          "otherContent":[],       
+          "otherContent":[]      
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -383,7 +387,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -405,7 +409,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
           }],
-          "otherContent":[],      
+          "otherContent":[]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -426,7 +430,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -448,7 +452,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
           }],
-          "otherContent":[],       
+          "otherContent":[]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -469,7 +473,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -491,7 +495,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -513,7 +517,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -535,7 +539,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -557,7 +561,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -579,7 +583,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -941,7 +945,18 @@ var testManifest = {
           "label" : "SLU_VFL_MS_002_fol_b_r",
           "height" : 300,
           "width" : 200,
-          "images" : [],
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                "height" : 2365,
+                "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
+          }],
           "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/4"]
          
     },
@@ -952,7 +967,18 @@ var testManifest = {
           "label" : "SLU_VFL_MS_002_fol_b_v",
           "height" : 300,
           "width" : 200,
-          "images" : [],
+          "images" : [{
+              "@type" : "oa:Annotation",
+              "motivation" : "sc:painting",
+              "resource" : {
+                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+                "@type" : "dctypes:Image",
+                "format" : "image/jpeg",
+                "height" : 2365,
+                "width" : 1579
+              },
+              "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
+          }],
           "otherContent":["http://www.example.org/iiif/LlangBrev/annoList/5"]
          
     },
@@ -1598,13 +1624,14 @@ var pageCanvases = testManifest.sequences[0].canvases;
 var annotationLists = [
     {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
-      "@type" : "sc:AnnotationLists",
+      "@type" : "sc:AnnotationList",
+      "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
       "resources" : [ 
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "BB Identifier",
             "@type" : "cnt:ContentAsText",
@@ -1615,7 +1642,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/2",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Nickname",
             "@type" : "cnt:ContentAsText",
@@ -1626,7 +1653,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/3",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Date Acquired",
             "@type" : "cnt:ContentAsText",
@@ -1640,13 +1667,14 @@ var annotationLists = [
 
   {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/2",
-      "@type" : "sc:AnnotationLists",
+      "@type" : "sc:AnnotationList",
+      "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
       "resources" : [ 
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/4",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Place Of Origin",
             "@type" : "cnt:ContentAsText",
@@ -1657,7 +1685,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/5",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Condition",
             "@type" : "cnt:ContentAsText",
@@ -1668,7 +1696,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/6",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Illustrations",
             "@type" : "cnt:ContentAsText",
@@ -1681,13 +1709,14 @@ var annotationLists = [
   },
   {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/3",
-      "@type" : "sc:AnnotationLists",
+      "@type" : "sc:AnnotationList",
+      "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
       "resources" : [ 
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/7",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "General Metadata",
             "@type" : "cnt:ContentAsText",
@@ -1698,7 +1727,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/8",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Title",
             "@type" : "cnt:ContentAsText",
@@ -1709,7 +1738,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/9",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Other Content Info",
             "@type" : "cnt:ContentAsText",
@@ -1722,13 +1751,14 @@ var annotationLists = [
   },
   {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/4",
-      "@type" : "sc:AnnotationLists",
+      "@type" : "sc:AnnotationList",
+      "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
       "resources" : [ 
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/10",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "BB Identifier",
             "@type" : "cnt:ContentAsText",
@@ -1739,7 +1769,7 @@ var annotationLists = [
          {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/11",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Institution or Repository",
             "@type" : "cnt:ContentAsText",
@@ -1750,7 +1780,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/12",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Shelfmark",
             "@type" : "cnt:ContentAsText",
@@ -1761,7 +1791,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/13",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Date Acquired",
             "@type" : "cnt:ContentAsText",
@@ -1772,7 +1802,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/14",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Provenance",
             "@type" : "cnt:ContentAsText",
@@ -1783,7 +1813,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/15",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Bibliography",
             "@type" : "cnt:ContentAsText",
@@ -1794,7 +1824,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/16",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Language",
             "@type" : "cnt:ContentAsText",
@@ -1805,7 +1835,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/17",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Subject",
             "@type" : "cnt:ContentAsText",
@@ -1816,7 +1846,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/18",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Title (refers to contents)",
             "@type" : "cnt:ContentAsText",
@@ -1827,7 +1857,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/19",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Incipit",
             "@type" : "cnt:ContentAsText",
@@ -1838,7 +1868,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/19",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Date",
             "@type" : "cnt:ContentAsText",
@@ -1849,7 +1879,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/20",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Place Of Origin",
             "@type" : "cnt:ContentAsText",
@@ -1860,7 +1890,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/21",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Format (single leaf, half bifolium, fragment)",
             "@type" : "cnt:ContentAsText",
@@ -1871,7 +1901,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/22",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Dimensions",
             "@type" : "cnt:ContentAsText",
@@ -1882,7 +1912,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/23",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Columns",
             "@type" : "cnt:ContentAsText",
@@ -1893,7 +1923,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/24",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Lines",
             "@type" : "cnt:ContentAsText",
@@ -1904,7 +1934,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/25",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Script",
             "@type" : "cnt:ContentAsText",
@@ -1915,7 +1945,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/26",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Decorations",
             "@type" : "cnt:ContentAsText",
@@ -1926,18 +1956,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/27",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
-          "resource" : {
-            "label" : "Artist(s)",
-            "@type" : "cnt:ContentAsText",
-            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
-          },
-          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
-        },
-         {
-          "@id" : "http://www.example.org/iiif/LlangBrev/anno/28",
-          "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Artist(s)",
             "@type" : "cnt:ContentAsText",
@@ -1950,13 +1969,14 @@ var annotationLists = [
   },
   {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/5",
-      "@type" : "sc:AnnotationLists",
+      "@type" : "sc:AnnotationList",
+      "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
       "resources" : [ 
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/29",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "BB Identifier",
             "@type" : "cnt:ContentAsText",
@@ -1967,7 +1987,7 @@ var annotationLists = [
          {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/30",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Institution or Repository",
             "@type" : "cnt:ContentAsText",
@@ -1978,7 +1998,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/31",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Shelfmark",
             "@type" : "cnt:ContentAsText",
@@ -1989,7 +2009,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/32",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Date Acquired",
             "@type" : "cnt:ContentAsText",
@@ -2000,7 +2020,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/33",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Provenance",
             "@type" : "cnt:ContentAsText",
@@ -2011,7 +2031,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/34",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Bibliography",
             "@type" : "cnt:ContentAsText",
@@ -2022,7 +2042,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/35",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Language",
             "@type" : "cnt:ContentAsText",
@@ -2033,7 +2053,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/36",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Subject",
             "@type" : "cnt:ContentAsText",
@@ -2044,7 +2064,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/37",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Title (refers to contents)",
             "@type" : "cnt:ContentAsText",
@@ -2055,7 +2075,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/38",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Explicit",
             "@type" : "cnt:ContentAsText",
@@ -2066,7 +2086,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/39",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Date",
             "@type" : "cnt:ContentAsText",
@@ -2077,7 +2097,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/40",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Place Of Origin",
             "@type" : "cnt:ContentAsText",
@@ -2088,7 +2108,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/41",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Format (single leaf, half bifolium, fragment)",
             "@type" : "cnt:ContentAsText",
@@ -2099,7 +2119,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/42",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Dimensions",
             "@type" : "cnt:ContentAsText",
@@ -2110,7 +2130,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/43",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Columns",
             "@type" : "cnt:ContentAsText",
@@ -2121,7 +2141,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/44",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Lines",
             "@type" : "cnt:ContentAsText",
@@ -2132,7 +2152,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/45",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Script",
             "@type" : "cnt:ContentAsText",
@@ -2143,7 +2163,7 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/46",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Decorations",
             "@type" : "cnt:ContentAsText",
@@ -2154,31 +2174,22 @@ var annotationLists = [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/47",
           "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
+          "motivation" : "oa:commenting",
           "resource" : {
             "label" : "Artist(s)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
           },
-          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
-        },
-         {
-          "@id" : "http://www.example.org/iiif/LlangBrev/anno/48",
-          "@type" : "oa:Annotation",
-          "motivation" : "sc:painting",
-          "resource" : {
-            "label" : "Artist(s)",
-            "@type" : "cnt:ContentAsText",
-            "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
-          },
-          "on" : "http://www.example.org/iiif/LlangBrev/canvas/55"
-        }]
+          "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
+        }],
+        "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
   //Everything above this fits into the January leaf (and its canvases.)
-        }] // end lists;
+        }]; // end lists;
 
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
   var properties={"@type" : "sc:Range"};
+  //this will be superfluous when the annotation store has ranges from other projects
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
   console.log("GET RANGES LIVE");
@@ -2192,6 +2203,7 @@ function getAllRanges(){
 function getAllAnnotations(){
   //THERE MAY BE NO ANNOTATIONS
   var properties={"@type" : "sc:AnnotationList"};
+  //this will be superfluous when the annotation store has lists from other projects
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
@@ -2220,7 +2232,6 @@ function toggleChildren(parentRange, admin, event){
     }
     else{
         outer = $(".popoverTrail");
-
     }
   if(event !== undefined && event.target.className.indexOf("putInGroup") > -1 || event.target.className.indexOf("leafIcon") > -1){ //detect if they clicked the checkbox or leaf icon.
     return false;
@@ -2492,7 +2503,9 @@ function dropHelp(event){
    */
   var targetTag = event.target.tagName;
   var target = undefined;
-    if(targetTag == "SPAN"){
+  console.log("this is the target");
+  console.log(event.target);
+    if(targetTag == "SPAN" || targetTag.indexOf("INPUT")>-1){
         console.log("Change target");
         var eventParent = event.target.parentNode;
         target = eventParent;
@@ -2500,10 +2513,11 @@ function dropHelp(event){
     else{
         target = event.target;
     }
-    console.log("Drop help called");
     event.preventDefault();
     var data = "";
     data = event.dataTransfer.getData("text");
+    console.log("Drop help called w/ data ========== "+data);
+
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
     var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
@@ -2511,7 +2525,9 @@ function dropHelp(event){
     
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
-    
+    console.log("This is the child");
+    console.log(child);
+    if(child === null || child === undefined) return false;
     if(targetClass.indexOf('notBucket') > -1){
       child.style.display = "block";
       areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
@@ -2524,10 +2540,16 @@ function dropHelp(event){
       }
     }
     var append = true;
-    console.log("from "+areaTakenFrom+" to"+areaDroppedTo);     
-    if(target.id == data || areaDroppedTo == areaTakenFrom){//dont append to self or same section
-      console.log("target is self");
-      append = false;
+    if(target.id === data || target.id === data+"_tmp"){
+        console.log("Target is self");
+        child.id = child.id.replace("_tmp", "");
+        child.style.display = "block";
+        append = false;
+    }   
+    else if(areaDroppedTo == areaTakenFrom){//dont append to self or same section
+      if(target.className.indexOf("notBucket") > -1){
+        append = false;
+      }
     }
     else{
       for (var i = 0; i < target.childNodes.length; i++) {
@@ -2536,7 +2558,6 @@ function dropHelp(event){
           append = false;
           child.id = child.id.replace("_tmp", "");
           child.style.display = "block";
-          return false;
         }    
       } 
     }
@@ -2557,21 +2578,22 @@ function dropHelp(event){
             }      
          $(this).append(folioCountHTML);
        });
-       
+       if($("div[depth='"+areaTakenFromDepth+"']").children(".notBucket").children(".child").length == 0){
+        $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").hide();
+        $("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").hide();
+         //newArea.children(".addGroup").hide();
+      }
+      else{
+        $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").show();
+        //$("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").show();
+         //newArea.children(".addGroup").show();
+      }
     }
     else{
       event.preventDefault();
+      return false;
     }
-    if($("div[depth='"+areaTakenFromDepth+"']").children(".notBucket").children(".child").length == 0){
-      $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").hide();
-      $("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").hide();
-       //newArea.children(".addGroup").hide();
-    }
-    else{
-      $("div[depth='"+areaTakenFromDepth+"']").children(".makeSortable").show();
-      //$("div[depth='"+areaTakenFromDepth+"']").children(".doneSortable").show();
-       //newArea.children(".addGroup").show();
-    }
+    
     
     //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
 }
@@ -2643,7 +2665,7 @@ function gatherRangesForArrange(which){
           }
         }
         else{
-          //dragAttribute = "id='drag_"+uniqueID+"165.134.241.141' draggable='true' ondragstart='dragHelp(event);'";
+          //dragAttribute = "id='drag_"+uniqueID+"localhost:8080' draggable='true' ondragstart='dragHelp(event);'";
           currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
         }
         //Create an html range object that can be added
@@ -3155,9 +3177,13 @@ function populateAnnoForms(){
         console.log(annos);
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('.formLabel').html().replace(":", "").trim();
+            label1 = label1.replace(/(.*)/, ""); // replace (stuff)
+            //need to get rid of trailing text between and including ()
             var currentEntry1 = $(this).find(".content");
             $.each(annos, function(){
-                var checkLabel1 = this.resource.label.replace(":", "").trim();
+                var checkLabel1 = this.resource.label.replace(":", "").trim();  //get rid of colon and extra spaces
+                checkLabel1 = checkLabel1.replace(/(.*)/, "");
+                //need to get rid of trailing text between and including ()
                 if (checkLabel1 == label1){
                     currentEntry1.val(this.resource["cnt:chars"]);
                 }
@@ -3168,9 +3194,13 @@ function populateAnnoForms(){
         });
         $.each($(".contentFormEntry"), function(){
             var label2 = $(this).find('.formLabel').html().replace(":", "").trim();
+            //need to get rid of trailing text between and including ()
+            label2 = label2.replace(/(.*)/, "");
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel2 = this.resource.label.replace(":", "").trim();
+                checkLabel2 = checkLabel2.replace(/(.*)/, "");
+                //need to get rid of trailing text between and including ()
                 if (checkLabel2 == label2){
                     currentEntry2.val(this.resource["cnt:chars"]);
                 }
@@ -3181,9 +3211,13 @@ function populateAnnoForms(){
         });
         $.each($(".carrierFormEntry"), function(){
             var label3 = $(this).find('.formLabel').html().replace(":", "").trim();
+            label3 = label3.replace(/(.*)/, "");
+            //need to get rid of trailing text between and including ()
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel3 = this.resource.label.replace(":", "").trim();
+                checkLabel3 = checkLabel3.replace(/(.*)/,"");
+                //need to get rid of trailing text between and including ()
                 if (checkLabel3 == label3){
                     currentEntry3.val(this.resource["cnt:chars"]);
                 }
@@ -3261,8 +3295,8 @@ function populateAnnoForms(){
         var canvasURI = uriToSave;
         var otherInfoList = {};
         $.each(testManifest.structures, function(){
-            if ($(this)["@id"] === uriToSave){
-                currentLeafObject = $(this); //Set the actual leaf object if the uriToSave is a leaf uri
+            if (this["@id"] === uriToSave){
+                currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
                 return false;
             }
         });
@@ -3277,11 +3311,13 @@ function populateAnnoForms(){
             var range = $(this).find(".content").attr("range");
             range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
+            addedInfoLabel = addedInfoLabel.replace(":", "");
+            addedInfoLabel = addedInfoLabel.replace(/(.*)/, "");
             var special = $(this).attr("special");
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
-                "motivation" : "sc:painting",
+                "motivation" : "oa:commenting",
                 "label" : "",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3289,23 +3325,24 @@ function populateAnnoForms(){
                 },
                 "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
             };
-            var rangeObject = { //this will only be saved 
-                "@id" : "",
-                "@type" : "sc:Range",
-                "motivation" : "sc:painting",
-                "label" : "",
-                "canvases": [],
-                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
-                "resources" : [],
-                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-            };
+//            var rangeObject = { //this will only be saved 
+//                "@id" : "",
+//                "@type" : "sc:Range",
+//                //"motivation" : "oa:commenting",
+//                "label" : "",
+//                "canvases": [],
+//                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
+//                "resources" : [],
+//                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+//                "otherContent" : []
+//            };
             if (special === "annotations"){
                 //console.log("Special Annos");
                 var inter = $("#interlinearAnnos").val();
                 var marginal = $("#marginalAnnos").val();
                 if(inter!==undefined && inter!==""){
                     var annoCopy1 = jQuery.extend({}, annotationObject);
-                    annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                    //annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annoCopy1.label = "Interlinear Annotations";
                     annoCopy1.resource["cnt:chars"] = inter;
 
@@ -3314,7 +3351,7 @@ function populateAnnoForms(){
                 }
                 if(marginal!==undefined && marginal!==""){
                     var annoCopy2 = jQuery.extend({}, annotationObject);
-                    annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                    //annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annoCopy2.label = "Marginal Annotations";
                     annoCopy2.resource["cnt:chars"] = marginal;
                     createNewAnno(annoCopy2, "Marginal Annotations", marginal, addedInfoList1);
@@ -3325,37 +3362,35 @@ function populateAnnoForms(){
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                 var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
                 //console.log("Anno Object @ID is being set to :" + newAnnoURI)
-                annotationObject["@id"] = newAnnoURI;
+                //annotationObject["@id"] = newAnnoURI;
                 annotationObject.resource["cnt:chars"] = entryValue;
-                rangeObject["@id"] = newRangeURI;
-                rangeObject.label = entryValue;
-                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
-                    var updateOrNew = "";
-                    var rangeToUpdate = "";
-                    for(var i=1; i<testManifest.structures.length; i++){
-                        if (testManifest.structures[i].label === entryValue){
-                            updateOrNew = "update";
-                            rangeToUpdate = testManifest.structures[i]["@id"];
-                            updateRange(rangeToUpdate, currentLeafServerID);
-                            break;
-                        }
-                        else{
-                            updateOrNew = "new";
-                        }
-                    }
-                    if(updateOrNew === "new"){
-                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList1);
-                        // addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
-                    }
-                }
-                else{
-                    annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+//                rangeObject["@id"] = newRangeURI;
+//                rangeObject.label = entryValue;
+//                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
+//                    var updateOrNew = "";
+//                    var rangeToUpdate = "";
+//                    for(var i=1; i<testManifest.structures.length; i++){
+//                        if (testManifest.structures[i].label === entryValue){
+//                            updateOrNew = "update";
+//                            rangeToUpdate = testManifest.structures[i]["@id"];
+//                            updateRange(rangeToUpdate, currentLeafServerID);
+//                            break;
+//                        }
+//                        else{
+//                            updateOrNew = "new";
+//                        }
+//                    }
+//                    if(updateOrNew === "new"){
+//                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList1);
+//                        // addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
+//                    }
+//                }
+                    //annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annotationObject.label = addedInfoLabel;
                     annotationObject.resource["cnt:chars"] = entryValue;
                     createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1);
                     // addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li><span annoServerID='"+annoServerID+"' class='removeInfo'> X </span>");
                     //There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-                }
                 //console.log(annotationObject);
             }
         });
@@ -3376,7 +3411,7 @@ function populateAnnoForms(){
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
-                "motivation" : "sc:painting",
+                "motivation" : "oa:commenting",
                 "label" : "",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3384,16 +3419,16 @@ function populateAnnoForms(){
             },
             "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
             };
-            var rangeObject = { //this will only be saved 
-                "@id" : "",
-                "@type" : "sc:Range",
-                "motivation" : "sc:painting",
-                "label" : "",
-                "canvases": [],
-                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. 
-                "resources" : [],
-                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-            };
+//            var rangeObject = { //this will only be saved 
+//                "@id" : "",
+//                "@type" : "sc:Range",
+//                "motivation" : "oa:commenting",
+//                "label" : "",
+//                "canvases": [],
+//                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. 
+//                "resources" : [],
+//                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+//            };
             if(entryValue !== undefined && entryValue !== ""){
                 //console.log('HELLO')
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
@@ -3401,29 +3436,28 @@ function populateAnnoForms(){
                 //console.log("Anno Object @ID is being set to :" + newAnnoURI)
                 annotationObject["@id"] = newAnnoURI;
                 annotationObject.resource["cnt:chars"] = entryValue;
-                rangeObject["@id"] = newRangeURI;
-                rangeObject.label = entryValue;
-                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
-                    //console.log("RANGE")
-                    var updateOrNew = "";
-                    var rangeToUpdate = "";
-                    for(var i=1; i<testManifest.structures.length; i++){
-                        if (testManifest.structures[i].label === entryValue){
-                            updateOrNew = "update";
-                            rangeToUpdate = testManifest.structures[i]["@id"];
-                            updateRange(rangeToUpdate, currentLeafServerID);
-                            break;
-                        }
-                        else{
-                            updateOrNew = "new";
-                        }
-                    }
-                    if(updateOrNew === "new"){
-                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList2);
-                        // addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
-                    }
-                }
-                else{
+//                rangeObject["@id"] = newRangeURI;
+//                rangeObject.label = entryValue;
+//                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
+//                    //console.log("RANGE")
+//                    var updateOrNew = "";
+//                    var rangeToUpdate = "";
+//                    for(var i=1; i<testManifest.structures.length; i++){
+//                        if (testManifest.structures[i].label === entryValue){
+//                            updateOrNew = "update";
+//                            rangeToUpdate = testManifest.structures[i]["@id"];
+//                            updateRange(rangeToUpdate, currentLeafServerID);
+//                            break;
+//                        }
+//                        else{
+//                            updateOrNew = "new";
+//                        }
+//                    }
+//                    if(updateOrNew === "new"){
+//                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList2);
+//                        // addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
+//                    }
+//                }
                     //console.log("ANNO")
                     annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annotationObject.label = addedInfoLabel;
@@ -3432,7 +3466,7 @@ function populateAnnoForms(){
                     //console.log("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
                     // addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
                     //There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-                }
+                
                 //console.log(annotationObject);
             }       
         });
@@ -3455,7 +3489,7 @@ function populateAnnoForms(){
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
-                "motivation" : "sc:painting",
+                "motivation" : "oa:commenting",
                 "label" : "",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3463,16 +3497,16 @@ function populateAnnoForms(){
                 },
                 "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
             };
-            var rangeObject = { //this will only be saved 
-                "@id" : "",
-                "@type" : "sc:Range",
-                "motivation" : "sc:painting",
-                "label" : "",
-                "canvases": [],
-                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
-                "resources" : [],
-                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-            };
+//            var rangeObject = { //this will only be saved 
+//                "@id" : "",
+//                "@type" : "sc:Range",
+//                "motivation" : "oa:commenting",
+//                "label" : "",
+//                "canvases": [],
+//                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
+//                "resources" : [],
+//                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
+//            };
             if(special !== undefined && special !== ""){
                 //console.log(special);
                 if(special === "dimensions"){
@@ -3491,11 +3525,11 @@ function populateAnnoForms(){
                         annotationObject1.resource["cnt:chars"] = leafHeight;
                         annotationObject2.label = "Leaf Width";
                         annotationObject2.resource["cnt:chars"] = leafWidth;
-                        annotationObject1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annotationObject1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         //console.log(annoID);
                         createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3); //this will increment annoID by 1
                         //console.log(annoID);
-                        annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be saving the new annoID # 
+                        //annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be saving the new annoID # 
                         createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Leaf Height: </span> "+leafHeight+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
                         // addedInfoList3.append("<li><span class='formLabel'>Leaf Width: </span> "+leafWidth+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
@@ -3508,11 +3542,11 @@ function populateAnnoForms(){
                         annotationObject3.resource["cnt:chars"] = textHeight;
                         annotationObject4.label = "Text Width";
                         annotationObject4.resource["cnt:chars"] = textWidth;
-                        annotationObject3["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annotationObject3["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         //console.log(annoID);
                         createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3); //this will increment annoID by 1
                         //console.log(annoID);
-                        annotationObject4["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
+                        //annotationObject4["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
                         createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Text Height: </span> "+textHeight+" <span annoServerID='"+annoServerID3+"' class='removeInfo'> X </span></li>");
                         // addedInfoList3.append("<li><span class='formLabel'>Text Width: </span> "+textWidth+" <span annoServerID='"+annoServerID4+"' class='removeInfo'> X </span></li>");
@@ -3525,11 +3559,11 @@ function populateAnnoForms(){
                         annotationObject5.resource["cnt:chars"] = lineHeight;
                         annotationObject6.label = "Line Width";
                         annotationObject6.resource["cnt:chars"] = lineWidth;
-                        annotationObject5["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annotationObject5["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         //console.log(annoID);
                         createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3); //this will increment annoID by 1
                         //console.log(annoID);
-                        annotationObject6["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
+                       // annotationObject6["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
                         createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3);
                         // addedInfoList3.append("<li><span class='formLabel'>Line Height: </span> "+lineHeight+" <span annoServerID='"+annoServerID5+"' class='removeInfo'> X </span></li>");
                         // addedInfoList3.append("<li><span class='formLabel'>Line Width: </span> "+lineWidth+" <span annoServerID='"+annoServerID6+"' class='removeInfo'> X </span></li>");
@@ -3542,7 +3576,7 @@ function populateAnnoForms(){
                     if(lines!==undefined && lines!==""){
                         //console.log("LINES");
                         var annoCopy1 = jQuery.extend({}, annotationObject);;
-                        annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy1.label = "Lines";
                         annoCopy1.resource["cnt:chars"] = lines;
                         createNewAnno(annoCopy1, "Lines", lines, addedInfoList3);
@@ -3551,7 +3585,7 @@ function populateAnnoForms(){
                     if(columns!==undefined && columns!==""){
                         //console.log("COLUMNS");
                         var annoCopy2 = jQuery.extend({}, annotationObject);;
-                        annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy2.label = "Columns";
                         annoCopy2.resource["cnt:chars"] = columns;
                         createNewAnno(annoCopy2, "Columns", columns, addedInfoList3);
@@ -3565,7 +3599,7 @@ function populateAnnoForms(){
                     if(initials!==undefined && initials!==""){
                         //console.log("INITIALS")
                         var annoCopy1 = jQuery.extend({}, annotationObject);
-                        annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy1.label = "Initials";
                         annoCopy1.resource["cnt:chars"] = initials;
                         createNewAnno(annoCopy1, "Initials", initials, addedInfoList3);
@@ -3574,7 +3608,7 @@ function populateAnnoForms(){
                     if(border!==undefined && border!==""){
                         //console.log("BORDER")
                         var annoCopy2 = jQuery.extend({}, annotationObject);
-                        annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        //annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annoCopy2.label = "Border";
                         annoCopy2.resource["cnt:chars"] = border;
                         createNewAnno(annoCopy2, "Border", border, addedInfoList3);
@@ -3585,36 +3619,36 @@ function populateAnnoForms(){
             else if(entryValue !== undefined && entryValue !== ""){
                 var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                 var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-                annotationObject["@id"] = newAnnoURI;
+                //annotationObject["@id"] = newAnnoURI;
                 annotationObject.resource["cnt:chars"] = entryValue;
-                rangeObject["@id"] = newRangeURI;
-                if(range){//there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
-                    var updateOrNew = "";
-                    var rangeToUpdate = "";
-                    for(var i=1; i<testManifest.structures.length; i++){
-                        if (testManifest.structures[i].label === entryValue){
-                            updateOrNew = "update";
-                            rangeToUpdate = testManifest.structures[i]["@id"];
-                            updateRange(rangeToUpdate, currentLeafServerID);
-                            break;
-                        }
-                        else{
-                            updateOrNew = "new";
-                        }
-                    }
-                    if(updateOrNew === "new"){
-                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList3);
-                        // addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span rangeServerID='"+rangeServerID2+"' class='removeInfo'> X </span></li>");
-                    }
-                }
-                else{
-                    annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+//                rangeObject["@id"] = newRangeURI;
+//                if(range){//there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
+//                    var updateOrNew = "";
+//                    var rangeToUpdate = "";
+//                    for(var i=1; i<testManifest.structures.length; i++){
+//                        if (testManifest.structures[i].label === entryValue){
+//                            updateOrNew = "update";
+//                            rangeToUpdate = testManifest.structures[i]["@id"];
+//                            updateRange(rangeToUpdate, currentLeafServerID);
+//                            break;
+//                        }
+//                        else{
+//                            updateOrNew = "new";
+//                        }
+//                    }
+//                    if(updateOrNew === "new"){
+//                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList3);
+//                        // addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span rangeServerID='"+rangeServerID2+"' class='removeInfo'> X </span></li>");
+//                    }
+//                }
+                //else{
+                    //annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                     annotationObject.label = addedInfoLabel;
                     annotationObject.resource["cnt:chars"] = entryValue;
                     createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3);
                     // addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
                     //There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-                }
+                //}
             }   
         });
 
@@ -3626,9 +3660,9 @@ function populateAnnoForms(){
             var canvasURI = $("#catalogueInfoFor").val();
             
             var annoObject = {
-                "@id" : newAnnoURI,
+                //"@id" : newAnnoURI,
                 "@type" : "oa:Annotation",
-                "motivation" : "sc:painting",
+                "motivation" : "oa:commenting",
                 "label" : "General Metadata",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3745,29 +3779,33 @@ function populateAnnoForms(){
 		var paramObj = {"@id":annoURI, "resource": resourceObj};
 		var params = {"content":JSON.stringify(paramObj)};
 		$.post(updateAnnoURL, params, function(data){
+                    //Also need to update the annotation in the list.  
+                    if(zeta){
+                    $.each(annoListCollection[2].resources, function(){
+                        if(this["@id"] == annoURI){
+                            this.resource = annoObj.resource;
+                            //actually update the annoList since we put the whole resource there and not just he URI.
+                        }
+                    });
+                    }
+                    else if (alpha){
+                        $.each(annoListCollection[0].resources, function(){
+                            if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                //actually update the annoList since we put the whole resource there and not just he URI.
+                            }
+                        });
+                    }
+                    else{
+                        $.each(annoListCollection[1].resources, function(){
+                            if(this["@id"] == annoURI){
+                                this.resource = annoObj.resource;
+                                //actually update the annoList since we put the whole resource there and not just he URI.
+                            }
+                        });
+                    }
 		});
-		if(zeta){
-        $.each(annoListCollection[2].resources, function(){
-            if(this["@id"] == annoURI){
-                    this.resource = annoObj.resource;
-            }
-        });
-		}
-		else if (alpha){
-      $.each(annoListCollection[0].resources, function(){
-          if(this["@id"] == annoURI){
-                  this.resource = annoObj.resource;
-          }
-      });
-		}
-		else{
-        $.each(annoListCollection[1].resources, function(){
-            if(this["@id"] == annoURI){
-                    this.resource = annoObj.resource;
-                    console.log("Local Anno Updated.");
-            }
-        });
-		}
+		
 	}
 
 	/*
@@ -3797,7 +3835,9 @@ function populateAnnoForms(){
 			tmpAnnos = annoListCollection[1];
 		}
 		$.each(tmpAnnos.resources, function(){
+                    //scrub the labels?
 			if(this.label == labelToCheckFor){
+                                // this annotation exists.  Update annotation and list.
 				updateAnnotation(this["@id"], annoObject);
 			}
 		});
@@ -3832,49 +3872,49 @@ function populateAnnoForms(){
 					var params = {"content":JSON.stringify(paramsObj)};
 					
 					$.post(updateAnnoListURL, params, function(data){
+                                            if(zeta){
+                                                $.each(testManifest.structures, function(){
+                                                        if (this["@id"] === objectID){ 
+                                                                var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json"};
+                                                                var listIncluded = false;
+                                                                $.each(this.otherContent,function(){
+                                                                        if(this["@id"] === annoListCollection[2]["@id"]){
+                                                                                listIncluded = true;
+                                                                                return false;
+                                                                        }
+                                                                });
+                                                                if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                                        }
+                                                });//local. adds the annotation list uri to the other content field.  
+                                            }
+                                            else{
+                                                    var annoListID = -1;
+                                                    $.each(testManifest.sequences[0].canvases, function(){
+                                                            if (this["@id"] === objectID){ //this is our canvas object
+                                                                    if(alpha){
+                                                                            annoListID = annoListCollection[0]["@id"];
+                                                                    }
+                                                                    else{
+                                                                            annoListID = annoListCollection[1]["@id"];
+                                                                    }
+                                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json"};
+                                                                    var listIncluded = false;
+                                                                    $.each(this.otherContent,function(){
+                                                                            if(this["@id"] === annoListID){
+                                                                                    listIncluded = true;
+                                                                                    return false;
+                                                                            }
+                                                                    });
+                                                                    if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
+                                                            }
+                                                    });
+                                            }//local
 					});
 				}
 			}); 
 				
-		});  //live. 
-		 
-		if(zeta){
-			$.each(testManifest.structures, function(){
-				if (this["@id"] === objectID){ //this is our canvas object
-					var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList"};
-					var listIncluded = false;
-					$.each(this.otherContent,function(){
-						if(this["@id"] === annoListCollection[2]["@id"]){
-							listIncluded = true;
-							return false;
-						}
-					})
-					if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
-				}
-			});//local. adds the annotation list uri to the other content field.  
-		}
-		else{
-			var annoListID = -1;
-			$.each(testManifest.sequences[0].canvases, function(){
-				if (this["@id"] === objectID){ //this is our canvas object
-					if(alpha){
-						annoListID = annoListCollection[0]["@id"];
-					}
-					else{
-						annoListID = annoListCollection[1]["@id"];
-					}
-					var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList"};
-					var listIncluded = false;
-					$.each(this.otherContent,function(){
-						if(this["@id"] === annoListID){
-							listIncluded = true;
-							return false;
-						}
-					})
-					if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
-				}
-			});
-		}//local
+		});  //live. 		 
+		
 	}
 
 	/*
@@ -3887,41 +3927,40 @@ function populateAnnoForms(){
 		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
 		var rangeServerID = -1;
 		$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
-			data=JSON.parse(data);
-			newRangeObject["@id"] = data["@id"]; //live
-			testManifest.structures.push(newRangeObject); //live
-			if(current === 'currentLeaf'){
-				currentLeafServerID = data["@id"];
-                                
-				currentLeaf = currentLeafServerID;
-                            $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
-			}
-			else{
-				//list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
-			}
+                    data=JSON.parse(data);
+                    newRangeObject["@id"] = data["@id"]; //live
+                    testManifest.structures.push(newRangeObject); //live
+                    if(current === 'currentLeaf'){
+                            currentLeafServerID = newRangeObject["@id"];
+                            currentLeaf = currentLeafServerID;
+                        $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
+                    }
+                    else{
+                            //list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
+                    }
 			
         	var newRangeAnnoList = {
-                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-                "@type":"sc:AnnotationList",
-                "resources" : [],
-                "on" : data["@id"]
-        	}
+                    //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                    "@type":"sc:AnnotationList",
+                    "resources" : [],
+                    "on" :newRangeObject["@id"]
+        	};
         	var listURL = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
         	$.post(listURL, listParams, function(data2){
         		data2 = JSON.parse(data2);
                         if(current = "currentLeaf"){
                             annoListCollection[2] = newRangeAnnoList;
-                            annoListCollection[2]["@id"] = data;
+                            annoListCollection[2]["@id"] = newRangeAnnoList["@id"];
                         }
-                        
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
         		var paramObj = {"@id":currentLeafServerID, "otherContent":[data["@id"]]};
         		var params = {"content":JSON.stringify(paramObj)};
         		$.post(updateCanvasURL, params, function(data){
+                            
         		});
         	});
-		});
+            });
 		
 	}
 
@@ -4124,7 +4163,7 @@ function populateAnnoForms(){
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
             canvasID += 1;
             var newCanvas1 = {
-                    "@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID, //local
+                //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID, //local
                 "@type" : "sc:Canvas",
                 "label" : "Llang_"+canvasID,
                 "height" : 1000,
@@ -4132,43 +4171,40 @@ function populateAnnoForms(){
                 "images" : [],
                 "otherContent": []
             }
-   //    	 var newCanvas1AnnoList = {
+       	 var newCanvas1AnnoList = {
 			// "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-			// "@type":"sc:AnnotationList",
-			// "resources" : [],
-			// "on" : newCanvas1["@id"]
-   //      } //local
+			 "@type":"sc:AnnotationList",
+			 "resources" : [],
+			 "on" : newCanvas1["@id"]
+         }; //local
+         annoListCollection[0] = newCanvas1AnnoList;
         annoListID++;
-        //testManifest.sequences[0].canvases.push(newCanvas1);
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'recto');"); //local
       	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
-      	 testManifest.sequences[0].canvases.push(newCanvas1); //local
+      	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
-      	 $.post(url, params1, function(data){ //save first new canvas
+          $.post(url, params1, function(data){ //save first new canvas
       	 	data = JSON.parse(data);
       	 	newCanvas1["@id"] = data["@id"];
-      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');"); 
-      	 	$("#folioSide1").attr("canvas", data["@id"]); 
+      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+newCanvas1["@id"]+"', 'recto');"); 
+      	 	$("#folioSide1").attr("canvas", newCanvas1["@id"]); 
                 
       	 	testManifest.sequences[0].canvases.push(newCanvas1); //live
- 	   	 	
-        	//annoListCollection.push(newCanvas1AnnoList);
-        	
+ 	   	 	        	
         	//save anno list for new canvas
         	var newCanvas1AnnoList = {
 				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
-				"on" : data["@id"]
-       	 	} //local
-                annoListCollection[0] = newCanvas1AnnoList;
+				"on" : newCanvas1["@id"]
+       	 	}; //local
+                //annoListCollection[0] = newCanvas1AnnoList;
         	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data;
-        		//update otherContent of first canvas
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
         		var paramObj = {"@id":newCanvas1["@id"], "otherContent":[data["@id"]]};
         		var params = {"content":JSON.stringify(paramObj)};
@@ -4176,11 +4212,12 @@ function populateAnnoForms(){
                             $("#folioSide1").click();
         		});
         	});
-      	 	newCanvas1ServerID = data["@id"];
-  	 		canvasID += 1;
+                $("#folioSide1").click();
+      	 	newCanvas1ServerID = newCanvas1["@id"];
+  	        canvasID += 1;
                         
       	 	var newCanvas2 = {
-      	 		"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID,
+      	 		//"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID,
 		        "@type" : "sc:Canvas",
 		        "label" : "Llang_"+canvasID,
 		        "height" : 1000,
@@ -4188,32 +4225,28 @@ function populateAnnoForms(){
 		        "images" : [],
 		        "otherContent" : []
 	      	 };
-   	  //    	 	var newCanvas2AnnoList = {
-	  //               "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-	  //               "@type":"sc:AnnotationList",
-	  //               "resources" : [],
-	  //               "on" : newCanvas2["@id"]
-	  //       }
-			// annoListCollection.push(newCanvas2AnnoList);
+
+			 //annoListCollection.push(newCanvas2AnnoList);
 			//local
 			annoListID++;
-                $("#folioSide2").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','verso');");
-      	 	$("#folioSide2").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
+//                $("#folioSide2").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','verso');");
+//      	 	$("#folioSide2").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
       	 	//testManifest.sequences[0].canvases.push(newCanvas2); //local
 	      	//annoListCollection[1].on = "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID; //local
 	      	var params2 = {'content': JSON.stringify(newCanvas2)};
 	      	$.post(url, params2, function(data){
 	      		data=JSON.parse(data);
-	      		newCanvas2ServerID = data["@id"];
+	      		
                         newCanvas2["@id"] = data["@id"];
-      	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+data["@id"]+"','verso');");
-      	 		$("#folioSide2").attr("canvas", data["@id"]);
+                        newCanvas2ServerID = newCanvas2["@id"];
+      	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+ newCanvas2["@id"]+"','verso');");
+      	 		$("#folioSide2").attr("canvas",  newCanvas2["@id"]);
       	 		testManifest.sequences[0].canvases.push(newCanvas2); //live
                         var newCanvas2AnnoList = {
-	                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
-	                "on" : data["@id"]
+	                "on" :  newCanvas2["@id"]
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
 				var listURL2 = "http://localhost:8080/brokenBooks/saveNewRange";
@@ -4221,7 +4254,6 @@ function populateAnnoForms(){
 	        	
 	        	$.post(listURL2, listParams2, function(data){
 	        		data = JSON.parse(data);
-	        		annoListCollection[1]["@id"] = data;
 	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
 	        		var paramObj = {"@id":newCanvas2["@id"], "otherContent":[data["@id"]]};
 	        		var params = {"content":JSON.stringify(paramObj)};
@@ -4244,10 +4276,8 @@ function populateAnnoForms(){
 			      	"ranges" : [],
 		      		"isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
 		      		"otherContent" : ""
-        		}
+        		};
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
-                                
-                                
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
                                 gatherRangesForArrange(1);
                     });
@@ -4419,7 +4449,12 @@ function populateAnnoForms(){
   function existing(leaf, leafIsIn){
         var alphaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/1";
         var betaCanvas = "http://www.example.org/iiif/LlangBrev/canvas/2";
-        //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
+        var alphaImage  = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
+        var betaImage = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
+        var alphaLabel = "Folio 1 Label"
+        var betaLabel = "Folio 2 Label";
+        var leafLabel = "Leaf Label";
+        //var leaf = "http://localhost:8080/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
     if(leaf !== undefined){
         var leafObject = undefined;
         currentLeafServerID = leaf;
@@ -4428,11 +4463,21 @@ function populateAnnoForms(){
             if(this["@id"] == leaf){
                 leafObject = this;
                 alphaCanvas = this.canvases[0];
+                if(this.label !== ""){
+                  leafLabel = this.label;
+                }
+                
                 var leafAnnoList = this.otherContent[0]; //anno list URIS
                 var alphaAnnoList = [];
                 $.each(testManifest.sequences[0].canvases, function(){
                   if(this["@id"] == alphaCanvas){
                     alphaAnnoList = this.otherContent[0];
+                    if(this.label !== ""){
+                      alphaLabel = this.label;
+                    }
+                    if(this.images.length > 0){
+                      alphaImage = this.images[0].resource["@id"];
+                    }
                   }
                 });
                 betaCanvas = this.canvases[1];
@@ -4440,6 +4485,12 @@ function populateAnnoForms(){
                 $.each(testManifest.sequences[0].canvases, function(){
                   if(this["@id"] == betaCanvas){
                     betaAnnoList = this.otherContent[0];
+                    if(this.label!== ""){
+                      betaLabel = this.label;
+                    }
+                    if(this.images.length > 0){
+                      betaImage = this.images[0].resource["@id"];
+                    }
                   }
                 });
 
@@ -4494,12 +4545,18 @@ function populateAnnoForms(){
     }
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);
+    console.log("alpha image "+alphaImage+".  Beta Image "+betaImage+".");
+    $(".rectoImg").attr("src", alphaImage);
     $("#folioSide1").addClass("selectedFolio");
     $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvas+"', 'verso');"); 
     $("#folioSide2").attr("canvas", betaCanvas);   
+    $(".versoImg").attr("src", betaImage);
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-
+    $("#folio1Label").html(alphaLabel);
+    $("#folio2Label").html(betaLabel);
+    $("#leafLabel").val(leafLabel);
+    $("#oneAndtwoLabel").html(leafLabel);
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
