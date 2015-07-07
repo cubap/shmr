@@ -2491,6 +2491,7 @@ function toggleChildren(parentRange, admin, event){
 }
 
 function dragHelp(event){
+    //perhaps we can detect a user is trying to drag a selected selection, which they wont be able to drop, and stop it here.
     event.dataTransfer.setData("text", event.target.id);
 }
 
@@ -2517,7 +2518,7 @@ function dropHelp(event){
     var data = "";
     data = event.dataTransfer.getData("text");
     console.log("Drop help called w/ data ========== "+data);
-
+    var droppedClass = $("#"+data).attr("class");
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
     var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
@@ -2528,9 +2529,15 @@ function dropHelp(event){
     console.log("This is the child");
     console.log(child);
     if(child === null || child === undefined) return false;
+    if(targetClass.indexOf("selectedSection") > -1 || droppedClass.indexOf("selectedSection") > -1) return false; //cannot drop into a selected section, cannot drop a selected section
     if(targetClass.indexOf('notBucket') > -1){
-      child.style.display = "block";
       areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
+      if(areaDroppedTo.attr("depth") === "1" && $("#"+data).attr("leaf") === "true"){
+          //cannot drop leaves into the top level structure. 
+          return false;
+      }
+      child.style.display = "block";
+      
     }
     else{
       child.id = child.id+"_tmp"; 
