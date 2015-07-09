@@ -81,7 +81,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
           }],
-          "otherContent":[],
+          "otherContent":[]
          },
          {
       //This will be the anchor canvas in the anchor range
@@ -257,7 +257,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -279,7 +279,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -301,7 +301,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -323,7 +323,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -345,7 +345,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/12"
           }],
-          "otherContent":[],      
+          "otherContent":[]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -366,7 +366,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
           }],
-          "otherContent":[],       
+          "otherContent":[]      
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -387,7 +387,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -409,7 +409,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
           }],
-          "otherContent":[],      
+          "otherContent":[]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -430,7 +430,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -452,7 +452,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
           }],
-          "otherContent":[],       
+          "otherContent":[]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -473,7 +473,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -495,7 +495,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -517,7 +517,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -539,7 +539,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -561,7 +561,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -583,7 +583,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
           }],
-          "otherContent":[],
+          "otherContent":[]
          
    },
    {
@@ -2184,11 +2184,22 @@ var annotationLists = [
         }],
         "on" : "http://www.example.org/iiif/LlangBrev/canvas/56"
   //Everything above this fits into the January leaf (and its canvases.)
-        }] // end lists;
+        }]; // end lists;
 
+function getManifest(){
+    var url="http://localhost:8080/brokenBooks/getManifest";
+    $.post(url, function(data){
+        console.log(data);
+        data=JSON.parse(data);
+        rangeCollection = data.structures;
+        pageCanvases = data.sequences[0];
+        getAllAnnotations();
+    });
+}
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
-  var properties={"@type" : "sc:Range"};
+  var properties={"@type" : "sc:Range", "forProject":"broken_books"};
+  //this will be superfluous when the annotation store has ranges from other projects
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
   console.log("GET RANGES LIVE");
@@ -2201,8 +2212,10 @@ function getAllRanges(){
 
 function getAllAnnotations(){
   //THERE MAY BE NO ANNOTATIONS
+  var properties={"@type" : "sc:AnnotationList", "forProject" : "broken_books"};
+  //this will be superfluous when the annotation store has lists from other projects
+  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
   var properties={"@type" : "sc:AnnotationList"};
-  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
      annotationLists = JSON.parse(data);
@@ -2213,7 +2226,7 @@ function getAllAnnotations(){
 
 function getAllCanvases(){
   //THERE WILL AT LEAST BE 2 CANVASES
-  var properties={"@type" : "sc:Canvas"};
+  var properties={"@type" : "sc:Canvas", "forProject":"broken_books"};
   var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
@@ -2230,7 +2243,6 @@ function toggleChildren(parentRange, admin, event){
     }
     else{
         outer = $(".popoverTrail");
-
     }
   if(event !== undefined && event.target.className.indexOf("putInGroup") > -1 || event.target.className.indexOf("leafIcon") > -1){ //detect if they clicked the checkbox or leaf icon.
     return false;
@@ -2490,6 +2502,7 @@ function toggleChildren(parentRange, admin, event){
 }
 
 function dragHelp(event){
+    //perhaps we can detect a user is trying to drag a selected selection, which they wont be able to drop, and stop it here.
     event.dataTransfer.setData("text", event.target.id);
 }
 
@@ -2516,7 +2529,7 @@ function dropHelp(event){
     var data = "";
     data = event.dataTransfer.getData("text");
     console.log("Drop help called w/ data ========== "+data);
-
+    var droppedClass = $("#"+data).attr("class");
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
     var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
@@ -2527,9 +2540,15 @@ function dropHelp(event){
     console.log("This is the child");
     console.log(child);
     if(child === null || child === undefined) return false;
+    if(targetClass.indexOf("selectedSection") > -1 || droppedClass.indexOf("selectedSection") > -1) return false; //cannot drop into a selected section, cannot drop a selected section
     if(targetClass.indexOf('notBucket') > -1){
-      child.style.display = "block";
       areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
+      if(areaDroppedTo.attr("depth") === "1" && $("#"+data).attr("leaf") === "true"){
+          //cannot drop leaves into the top level structure. 
+          return false;
+      }
+      child.style.display = "block";
+      
     }
     else{
       child.id = child.id+"_tmp"; 
@@ -3233,7 +3252,6 @@ function populateAnnoForms(){
     */
    
     function enterCatalogueInfo(canvasID, canvas){
-        console.log("cat info");
         var previewImgSrc = $("."+canvas+"Img").attr("src");
         $(".imgPreview").attr("src",previewImgSrc);
         $(".content").val(""); //Reset all fields
@@ -3278,7 +3296,6 @@ function populateAnnoForms(){
                 $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                 alpha = beta = zeta = true;
             }
-            console.log("cat info pop anno forms");
             populateAnnoForms();
             // $("#start").attr("onclick", "submitStart('"+canvas+"');");
         
@@ -3874,7 +3891,7 @@ function populateAnnoForms(){
                                             if(zeta){
                                                 $.each(testManifest.structures, function(){
                                                         if (this["@id"] === objectID){ 
-                                                                var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json"};
+                                                                var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
                                                                 var listIncluded = false;
                                                                 $.each(this.otherContent,function(){
                                                                         if(this["@id"] === annoListCollection[2]["@id"]){
@@ -3896,7 +3913,7 @@ function populateAnnoForms(){
                                                                     else{
                                                                             annoListID = annoListCollection[1]["@id"];
                                                                     }
-                                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json"};
+                                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
                                                                     var listIncluded = false;
                                                                     $.each(this.otherContent,function(){
                                                                             if(this["@id"] === annoListID){
@@ -3912,8 +3929,7 @@ function populateAnnoForms(){
 				}
 			}); 
 				
-		});  //live. 
-		 
+		});  //live. 		 
 		
 	}
 
@@ -3926,42 +3942,42 @@ function populateAnnoForms(){
 		//testManifest.structures.push(newRangeObject); //local
 		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
 		var rangeServerID = -1;
-		//$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
-			//data=JSON.parse(data);
-			//newRangeObject["@id"] = data["@id"]; //live
-			testManifest.structures.push(newRangeObject); //live
-			if(current === 'currentLeaf'){
-				currentLeafServerID = newRangeObject["@id"];
-                                
-				currentLeaf = currentLeafServerID;
-                            $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
-			}
-			else{
-				//list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
-			}
+		$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
+                    data=JSON.parse(data);
+                    newRangeObject["@id"] = data["@id"]; //live
+                    testManifest.structures.push(newRangeObject); //live
+                    if(current === 'currentLeaf'){
+                            currentLeafServerID = newRangeObject["@id"];
+                            currentLeaf = currentLeafServerID;
+                        $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
+                    }
+                    else{
+                            //list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
+                    }
 			
         	var newRangeAnnoList = {
-                    "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                    //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
                     "@type":"sc:AnnotationList",
                     "resources" : [],
-                    "on" :newRangeObject["@id"]
-        	}
+                    "on" :newRangeObject["@id"],
+                    "forProject": "broken_books"
+        	};
         	var listURL = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
-        	//$.post(listURL, listParams, function(data2){
-        		//data2 = JSON.parse(data2);
+        	$.post(listURL, listParams, function(data2){
+        		data2 = JSON.parse(data2);
                         if(current = "currentLeaf"){
                             annoListCollection[2] = newRangeAnnoList;
                             annoListCollection[2]["@id"] = newRangeAnnoList["@id"];
                         }
-                        
-//        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-//        		var paramObj = {"@id":currentLeafServerID, "otherContent":[data["@id"]]};
-//        		var params = {"content":JSON.stringify(paramObj)};
-//        		$.post(updateCanvasURL, params, function(data){
-//        		});
-        	//});
-		//});
+        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+        		var paramObj = {"@id":currentLeafServerID, "otherContent":[data["@id"]]};
+        		var params = {"content":JSON.stringify(paramObj)};
+        		$.post(updateCanvasURL, params, function(data){
+                            
+        		});
+        	});
+            });
 		
 	}
 
@@ -4163,6 +4179,26 @@ function populateAnnoForms(){
             annoListCollection = new Array(3);
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
             canvasID += 1;
+            var newCanvasHolderImg = {
+                "@type":"oa:Annotation",
+                "motivation":"sc:painting",
+                "resource":
+                        {
+                            "@id":"http://localhost:8080/brokenBooks/images/imgNotFound.png",
+                            "format":"image/jpg",
+                            "@type":"dctypes:Image",
+//                            "service":
+//                                    {
+//                                        "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
+//                                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+//                                        "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
+//                                    },
+                            "width": 667,
+                            "height":1000
+                        },
+                "on":""
+
+            };
             var newCanvas1 = {
                 //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID, //local
                 "@type" : "sc:Canvas",
@@ -4170,15 +4206,11 @@ function populateAnnoForms(){
                 "height" : 1000,
                 "width" : 667,
                 "images" : [],
+                "forProject" : "broken_books",
                 "otherContent": []
-            }
-       	 var newCanvas1AnnoList = {
-			// "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-			 "@type":"sc:AnnotationList",
-			 "resources" : [],
-			 "on" : newCanvas1["@id"]
-         }; //local
-        annoListID++;
+            };
+         annoListCollection[0] = newCanvas1AnnoList;
+         annoListID++;
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'recto');"); //local
       	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
       	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
@@ -4197,12 +4229,14 @@ function populateAnnoForms(){
 				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
+                                "forProject": "broken_books",
 				"on" : newCanvas1["@id"]
        	 	}; //local
                 //annoListCollection[0] = newCanvas1AnnoList;
         	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
+                    //add holder img annotation in to images field.
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data;
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
@@ -4211,41 +4245,40 @@ function populateAnnoForms(){
         		$.post(updateCanvasURL, params, function(data){
                             $("#folioSide1").click();
         		});
+                        var imgAnno = {"@id":newCanvas1["@id"], "images":[newCanvasHolderImg]};
+        		var imgParams = {"content":JSON.stringify(imgAnno)};
+        		$.post(updateCanvasURL, imgParams, function(data){
+        		});
         	});
                 $("#folioSide1").click();
       	 	newCanvas1ServerID = newCanvas1["@id"];
   	        canvasID += 1;
+                annoListID++;
+                var urlCanvas = {
+                            "@type" : "sc:Canvas",
+                            "label" : "Llang_"+canvasID,
+                            "height" : 1000,
+                            "width" : 667,
+                            "images" : [],
+                            "forProject" : "broken_books",
+                            "otherContent" : []
+                };
+                
                         
-      	 	var newCanvas2 = {
-      	 		//"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID,
-		        "@type" : "sc:Canvas",
-		        "label" : "Llang_"+canvasID,
-		        "height" : 1000,
-		        "width" : 667,
-		        "images" : [],
-		        "otherContent" : []
-	      	 };
-
-			 //annoListCollection.push(newCanvas2AnnoList);
-			//local
-			annoListID++;
-//                $("#folioSide2").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"','verso');");
-//      	 	$("#folioSide2").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID);
-      	 	//testManifest.sequences[0].canvases.push(newCanvas2); //local
-	      	//annoListCollection[1].on = "http://www.example.org/iiif/LlangBrev/canvases/"+canvasID; //local
-	      	var params2 = {'content': JSON.stringify(newCanvas2)};
+	      	var params2 = {'content': JSON.stringify(urlCanvas)};
 	      	$.post(url, params2, function(data){
+                        var newCanvas2 = urlCanvas;
 	      		data=JSON.parse(data);
-	      		
                         newCanvas2["@id"] = data["@id"];
                         newCanvas2ServerID = newCanvas2["@id"];
       	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+ newCanvas2["@id"]+"','verso');");
       	 		$("#folioSide2").attr("canvas",  newCanvas2["@id"]);
       	 		testManifest.sequences[0].canvases.push(newCanvas2); //live
                         var newCanvas2AnnoList = {
-	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
+                        "forProject": "broken_books",
 	                "on" :  newCanvas2["@id"]
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
@@ -4259,6 +4292,10 @@ function populateAnnoForms(){
 	        		var params = {"content":JSON.stringify(paramObj)};
 	        		$.post(updateCanvasURL, params, function(data){
 	        		});
+                                var imgAnno2 = {"@id":newCanvas1["@id"], "images":[newCanvasHolderImg]};
+                                var imgParams2 = {"content":JSON.stringify(imgAnno2)};
+                                $.post(updateCanvasURL, imgParams2, function(data){
+                                });
 	        	});
 	  	 	 	rangeID += 1;
 	  	 	 	annoListID += 1;
@@ -4275,11 +4312,10 @@ function populateAnnoForms(){
 			      	"resources" : [],
 			      	"ranges" : [],
 		      		"isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                                "forProject": "broken_books",
 		      		"otherContent" : ""
-        		}
+        		};
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
-                                
-                                
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
                                 gatherRangesForArrange(1);
                     });

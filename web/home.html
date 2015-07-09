@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Broken Books Home</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
+        <script src="http://localhost:8080/brokenBooks/js/bb.js"></script>  
+        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">
+        <!-- homepage css -->
+        <style>
+            body{
+                background-color: white;
+                background-image: none;
+                padding: 0px 18px;
+            }
+            p{
+                color: black;
+            }
+            #homeHeader{
+                border-bottom: 2px solid black;
+                padding: 5px 0px;
+            }
+            #hdrLogo{
+                border: 1pxsolid red;
+                height: 20px;
+                width: 60px;
+                display: inline-block;
+            }
+            #BBlogo{
+                
+            }
+            #hdrLinks{
+                display: inline-block;
+                border-top: 1px solid black;
+                border-bottom: 1px solid black;
+                padding: 0px 2px;
+            }
+            #hdrLinks span{
+                display: inline-block;
+            }
+            #homeInfo p{
+                border: 1px solid blue;
+            }
+            #additionalInfo p{
+                border: 1px solid aqua;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="homeHeader">
+            <div id="hdrLogo">
+                <img id="BBlogo" src="" />
+            </div>
+            <div id="hdrLinks">
+                <span class="hdrLink">Contributions</span>
+                <span href="../brokenBooks/sort_order.html" class="hdrLink">Sections</span>
+                <span href="../brokenBooks/putInBucket.html" class="hdrLink"></span>
+                <span class="hdrLink">Explore</span>
+                <span href="../brokenBooks/home.html" class="hdrLink"></span>
+                <span class="hdrLink">DS Home</span>
+                <span class="hdrLink">Help</span>
+            </div>
+        </div>
+        <div id="homeInfo">
+            <h3>
+                Broken Books Description
+            </h3>
+            <p>
+                Often times in history books are taken apart, "broken" into pieces and dispersed.  Our site
+                allows for the virtual reconstruction of one of these broken books, the pre-modern manuscript known as the
+                Llangattock Breviary and continues to be developed so that any book can be digitally reconstructed.
+            </p>
+            <p>
+                Deriving its nickname from a later owner, John Allan Rolls, the 1st Baron Llangattock, 
+                the Breviary was sold at Christie's, London in 1958. After the sale, this manuscript was broken 
+                apart and the separated leaves were sold on the American market by a dealer from Boston. To view the
+                Digital Scriptorium implementation of this digital object, you can go to 
+                <a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">OMEKA here</a>.
+            </p>  
+            <p>
+                Working with collaborative partners, including many members of Digital Scriptorium, we have collected
+                digital images of this book's leaves from institutions and private collections all over the world, 
+                including Harvard, U.C. Berkeley, the American Academy in Rome, University of South Carolina, 
+                Michigan State, Dartmouth, the Hill Monastic Manuscript Library, the Bibliothèque Nationale
+                in Paris and the Museo Schifanoia in Ferrara. 
+            </p>
+            <p>
+                The power behind the digital reconstruction is <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
+                and the <a target="_blank" href="http://iiif.io">International Image Interoperability Framework</a> (IIIF).
+                Using these innovative tools we can create canvases that hold the digital images 
+                of the relevant leaves and annotatations to store metadata about them.
+                These canvases will be grouped in pairs so that users can attach annotations, 
+                including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually 
+                reconstructing the original manuscript.
+            </p>
+        </div>
+        <div id="additionalInfo">
+            <p>
+                One component of Broken Books is the ability for anyone to contribute at any level they want.  The interface
+                offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within
+                a structure an administrator has prepared.  Users are required to submit at minimum ONE piece of 
+                information about the leaf they are suggesting, which means you can fill out as much or as little information
+                about the leaf as feels comfortable.  <a href="../brokenBooks/putInBucket.html">Contribute a leaf here!</a>
+            </p>
+            
+            <p>
+                Administrators are given the ability to construct and set up the organizational structure of the digital
+                resource they are reconstructing.  This structure waits for leaves to be placed within the sections.  Leaves
+                that are contributed are reviewed by the administrator and once approved are placed within the publicized
+                structure.  <a href="../brokenBooks/sort_order.html?demo=1">Click here to construct.</a>
+            </p>
+            
+            <p>
+                The publicized structure with its pages can be viewed and paged through like reading the book by everyone
+                who would like to read it. 
+                <a href="../brokenBooks/getManifest.html?demo=1">Click here to read the Llangantock Breviary so far.</a>
+            </p>
+        </div>
+        <input type="button" value="Test Get Manifest" onclick="getManifest();"/>
+        
+    </body>
+</html>

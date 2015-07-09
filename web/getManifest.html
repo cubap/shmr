@@ -13,6 +13,8 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
+        <script src="http://localhost:8080/brokenBooks/js/mirador.js"></script>  
+        <link rel="stylesheet" href="../brokenBooks/css/mirador-combined.css">	
         <style>
             .range{
                 border: 2px solid red;
@@ -85,14 +87,47 @@ and open the template in the editor.
     </head>
     <body>
         <div class="mainBlock" id="focusedRange">
-            <button onclick="getAllRanges();">SORT RANGES LIVE</button>
-            <button onclick="organizeRanges();">SORT RANGES LOCAL</button>
-        </div>
-        <div class="sideBarInfo">
-            <div class="manifestData"></div>
-            <div id="manifestRanges"></div>
+
         </div>
     </body>
 </html>
 <script>
+   $(function(){
+       var thisURL = document.location.href;
+       if(thisURL.indexOf("demo=1") > -1 ){
+           organizeRanges();
+       }
+       else{
+            var windowHeight = window.innerHeight - 50;
+            $("#focusedRange").css("height", windowHeight+"px");
+            Mirador({
+                "id": "focusedRange", // The CSS ID selector for the containing element.
+                "layout": "1x1", // The number and arrangement of windows ("row"x"column")?
+                "data": [{"manifestUri": "http://localhost:8080/brokenBooks/getManifest", "location": "Saint Louis University Test"}],
+                "workspaceType": "singleObject",
+                //"mainMenuSettings" : {"buttons" : {"bookmark" : false, "layout" : false}},
+                "windowObjects" : [
+                    {
+                        "loadedManifest": "http://localhost:8080/brokenBooks/getManifest",
+                        "viewType" : "ImageView"
+                          // "canvasID": "http://dms-data.stanford.edu/data/manifests/Walters/qm670kv1873/canvas/canvas-12",
+                          //"bottomPanel" : true,
+                          //"sidePanel" : false,
+                          //"availableViews" : ['ThumbnailsView', 'ImageView', 'BookView'],
+                    //"displayLayout" : false,
+                          //"overlay" : false
+//                    "layoutOptions": {
+//                      "newObject" : false,
+//                      "close" : false,
+//                      "slotRight" : false,
+//                      "slotLeft" : false,
+//                      "slotAbove" : false,
+//                      "slotBelow" : false
+//                    }
+                    }
+                ]
+                
+            });
+        }
+   });
 </script>

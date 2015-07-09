@@ -45,3 +45,62 @@ and open the template in the editor.
     <div id="fullImgContainer"><div onclick='$("#fullImgContainer").hide(); $("#fullImageShade").hide();' class='closeBtn'>X</div><img src=""/></div>
     <div id="fullImageShade"></div>
 </div>	
+<script>
+    var heelo ={
+        "@context":"http://iiif.io/api/presentation/2/context.json",
+        "@id":"http://iiif.biblissima.fr/manifests/ark:/12148/btv1b83045120/manifest.json",
+        "@type":"sc:Manifest",
+        "label":"Livre des Morts d'Ankhesenaset. Egyptien 74",
+        "metadata":[{"label":"Repository","value":"Biblioth\u00e8que nationale de France"},{"label":"Shelfmark","value":"Egyptien 74"},{"label":"Title","value":"Livre des Morts d'Ankhesenaset. Egyptien 74"},{"label":"Date","value":"Fin de la 21e dynastie (1096-945 av. J.-C)."},{"label":"Format","value":"Une colonne de 22lignes de hi\u00e9ratique rubriqu\u00e9 avec l\u2019insertion de deux vignettes polychromes \u00e0gauche. - Pr\u00e9sence d'une mention en hi\u00e9ratique cursif en haut de la page. - q3(j) pt\u1e25, bjk. - , \"Image de Ptah\", \"faucon\",renvoyant aux deux vignettes ins\u00e9r\u00e9es dans le texte. - 240 x 210mm"},{"label":"Provider","value":"Biblioth\u00e8que nationale de France"},{"label":"Disseminator","value":"Biblissima"},{"label":"Source Images","value":"http://gallica.bnf.fr/ark:/12148/btv1b83045120"}
+        ],
+        "sequences":[
+            {
+                "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/sequence/normal",
+                "@type":"sc:Sequence",
+                "label":"Normal",
+                "canvases":[
+                    {
+                        "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/canvas/f1",
+                        "@type":"sc:Canvas",
+                        "label":"NP",
+                        "width":4009,
+                        "height":3888,
+                        "images":[ //It really wants this resource and service and breaks without it.  This is a fix Mirador needs. 
+                            {
+                                "@type":"oa:Annotation",
+                                "motivation":"sc:painting",
+                                "resource":
+                                        {
+                                            "@id":"http://gallica.bnf.fr/ark:/12148/btv1b83045120/f1.highres",
+                                            "format":"image/jpg",
+                                            "@type":"dctypes:Image",
+                                            "service":
+                                                    {
+                                                        "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
+                                                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+                                                        "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
+                                                    },
+                                            "width":4009,
+                                            "height":3888
+                                        },
+                                "on":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/canvas/f1"
+                            
+                            }]
+                    }]
+            
+            }],
+        "description":"Livre des Morts d'Ankhesenaset. Egyptien 74",
+        "attribution":"BnF - public domain",
+        "thumbnail":{
+            "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1/full/,150/0/native.jpg",
+            "service":{
+                "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
+                "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+                "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
+            }
+        },
+        "logo":"http://static.biblissima.fr/images/bnf-logo.jpg",
+        "license":"https://creativecommons.org/publicdomain/zero/1.0/",
+        "related":"http://gallica.bnf.fr/ark:/12148/btv1b83045120",
+        "seeAlso":{"@id":"http://oai.bnf.fr/oai2/OAIHandler?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:bnf.fr:gallica/ark:/12148/btv1b83045120","format":"application/xml"},"viewingHint":"paged"}
+</script>
