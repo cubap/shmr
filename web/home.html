@@ -24,53 +24,77 @@ and open the template in the editor.
                 color: black;
             }
             #homeHeader{
-                border-bottom: 2px solid black;
+                border-bottom: 2px solid rgb(199,199,198);
                 padding: 5px 0px;
+                overflow: hidden;
             }
             #hdrLogo{
-                border: 1pxsolid red;
-                height: 20px;
-                width: 60px;
+                border: 1px solid red;
+                height: 100px;
+                width: 10%;
                 display: inline-block;
+                background-color: white;
+                top: -18px;
+                position: relative;
             }
             #BBlogo{
                 
             }
             #hdrLinks{
-                display: inline-block;
-                border-top: 1px solid black;
-                border-bottom: 1px solid black;
+                border-top: 1px solid rgb(199,199,198);
+                border-bottom: 1px solid rgb(199,199,198);
                 padding: 0px 2px;
+                color: rgb(199,199,198);
+                left: 11%;
+                top: 83px;
+                position: relative;
+                background-color: rgb(240, 242, 218);
+                text-transform: uppercase;
+                font-weight: bold;
+                width: 89%;
             }
             #hdrLinks span{
                 display: inline-block;
+                margin: 0px 5px;
             }
             #homeInfo p{
-                border: 1px solid blue;
+                /*border: 1px solid blue;*/
             }
             #additionalInfo p{
-                border: 1px solid aqua;
+                /*border: 1px solid aqua;*/
+            }
+            #login{
+                text-transform: uppercase;
+                color: rgb(199,199,198);
+                position: absolute;
+                right: 4%;
+                top: 70px;
             }
         </style>
     </head>
     <body>
         <div id="homeHeader">
+            <div id="login">login</div>
+            <table id="hdrLinks">
+                <tbody>
+                    <tr>
+                        <td class="hdrLink">Contributions</td>
+                        <td href="../brokenBooks/sort_order.html" class="hdrLink">Sections</td>
+                        <td href="../brokenBooks/putInBucket.html" class="hdrLink">Create</td>
+                        <td class="hdrLink">Explore</td>
+                        <td href="../brokenBooks/home.html" class="hdrLink"></td>
+                        <td class="hdrLink">DS Home</td>
+                        <td class="hdrLink">Help</td>
+                    </tr>
+                </tbody>
+            </table>
             <div id="hdrLogo">
                 <img id="BBlogo" src="" />
-            </div>
-            <div id="hdrLinks">
-                <span class="hdrLink">Contributions</span>
-                <span href="../brokenBooks/sort_order.html" class="hdrLink">Sections</span>
-                <span href="../brokenBooks/putInBucket.html" class="hdrLink"></span>
-                <span class="hdrLink">Explore</span>
-                <span href="../brokenBooks/home.html" class="hdrLink"></span>
-                <span class="hdrLink">DS Home</span>
-                <span class="hdrLink">Help</span>
             </div>
         </div>
         <div id="homeInfo">
             <h3>
-                Broken Books Description
+                Welcome to Broken Books
             </h3>
             <p>
                 Often times in history books are taken apart, "broken" into pieces and dispersed.  Our site
@@ -123,7 +147,6 @@ and open the template in the editor.
                 <a href="../brokenBooks/getManifest.html?demo=1">Click here to read the Llangantock Breviary so far.</a>
             </p>
         </div>
-        <input type="button" value="Test Get Manifest" onclick="getManifest();"/>
         
     </body>
 </html>

@@ -4187,17 +4187,16 @@ function populateAnnoForms(){
                             "@id":"http://localhost:8080/brokenBooks/images/imgNotFound.png",
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
-//                            "service":
-//                                    {
-//                                        "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
-//                                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
-//                                        "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
-//                                    },
+                            "service":
+                                {                                       
+                                    "@context": "http://iiif.io/api/image/2/context.json",
+                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                    "@id" : "http://localhost:8080/brokenBooks/images/imgNotFound.png"
+                                },
                             "width": 667,
                             "height":1000
                         },
                 "on":""
-
             };
             var newCanvas1 = {
                 //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID, //local
@@ -4209,7 +4208,7 @@ function populateAnnoForms(){
                 "forProject" : "broken_books",
                 "otherContent": []
             };
-         annoListCollection[0] = newCanvas1AnnoList;
+            
          annoListID++;
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'recto');"); //local
       	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
@@ -4219,36 +4218,45 @@ function populateAnnoForms(){
           $.post(url, params1, function(data){ //save first new canvas
       	 	data = JSON.parse(data);
       	 	newCanvas1["@id"] = data["@id"];
-      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+newCanvas1["@id"]+"', 'recto');"); 
-      	 	$("#folioSide1").attr("canvas", newCanvas1["@id"]); 
-                
-      	 	testManifest.sequences[0].canvases.push(newCanvas1); //live
- 	   	 	        	
-        	//save anno list for new canvas
-        	var newCanvas1AnnoList = {
+                var newCanvas1HolderImg = newCanvasHolderImg;
+                newCanvas1HolderImg.on = data["@id"];
+                var newCanvas1AnnoList = {
 				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
                                 "forProject": "broken_books",
 				"on" : newCanvas1["@id"]
        	 	}; //local
+                
+                annoListCollection[0] = newCanvas1AnnoList;
+      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+newCanvas1["@id"]+"', 'recto');"); 
+      	 	$("#folioSide1").attr("canvas", newCanvas1["@id"]); 
+                
+      	 	testManifest.sequences[0].canvases.push(newCanvas1); //live
+ 	   	 	        	
+        	//save anno list for new canvas
+        	
                 //annoListCollection[0] = newCanvas1AnnoList;
         	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
                     //add holder img annotation in to images field.
         		data = JSON.parse(data);
-        		annoListCollection[0]["@id"] = data;
+        		annoListCollection[0]["@id"] = data["@id"];
+                        var listID = data["@id"];
         		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-        		var paramObj = {"@id":newCanvas1["@id"], "otherContent":[data["@id"]]};
-        		var params = {"content":JSON.stringify(paramObj)};
-        		$.post(updateCanvasURL, params, function(data){
-                            $("#folioSide1").click();
-        		});
-                        var imgAnno = {"@id":newCanvas1["@id"], "images":[newCanvasHolderImg]};
+                        var imgAnno = {"@id":newCanvas1["@id"], "images":[newCanvas1HolderImg]};
         		var imgParams = {"content":JSON.stringify(imgAnno)};
         		$.post(updateCanvasURL, imgParams, function(data){
+                            var paramObj = {"@id":newCanvas1["@id"], "otherContent":[listID]};
+                            var params = {"content":JSON.stringify(paramObj)};
+                            $.post(updateCanvasURL, params, function(data){
+                                $("#folioSide1").click();
+                            });
         		});
+        		
+                        
+                        
         	});
                 $("#folioSide1").click();
       	 	newCanvas1ServerID = newCanvas1["@id"];
@@ -4270,6 +4278,8 @@ function populateAnnoForms(){
                         var newCanvas2 = urlCanvas;
 	      		data=JSON.parse(data);
                         newCanvas2["@id"] = data["@id"];
+                        var newCanvas2HolderImg = newCanvasHolderImg;
+                        newCanvas2HolderImg.on = data["@id"];
                         newCanvas2ServerID = newCanvas2["@id"];
       	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+ newCanvas2["@id"]+"','verso');");
       	 		$("#folioSide2").attr("canvas",  newCanvas2["@id"]);
@@ -4284,18 +4294,22 @@ function populateAnnoForms(){
                         annoListCollection[1] = newCanvas2AnnoList;
 				var listURL2 = "http://localhost:8080/brokenBooks/saveNewRange";
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
-	        	
+	        	var canvasID = newCanvas2["@id"];
 	        	$.post(listURL2, listParams2, function(data){
 	        		data = JSON.parse(data);
+                                annoListCollection[1]["@id"] = data["@id"];
+                                var listID = data["@id"];
 	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-	        		var paramObj = {"@id":newCanvas2["@id"], "otherContent":[data["@id"]]};
-	        		var params = {"content":JSON.stringify(paramObj)};
-	        		$.post(updateCanvasURL, params, function(data){
-	        		});
-                                var imgAnno2 = {"@id":newCanvas1["@id"], "images":[newCanvasHolderImg]};
+                                var imgAnno2 = {"@id":canvasID, "images":[newCanvas2HolderImg]};
                                 var imgParams2 = {"content":JSON.stringify(imgAnno2)};
                                 $.post(updateCanvasURL, imgParams2, function(data){
+                                    var paramObj = {"@id":canvasID, "otherContent":[listID]};
+                                    var params = {"content":JSON.stringify(paramObj)};
+                                    $.post(updateCanvasURL, params, function(data){
+                                    });
                                 });
+	        		
+                                
 	        	});
 	  	 	 	rangeID += 1;
 	  	 	 	annoListID += 1;
