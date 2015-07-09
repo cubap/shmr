@@ -519,7 +519,7 @@ and open the template in the editor.
             }
             .rectoImg{
                 position: relative;
-                background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');                   
+                background-image: url('../images/addImg.jpg');                   
                 max-height: 140px;
                 max-width:120px;
                 background-size: 120px 140px;
@@ -530,7 +530,7 @@ and open the template in the editor.
             }
             .versoImg{
                 position: relative;
-                background-image: url('http://dimplify.com/images/upload-image-thumb.jpg');
+                background-image: url('../images/addImg.jpg');
                 background-size: 120px 140px;
                 min-height: 140px;
                 min-width:120px;

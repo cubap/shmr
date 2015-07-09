@@ -8,6 +8,11 @@ var annoListID = 5;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
 var annoListCollection = new Array(3);
+var putInBucketDemo = false;
+var thisURL = document.location.href;
+if(thisURL.indexOf("demo=1") > -1 ){
+    putInBucketDemo = true; 
+}
 var testLists = [
     {
         "@type" : "sc:AnnotationList",
@@ -3310,6 +3315,7 @@ function populateAnnoForms(){
         var uriToSave = $("#catalogueInfoFor").val(); //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
+        if(putInBucketDemo)return false;
         $.each(testManifest.structures, function(){
             if (this["@id"] === uriToSave){
                 currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
@@ -4171,6 +4177,7 @@ function populateAnnoForms(){
 	*/
 	function submitIntro(test){
             $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+            if(putInBucketDemo)return false;
             if(test === "testEdit"){
                 return false;
             }
@@ -4215,7 +4222,7 @@ function populateAnnoForms(){
       	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
-          $.post(url, params1, function(data){ //save first new canvas
+             $.post(url, params1, function(data){ //save first new canvas
       	 	data = JSON.parse(data);
       	 	newCanvas1["@id"] = data["@id"];
                 var newCanvas1HolderImg = newCanvasHolderImg;
@@ -4334,6 +4341,7 @@ function populateAnnoForms(){
                                 gatherRangesForArrange(1);
                     });
   	 	});
+            
       	     	
 	}
 
