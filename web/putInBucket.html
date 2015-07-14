@@ -66,7 +66,7 @@ var contributer = true;
                             var target = event.target;
                             var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
                             var files = !!this.files ? this.files : [];
-                            var canvasURI = $(this).parent().attr("canvas"); //local
+                            var canvasURI = $(this).parent().parent().attr("canvas"); //local
                             var canvasServerURI = $(this).parent().parent().find(".imgCatalogueInfo").attr("canvasServerID"); //live
                             if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
 
@@ -80,20 +80,23 @@ var contributer = true;
                                     $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
                                     var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
                                     var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
-                                    var annotationObject = {
-                                                            "@id" : newAnnoURI,
-                                                    "@type" : "oa:Annotation",
-                                                    "motivation" : "sc:painting",
-                                                    "label" : "Canvas Image",
-                                                    "resource" : {
-                                                            "@id" : newImageURI,
-                                                            "@type" : "dctypes:Image",
-                                                            "format" : "image/jpeg",
-                                                            "height" : 2365,
-                                                            "width" : 1579
-                                                            },
-                                                            "on" : canvasServerURI
-                                                    };
+                                     var annotationObject = {
+                                        "format":"image/jpg",
+                                        "@type":"dctypes:Image",
+                                        "resource":
+                                        {
+                                            "@id": this.result,
+                                            "service":
+                                                {                                       
+                                                    "@context": "http://iiif.io/api/image/2/context.json",
+                                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                                    "@id" : this.result
+                                                },
+                                            "width": 667, //how should I set these?
+                                            "height":1000 //how should I set these?
+                                        },
+                                        "on" : canvasURI
+                                    };
                                                     //$("#catalogueInfoFor").val(canvasURI);
                                     //(annotationObject, canvasURI); // local
                                     addImage(annotationObject, canvasServerURI); // live\

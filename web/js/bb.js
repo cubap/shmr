@@ -2236,7 +2236,7 @@ function getAllCanvases(){
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
      pageCanvases = JSON.parse(data);
-     console.log("got canvases")
+     console.log("got canvases");
      getAllAnnotations();
   });
 }
@@ -3200,12 +3200,13 @@ function populateAnnoForms(){
         console.log(annos);
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('.formLabel').html().replace(":", "").trim();
-            label1 = label1.replace(/(.*)/, ""); // replace (stuff)
+            label1 = label1.replace(/\(.*?\)\s?/g, ''); // replace (stuff)
             //need to get rid of trailing text between and including ()
             var currentEntry1 = $(this).find(".content");
+            console.log(label1+"!");
             $.each(annos, function(){
-                var checkLabel1 = this.resource.label.replace(":", "").trim();  //get rid of colon and extra spaces
-                checkLabel1 = checkLabel1.replace(/(.*)/, "");
+                var checkLabel1 = this.resource.label.replace(":", "").trim();  
+                checkLabel1 = checkLabel1.replace(/\(.*?\)\s?/g, '');
                 //need to get rid of trailing text between and including ()
                 if (checkLabel1 == label1){
                     currentEntry1.val(this.resource["cnt:chars"]);
@@ -3218,11 +3219,11 @@ function populateAnnoForms(){
         $.each($(".contentFormEntry"), function(){
             var label2 = $(this).find('.formLabel').html().replace(":", "").trim();
             //need to get rid of trailing text between and including ()
-            label2 = label2.replace(/(.*)/, "");
+            label2 = label2.replace(/\(.*?\)\s?/g, '');
             var currentEntry2 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel2 = this.resource.label.replace(":", "").trim();
-                checkLabel2 = checkLabel2.replace(/(.*)/, "");
+                checkLabel2 = checkLabel2.replace(/\(.*?\)\s?/g, '');
                 //need to get rid of trailing text between and including ()
                 if (checkLabel2 == label2){
                     currentEntry2.val(this.resource["cnt:chars"]);
@@ -3234,12 +3235,12 @@ function populateAnnoForms(){
         });
         $.each($(".carrierFormEntry"), function(){
             var label3 = $(this).find('.formLabel').html().replace(":", "").trim();
-            label3 = label3.replace(/(.*)/, "");
+            label3 = label3.replace(/\(.*?\)\s?/g, '');
             //need to get rid of trailing text between and including ()
             var currentEntry3 = $(this).find(".content");
             $.each(annos, function(){
                 var checkLabel3 = this.resource.label.replace(":", "").trim();
-                checkLabel3 = checkLabel3.replace(/(.*)/,"");
+                checkLabel3 = checkLabel3.replace(/\(.*?\)\s?/g, '');
                 //need to get rid of trailing text between and including ()
                 if (checkLabel3 == label3){
                     currentEntry3.val(this.resource["cnt:chars"]);
@@ -3752,20 +3753,17 @@ function populateAnnoForms(){
 		$("#fullImageShade").hide()
 	}
 	function addImage(anno, canvasURI){
-		//DO not add image annotations into an annotation list. 
-		//console.log("CANVASURI: "+canvasURI);
-		//console.log(anno);
-		//here, the anno is an image annotation.  The object can be directly saved into a canvases 'images[]' field outside of an annotation list.  I have the @id of the canvas and the annotation I want to put into its images[] field.
-		//createNewAnno(anno); //live
-		//anno["@id"] = annoServerID; //live
-		$.each(testManifest.sequences[0].canvases, function(){
+              var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+              var paramObj = {"@id": canvasURI, "images":[anno]};
+              var params = {"content":JSON.stringify(paramObj)};
+              $.post(updateCanvasURL, params, function(data){
+                  $.each(testManifest.sequences[0].canvases, function(){
 			if(this["@id"] === canvasURI){
 				this.images.push(anno);
-				imageID++;
-				//updateCanvas
 				return false;
 			}
-		})
+		});
+              });
 	}
 
 	/*
@@ -4190,10 +4188,12 @@ function populateAnnoForms(){
                 "@type":"oa:Annotation",
                 "motivation":"sc:painting",
                 "resource":
-                        {
-                            "@id":"http://localhost:8080/brokenBooks/images/imgNotFound.png",
+                    {
+                            
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
+                            
+                            "@id" : "http://localhost:8080/brokenBooks/images/imgNotFound.png",
                             "service":
                                 {                                       
                                     "@context": "http://iiif.io/api/image/2/context.json",
@@ -4202,9 +4202,10 @@ function populateAnnoForms(){
                                 },
                             "width": 667,
                             "height":1000
-                        },
-                "on":""
-            };
+                    },
+                    "on":""
+                };
+                
             var newCanvas1 = {
                 //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID, //local
                 "@type" : "sc:Canvas",
@@ -4372,18 +4373,58 @@ function populateAnnoForms(){
   function updateImageAnno(which){
       if(which === "alpha"){
               var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-              var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[$('textarea[rv="recto"]').val()]};
+              var image = $('textarea[rv="recto"]').val();
+              var canvas = $("#folioSide1").attr("canvas");
+              var anno = {
+                            "format":"image/jpg",
+                            "@type":"dctypes:Image",
+                            "resource":
+                            {
+                                "@id": image,
+                                "service":
+                                    {                                       
+                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                        "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                        "@id" : image
+                                    },
+                                "width": 667, //how should I set these?
+                                "height":1000 //how should I set these?
+                            },
+                            "on" : canvas
+                        };
+              
+              var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               $.post(updateCanvasURL, params, function(data){
               });
       }
       else{
               var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-              var paramObj = {"@id": $("#folioSide2").attr("canvas"), "images":[$('textarea[rv="verso"]').val()]};
+              var image = $('textarea[rv="verso"]').val();
+              var canvas = $("#folioSide2").attr("canvas");
+              var anno = {
+                            "format":"image/jpg",
+                            "@type":"dctypes:Image",
+                            "resource":
+                            {
+                                "@id": image,
+                                "service":
+                                    {                                       
+                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                        "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                        "@id" : image
+                                    },
+                                "width": 667, //how should I set these?
+                                "height":1000 //how should I set these?
+                            },
+                            "on" : canvas
+                        };
+              var paramObj = {"@id": $("#folioSide2").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               $.post(updateCanvasURL, params, function(data){
               });
       }
+      $(".uploadness").hide();
   }
 
   function breakUpConfirm(event){
@@ -4597,11 +4638,6 @@ function populateAnnoForms(){
                 */
             }
         });       
-    }
-    else{ //for the tester from the creation intro set of buttons. 
-        leafIsIn = "http://www.example.org/iiif/LlangBrev/range/7";
-        leaf = "http://www.example.org/iiif/LlangBrev/range/25";
-        currentLeafServerID = leaf;
     }
     $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvas+"', 'recto');"); 
     $("#folioSide1").attr("canvas", alphaCanvas);

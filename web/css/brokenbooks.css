@@ -558,10 +558,13 @@ and open the template in the editor.
             }
             .uploadness{
                 display: none;
-                position: relative;
+                position: absolute;
                 border: 1px solid black;
                 margin: 0px 2px auto;
                 padding : 5px;
+                background-color: black;
+                color: white;
+                z-index: 2;
             }
             .uploadness textarea{
                 display: inline-table;

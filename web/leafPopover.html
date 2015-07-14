@@ -12,19 +12,31 @@ and open the template in the editor.
         <div id="whatPiece">
             <div id="oneAndtwo">
                 <div style="margin-bottom: 17px;" id="oneAndtwoLabel" >LEAF LABEL</div><img style="z-index:2; left: 10px; top:10px;" class="rectoImg" src=""/><img style="right: 60px; top: -10px; z-index: 1;" class="versoImg" src=""/>
-                        <img class="unselectedI" style="left: 34px; top:-11px;" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('oneAndtwo');"/>
+                <img class="unselectedI" style="left: 34px; top:-11px;" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('oneAndtwo');"/>
                 <img class="selectedI" style="right: 109px; top: 22px;" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('oneAndtwo');"/>
                 </div>
             <div id="folioSide1"><input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
                 <div id="folio1Label">Folio 1 Label</div>
-                <img onclick="$(this).parent().find('input[type=\'file\']').click();" class="rectoImg" src=""/>
+                <div class="uploadness">
+                    <div class="leafPopClose" onclick="$(this).parent().hide();">X</div>
+                    Enter Image Uri:&nbsp;&nbsp;<textarea rv="recto" class="canvasImageSource"></textarea><button onclick='updateImageAnno("alpha");'>Save</button><br>
+                    OR<br>
+                    <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+                </div>
+                <img onclick="$(this).parent().find('.uploadness').show();" class="rectoImg" src=""/>
                 <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide1');"/>
                 <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide1');"/>
                 </div>
             <div id="folioSide2"><input type="file" rv="verso" class="canvasImageFile" required="true" multiple="false" />
                 <div id="folio2Label">Folio 2 Label</div>
-                <img onclick="$(this).parent().find('input[type=\'file\']').click();" class="versoImg" src=""/>
-                                        <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide2');"/>
+                 <div class="uploadness">
+                     <div class="leafPopClose" onclick="$(this).parent().hide();">X</div>
+                    Enter Image Uri:&nbsp;&nbsp;<textarea rv="verso" class="canvasImageSource"></textarea><button onclick='updateImageAnno("beta");'>Save</button><br>
+                    OR<br>
+                    <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+                </div>
+                <img onclick="$(this).parent().find('.uploadness').show();" class="versoImg" src=""/>
+                <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide2');"/>
                 <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide2');"/>
 
             </div>
@@ -46,61 +58,4 @@ and open the template in the editor.
     <div id="fullImageShade"></div>
 </div>	
 <script>
-    var heelo ={
-        "@context":"http://iiif.io/api/presentation/2/context.json",
-        "@id":"http://iiif.biblissima.fr/manifests/ark:/12148/btv1b83045120/manifest.json",
-        "@type":"sc:Manifest",
-        "label":"Livre des Morts d'Ankhesenaset. Egyptien 74",
-        "metadata":[{"label":"Repository","value":"Biblioth\u00e8que nationale de France"},{"label":"Shelfmark","value":"Egyptien 74"},{"label":"Title","value":"Livre des Morts d'Ankhesenaset. Egyptien 74"},{"label":"Date","value":"Fin de la 21e dynastie (1096-945 av. J.-C)."},{"label":"Format","value":"Une colonne de 22lignes de hi\u00e9ratique rubriqu\u00e9 avec l\u2019insertion de deux vignettes polychromes \u00e0gauche. - Pr\u00e9sence d'une mention en hi\u00e9ratique cursif en haut de la page. - q3(j) pt\u1e25, bjk. - , \"Image de Ptah\", \"faucon\",renvoyant aux deux vignettes ins\u00e9r\u00e9es dans le texte. - 240 x 210mm"},{"label":"Provider","value":"Biblioth\u00e8que nationale de France"},{"label":"Disseminator","value":"Biblissima"},{"label":"Source Images","value":"http://gallica.bnf.fr/ark:/12148/btv1b83045120"}
-        ],
-        "sequences":[
-            {
-                "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/sequence/normal",
-                "@type":"sc:Sequence",
-                "label":"Normal",
-                "canvases":[
-                    {
-                        "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/canvas/f1",
-                        "@type":"sc:Canvas",
-                        "label":"NP",
-                        "width":4009,
-                        "height":3888,
-                        "images":[ //It really wants this resource and service and breaks without it.  This is a fix Mirador needs. 
-                            {
-                                "@type":"oa:Annotation",
-                                "motivation":"sc:painting",
-                                "resource":
-                                        {
-                                            "@id":"http://gallica.bnf.fr/ark:/12148/btv1b83045120/f1.highres",
-                                            "format":"image/jpg",
-                                            "@type":"dctypes:Image",
-                                            "service":
-                                                    {
-                                                        "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
-                                                        "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
-                                                        "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
-                                                    },
-                                            "width":4009,
-                                            "height":3888
-                                        },
-                                "on":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/canvas/f1"
-                            
-                            }]
-                    }]
-            
-            }],
-        "description":"Livre des Morts d'Ankhesenaset. Egyptien 74",
-        "attribution":"BnF - public domain",
-        "thumbnail":{
-            "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1/full/,150/0/native.jpg",
-            "service":{
-                "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
-                "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
-                "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
-            }
-        },
-        "logo":"http://static.biblissima.fr/images/bnf-logo.jpg",
-        "license":"https://creativecommons.org/publicdomain/zero/1.0/",
-        "related":"http://gallica.bnf.fr/ark:/12148/btv1b83045120",
-        "seeAlso":{"@id":"http://oai.bnf.fr/oai2/OAIHandler?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:bnf.fr:gallica/ark:/12148/btv1b83045120","format":"application/xml"},"viewingHint":"paged"}
 </script>

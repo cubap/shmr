@@ -87,10 +87,9 @@ and open the template in the editor.
                 <tbody>
                     <tr>
                         <td class="hdrLink">Contributions</td>
-                        <td href="../brokenBooks/sort_order.html" class="hdrLink">Sections</td>
-                        <td href="../brokenBooks/putInBucket.html" class="hdrLink">Create</td>
+                        <td class="hdrLink"><a href="../brokenBooks/sort_order.html">Sections</a></td>
+                        <td class="hdrLink"><a href="../brokenBooks/putInBucket.html">Create</a></td>
                         <td class="hdrLink">Explore</td>
-                        <td href="../brokenBooks/home.html" class="hdrLink"></td>
                         <td class="hdrLink">DS Home</td>
                         <td class="hdrLink">Help</td>
                     </tr>
@@ -128,7 +127,7 @@ and open the template in the editor.
                 The power behind the digital reconstruction is <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
                 and the <a target="_blank" href="http://iiif.io">International Image Interoperability Framework</a> (IIIF).
                 Using these innovative tools we can create canvases that hold the digital images 
-                of the relevant leaves and annotatations to store metadata about them.
+                of the relevant leaves and annotations to store metadata about them.
                 These canvases will be grouped in pairs so that users can attach annotations, 
                 including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually 
                 reconstructing the original manuscript.
@@ -162,6 +161,6 @@ and open the template in the editor.
 <script>
  $(function(){
      var windowHeight = $(window).height();
-     $("body").height(windowHeight+"px");
+     $("body").css("min-height", windowHeight+"px");
  });
 </script>
