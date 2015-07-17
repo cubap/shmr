@@ -4722,3 +4722,29 @@ function selectInTree(child){
     }
 
 }
+//var canvas =
+//    {
+//    "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/canvas/f1",
+//    "@type":"sc:Canvas",
+//    "label":"NP",
+//    "forProject" : "broken_books",
+//    "width":4009,"height":3888,
+//    "images":[{
+//            "@type":"oa:Annotation",
+//            "motivation":"sc:painting",
+//            "resource":{
+//                "@id":"http://gallica.bnf.fr/ark:/12148/btv1b83045120/f1.highres",
+//                "format":"image/jpg","@type":"dctypes:Image",
+//                "service":{
+//                    "@context":"http://library.stanford.edu/iiif/image-api/1.1/context.json",
+//                    "profile":"http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+//                    "@id":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/f1"
+//                },
+//        "width":4009,
+//        "height":3888
+//        }
+//    }],
+//    "on":"http://gallica.bnf.fr/iiif/ark:/12148/btv1b83045120/canvas/f1"
+//    }
+    
+    
