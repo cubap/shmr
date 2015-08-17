@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var rangeID, canvasID, annoID, imageID = 1;
+var rangeID, canvasTag, annoID, imageID = 1;
 var annoListID = 5;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
@@ -4183,7 +4183,7 @@ function populateAnnoForms(){
             var newCanvas2ServerID = -1;
             annoListCollection = new Array(3);
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
-            canvasID += 1;
+            canvasTag = parseInt(canavsTag)+1;
             var newCanvasHolderImg = {
                 "@type":"oa:Annotation",
                 "motivation":"sc:painting",
@@ -4207,9 +4207,9 @@ function populateAnnoForms(){
                 };
                 
             var newCanvas1 = {
-                //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasID, //local
+                //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag, //local
                 "@type" : "sc:Canvas",
-                "label" : "Llang_"+canvasID,
+                "label" : "Llang_"+canvasTag,
                 "height" : 1000,
                 "width" : 667,
                 "images" : [],
@@ -4218,8 +4218,8 @@ function populateAnnoForms(){
             };
             
          annoListID++;
-         $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasID+"', 'recto');"); //local
-      	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasID); //local
+         $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+"', 'recto');"); //local
+      	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag); //local
       	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
       	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
@@ -4268,11 +4268,11 @@ function populateAnnoForms(){
         	});
                 $("#folioSide1").click();
       	 	newCanvas1ServerID = newCanvas1["@id"];
-  	        canvasID += 1;
+  	        canvasTag = parseInt(canvasTag) + 1;
                 annoListID++;
                 var urlCanvas = {
                             "@type" : "sc:Canvas",
-                            "label" : "Llang_"+canvasID,
+                            "label" : "Llang_"+canvasTag,
                             "height" : 1000,
                             "width" : 667,
                             "images" : [],
