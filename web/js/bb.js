@@ -2639,14 +2639,14 @@ function gatherRangesForArrange(which){
     else if (which == 2){
         outer = $(".adminTrail");
     }
-    var url = window.location.href;
+    var windowurl = document.location.href;
     var properties={"@type" : "sc:Range", "forProject":"broken_books"};
 //this will be superfluous when the annotation store has ranges from other projects
     var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
     $.post(url, params)
     .done(function(data){
-        if(url.indexOf("demo=1") > -1){
+        if(windowurl.indexOf("demo=1") > -1){
             rangeCollection = testManifest.structures;
         }
         else{
@@ -2799,7 +2799,7 @@ function gatherRangesForArrange(which){
         }
     })
     .fail(function(){
-        if(url.indexOf("demo=1") > -1){
+        if(windowurl.indexOf("demo=1") > -1){
             rangeCollection = testManifest.structures;
         }
         else{
