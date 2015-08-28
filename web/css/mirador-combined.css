@@ -3098,11 +3098,11 @@ li.highlight {
 }
 .brightnessSlider{
   display: block;
-  height:200px;
+  /*height:200px;*/
 }
 .contrastSlider{
   display: block;
-  height:200px;
+  /*height:200px;*/
 }
 .invertEffect{
   -webkit-filter: invert(100%);
@@ -3907,4 +3907,16 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
     height: 100%;
     margin: 0 auto;
     display: block;
+}
+
+/* Custom BB CSS */
+.bbAnnosContainer{
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: green;
+  z-index: 100;
+  color: black;
+  border: 2px solid blue;
 }

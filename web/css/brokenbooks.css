@@ -475,6 +475,9 @@ and open the template in the editor.
                 background-color: black !important;
                 border: none !important;
             }
+            .ui-slider-range{
+                background-color: white !important;
+            }
             .ui-state-default, .ui-state-hover{ /* background color of tabs and hover */
                 background-image: none !important;
                 background-color: #FFF !important;
@@ -773,6 +776,33 @@ and open the template in the editor.
                 left: 0;
                 top:0;
                 z-index: 5;
+            }
+            .lockUp{
+                position: absolute;
+                top: -11px;
+                color: #008000;
+                font-size: 21px;
+                font-weight: bold;
+                right: 26px;
+                z-index: 3 !important;
+            }
+            .lockDown{
+                position: absolute;
+                top: 15px;
+                color: #008000;
+                font-size: 20px;
+                font-weight: bold;
+                right: 27px;
+                -ms-transform: rotate(180deg); /* IE 9 */
+                -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+                transform: rotate(180deg);
+                z-index: 3!important;
+            }
+            .lockDown:hover{
+                background-color: green;
+            }
+            .lockUp:hover{
+                background-color: green;
             }
 
             

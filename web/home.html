@@ -11,7 +11,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
-        <script src="http://localhost:8080/brokenBooks/js/bb.js"></script>  
+        <script src="../brokenBooks/js/bb.js"></script>  
         <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">
         <!-- homepage css -->
         <style>
@@ -34,7 +34,6 @@ and open the template in the editor.
                 overflow: hidden;
             }
             #hdrLogo{
-                border: 1px solid red;
                 height: 100px;
                 width: 20%;
                 display: inline-block;
@@ -43,7 +42,7 @@ and open the template in the editor.
                 position: relative;
             }
             #BBlogo{
-                
+                height: 100px;
             }
             #hdrLinks{
                 border-top: 1px solid rgb(153, 153, 150);
@@ -64,6 +63,7 @@ and open the template in the editor.
             }
             #homeInfo p{
                 /*border: 1px solid blue;*/
+                padding: 0px 100px;
             }
             #additionalInfo p{
                 /*border: 1px solid aqua;*/
@@ -96,8 +96,7 @@ and open the template in the editor.
                 </tbody>
             </table>
             <div href="../brokenBooks/home.html" id="hdrLogo">
-                BB LOGO
-                <!--<img id="BBlogo" src="" />-->
+                <img id="BBlogo" src="../brokenBooks/images/bblogo.png" />
             </div>
         </div>
         <div id="homeInfo">
@@ -105,54 +104,61 @@ and open the template in the editor.
                 Welcome to Broken Books
             </h3>
             <p>
-                Often times in history books are taken apart, "broken" into pieces and dispersed.  Our site
-                allows for the virtual reconstruction of one of these broken books, the pre-modern manuscript known as the
-                Llangattock Breviary and continues to be developed so that any book can be digitally reconstructed.
+                For many antiquarian books and manuscripts, the inevitable consequence of increased value over time results in an unfortunate fate: 
+                they are taken apart, "broken" into pieces, sold for profit among various owners and institutional collections.  As scattered fragments, 
+                however, detached leaves present to scholars frustrating glimpses of historically significant texts and decorative programs
+                that cannot be fully studied without evidence of the original work and the context in which it was produced.  Our site
+                allows for the virtual reconstruction of these broken books so that any book can be digitally recaptured, reordered, and reconstructed, 
+                at least as much as pieces of it are found.
             </p>
             <p>
-                Deriving its nickname from a later owner, John Allan Rolls, the 1st Baron Llangattock, 
-                the Breviary was sold at Christie's, London in 1958. After the sale, this manuscript was broken 
-                apart and the separated leaves were sold on the American market by a dealer from Boston. To view the
-                Digital Scriptorium implementation of this digital object, you can go to 
-                <a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">OMEKA here</a>.
+                The first test case for the Broken Books project is a famously broken, pre-modern manuscript known as the Llangattock Breviary.
+                Although originally made for Leonello d’Este (1407-1450), Marquis of Ferrara, the manuscript derives its nickname from a later owner, 
+                John Allan Rolls (1837-1912), the 1st Baron Llangattock.  Although somewhat damaged through preceding ownership,the Llangattock Breviary 
+                remained undisturbed in the Rolls family collection for several generations until it was sold at Christie's, London on Monday, December 8, 1958. 
+                After the sale, this manuscript was broken apart and the separated leaves were sold on the American market by Goodspeeds, 
+                an antiquarian book dealer from Boston. 
             </p>  
             <p>
-                Working with collaborative partners, including many members of Digital Scriptorium, we have collected
-                digital images of this book's leaves from institutions and private collections all over the world, 
-                including Harvard, U.C. Berkeley, the American Academy in Rome, University of South Carolina, 
-                Michigan State, Dartmouth, the Hill Monastic Manuscript Library, the Bibliothèque Nationale
-                in Paris and the Museo Schifanoia in Ferrara. 
+               Working with collaborative partners, including many members of Digital Scriptorium, we have collected digital images of this book's 
+               leaves from institutions and private collections all over the world, including Harvard, U.C. Berkeley, the American Academy in Rome, 
+               University of South Carolina, Michigan State, Dartmouth, and the Hill Monastic Manuscript Library, Washington University in Seattle, 
+               the Louvre Museum, and the Museo Schifanoia in Ferrara. Dr. Debra Cashion, Co-PI and lead scholar of the project, has textually 
+               identified and cataloged all of the leaves discovered thus far, and created an online exhibit about then which you can access at
+               <a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">OMEKA here</a>.
             </p>
             <p>
-                The power behind the digital reconstruction is <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
+                The Broken Books OMEKA exhibit, however, does not represent the complete Broken Books project. 
+                Developer Bryan Haberberger has built a digital resource to enable outside users to contribute leaves and metadata to help 
+                rebuild the manuscript.  The power behind the digital reconstruction is 
+                <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
                 and the <a target="_blank" href="http://iiif.io">International Image Interoperability Framework</a> (IIIF).
-                Using these innovative tools we can create canvases that hold the digital images 
-                of the relevant leaves and annotations to store metadata about them.
-                These canvases will be grouped in pairs so that users can attach annotations, 
-                including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually 
-                reconstructing the original manuscript.
+                Using these innovative tools we can create canvases that hold the digital images of the relevant leaves and annotations 
+                to store metadata about them. These canvases will be grouped in pairs so that users can attach annotations, 
+                including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually reconstructing the original manuscript.
             </p>
         </div>
         <div id="additionalInfo">
             <p>
-                One component of Broken Books is the ability for anyone to contribute at any level they want.  The interface
-                offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within
-                a structure an administrator has prepared.  Users are required to submit at minimum ONE piece of 
-                information about the leaf they are suggesting, which means you can fill out as much or as little information
-                about the leaf as feels comfortable.  <a href="../brokenBooks/putInBucket.html?demo=1">Contribute a leaf here!</a>
+                One important component of Broken Books is the ability for anyone to contribute at any level they want. 
+                The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
+                a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
+                information about the leaf they want to add, which means they can fill out as much or as little information
+                about the leaf as they wish.  <a href="../brokenBooks/putInBucket.html?demo=1">See what it is like to contribute a leaf here!</a>
             </p>
             
             <p>
-                Administrators are given the ability to construct and set up the organizational structure of the digital
-                resource they are reconstructing.  This structure waits for leaves to be placed within the sections.  Leaves
-                that are contributed are reviewed by the administrator and once approved are placed within the publicized
-                structure.  <a href="../brokenBooks/sort_order.html?demo=1">Click here to construct.</a>
+                Scholars-Administrators in Broken Books are given the ability to construct and set up the organizational structure of the booke or
+                manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
+                that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
+                structure, which continually redefines where leaves are still missing.  
+                <a href="../brokenBooks/sort_order.html?demo=1">See what it is like to structure a book or manuscript!</a>
             </p>
             
             <p>
-                The publicized structure with its pages can be viewed and paged through like reading the book by everyone
-                who would like to read it. 
-                <a href="../brokenBooks/getManifest.html?demo=1">Click here to read the Llangantock Breviary so far.</a>
+                The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
+                Broken Books uses the Mirador viewer for these purposes
+                <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
             </p>
         </div>
         

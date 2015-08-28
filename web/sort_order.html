@@ -11,7 +11,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
-        <script src="http://localhost:8080/brokenBooks/js/bb.js"></script>  
+        <script src="../brokenBooks/js/bb.js"></script>  
         <title>Sort Breviary Order</title>
         <style>
             .leafPopover{
@@ -73,7 +73,7 @@ and open the template in the editor.
                 border-bottom: transparent;
             }  
             /*.rectoImg, .versoImg{
-                background-image : url("http://localhost:8080/brokenBooks/images/imgNotFound.png") !important;
+                background-image : url("http://165.134.241.141/brokenBooks/images/imgNotFound.png") !important;
             } */        
         </style>
     </head>
@@ -165,7 +165,7 @@ and open the template in the editor.
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
             if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
             }      
          $(this).append(folioCountHTML);
        });
@@ -236,54 +236,6 @@ and open the template in the editor.
             });
             gatherRangesForArrange(2); //populate the admin interface
         });
-        var hello2 = {
-            "@id":"/brokenBooks/getManifest",
-            "@context":"http://www.shared-canvas.org/ns/context.json",
-            "@type":"sc:Manifest",
-            "metadata":"",
-            "label" :"The Llangantock Breviary",
-            "structures":[],
-            "sequences":[
-                {
-                    "@id" : "http://localhost:8080/brokenBooks/sequence/normal",
-                    "@type":"sc:Sequence",
-                    "label":"Llangantock Canvses",
-                    "canvases":[
-                        {
-                            "_id":{"date":{"date":9,"day":4,"hours":10,"minutes":4,"month":6,"seconds":49,"time":1436454289000,"timezoneOffset":300,"year":115},"inc":-388387664,"machine":873314507,"new":false,"time":1436454289000,"timeSecond":1436454289,"timestamp":1436454289},
-                            "@type":"sc:Canvas",
-                            "label":"Llang_NaN",
-                            "height":1000,
-                            "width":667,
-                            "images":[],
-                            "forProject":"broken_books",
-                            "addedTime":1436454289440,
-                            "originalAnnoID":"",
-                            "version":1,
-                            "permission":0,
-                            "forkFromID":"",
-                            "@id":"http://localhost:8080/annotationstore/annotation/559e8d91340db8cbe8d9acb0",
-                            "otherContent":["http://localhost:8080/annotationstore/annotation/559e8d91340db8cbe8d9acb2"]
-                        },
-                        {
-                            "_id":{"date":{"date":9,"day":4,"hours":10,"minutes":4,"month":6,"seconds":49,"time":1436454289000,"timezoneOffset":300,"year":115},"inc":-388387663,"machine":873314507,"new":false,"time":1436454289000,"timeSecond":1436454289,"timestamp":1436454289},
-                            "@type":"sc:Canvas",
-                            "label":"Llang_NaN",
-                            "height":1000,
-                            "width":667,
-                            "images":[],
-                            "forProject":"broken_books",
-                            "addedTime":1436454289470,
-                            "originalAnnoID":"",
-                            "version":1,
-                            "permission":0,
-                            "forkFromID":"",
-                            "@id":"http://localhost:8080/annotationstore/annotation/559e8d91340db8cbe8d9acb1",
-                            "otherContent":["http://localhost:8080/annotationstore/annotation/559e8d91340db8cbe8d9acb3"]
-                        }
-                    ]
-                }
-            ]
-        };
+
     </script>
 </html>

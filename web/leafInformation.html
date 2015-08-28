@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
 	<head>
-            <script src="http://localhost:8080/brokenBooks/js/bb.js"></script>  
+            <script src="../brokenBooks/js/bb.js"></script>  
 <!--		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
             <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
@@ -22,28 +22,28 @@ and open the template in the editor.
                 <ul>
                     <li>
                         <a href="#contextForm">Context</a>
-                        <img class="helperIcon" helper="context" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+                        <img class="helperIcon" helper="context" src="http://165.134.241.141/brokenBooks/images/redI.jpg" />
                         <div class="helperContent" helper="context">Attributes that concern the history of the manuscript, including shelfmarks, current location, patronage, provenance, additions to the manuscript that point to function and ownership, including the binding, ex libris plates, library stamps, insignia, frames and other evidence of use.</div>
                     </li>
                     <li>
                         <a href="#carrierForm">Carrier</a>
-                        <img class="helperIcon" helper="carrier" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+                        <img class="helperIcon" helper="carrier" src="http://165.134.241.141/brokenBooks/images/redI.jpg" />
                         <div class="helperContent" helper="carrier">Attributes that concern the description of the manuscript as a physical artifact, including date, place of origin, support, dimensions, script, layout, decoration, scribes, and artists.</div>
                         
                     </li>
                     <li>
                         <a href="#contentForm">Content</a>
-                        <img class="helperIcon" helper="content" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+                        <img class="helperIcon" helper="content" src="http://165.134.241.141/brokenBooks/images/redI.jpg" />
                         <div class="helperContent" helper="content">Attributes that concern the text or verbal information of the manuscript,
                             including author, title, subject, language, translator, prologue, incipits, explicits, colophons, and indices.</div>
                     </li>
                     <li>
                         <a href="#notesForm">General</a>
-                        <img class="helperIcon" helper="general" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+                        <img class="helperIcon" helper="general" src="http://165.134.241.141/brokenBooks/images/redI.jpg" />
                         <div class="helperContent" helper="general">Attributes that the Contributor does not wish to assign to any category.  This section can also be for general notes or for interesting information you would like to store with the object you are describing (such as a Digital Scriptorium link to a record for this object)</div>
                     </li>
                     <li ><a href="#placement">Arrange</a>
-                        <img class="helperIcon" helper="arrange" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+                        <img class="helperIcon" helper="arrange" src="http://165.134.241.141/brokenBooks/images/redI.jpg" />
                         <div class="helperContent" helper="arrange">This area shows the sections into which you can place the leaf.  By default, the leaf you are creating has already been placed into the "bucket", which is just a collection of all the leaves contributed thus far.  If you would like to put it into a specific section, click on that section to highlight it.  Click "Save Arrangement" to save your selection.</div>
                     </li>
                 </ul>
@@ -94,36 +94,22 @@ and open the template in the editor.
                                                                     <option value="lineDim">Line Dimensions</option>
                                                             </select>
                                                             <div id="leafDim">
-                                                                    <span class="formLabel">Leaf Height:<input class="content" id="leafHeight" type="text"/></span>
-                                                                    <span class="formLabel">Leaf Width: <input class="content" id="leafWidth" type="text"/></span>
+                                                                <span class="formLabel">Leaf Height:</span><input class="content" id="leafHeight" type="text"/><br>
+                                                                    <span class="formLabel">Leaf Width: </span><input class="content" id="leafWidth" type="text"/>
                                                             </div>
                                                             <div id="tbDim">
-                                                                    <span class="formLabel">Text Block Height:<input class="content" id="tbHeight" type="text"/></span>
-                                                                    <span class="formLabel">Text Block Width: <input class="content" id="tbWidth" type="text"/></span>
+                                                                    <span class="formLabel">Text Block Height:</span><input class="content" id="tbHeight" type="text"/><br>
+                                                                    <span class="formLabel">Text Block Width:</span> <input class="content" id="tbWidth" type="text"/>
                                                             </div>
                                                             <div id="lineDim">
-                                                                    <span class="formLabel">Single Line Height:<input class="content" id="lHeight" type="text"/> </span>
+                                                                <span class="formLabel">Single Line Height:</span> <input class="content" id="lHeight" type="text"/> <br>
                                                                     <span class="formLabel">Single Line Width: <input class="content" id="lWidth" type="text"/> </span>
                                                             </div>
                                                     </td>
                                             </tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Condition: </td> <td> <input class="content" type="text" id="condition"/></td></tr>
-                                            <tr class="carrierFormEntry" special="layout">
-                                                    <td class="formLabel ">Layout: </td>
-                                                    <td>
-                                                            <select class="specialFormEntry">
-                                                                    <option value="0">Type</option>
-                                                                    <option value="lines">Lines</option>
-                                                                    <option value="columns">Columns</option>
-                                                            </select>
-                                                            <div id="lines">
-                                                                    <span class="formLabel">Lines:<input class="content" id="layoutLines" type="text"/></span>
-                                                            </div>
-                                                            <div id="columns">
-                                                                    <span class="formLabel">Columns:<input class="content" id="layoutColumns" type="text"/></span>
-                                                            </div>
-                                                    </td>
-                                            </tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel ">Line Layout: </td><td> <input class="content" type="text" id="lLayout"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel ">Column Layout: </td><td> <input class="content" type="text" id="cLayout"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Rulings: </td> <td> <input class="content" type="text" id="carrierRulings" /> </td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Prickings: </td> <td> <input class="content" type="text" id="carrierPrickings" /> </td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Script: </td> <td> <input class="content" type="text" id="carrierScript"/></td></tr>
@@ -137,11 +123,12 @@ and open the template in the editor.
                                             <tr class="carrierFormEntry"><td class="formLabel">Folio Number: </td> <td> <input class="content" type="text" id="carrierFolioNum"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Manuscripts Related by Carrier: </td><td><input class="content" type="text"  id="carrierRelated"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Recto or Verso: </td> <td> <input class="content" type="text" id="carrierRV"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Conjoint Before: </td> <td> <input class="content" type="text" id="conjoint1"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Conjoint After: </td> <td> <input class="content" type="text" id="conjoint2"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Other Carrier Info: </td> <td> <textarea class="content" type="text" id="carrierOther"></textarea></td></tr>
                                     </tbody>
                             </table>
                     </div>
-                    <!-- <h3 id="contentHeader">Content</h3> -->
                     <div id="contentForm">
                             <table>
                                     <tbody>
@@ -168,15 +155,17 @@ and open the template in the editor.
                                                                     <option value="inter">Interlinear</option>
                                                                     <option value="marginal">Marginal</option>
                                                             </select>
-<!--                                                            <div id="inter">
-                                                                    <span class="formLabel">Interlinear Annotations:<input class="content" id="interlinearAnnos" type="text"/></span>
+                                                            <div id="inter">
+                                                                <span class="formLabel">Interlinear Annotations:</span> <input class="content" id="interlinearAnnos" type="text"/>
                                                             </div>
                                                             <div id="marginal">
-                                                                    <span class="formLabel">Marginal Annotations:<input class="content" id="marginalAnnos" type="text"/></span>
-                                                            </div>-->
+                                                                <span class="formLabel">Marginal Annotations:</span><input class="content" id="marginalAnnos" type="text"/>
+                                                            </div>
                                                     </td>
                                             </tr>
                                             <tr><td class="formLabel">Other Transcription :  </td> <td>  file upload here </td> </tr> 
+                                            <tr class="carrierFormEntry"><td class="formLabel">Consecutive Before: </td> <td> <input class="content" type="text" id="consective1"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Consecutive After: </td> <td> <input class="content" type="text" id="consecutive2"/></td></tr>
                                             <tr class="contentFormEntry"><td class="formLabel">Manuscripts related by Content: </td> <td>  <input class="content" type="text" id="contentRelated"/></td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Other Content Info: </td> <td> <textarea class="content" id="contentOther"></textarea></td></tr>
                                     </tbody>
