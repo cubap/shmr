@@ -47,11 +47,14 @@ public class GetDemoManifestServlet extends HttpServlet {
         JSONArray a_metadata = new JSONArray();
         JSONObject metadata1 = new JSONObject();
         JSONObject metadata2 = new JSONObject();
+        JSONObject metadata3 = new JSONObject();
         
         metadata1.element("label", "Title");
         metadata1.element("value", "Llangantock Breviary Reconstruction");
         metadata2.element("label", "Created By");
         metadata2.element("value", "SLU Center for Digital Humanities");
+        metadata3.element("label", "<img src='../brokenBooks/anchor.png' />  Anchor Object");
+        metadata3.element("value", "<a href='http://ds.lib.berkeley.edu/VFLMS002_44'>http://ds.lib.berkeley.edu/VFLMS002_44</a>");
         a_metadata.add(metadata1);
         a_metadata.add(metadata2);
         jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");

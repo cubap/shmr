@@ -2644,14 +2644,14 @@ function gatherRangesForArrange(which){
 //this will be superfluous when the annotation store has ranges from other projects
     var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
-    $.post(url, params)
-    .done(function(data){
-        if(windowurl.indexOf("demo=1") > -1){
+    //$.post(url, params)
+    //.done(function(data){
+        //if(windowurl.indexOf("demo=1") > -1){
             rangeCollection = testManifest.structures;
-        }
-        else{
-            rangeCollection = JSON.parse(data);
-        }
+        //}
+        //else{
+           // rangeCollection = JSON.parse(data);
+        //}
         for(var i = rangeCollection.length - 1; i>=0; i--){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -2797,15 +2797,15 @@ function gatherRangesForArrange(which){
                 $(this).append(folioCountHTML);
            });
         }
-    })
-    .fail(function(){
-        if(windowurl.indexOf("demo=1") > -1){
-            rangeCollection = testManifest.structures;
-        }
-        else{
-            alert("Could not get ranges");
-        }
-    });
+    //})
+//    .fail(function(){
+//        if(windowurl.indexOf("demo=1") > -1){
+//            rangeCollection = testManifest.structures;
+//        }
+//        else{
+//            alert("Could not get ranges");
+//        }
+//    });
     
     
     
