@@ -3384,6 +3384,11 @@ function populateAnnoForms(){
         });
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
         $(".contentFormEntry").each(function(){
+            var entryValue = $(this).find(".content").val();
+            var special = $(this).attr("special");
+            if(entryValue === "" && (special === "" || special === undefined)){
+                return false;
+            }
             var addedInfoList1 = {};
             if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
             else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
@@ -3394,8 +3399,10 @@ function populateAnnoForms(){
             range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
             addedInfoLabel = addedInfoLabel.replace(":", "");
-            addedInfoLabel = addedInfoLabel.replace(/(.*)/, "");
-            var special = $(this).attr("special");
+            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+            console.log("content label:");
+            console.log(addedInfoLabel);
+            
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
@@ -3478,6 +3485,11 @@ function populateAnnoForms(){
         });
 
         $(".contextFormEntry").each(function(){
+            var entryValue = $(this).find(".content").val();
+            var special = $(this).attr("special");
+            if(entryValue === "" && (special === "" || special === undefined)){
+                return false;
+            }
             var addedInfoList2 = {};
             //console.log(alpha, beta, zeta);
             if(zeta){ addedInfoList2 = $("#zetaInformation").find(".contextList"); }
@@ -3485,10 +3497,13 @@ function populateAnnoForms(){
             else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
             //console.log(addedInfoList2);
             var entryID = $(this).find(".content").attr("id");
-            var entryValue = $(this).find(".content").val();
             var range = $(this).find(".content").attr("range");
             range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
+            addedInfoLabel = addedInfoLabel.replace(":", "");
+            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+            console.log("context label:");
+            console.log(addedInfoLabel);
             //console.log(entryID, entryValue, range, addedInfoLabel);
             var annotationObject = {
                 "@id" : "",
@@ -3554,20 +3569,26 @@ function populateAnnoForms(){
         });
 
         $(".carrierFormEntry").each(function(){
+            var entryValue = $(this).find(".content").val();
+            var special = $(this).attr("special");
+            if(entryValue === "" && (special === "" || special === undefined)){
+                return false;
+            }
             var addedInfoList3 = {};
-            
             if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
             else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
             else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
             var entryID = $(this).find(".content").attr("id");
-            var entryValue = $(this).find(".content").val();
             var range = $(this).find(".content").attr("range");
             range = (range !== undefined && range !== "");
             var addedInfoLabel = $(this).find(".formLabel").html();
+            addedInfoLabel = addedInfoLabel.replace(":", "");
+            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+            console.log("carrier label:");
+            console.log(addedInfoLabel);
 
             ////console.log("RANGE T/F: "+range);
             
-            var special = $(this).attr("special");
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
@@ -4809,13 +4830,18 @@ function lock(direction, event){
 
 
 //db.annotation.update(
-//   { "@id" : "http://localhost:8080/annotationstore/annotation/123" },
+//   { "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd1d43ac6df4463633908" },
 //    {
 //     $set: {
-//     "@id" : "http://localhost:8080/annotationstore/annotation/55df55bd3a4a50cdbfcea377"
+//                "resources" : [{"@type":"oa:Annotation","motivation":"oa:commenting","label":"General Metadata",
+//                "resource":{"@type":"cnt:ContentAsText","cnt:chars":"Not much to know."},
+//                "on":"http://165.134.241.141/annotationstore/annotation/55e46661788de057f2208aba",
+//                "@id":"http://165.134.241.141/annotationstore/annotation/55e4670e788de057f2208ac8"}]
 //     }
 //   }
 //)
+
+
 //var goodDemoData=
 //{
 //        "@id" : "http://localhost:8080/annotationstore/annotation/demoCanvas_1",
