@@ -45,17 +45,19 @@ and open the template in the editor.
                 height: 100px;
             }
             #hdrLinks{
-                border-top: 1px solid rgb(153, 153, 150);
-                border-bottom: 1px solid rgb(153, 153, 150);
+                border-top: 1px solid rgb(0, 57, 97);
+                border-bottom: 1px solid rgb(0, 57, 97);
                 padding: 0px 2px;
-                color: rgb(153, 153, 150);
+                color: rgb(109, 110, 123);
                 left: 21%;
                 top: 83px;
                 position: relative;
-                background-color: rgb(240, 242, 218);
                 text-transform: uppercase;
                 font-weight: bold;
                 width: 89%;
+            }
+            h3{
+                border-bottom: 1px solid rgb(0, 57, 97);
             }
             #hdrLinks span{
                 display: inline-block;
@@ -64,8 +66,11 @@ and open the template in the editor.
             #homeInfo p{
                 /*border: 1px solid blue;*/
                 padding: 0px 100px;
+                color: rgb(109, 110, 123);
             }
             #additionalInfo p{
+                padding: 0px 100px;
+                color: rgb(109, 110, 123);
                 /*border: 1px solid aqua;*/
             }
             #login{
@@ -78,6 +83,40 @@ and open the template in the editor.
             td{
                 cursor: pointer;
             }
+            #orderWrap{
+                display: none; 
+                position: absolute;
+                top: 25px;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                max-width: 1120px;
+                box-shadow: 0px 0px 13px 3px;
+            }
+            #exploreDemo{
+                font-size: 22px;
+                position:relative;
+                right: 0;
+                font-weight: bold;
+                text-transform: uppercase;
+                padding: 5px 10px;
+                background-color: rgb(121,28,45);
+            }
+            .copyWrapper{
+                max-height: 300px;
+                overflow-y: auto;
+            }
+            #homeImg2{
+                width: 40%;
+                height: 500px;
+            }
+            .bbImageLeft{
+                float: left;
+            }
+            #homeImg1{
+                max-height: 700px;
+                max-width: 100%;
+            }
         </style>
     </head>
     <body>
@@ -86,87 +125,185 @@ and open the template in the editor.
             <table id="hdrLinks">
                 <tbody>
                     <tr>
-                        <td class="hdrLink">Contributions</td>
-                        <td class="hdrLink"><a href="../brokenBooks/sort_order.html">Sections</a></td>
-                        <td class="hdrLink"><a href="../brokenBooks/putInBucket.html">Create</a></td>
-                        <td class="hdrLink">Explore</td>
-                        <td class="hdrLink">DS Home</td>
-                        <td class="hdrLink">Help</td>
+                        <td class="hdrLink"><a>About Us</a></td>
+                        <td class="hdrLink"><a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">View On Omeka</a></td>
+                        <td class="hdrLink"><a href="../brokenBooks/home.html?demo=1">BB Home</a></td>
                     </tr>
                 </tbody>
             </table>
             <div href="../brokenBooks/home.html" id="hdrLogo">
                 <img id="BBlogo" src="../brokenBooks/images/bblogo.png" />
             </div>
+            <input type="button" id="exploreDemo" value="explore the demo" />
         </div>
         <div id="homeInfo">
-            <h3 style="text-align: center">
+            <h3>
                 Welcome to Broken Books
             </h3>
-            <p>
-                For many antiquarian books and manuscripts, the inevitable consequence of increased value over time results in an unfortunate fate: 
-                they are taken apart, "broken" into pieces, sold for profit among various owners and institutional collections.  As scattered fragments, 
-                however, detached leaves present to scholars frustrating glimpses of historically significant texts and decorative programs
-                that cannot be fully studied without evidence of the original work and the context in which it was produced.  Our site
-                allows for the virtual reconstruction of these broken books so that any book can be digitally recaptured, reordered, and reconstructed, 
-                at least as much as pieces of it are found.
-            </p>
-            <p>
-                The first test case for the Broken Books project is a famously broken, pre-modern manuscript known as the Llangattock Breviary.
-                Although originally made for Leonello d’Este (1407-1450), Marquis of Ferrara, the manuscript derives its nickname from a later owner, 
-                John Allan Rolls (1837-1912), the 1st Baron Llangattock.  Although somewhat damaged through preceding ownership,the Llangattock Breviary 
-                remained undisturbed in the Rolls family collection for several generations until it was sold at Christie's, London on Monday, December 8, 1958. 
-                After the sale, this manuscript was broken apart and the separated leaves were sold on the American market by Goodspeeds, 
-                an antiquarian book dealer from Boston. 
-            </p>  
-            <p>
-               Working with collaborative partners, including many members of Digital Scriptorium, we have collected digital images of this book's 
-               leaves from institutions and private collections all over the world, including Harvard, U.C. Berkeley, the American Academy in Rome, 
-               University of South Carolina, Michigan State, Dartmouth, and the Hill Monastic Manuscript Library, Washington University in Seattle, 
-               the Louvre Museum, and the Museo Schifanoia in Ferrara. Dr. Debra Cashion, Co-PI and lead scholar of the project, has textually 
-               identified and cataloged all of the leaves discovered thus far, and created an online exhibit about then which you can access at
-               <a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">OMEKA here</a>.
-            </p>
-            <p>
-                The Broken Books OMEKA exhibit, however, does not represent the complete Broken Books project. 
-                Developer Bryan Haberberger has built a digital resource to enable outside users to contribute leaves and metadata to help 
-                rebuild the manuscript.  The power behind the digital reconstruction is 
-                <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
-                and the <a target="_blank" href="http://iiif.io">International Image Interoperability Framework</a> (IIIF).
-                Using these innovative tools we can create canvases that hold the digital images of the relevant leaves and annotations 
-                to store metadata about them. These canvases will be grouped in pairs so that users can attach annotations, 
-                including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually reconstructing the original manuscript.
-            </p>
+            <div class="bbImageLeft">
+                <img id="homeImg1" src="../brokenBooks/images/BrokenBook01.jpg"/>
+            </div>
+            <div class="copyWrapper">
+                <p>
+                    For many antiquarian books and manuscripts, the inevitable consequence of increased value over time results in an unfortunate fate: 
+                    they are taken apart, "broken" into pieces, sold for profit among various owners and institutional collections.  As scattered fragments, 
+                    however, detached leaves present to scholars frustrating glimpses of historically significant texts and decorative programs
+                    that cannot be fully studied without evidence of the original work and the context in which it was produced.  Our site
+                    allows for the virtual reconstruction of these broken books so that any book can be digitally recaptured, reordered, and reconstructed, 
+                    at least as much as pieces of it are found.
+                </p>
+                <p>
+                    The first test case for the Broken Books project is a famously broken, pre-modern manuscript known as the Llangattock Breviary.
+                    Although originally made for Leonello d’Este (1407-1450), Marquis of Ferrara, the manuscript derives its nickname from a later owner, 
+                    John Allan Rolls (1837-1912), the 1st Baron Llangattock.  Although somewhat damaged through preceding ownership,the Llangattock Breviary 
+                    remained undisturbed in the Rolls family collection for several generations until it was sold at Christie's, London on Monday, December 8, 1958. 
+                    After the sale, this manuscript was broken apart and the separated leaves were sold on the American market by Goodspeeds, 
+                    an antiquarian book dealer from Boston. 
+                </p>  
+                <p>
+                   Working with collaborative partners, including many members of Digital Scriptorium, we have collected digital images of this book's 
+                   leaves from institutions and private collections all over the world, including Harvard, U.C. Berkeley, the American Academy in Rome, 
+                   University of South Carolina, Michigan State, Dartmouth, and the Hill Monastic Manuscript Library, Washington University in Seattle, 
+                   the Louvre Museum, and the Museo Schifanoia in Ferrara. Dr. Debra Cashion, Co-PI and lead scholar of the project, has textually 
+                   identified and cataloged all of the leaves discovered thus far, and created an online exhibit about then which you can access at
+                   <a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">OMEKA here</a>.
+                </p>
+                <p>
+                    The Broken Books OMEKA exhibit, however, does not represent the complete Broken Books project. 
+                    Developer Bryan Haberberger has built a digital resource to enable outside users to contribute leaves and metadata to help 
+                    rebuild the manuscript.  The power behind the digital reconstruction is 
+                    <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
+                    and the <a target="_blank" href="http://iiif.io">International Image Interoperability Framework</a> (IIIF).
+                    Using these innovative tools we can create canvases that hold the digital images of the relevant leaves and annotations 
+                    to store metadata about them. These canvases will be grouped in pairs so that users can attach annotations, 
+                    including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually reconstructing the original manuscript.
+                </p>
+            </div>
         </div>
+        <div style="clear:both"></div>
         <div id="additionalInfo">
-            <p>
-                One important component of Broken Books is the ability for anyone to contribute at any level they want. 
-                The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
-                a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
-                information about the leaf they want to add, which means they can fill out as much or as little information
-                about the leaf as they wish.  <a href="../brokenBooks/putInBucket.html?demo=1">See what it is like to contribute a leaf here!</a>
-            </p>
-            
-            <p>
-                Scholars-Administrators in Broken Books are given the ability to construct and set up the organizational structure of the booke or
-                manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
-                that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
-                structure, which continually redefines where leaves are still missing.  
-                <a href="../brokenBooks/sort_order.html?demo=1">See what it is like to structure a book or manuscript!</a>
-            </p>
-            
-            <p>
-                The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
-                Broken Books uses the Mirador viewer for these purposes
-                <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
-            </p>
+            <h3>
+                About Broken Books
+            </h3>
+            <div class="copyWrapper" class="bbImageLeft">
+                <p>
+                    One important component of Broken Books is the ability for anyone to contribute at any level they want. 
+                    The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
+                    a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
+                    information about the leaf they want to add, which means they can fill out as much or as little information
+                    about the leaf as they wish.  <a href="../brokenBooks/putInBucket.html?demo=1">See what it is like to contribute a leaf here!</a>
+                </p>
+
+                <p>
+                    Scholars-Administrators in Broken Books are given the ability to construct and set up the organizational structure of the booke or
+                    manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
+                    that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
+                    structure, which continually redefines where leaves are still missing.  
+                    <a href="../brokenBooks/sort_order.html?demo=1">See what it is like to structure a book or manuscript!</a>
+                </p>
+
+                <p>
+                    The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
+                    Broken Books uses the Mirador viewer for these purposes
+                    <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
+                </p>
+            </div>
+            <img id="homeImg2" src="../brokenBooks/images/BrokenBook01.jpg"/>
+        </div>
+        <div style="clear:both"></div>
+        
+        <div id="orderWrap">
+            <div class="leafPopClose" onclick="$('#orderWrap').hide();">X</div>
+            <div id="help_ordering">Helper Text For Ordering</div>
+            <div id="ordering">
+
+            </div>
         </div>
         
+        <div class="leafPopover"></div>
+        
+        <input type="button" onclick="$('.leafPopover').show();" value="Create" />
+        <input type="button" onclick="$('#orderWrap').show();" value="Order" />
+        <input type="button" href="../brokenBooks/demoManifest.html" target="_blank" value="View" />
     </body>
 </html>
 <script>
+    var pageurl = document.location.href;
+    if(pageurl.indexOf("demo=1") === -1){
+        document.location.href="http://localhost:8080/brokenBooks/home.html?demo=1";
+    }
  $(function(){
      var windowHeight = $(window).height();
      $("body").css("min-height", windowHeight+"px");
+     $("#ordering").load("../brokenBooks/sort_order.html", function(){
+
+     });
+     $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
+                $(".leaf").load("../brokenBooks/leafInformation.html", function(){
+                        console.log("SET TABS");
+                        $("#formTabs").tabs({
+                            activate: function(event ,ui){
+                            //console.log(event);
+                            if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
+                                $(".sideBarInfo").hide();
+                                $("#sideBarArrange").show();
+                            }
+                            else{
+                                $(".sideBarInfo").show();
+                                $("#sideBarArrange").hide();
+                            }
+                        }
+                        });
+                        $('.canvasImageFile').on("change", function(event){
+                            var target = event.target;
+                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
+                            var files = !!this.files ? this.files : [];
+                            var canvasURI = $(this).parent().parent().attr("canvas"); //local
+                            if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
+
+                            if (/^image/.test( files[0].type)){ // only image file
+                                    var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
+                                var reader = new FileReader(); // instance of the FileReader
+                                reader.readAsDataURL(files[0]); // read the local file
+                                reader.onloadend = function(){ // set image data as background of div
+                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                     var annotationObject = {
+                                        "format":"image/jpg",
+                                        "@type":"dctypes:Image",
+                                        "resource":
+                                        {
+                                            "@id": this.result,
+                                            "service":
+                                                {                                       
+                                                    "@context": "http://iiif.io/api/image/2/context.json",
+                                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                                    "@id" : this.result
+                                                },
+                                            "width": 667, //how should I set these?
+                                            "height":1000 //how should I set these?
+                                        },
+                                        "on" : canvasURI
+                                    };
+                                                    //$("#catalogueInfoFor").val(canvasURI);
+                                    //(annotationObject, canvasURI); // local
+                                    addImage(annotationObject, canvasURI); // live\
+                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                        target.click();
+                                    };
+                                };
+                            }
+                        });
+                        gatherRangesForArrange(1); //populate the popover
+                        $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/demo1', 'recto');"); //local
+                        $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/demo1"); //local
+                        $("#folioSide2").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/demo2', 'verso');"); //local
+                        $("#folioSide2").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/demo2"); //local
+                        $("#folioSie1").click();
+                    });
+            });
+     
  });
 </script>

@@ -53,11 +53,12 @@ public class GetDemoManifestServlet extends HttpServlet {
         metadata1.element("value", "Llangantock Breviary Reconstruction");
         metadata2.element("label", "Created By");
         metadata2.element("value", "SLU Center for Digital Humanities");
-        metadata3.element("label", "<img src='../brokenBooks/anchor.png' />  Anchor Object");
-        metadata3.element("value", "<a href='http://ds.lib.berkeley.edu/VFLMS002_44'>http://ds.lib.berkeley.edu/VFLMS002_44</a>");
+        metadata3.element("label", "Anchor Object"); //<img class='bbanchor' src='../brokenBooks/images/anchor.png'/>
+        metadata3.element("value", "http://ds.lib.berkeley.edu/VFLMS002_44");
         a_metadata.add(metadata1);
         a_metadata.add(metadata2);
-        jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");
+        a_metadata.add(metadata3);
+        jo_sequence.element("@id", "http://localhost:8080/brokenBooks/sequence/normal");
         jo_sequence.element("@type", "sc:Sequence");
         jo_sequence.element("label", "Llangantock Canvases");
         String canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"demo\":\"bb_demo\"}");

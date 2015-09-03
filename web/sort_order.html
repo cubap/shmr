@@ -7,12 +7,12 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
+<!--        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
         <script src="../brokenBooks/js/bb.js"></script>  
-        <title>Sort Breviary Order</title>
+        <title>Sort Breviary Order</title>-->
         <style>
             .leafPopover{
                 position: absolute;
@@ -80,7 +80,7 @@ and open the template in the editor.
     <body>
         <div class="mainBlock">
             <div id="mainBlockCover"></div>
-            <p>
+            <p style="display: none;">
                     This interface allows you to order the breviary.  When you drag and drop, you are specifically moving one grouping to another.  
                     The original positioning will be removed.  You can drop into any group and into any column's red area.
                     <br>
@@ -135,8 +135,6 @@ and open the template in the editor.
     </body>
     <script>
 
-
-
     function makeSortable(column){
         //Will sortable overrule draggable? 
         var columnDepth = column.attr("depth");
@@ -173,67 +171,7 @@ and open the template in the editor.
 
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
-            $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
-                $(".leaf").load("../brokenBooks/leafInformation.html", function(){
-                        console.log("SET TABS");
-                        $("#formTabs").tabs({
-                            activate: function(event ,ui){
-                            //console.log(event);
-                            if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
-                                $(".sideBarInfo").hide();
-                                $("#sideBarArrange").show();
-                            }
-                            else{
-                                $(".sideBarInfo").show();
-                                $("#sideBarArrange").hide();
-                            }
-                        }
-                        });
-                        $('.canvasImageFile').on("change", function(event){
-                            var target = event.target;
-                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
-                            var files = !!this.files ? this.files : [];
-                            var canvasURI = $(this).parent().parent().attr("canvas"); //local
-                            if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
-
-                            if (/^image/.test( files[0].type)){ // only image file
-                                    var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
-                                var reader = new FileReader(); // instance of the FileReader
-                                reader.readAsDataURL(files[0]); // read the local file
-                                reader.onloadend = function(){ // set image data as background of div
-                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                                     var annotationObject = {
-                                        "format":"image/jpg",
-                                        "@type":"dctypes:Image",
-                                        "resource":
-                                        {
-                                            "@id": this.result,
-                                            "service":
-                                                {                                       
-                                                    "@context": "http://iiif.io/api/image/2/context.json",
-                                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                                    "@id" : this.result
-                                                },
-                                            "width": 667, //how should I set these?
-                                            "height":1000 //how should I set these?
-                                        },
-                                        "on" : canvasURI
-                                    };
-                                                    //$("#catalogueInfoFor").val(canvasURI);
-                                    //(annotationObject, canvasURI); // local
-                                    addImage(annotationObject, canvasURI); // live\
-                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
-                                        target.click();
-                                    };
-                                };
-                            }
-                        });
-                        gatherRangesForArrange(1); //populate the popover
-                    });
-            });
+            
             gatherRangesForArrange(2); //populate the admin interface
         });
 

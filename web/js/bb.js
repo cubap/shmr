@@ -2691,7 +2691,7 @@ function gatherRangesForArrange(which){
           isLeaf = true;
           tag="child";
           dropAttribute = "";
-          lockit = "<div class='lockUp' onclick='lock(\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock(\"down\",event);'> &#8686;  </div>";
+          lockit = "<div class='lockUp' onclick='lock('"+relation+"',\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock('"+relation+"',\"down\",event);'> &#8686;  </div>";
           //checkbox = "";
         }
         else{
@@ -2732,7 +2732,7 @@ function gatherRangesForArrange(which){
                         if(thisCanvases!==undefined && thisCanvases !== 0){
                           isLeaf = true;
                           dropAttribute = "";
-                          lockit2 = "<div class='lockUp' onclick='lock(\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock(\"down\",event);'> &#8686;  </div>";
+                          lockit2 = "<div class='lockUp' onclick='lock('"+this["@id"]+"',\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock('"+this["@id"]+"',\"down\",event);'> &#8686;  </div>";
                         }
                         else{
                           isLeaf = false;
@@ -3370,15 +3370,20 @@ function populateAnnoForms(){
 */
 
     function saveFolio(){
+        var windowURL = document.location.href;
         var currentLeafObject = {};
         var otherInfo = {};
         var uriToSave = $("#catalogueInfoFor").val(); //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
-        if(putInBucketDemo)return false;
+        if(windowURL.indexOf("demo=1") > -1)return false;
         $.each(testManifest.structures, function(){
             if (this["@id"] === uriToSave){
                 currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
+                $(".content").val();
+                $(".rectoImg").attr("src", "");
+                $(".versoImg").attr("src", "");
+                $("#folioSide1").click();
                 return false;
             }
         });
@@ -3780,7 +3785,7 @@ function populateAnnoForms(){
 		var imgToShow = $("#"+imgContainer).find('img').attr("src");
 		$("#fullImgContainer").find('img').attr('src', imgToShow);
 		$("#fullImgContainer").show();
-		$("#fullImageShade").show();
+		//$("#fullImageShade").show();
 	}
 	function hideFullImage(){
 		$("#fullImgContainer").hide();
@@ -4208,8 +4213,12 @@ function populateAnnoForms(){
 		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
 	*/
 	function submitIntro(test){
+            var windowURL = document.location.href;
             $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
-            if(putInBucketDemo)return false;
+            if(windowURL.indexOf("demo=1") > -1){
+                gatherRangesForArrange(1); //Should we populate this for the demo
+                return false;
+            }
             if(test === "testEdit"){
                 return false;
             }
@@ -4430,6 +4439,7 @@ function populateAnnoForms(){
               var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               $.post(updateCanvasURL, params, function(data){
+                  $(".rectoImg").attr("src", image);
               });
       }
       else{
@@ -4456,6 +4466,7 @@ function populateAnnoForms(){
               var paramObj = {"@id": $("#folioSide2").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               $.post(updateCanvasURL, params, function(data){
+                  $(".versoImg").attr("src", image);
               });
       }
       $(".uploadness").hide();
@@ -4557,8 +4568,8 @@ function populateAnnoForms(){
                   if(this["@id"] == leafID){
                       uniqueID += 1;
                       dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
-                      var lockit = "<div class='lockUp' onclick='lock(\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock(\"down\",event);'> &#8686;  </div>";
-                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' /></div>");
+                      var lockit = "<div class='lockUp' onclick='lock('"+leafID+"',\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock('"+leafID+"',\"down\",event);'> &#8686;  </div>";
+                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" "+lockit+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' /></div>");
                       newGroup.append(newLeaf);
                   }
               })
@@ -4583,13 +4594,14 @@ function populateAnnoForms(){
   }
 
   function existing(leaf, leafIsIn){
+        var windowURL = document.location.href;
         var alphaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/1";
         var betaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/2";
         var alphaCanvasObj = {};
         var betaCanvasObj = {};
         var alphaImage  = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
         var betaImage = "http://localhost:8080/brokenBooks/images/imgNotFound.png";
-        var alphaLabel = "Folio 1 Label"
+        var alphaLabel = "Folio 1 Label";
         var betaLabel = "Folio 2 Label";
         var leafLabel = "Leaf Label";
         //var leaf = "http://localhost:8080/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
@@ -4609,9 +4621,13 @@ function populateAnnoForms(){
                 
                 var leafAnnoList = this.otherContent[0]["@id"]; //anno list URIS
                 var alphaAnnoList = {};
-                if(putInBucketDemo){
+                if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == alphaCanvasURI){
+                        race1 = true;
+                        if(this.otherContent && this.otherContent[0]){
+                             alphaAnnoList = this.otherContent[0]["@id"];
+                        }
                         alphaAnnoList = this.otherContent[0];
                         if(this.label !== ""){
                           alphaLabel = this.label;
@@ -4630,7 +4646,12 @@ function populateAnnoForms(){
                         race1 = true;
                         alphaCanvasData = JSON.parse(alphaCanvasData);
                         alphaCanvasObj = alphaCanvasData;
-                        alphaAnnoList = alphaCanvasData.otherContent[0]["@id"];
+                        if(alphaCanvasData.otherContent && alphaCanvasData.otherContent[0]){
+                             alphaAnnoList = alphaCanvasData.otherContent[0]["@id"];
+                        }
+                        else{
+                            alphaAnnoList = [];
+                        }
                         if(alphaCanvasData.label !== undefined && alphaCanvasData.label !== ""){
                           alphaLabel = this.label;
                         }
@@ -4641,11 +4662,14 @@ function populateAnnoForms(){
                     }); //live
                 }
                 betaCanvasURI = this.canvases[1];
-                var betaAnnoList = {};
-                if(putInBucketDemo){
+                var betaAnnoList = [];
+                if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == betaCanvasURI){
-                        betaAnnoList = this.otherContent[0];
+                        race2 = true;
+                        if(this.otherContent && this.otherContent[0]){
+                            betaAnnoList = this.otherContent[0];
+                        }
                         if(this.label!== ""){
                           betaLabel = this.label;
                         }
@@ -4662,7 +4686,12 @@ function populateAnnoForms(){
                         race2 = true;
                         betaCanvasData = JSON.parse(betaCanvasData);
                         betaCanvasObj = betaCanvasData;
-                        betaAnnoList = betaCanvasData.otherContent[0]["@id"];
+                        if(betaCanvasData.otherContent && betaCanvasData.otherContent[0]){
+                             betaAnnoList = betaCanvasData.otherContent[0]["@id"];
+                        }
+                        else{
+                            betaAnnoList = [];
+                        }
                         if(betaCanvasData.label !== undefined && betaCanvasData.label !== ""){
                           betaLabel = this.label;
                         }
@@ -4672,8 +4701,8 @@ function populateAnnoForms(){
                     }
                     }); //live
                 }
-
-                if(putInBucketDemo){
+                
+                if(windowURL.indexOf("demo=1") > -1){
                     $.each(annotationLists, function(){
                       if(this["@id"] == alphaAnnoList["@id"]){
                         annoListCollection[0] = this;
@@ -4731,10 +4760,10 @@ function populateAnnoForms(){
     $(".versoImg").attr("src", betaImage);
     $("#oneAndtwo").attr("canvas", leaf);
     $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-    $("#folio1Label").html(alphaLabel);
-    $("#folio2Label").html(betaLabel);
+    $("#folio1Label").val(alphaLabel);
+    $("#folio2Label").val(betaLabel);
     $("#leafLabel").val(leafLabel);
-    $("#oneAndtwoLabel").html(leafLabel);
+    $("#oneAndtwoLabel").val(leafLabel);
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
@@ -4748,7 +4777,7 @@ function populateAnnoForms(){
     $("#cancelMetadata").hide();
     $(".content").attr("readonly", "readonly");
     $("#placement").children("p:first").html("This area shows where the leaf is positioned in the structure.  This cannot be altered here.  If you want to move your leaf to a new section \n\
-      close this and use the drag and drop interface.")
+      close this and use the drag and drop interface.");
     submitIntro('testEdit');
     alpha = true;
     beta = false;
@@ -4763,6 +4792,14 @@ function closeLeafPopover(){
   $(".popoverTrail").children(".rangeArrangementArea:first").find(".selectedSection").click();
   $(".imgAdditionArea").hide();
   $("#mainBlockCover").hide();
+  $("#catalogueInfoFor").val(''); 
+    $("#folioSide2").removeClass("selectedFolio");
+    $("#folioSide1").removeClass("selectedFolio");
+    $(".content").val();
+    $(".rectoImg").attr("src", "");
+    $(".versoImg").attr("src", "");
+    $(".previewImg").attr("src", "");
+    alpha = beta = zeta = false;
 }
 
 function selectInTree(child){
@@ -4805,38 +4842,55 @@ function selectInTree(child){
 
 }
 
-function lock(direction, event){
+//Leaf locking happens in two directions.  If you lock a leaf to the leaf below, you have to update both leaves of the relationsip.  
+function lock(leafURI, direction, event){
+    var windowURL = document.location.href;
+    if(windowURL.indexOf("demo=1") > -1){
+        return false; 
+    }
     var leafToLock = $(event.target).parent();
     var leafToLockWith = "";
-    var alertReturn = "";
     if(direction === "up"){
         leafToLockWith = leafToLock.prev();
-        alertReturn = "before";
+        if(leafToLockWith.attr("leaf") === "true"){
+            var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
+            var paramObj = {"@id":leafURI, "afterLeaf": leafToLockWith.attr("rangeID")};
+            var params = {"content":JSON.stringify(paramObj)};
+            $.post(updateAnnoURL, params, function(data){
+                var paramObj1 = {"@id":leafToLockWith.attr("rangeID"), "beforeLeaf" : leafToLockWith.attr("rangeID")};
+                var params1 = {"content":JSON.stringify(paramObj1)};
+                $.post(updateAnnoURL, params1, function(data2){
+                    
+                });
+            });
+        }
     }
     else{
         leafToLockWith = leafToLock.next();
-        alertReturn = "after";
+        if(leafToLockWith.attr("leaf") === "true"){
+            var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
+            var paramObj = {"@id":leafURI, "beforeLeaf": leafToLockWith.attr("rangeID")};
+            var params = {"content":JSON.stringify(paramObj)};
+            $.post(updateAnnoURL, params, function(data){
+                var paramObj1 = {"@id":leafToLockWith.attr("rangeID"), "afterLeaf" : leafToLockWith.attr("rangeID")};
+                var params1 = {"content":JSON.stringify(paramObj1)};
+                $.post(updateAnnoURL, params1, function(data2){
+                    
+                });
+            });
+        }
     }    
-    if(leafToLockWith.attr("leaf") === "true"){
-        console.log("I will lock with");
-        console.log(leafToLockWith);
-        //update both leaves with the information about the leaf they are locked before or after with.
-        //update the UI to represent the leaves are in fact locked.
-    }
-    else{
-        alert("There is no leaf "+alertReturn+" the leaf you are attempting to lock.");
-    }
 }
 
 
 //db.annotation.update(
-//   { "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd1d43ac6df4463633908" },
+//   { "@id" : "http://localhost:8080/annotationstore/annotation/55dcd1d43ac6df4463633908" },
 //    {
 //     $set: {
 //                "resources" : [{"@type":"oa:Annotation","motivation":"oa:commenting","label":"General Metadata",
 //                "resource":{"@type":"cnt:ContentAsText","cnt:chars":"Not much to know."},
-//                "on":"http://165.134.241.141/annotationstore/annotation/55e46661788de057f2208aba",
-//                "@id":"http://165.134.241.141/annotationstore/annotation/55e4670e788de057f2208ac8"}]
+//                "on":"http://localhost:8080/annotationstore/annotation/55e46661788de057f2208aba",
+//                "@id":"http://localhost:8080/annotationstore/annotation/55e4670e788de057f2208ac8"}]
 //     }
 //   }
 //)

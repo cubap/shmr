@@ -18,7 +18,7 @@ and open the template in the editor.
                 background-color: black;
                 border: 1px solid white;
                 cursor: pointer;
-                font-family: "Comic Sans MS", cursive, sans-serif;
+                font-family: serif;
                 color: white;
                 font-variant: small-caps;
             }
@@ -27,7 +27,7 @@ and open the template in the editor.
             }
             .mainBlock{
                 position: relative;
-                box-shadow: 0px 0px 13px 3px;
+                /*box-shadow: 0px 0px 13px 3px;*/
                 margin: 0 auto;
                 padding: 10px 10px 10px 30px;
                 text-align: center;
@@ -37,7 +37,7 @@ and open the template in the editor.
                 height: 100%;
             }
             .imgAdditionArea{
-                display: none;
+                display: block;
                 position: relative;
                 width: 1000px;
             }
@@ -45,6 +45,7 @@ and open the template in the editor.
                 position: relative;
                 margin: 0 auto;
                 background-color: #000;
+                max-width: 1120px;
             }
             .intro{
                 display: block;
@@ -287,7 +288,7 @@ and open the template in the editor.
                 margin-right:25px;
                 background-color: black;
                 color: white;
-                margin-bottom: 13px;
+                margin-bottom: 19px;
                 margin-top: 13px;
                     
             }
@@ -335,7 +336,7 @@ and open the template in the editor.
             .arrangeTrail{
                 position: relative;
                 min-height: 420px;
-                width: 107%;
+                width: 102%;
                 text-align: left;
                 margin: 8px 0px;
                 overflow-x: auto;
@@ -401,6 +402,7 @@ and open the template in the editor.
                 font-weight: bold;
                 font-size: 14pt;
                 left: -10px;
+                border-bottom: 1px solid white;
             }
             .closeBtn{
                 top: 0px;
@@ -804,5 +806,30 @@ and open the template in the editor.
             .lockUp:hover{
                 background-color: green;
             }
-
+            .bbAnchor{
+                max-height: 40px;
+                max-width: 40px;
+            }
+            .dimLabel{
+                top: 3px;
+                display: inline-block;
+                position: relative;
+                margin: 4px 0px;
+            }
+            #leafHeight, #leafWidth {
+                width: 107px;
+                position: relative;
+            }
+            #tbHeight, #tbWidth{
+                width: 58px;
+                position: relative;
+            }
+            #lHeight, #lWidth{
+                width: 100px;
+                position: relative;
+            }
+            #interlinearAnnos, #marginalAnnos{
+                position: relative;
+                width: 95px; 
+            }
             
