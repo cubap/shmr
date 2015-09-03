@@ -29,8 +29,7 @@ and open the template in the editor.
                 color: black;
             }
             #homeHeader{
-                border-bottom: 2px solid rgb(153, 153, 150);
-                padding: 5px 0px;
+                padding: 0px 0px 14px 0px;
                 overflow: hidden;
             }
             #hdrLogo{
@@ -54,10 +53,17 @@ and open the template in the editor.
                 position: relative;
                 text-transform: uppercase;
                 font-weight: bold;
-                width: 89%;
+                width: 79%;
+                text-align: right;
+            }
+            .hdrLink{
+                display: inline-block;
+                margin: 4px 30px;
             }
             h3{
                 border-bottom: 1px solid rgb(0, 57, 97);
+                color: rgb(0, 57, 97);
+                padding-left: 5px;
             }
             #hdrLinks span{
                 display: inline-block;
@@ -65,11 +71,23 @@ and open the template in the editor.
             }
             #homeInfo p{
                 /*border: 1px solid blue;*/
-                padding: 0px 100px;
                 color: rgb(109, 110, 123);
             }
+            #additionalInfo{
+                border-bottom: 1px solid #003961;
+            }
+            .demoPopover{
+                position: fixed;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                top: 40%;
+                background-color: black;
+                padding: 8px 18px;
+                display: none;
+                width: 600px;
+            }
             #additionalInfo p{
-                padding: 0px 100px;
                 color: rgb(109, 110, 123);
                 /*border: 1px solid aqua;*/
             }
@@ -101,47 +119,86 @@ and open the template in the editor.
                 text-transform: uppercase;
                 padding: 5px 10px;
                 background-color: rgb(121,28,45);
+                top: 15px;
+                left: 632px;
             }
             .copyWrapper{
-                max-height: 300px;
+                max-height: 587px;
                 overflow-y: auto;
             }
+            .copyWrapper_2{
+                max-height: 300px;
+                max-width: 55%;
+                overflow-y: auto;
+                float: left;
+                top: -25px;
+                position: relative;
+            }
+            .copyWrapper_2 p{
+                padding-left: 15px;
+            }
             #homeImg2{
-                width: 40%;
-                height: 500px;
+                max-width: 40%;
+                top: -21px;
+                position: relative;
             }
             .bbImageLeft{
                 float: left;
+                max-width: 45%;
             }
             #homeImg1{
-                max-height: 700px;
                 max-width: 100%;
             }
+            a, a:visited {
+                text-decoration: none !important;
+                color: rgb(109, 110, 123) !important;
+            }
+            .demobtn{
+                font-size: 20px;
+                position:relative;
+                font-weight: bold;
+                text-transform: uppercase;
+                padding: 3px 8px;
+                background-color: #791C2D !important;
+                margin: 8px 0px;
+                margin: 0 auto;
+                display: block;
+                width: 150px;
+            }
+            .demoHdrTxt{
+                border-bottom: 1px solid black;
+                color: black;
+                padding: 0px 15px;
+            }
+            .demoContent{
+                background-color: white;
+                border: 2px solid #6D6E7B;
+            }
+            .demoHdr{
+                color:white;
+            }
+            
         </style>
     </head>
     <body>
         <div id="homeHeader">
             <div id="login">login</div>
-            <table id="hdrLinks">
-                <tbody>
-                    <tr>
-                        <td class="hdrLink"><a>About Us</a></td>
-                        <td class="hdrLink"><a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">View On Omeka</a></td>
-                        <td class="hdrLink"><a href="../brokenBooks/home.html?demo=1">BB Home</a></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="hdrLinks">
+                <div class="hdrLink"><a>About Us</a></div>
+                <div class="hdrLink"><a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">View On Omeka</a></div>
+                <div class="hdrLink"><a href="../brokenBooks/home.html?demo=1">BB Home</a></div>
+            </div>
             <div href="../brokenBooks/home.html" id="hdrLogo">
                 <img id="BBlogo" src="../brokenBooks/images/bblogo.png" />
             </div>
-            <input type="button" id="exploreDemo" value="explore the demo" />
+            <input type="button" id="exploreDemo" value="explore the demo" onclick="$('#demoPopover').show();" />
         </div>
         <div id="homeInfo">
             <h3>
                 Welcome to Broken Books
             </h3>
             <div class="bbImageLeft">
-                <img id="homeImg1" src="../brokenBooks/images/BrokenBook01.jpg"/>
+                <img id="homeImg1" src="../brokenBooks/images/upperimage.png"/>
             </div>
             <div class="copyWrapper">
                 <p>
@@ -165,8 +222,7 @@ and open the template in the editor.
                    leaves from institutions and private collections all over the world, including Harvard, U.C. Berkeley, the American Academy in Rome, 
                    University of South Carolina, Michigan State, Dartmouth, and the Hill Monastic Manuscript Library, Washington University in Seattle, 
                    the Louvre Museum, and the Museo Schifanoia in Ferrara. Dr. Debra Cashion, Co-PI and lead scholar of the project, has textually 
-                   identified and cataloged all of the leaves discovered thus far, and created an online exhibit about then which you can access at
-                   <a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">OMEKA here</a>.
+                   identified and cataloged all of the leaves discovered thus far, and created an online exhibit about them.
                 </p>
                 <p>
                     The Broken Books OMEKA exhibit, however, does not represent the complete Broken Books project. 
@@ -185,13 +241,13 @@ and open the template in the editor.
             <h3>
                 About Broken Books
             </h3>
-            <div class="copyWrapper" class="bbImageLeft">
+            <div class="copyWrapper_2">
                 <p>
                     One important component of Broken Books is the ability for anyone to contribute at any level they want. 
                     The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
                     a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
                     information about the leaf they want to add, which means they can fill out as much or as little information
-                    about the leaf as they wish.  <a href="../brokenBooks/putInBucket.html?demo=1">See what it is like to contribute a leaf here!</a>
+                    about the leaf as they wish.
                 </p>
 
                 <p>
@@ -199,7 +255,6 @@ and open the template in the editor.
                     manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
                     that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
                     structure, which continually redefines where leaves are still missing.  
-                    <a href="../brokenBooks/sort_order.html?demo=1">See what it is like to structure a book or manuscript!</a>
                 </p>
 
                 <p>
@@ -208,7 +263,7 @@ and open the template in the editor.
                     <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
                 </p>
             </div>
-            <img id="homeImg2" src="../brokenBooks/images/BrokenBook01.jpg"/>
+            <img id="homeImg2" src="../brokenBooks/images/lowerimage.png"/>
         </div>
         <div style="clear:both"></div>
         
@@ -221,10 +276,23 @@ and open the template in the editor.
         </div>
         
         <div class="leafPopover"></div>
-        
-        <input type="button" onclick="$('.leafPopover').show();" value="Create" />
-        <input type="button" onclick="$('#orderWrap').show();" value="Order" />
-        <input type="button" href="../brokenBooks/demoManifest.html" target="_blank" value="View" />
+        <div class="demoPopover">
+            <div class="leafPopClose" onclick="$('#demoPopover').hide();">X</div>
+            <div class="demoHdr">Demo</div>
+            <div class="demoContent">
+                <div class="demoHdrTxt">
+                    In this demo you will be able to create a leaf and order the leaves in this Project
+                    and view the project in its assembled form. In doing this you will act as a
+                    contributor to the project. The project Creator has more options and a regular
+                    user would only able to view the publicly accessable assembled form.
+                    <input class="demobtn" type="button" onclick="$('.leafPopover').show();" value="Contribute" />
+                    <input class="demobtn" type="button" onclick="$('#orderWrap').show();" value="Arrange" />
+                    <input class="demobtn" type="button" href="../brokenBooks/demoManifest.html" target="_blank" value="View" />
+                </div>
+            </div>
+            
+        </div>
+            
     </body>
 </html>
 <script>
