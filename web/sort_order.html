@@ -87,7 +87,7 @@ and open the template in the editor.
         <div class="mainBlock">
             <div class="mainBlockCover"></div>
             <div id="mainBlockHelp" class="demoPopover"> 
-                <div class="leafPopClose" onclick="$('#mainBlockHelp').hide();">X</div>
+                <div class="leafPopClose" onclick="$('#mainBlockHelp').hide(); $('.mainBlockCover').hide();">X</div>
                 <div class="popHdr">Help</div>
                 <p>
                         This interface allows you to order the breviary.  When you drag and drop, you are specifically moving one grouping to another.  
@@ -117,7 +117,7 @@ and open the template in the editor.
                         <br>
                         You cannot add leaves in this interface.  You can add a new section and define what leaves are in it.
                 </p>
-                <input type="button" onclick="$('#mainBlockHelp').hide();" value="Close" />
+                <input type="button" onclick="$('#mainBlockHelp').hide(); $('.mainBlockCover').hide();" value="Close" />
             </div>
             <div class="arrangeTrail adminTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">

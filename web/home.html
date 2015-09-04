@@ -181,15 +181,15 @@ and open the template in the editor.s
             .demoHdrTxt{
                 border-bottom: 1px solid black;
                 border-bottom: 1px solid #000;
-                color: black;
-                padding: 15px;
-                font-family: sans-serif;
+                color: black;               
                 font-size: 14px;
                 color: #6D6E7B;
+                padding: 15px;
             }
             .demoContent{
                 background-color: white;
                 border: 2px solid #6D6E7B;
+                font-family: sans-serif;
             }
             .popHdr{
                 color:white;
@@ -243,9 +243,14 @@ and open the template in the editor.s
             }
             #orderMini, #createMini{
                 z-index: 5;
+                position: absolute;
+                top: 33%;
             }
             #mainBlockHelp{
                 display: none; 
+            }
+            #mainBlockHelp p{
+                color: white !important;
             }
             
         </style>
@@ -343,19 +348,20 @@ and open the template in the editor.s
         
         <div id="orderWrap">
             <div class="leafPopClose" onclick="$('#orderWrap').hide();">X</div>
-            <div id="popHdr"><span>Helper Text For Ordering</span>  <img onclick="$('#mainBlockHelp').show();"
+            <div class="popHdr"><span>Helper Text For Ordering</span>  <img onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
                 class="helperIcon" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
             </div>
             <div id="orderMini" class="demoPopover">
-                <div class="leafPopClose" onclick="$('#orderMini').hide();">X</div>
+                <div class="leafPopClose" onclick="$('#orderMini').hide(); $('.mainBlockCover').hide();">X</div>
                 <div class="popHdr">arrange the leaves</div>
-                <div class="demoContent">
+                <div class="demoContent demoHdrTxt">
                     Here you can arrange and sequence the leaves and groups of leaves. Once
                     you are finished and the information is submitted it will be reviewed for accuracy.
                     If your data is accurate, your leaf will be placed with the other Llangantock
                     Breviary leaves.
+                    <input type="button" onclick="$('#orderMini').hide(); $('.mainBlockCover').hide();" value="Arrange" />
                 </div>
-                <input type="button" onclick="$('#orderMini').hide();" value="Arrange" />
+                
             </div>
             <div id="ordering">
                 
@@ -365,7 +371,7 @@ and open the template in the editor.s
         <div class="leafPopover"></div>
         
         <div id="demoStarter" class="demoPopover">
-            <div class="leafPopClose" onclick="$('.demoPopover').hide(); $('.pageShade').hide();">X</div>
+            <div class="leafPopClose" onclick="demoPopoverClose();">X</div>
             <div class="popHdr">Demo</div>
             <div class="demoContent">
                 <div class="demoHdrTxt">
@@ -375,11 +381,11 @@ and open the template in the editor.s
                     user would only able to view the publicly accessible assembled form.
                 </div>
                 <div class="demobtn">
-                    <input type="button" onclick="$('.leafPopover').show();  $('.pageShade').show();" value="Contribute" />
+                    <input type="button" onclick="$('.leafPopover').show();" value="Contribute" />
                     <div class="demoBtnHelper">Combine data or materials to create a leaf</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" onclick="$('#orderWrap').show(); $('.pageShade').show();" value="Arrange" />
+                    <input type="button" onclick="$('#orderWrap').show();" value="Arrange" />
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
@@ -403,9 +409,13 @@ and open the template in the editor.s
      $("#demoStarter").show();
      $(".mainBlockCover").show();
      $("#createMini").show();
-     $("#arrangeMini").show();
+     $("#orderMini").show();
      $(".pageShade").show();
      $("#mainBlockHelp").hide();
+ }
+ function demoPopoverClose(){
+     $('#demoStarter').hide(); 
+     $('.pageShade').hide();
  }
  $(function(){
      var windowHeight = $(window).height();
