@@ -72,6 +72,12 @@ and open the template in the editor.
                 border-top: transparent;
                 border-bottom: transparent;
             }  
+            #mainBlockHelp{
+                display: none;
+                position: absolute;
+                margin: 0 auto;
+                
+            }
             /*.rectoImg, .versoImg{
                 background-image : url("http://165.134.241.141/brokenBooks/images/imgNotFound.png") !important;
             } */        
@@ -79,38 +85,44 @@ and open the template in the editor.
     </head>
     <body>
         <div class="mainBlock">
-            <div id="mainBlockCover"></div>
-            <p style="display: none;">
-                    This interface allows you to order the breviary.  When you drag and drop, you are specifically moving one grouping to another.  
-                    The original positioning will be removed.  You can drop into any group and into any column's red area.
-                    <br>
-                    You can create a new group in any column.  You will be given a list of leaves to add to the area and a field to enter a label.  You can make an empty group.
-                    <br>
-                    You can also group any existing groups or leaves together.  Check their checkboxes and click 'Group' to group the select areas together.  Leaves grouped in the unassigned
-                    areas will be removed from unassigned and ordered within the red area.
-                    <br>
-                    If you want to remove a group, you can "break" it.  Removing a group would mean you also want to remove all of its children.  Breaking a group removes the parent and brings up all the children.  If you break a leaf or an empty group, you delete it.  Right click on an area to be given the option to break it.  
-                    <br>
-                    If you would like to order a group, click to expand its children to a column and click the Sort button.  
-                    You will not be able to do any dragging or area creation while you are ordering a group.  Either cancel or save to resume this functionality.
-                    <br>
-                    Each column has an 'unassigned' area.  This area is for leaves that have not been specifically ordered by another group of from being given a position.  
-                    The leaves in the unassigned area are in no specific order and the unassigned area cannot be ordered.  
-                    Make a group out of the leaves in these areas or drag them out and drop them where you want them to go.
-                    <br>
-                    Each listed area can be clicked to reveal its children and unassigned area or to close it.  
-                    <br>
-                    You can double click any listed area's title to change it. *NOT YET WORKING*
-                    <br>
-                    The number of leaves in an area are shown in a blue box.  If you have made changes, the leaf count may not be accurate.  
-                    You can click 'Reset Folio Count' to get an accurate leaf count for each section.  
-                    It will save all changes and close everything to do this.
-                    <br>
-                    You cannot add leaves in this interface.  You can add a new section and define what leaves are in it.
-            </p>
+            <div class="mainBlockCover"></div>
+            <div id="mainBlockHelp" class="demoPopover"> 
+                <div class="leafPopClose" onclick="$('#mainBlockHelp').hide();">X</div>
+                <div class="popHdr">Help</div>
+                <p>
+                        This interface allows you to order the breviary.  When you drag and drop, you are specifically moving one grouping to another.  
+                        The original positioning will be removed.  You can drop into any group and into any column's red area.
+                        <br>
+                        You can create a new group in any column.  You will be given a list of leaves to add to the area and a field to enter a label.  You can make an empty group.
+                        <br>
+                        You can also group any existing groups or leaves together.  Check their checkboxes and click 'Group' to group the select areas together.  Leaves grouped in the unassigned
+                        areas will be removed from unassigned and ordered within the red area.
+                        <br>
+                        If you want to remove a group, you can "break" it.  Removing a group would mean you also want to remove all of its children.  Breaking a group removes the parent and brings up all the children.  If you break a leaf or an empty group, you delete it.  Right click on an area to be given the option to break it.  
+                        <br>
+                        If you would like to order a group, click to expand its children to a column and click the Sort button.  
+                        You will not be able to do any dragging or area creation while you are ordering a group.  Either cancel or save to resume this functionality.
+                        <br>
+                        Each column has an 'unassigned' area.  This area is for leaves that have not been specifically ordered by another group of from being given a position.  
+                        The leaves in the unassigned area are in no specific order and the unassigned area cannot be ordered.  
+                        Make a group out of the leaves in these areas or drag them out and drop them where you want them to go.
+                        <br>
+                        Each listed area can be clicked to reveal its children and unassigned area or to close it.  
+                        <br>
+                        You can double click any listed area's title to change it. *NOT YET WORKING*
+                        <br>
+                        The number of leaves in an area are shown in a blue box.  If you have made changes, the leaf count may not be accurate.  
+                        You can click 'Reset Folio Count' to get an accurate leaf count for each section.  
+                        It will save all changes and close everything to do this.
+                        <br>
+                        You cannot add leaves in this interface.  You can add a new section and define what leaves are in it.
+                </p>
+                <input type="button" onclick="$('#mainBlockHelp').hide();" value="Close" />
+            </div>
             <div class="arrangeTrail adminTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
                    <div class="rAreaLabel">Llangantock Subsections</div>
+                   
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>Bucket</span></div>
                    <input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>

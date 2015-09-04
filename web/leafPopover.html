@@ -5,6 +5,16 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div class="mainBlock imgAdditionArea">
+    <div class="mainBlockCover"></div>
+    <div id="createMini" class="demoPopover">
+        <div class="leafPopClose" onclick="$('#createMini').hide();">X</div>
+        <div class="popHdr">create a leaf</div>
+        <div class="demoContent">
+            Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  
+            If your data is accurate, your leaf will be placed with the other Llangantock Breviary leaves. 
+        </div>
+        <input type="button" onclick="$('#createMini').hide();" value="Create" />
+    </div>
     <div class="leafPopClose" onclick="closeLeafPopover();">X</div>
     <div id="leafAdditionLabel">
             Llangantock Leaf Contribution

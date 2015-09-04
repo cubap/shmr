@@ -141,6 +141,7 @@ and open the template in the editor.s
             .copyWrapper{
                 max-height: 587px;
                 overflow-y: auto;
+                padding-right: 25px;
             }
             .copyWrapper_2{
                 max-height: 300px;
@@ -190,7 +191,7 @@ and open the template in the editor.s
                 background-color: white;
                 border: 2px solid #6D6E7B;
             }
-            .demoHdr{
+            .popHdr{
                 color:white;
                 position: absolute;
                 top: 10px;
@@ -229,7 +230,7 @@ and open the template in the editor.s
                 display: none;
                 z-index: 1;
             }
-            #help_ordering{
+            .popHdr{
                 color: white;
                 font-weight: bold;
                 font-family: sans-serif;
@@ -239,6 +240,12 @@ and open the template in the editor.s
             #homeInfo{
                 position: relative;
                 top: -29px;
+            }
+            #orderMini, #createMini{
+                z-index: 5;
+            }
+            #mainBlockHelp{
+                display: none; 
             }
             
         </style>
@@ -336,16 +343,30 @@ and open the template in the editor.s
         
         <div id="orderWrap">
             <div class="leafPopClose" onclick="$('#orderWrap').hide();">X</div>
-            <div id="help_ordering">Helper Text For Ordering</div>
+            <div id="popHdr"><span>Helper Text For Ordering</span>  <img onclick="$('#mainBlockHelp').show();"
+                class="helperIcon" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+            </div>
+            <div id="orderMini" class="demoPopover">
+                <div class="leafPopClose" onclick="$('#orderMini').hide();">X</div>
+                <div class="popHdr">arrange the leaves</div>
+                <div class="demoContent">
+                    Here you can arrange and sequence the leaves and groups of leaves. Once
+                    you are finished and the information is submitted it will be reviewed for accuracy.
+                    If your data is accurate, your leaf will be placed with the other Llangantock
+                    Breviary leaves.
+                </div>
+                <input type="button" onclick="$('#orderMini').hide();" value="Arrange" />
+            </div>
             <div id="ordering">
-
+                
             </div>
         </div>
         
         <div class="leafPopover"></div>
-        <div class="demoPopover">
+        
+        <div id="demoStarter" class="demoPopover">
             <div class="leafPopClose" onclick="$('.demoPopover').hide(); $('.pageShade').hide();">X</div>
-            <div class="demoHdr">Demo</div>
+            <div class="popHdr">Demo</div>
             <div class="demoContent">
                 <div class="demoHdrTxt">
                     In this demo you will be able to create a leaf and order the leaves in this Project
@@ -379,8 +400,12 @@ and open the template in the editor.s
     }
     
  function demoPopover(){
-     $(".demoPopover").show();
+     $("#demoStarter").show();
+     $(".mainBlockCover").show();
+     $("#createMini").show();
+     $("#arrangeMini").show();
      $(".pageShade").show();
+     $("#mainBlockHelp").hide();
  }
  $(function(){
      var windowHeight = $(window).height();

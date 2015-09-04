@@ -4028,10 +4028,10 @@ function populateAnnoForms(){
     var newTitleRequest = 
     $("<div id='newGroupTitleArea'><h1>Create New Group</h1><br>\n\
     <div class='newGroupCenter'>New Group Title<input id='newGroupTitle' type='text'/><div class='noTitleWarning'>You must supply a title to make a group.</div></div>\n\
-        <input onclick=\"makeAgroup($('#newGroupTitle').val());\" type='button' value='Submit'/><input onclick=\"$('#newGroupTitleArea').remove();  $('#mainBlockCover').hide();\" type='button' value='Cancel'/>\n\
+        <input onclick=\"makeAgroup($('#newGroupTitle').val());\" type='button' value='Submit'/><input onclick=\"$('#newGroupTitleArea').remove();  $('.mainBlockCover').hide();\" type='button' value='Cancel'/>\n\
     </div>");
     $('.adminTrail').append(newTitleRequest);
-    $("#mainBlockCover").show();
+    $(".mainBlockCover").show();
     theArea = inThisArea;
     
   }
@@ -4085,7 +4085,7 @@ function populateAnnoForms(){
             newGroup.children(".arrangeSection").hide();
             //newGroup.show();
             $('#newGroupTitleArea').remove();
-            $("#mainBlockCover").hide();
+            $(".mainBlockCover").hide();
             areaForNewGroup.children(".selectedSection").click();
         }
         //TODO: createNewRange for the new group, updateRange of range that got the new group.  
@@ -4524,7 +4524,7 @@ function populateAnnoForms(){
 
   function newGroupForm(column){
       $("#newGroupForm").show();
-      $("#mainBlockCover").show();
+      $(".mainBlockCover").show();
       var columnDepth = parseInt(column.attr("depth"));
       $("#saveGroupForm").attr("onclick", "saveNewGroupForm("+columnDepth+");");
       if($("#allLeaves").children().length == 0){
@@ -4589,7 +4589,7 @@ function populateAnnoForms(){
   function cancelNewGroupForm(){
     $("#newGroupForm").find('input[type=checkbox]:checked').removeAttr('checked');
     $("#newGroupForm").hide();
-    $("#mainBlockCover").hide();
+    $(".mainBlockCover").hide();
     $("#groupTitle").val("");
   }
 
@@ -4771,7 +4771,7 @@ function populateAnnoForms(){
     if($(".imgAdditionArea").children(".leafPopClose").length == 0){
       $(".imgAdditionArea").append(buttonToClose);
     }
-    $("#mainBlockCover").show();
+    $(".mainBlockCover").show();
     $("#placement").children("input[type='button']").hide();
     $("#saveMetadata").hide();
     $("#cancelMetadata").hide();
@@ -4791,7 +4791,7 @@ function populateAnnoForms(){
 function closeLeafPopover(){
   $(".popoverTrail").children(".rangeArrangementArea:first").find(".selectedSection").click();
   $(".leafPopover").hide();
-  $("#mainBlockCover").hide();
+  $(".mainBlockCover").show();
   $("#catalogueInfoFor").val(''); 
     $("#folioSide2").removeClass("selectedFolio");
     $("#folioSide1").removeClass("selectedFolio");
