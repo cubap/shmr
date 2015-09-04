@@ -166,7 +166,11 @@ and open the template in the editor.s
             #homeImg1{
                 max-width: 100%;
             }
-            a, a:visited {
+            a{
+                text-decoration: none;
+                color: rgb(109, 110, 123);
+            }
+            a:visited {
                 text-decoration: none !important;
                 color: rgb(109, 110, 123) !important;
             }
@@ -248,9 +252,13 @@ and open the template in the editor.s
             }
             #mainBlockHelp{
                 display: none; 
+                z-index: 4;
             }
             #mainBlockHelp p{
                 color: white !important;
+            }
+            p a {
+                text-decoration: underline;
             }
             
         </style>
@@ -337,8 +345,7 @@ and open the template in the editor.s
 
                     <p>
                         The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
-                        Broken Books uses the Mirador viewer for these purposes
-                        <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
+                        Broken Books uses the Mirador viewer for these purposes.  You can view a leaf through the demo on this page.
                     </p>
                 </div>
                 <img id="homeImg2" src="../brokenBooks/images/lowerimage.png"/>
@@ -352,14 +359,14 @@ and open the template in the editor.s
                 class="helperIcon" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
             </div>
             <div id="orderMini" class="demoPopover">
-                <div class="leafPopClose" onclick="$('#orderMini').hide(); $('.mainBlockCover').hide();">X</div>
+                <div class="leafPopClose" onclick="$('#orderMini').hide(); $(this).parent().next().find('.mainBlockCover').hide();">X</div>
                 <div class="popHdr">arrange the leaves</div>
                 <div class="demoContent demoHdrTxt">
                     Here you can arrange and sequence the leaves and groups of leaves. Once
                     you are finished and the information is submitted it will be reviewed for accuracy.
                     If your data is accurate, your leaf will be placed with the other Llangantock
                     Breviary leaves.
-                    <input type="button" onclick="$('#orderMini').hide(); $('.mainBlockCover').hide();" value="Arrange" />
+                    <input type="button" onclick="$('#orderMini').hide(); $(this).parent().parent().next().find('.mainBlockCover').hide();" value="Arrange" />
                 </div>
                 
             </div>
@@ -389,7 +396,7 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/demoManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://localhost:8080/brokenBooks/demoManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangantock Breviary</div>
                 </div>                
             </div>        
@@ -402,7 +409,7 @@ and open the template in the editor.s
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href="http://165.134.241.141/brokenBooks/home.html?demo=1";
+        document.location.href="http://localhost:8080/brokenBooks/home.html?demo=1";
     }
     
  function demoPopover(){

@@ -7,12 +7,12 @@ and open the template in the editor.
 <div class="mainBlock imgAdditionArea">
     <div class="mainBlockCover"></div>
     <div id="createMini" class="demoPopover">
-        <div class="leafPopClose" onclick="$('#createMini').hide(); $('.mainBlockCover').hide();">X</div>
+        <div class="leafPopClose" onclick="$('#createMini').hide(); $(this).parent().parent().find('.mainBlockCover').hide();">X</div>
         <div class="popHdr">create a leaf</div>
         <div class="demoContent demoHdrTxt">
             Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  
             If your data is accurate, your leaf will be placed with the other Llangantock Breviary leaves. 
-            <input type="button" onclick="$('#createMini').hide(); $('.mainBlockCover').hide();" value="Create" />
+            <input type="button" onclick="$('#createMini').hide(); $(this).parent().parent().parent().find('.mainBlockCover').hide();" value="Create" />
         </div>
         
     </div>
@@ -101,7 +101,7 @@ and open the template in the editor.
  
 
 //        {
-//          "@id" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_1",
+//          "@id" : "http://localhost:8080/annotationstore/annotation/demoCanvas_1",
 //          "@type" : "sc:Canvas",
 //          "label" : "SLU_VFL_MS_002_fol_b_r",
 //          "height" : 300,
@@ -110,7 +110,7 @@ and open the template in the editor.
 //              "@type" : "oa:Annotation",
 //              "motivation" : "sc:painting",
 //              "resource" : {
-//                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+//                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
 //                "@type" : "dctypes:Image",
 //                "format" : "image/jpeg",
 //                "height" : 2365,
@@ -119,16 +119,16 @@ and open the template in the editor.
 //                {                                       
 //                    "@context": "http://iiif.io/api/image/2/context.json",
 //                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-//                    "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg"
+//                    "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg"
 //                }
 //              },
-//              "on" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_1"
+//              "on" : "http://localhost:8080/annotationstore/annotation/demoCanvas_1"
 //          }],
 //         "otherContent":[]  ,
 //         "demo" : "bb_demo"
 //    },
 //    {
-//          "@id" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_2",
+//          "@id" : "http://localhost:8080/annotationstore/annotation/demoCanvas_2",
 //          "@type" : "sc:Canvas",
 //          "label" : "SLU_VFL_MS_002_fol_b_v",
 //          "height" : 300,
@@ -137,7 +137,7 @@ and open the template in the editor.
 //              "@type" : "oa:Annotation",
 //              "motivation" : "sc:painting",
 //              "resource" : {
-//                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+//                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
 //                "@type" : "dctypes:Image",
 //                "format" : "image/jpeg",
 //                "height" : 2365,
@@ -146,16 +146,16 @@ and open the template in the editor.
 //                    {                                       
 //                        "@context": "http://iiif.io/api/image/2/context.json",
 //                        "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-//                        "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg"
+//                        "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg"
 //                    }
 //              },
-//              "on" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_2"
+//              "on" : "http://localhost:8080/annotationstore/annotation/demoCanvas_2"
 //          }],
 //          "otherContent":[],
 //            "demo" : "bb_demo"     
 //    },
 //    {
-//          "@id" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_3",
+//          "@id" : "http://localhost:8080/annotationstore/annotation/demoCanvas_3",
 //          "@type" : "sc:Canvas",
 //          "label" : "Cover Page: Missing Image",
 //          "height" : 300,

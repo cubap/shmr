@@ -79,7 +79,7 @@ and open the template in the editor.
                 
             }
             /*.rectoImg, .versoImg{
-                background-image : url("http://165.134.241.141/brokenBooks/images/imgNotFound.png") !important;
+                background-image : url("http://localhost:8080/brokenBooks/images/imgNotFound.png") !important;
             } */        
         </style>
     </head>
@@ -87,7 +87,7 @@ and open the template in the editor.
         <div class="mainBlock">
             <div class="mainBlockCover"></div>
             <div id="mainBlockHelp" class="demoPopover"> 
-                <div class="leafPopClose" onclick="$('#mainBlockHelp').hide(); $('.mainBlockCover').hide();">X</div>
+                <div class="leafPopClose" onclick="$('#mainBlockHelp').hide(); $(this).parent().parent().find('.mainBlockCover').hide();">X</div>
                 <div class="popHdr">Help</div>
                 <p>
                         This interface allows you to order the breviary.  When you drag and drop, you are specifically moving one grouping to another.  
@@ -117,7 +117,7 @@ and open the template in the editor.
                         <br>
                         You cannot add leaves in this interface.  You can add a new section and define what leaves are in it.
                 </p>
-                <input type="button" onclick="$('#mainBlockHelp').hide(); $('.mainBlockCover').hide();" value="Close" />
+                <input type="button" onclick="$('#mainBlockHelp').hide(); $(this).parent().parent().find('.mainBlockCover').hide();" value="Close" />
             </div>
             <div class="arrangeTrail adminTrail">
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
@@ -175,7 +175,7 @@ and open the template in the editor.
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
             if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
             }      
          $(this).append(folioCountHTML);
        });
