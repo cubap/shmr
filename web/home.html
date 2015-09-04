@@ -78,7 +78,11 @@ and open the template in the editor.
                 color: rgb(109, 110, 123);
             }
             #additionalInfo{
-                border-bottom: 1px solid #003961;
+                padding-bottom: 25px;
+            }
+            #additionalWrap{
+                height: auto;
+                border-bottom: 2px solid #003961;
             }
             .demoPopover{
                 position: fixed;
@@ -175,10 +179,9 @@ and open the template in the editor.
             }
             .demoHdrTxt{
                 border-bottom: 1px solid black;
-                padding: 0px 15px;
                 border-bottom: 1px solid #000;
                 color: black;
-                padding: 15px 0px 15px 15px;
+                padding: 15px;
                 font-family: sans-serif;
                 font-size: 14px;
                 color: #6D6E7B;
@@ -296,32 +299,34 @@ and open the template in the editor.
         </div>
         <div style="clear:both"></div>
         <div id="additionalInfo">
-            <h3>
-                About Broken Books
-            </h3>
-            <div class="copyWrapper_2">
-                <p>
-                    One important component of Broken Books is the ability for anyone to contribute at any level they want. 
-                    The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
-                    a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
-                    information about the leaf they want to add, which means they can fill out as much or as little information
-                    about the leaf as they wish.
-                </p>
+            <div id="additionalWrap">
+                <h3>
+                    About Broken Books
+                </h3>
+                <div class="copyWrapper_2">
+                    <p>
+                        One important component of Broken Books is the ability for anyone to contribute at any level they want. 
+                        The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
+                        a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
+                        information about the leaf they want to add, which means they can fill out as much or as little information
+                        about the leaf as they wish.
+                    </p>
 
-                <p>
-                    Scholars-Administrators in Broken Books are given the ability to construct and set up the organizational structure of the booke or
-                    manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
-                    that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
-                    structure, which continually redefines where leaves are still missing.  
-                </p>
+                    <p>
+                        Scholars-Administrators in Broken Books are given the ability to construct and set up the organizational structure of the booke or
+                        manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
+                        that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
+                        structure, which continually redefines where leaves are still missing.  
+                    </p>
 
-                <p>
-                    The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
-                    Broken Books uses the Mirador viewer for these purposes
-                    <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
-                </p>
+                    <p>
+                        The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
+                        Broken Books uses the Mirador viewer for these purposes
+                        <a href="../brokenBooks/demoManifest.html">Click here to see a leaf from the Llangantock Breviary.</a>
+                    </p>
+                </div>
+                <img id="homeImg2" src="../brokenBooks/images/lowerimage.png"/>
             </div>
-            <img id="homeImg2" src="../brokenBooks/images/lowerimage.png"/>
         </div>
         <div style="clear:both"></div>
         
@@ -350,10 +355,10 @@ and open the template in the editor.
                 </div>
                 <div class="demobtn">
                     <input type="button" onclick="$('#orderWrap').show(); $('.pageShade').show();" value="Arrange" />
-                    <div class="demoBtnHelper">Create structure and add arrange the leaves</div>
+                    <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" href="../brokenBooks/demoManifest.html" target="_blank" value="View" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://localhost:8080/brokenBooks/demoManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangantock Breviary</div>
                 </div>                
             </div>        
