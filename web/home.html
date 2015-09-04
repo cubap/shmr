@@ -29,7 +29,7 @@ and open the template in the editor.s
                 color: black;
             }
             #homeHeader{
-                padding: 0px 0px 23px 0px;
+                padding: 0px 0px 25px 0px;
                 overflow: hidden;
             }
             #hdrLogo{
@@ -135,7 +135,7 @@ and open the template in the editor.s
                 background-color: #791C2D;
                 display: block;
                 position: absolute;
-                top: -16px;
+                top: -14px;
                 right: 0px
             }
             .copyWrapper{
@@ -235,6 +235,10 @@ and open the template in the editor.s
                 font-family: sans-serif;
                 padding-bottom: 6px;
                 font-size: 18px;
+            }
+            #homeInfo{
+                position: relative;
+                top: -29px;
             }
             
         </style>
@@ -358,7 +362,7 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://localhost:8080/brokenBooks/demoManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/demoManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangantock Breviary</div>
                 </div>                
             </div>        
@@ -371,7 +375,7 @@ and open the template in the editor.s
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href="http://localhost:8080/brokenBooks/home.html?demo=1";
+        document.location.href="http://165.134.241.141/brokenBooks/home.html?demo=1";
     }
     
  function demoPopover(){

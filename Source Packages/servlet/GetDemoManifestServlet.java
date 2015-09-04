@@ -58,7 +58,7 @@ public class GetDemoManifestServlet extends HttpServlet {
         a_metadata.add(metadata1);
         a_metadata.add(metadata2);
         a_metadata.add(metadata3);
-        jo_sequence.element("@id", "http://localhost:8080/brokenBooks/sequence/normal");
+        jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");
         jo_sequence.element("@type", "sc:Sequence");
         jo_sequence.element("label", "Llangantock Canvases");
         String canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"demo\":\"bb_demo\"}");

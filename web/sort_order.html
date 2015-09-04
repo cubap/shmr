@@ -73,7 +73,7 @@ and open the template in the editor.
                 border-bottom: transparent;
             }  
             /*.rectoImg, .versoImg{
-                background-image : url("http://localhost:8080/brokenBooks/images/imgNotFound.png") !important;
+                background-image : url("http://165.134.241.141/brokenBooks/images/imgNotFound.png") !important;
             } */        
         </style>
     </head>
@@ -163,7 +163,7 @@ and open the template in the editor.
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
             if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
             }      
          $(this).append(folioCountHTML);
        });
