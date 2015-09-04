@@ -29,32 +29,35 @@ and open the template in the editor.
                 color: black;
             }
             #homeHeader{
-                padding: 0px 0px 14px 0px;
+                padding: 0px 0px 23px 0px;
                 overflow: hidden;
             }
             #hdrLogo{
                 height: 100px;
-                width: 20%;
+                width: auto;
                 display: inline-block;
-                background-color: white;
-                top: -18px;
+                background-color: #FFF;
+                top: -13px;
                 position: relative;
+                left: 32px;
             }
             #BBlogo{
                 height: 100px;
             }
             #hdrLinks{
-                border-top: 1px solid rgb(0, 57, 97);
-                border-bottom: 1px solid rgb(0, 57, 97);
+                border-top: 1px solid #003961;
+                border-bottom: 1px solid #003961;
                 padding: 0px 2px;
-                color: rgb(109, 110, 123);
-                left: 21%;
+                color: #6D6E7B;
+                left: 27%;
                 top: 83px;
                 position: relative;
                 text-transform: uppercase;
                 font-weight: bold;
-                width: 79%;
+                width: 73%;
                 text-align: right;
+                font-size: 15px;
+                white-space: nowrap;
             }
             .hdrLink{
                 display: inline-block;
@@ -64,6 +67,7 @@ and open the template in the editor.
                 border-bottom: 1px solid rgb(0, 57, 97);
                 color: rgb(0, 57, 97);
                 padding-left: 5px;
+                margin-left: 17px;
             }
             #hdrLinks span{
                 display: inline-block;
@@ -78,14 +82,15 @@ and open the template in the editor.
             }
             .demoPopover{
                 position: fixed;
-                left: 0;
-                right: 0;
-                margin: 0 auto;
-                top: 40%;
-                background-color: black;
-                padding: 8px 18px;
+                left: 0px;
+                right: 0px;
+                margin: 0px auto;
+                top: 5%;
+                background-color: #000;
+                padding: 37px 45px;
                 display: none;
-                width: 600px;
+                width: 497px;
+                z-index: 3;
             }
             #additionalInfo p{
                 color: rgb(109, 110, 123);
@@ -110,17 +115,24 @@ and open the template in the editor.
                 margin: 0 auto;
                 max-width: 1120px;
                 box-shadow: 0px 0px 13px 3px;
+                z-index: 4;
+                background-color: black;
+                padding: 44px 20px;
+            }
+            #exploreWrap{
+                position: relative;
+                display: block;
             }
             #exploreDemo{
                 font-size: 22px;
-                position:relative;
-                right: 0;
                 font-weight: bold;
                 text-transform: uppercase;
                 padding: 5px 10px;
-                background-color: rgb(121,28,45);
-                top: 15px;
-                left: 632px;
+                background-color: #791C2D;
+                display: block;
+                position: absolute;
+                top: -16px;
+                right: 0px
             }
             .copyWrapper{
                 max-height: 587px;
@@ -156,19 +168,20 @@ and open the template in the editor.
             .demobtn{
                 font-size: 20px;
                 position:relative;
-                font-weight: bold;
-                text-transform: uppercase;
                 padding: 3px 8px;
-                background-color: #791C2D !important;
-                margin: 8px 0px;
-                margin: 0 auto;
+                margin: 10px 0px;
                 display: block;
-                width: 150px;
+                text-align: center;
             }
             .demoHdrTxt{
                 border-bottom: 1px solid black;
-                color: black;
                 padding: 0px 15px;
+                border-bottom: 1px solid #000;
+                color: black;
+                padding: 15px 0px 15px 15px;
+                font-family: sans-serif;
+                font-size: 14px;
+                color: #6D6E7B;
             }
             .demoContent{
                 background-color: white;
@@ -176,6 +189,49 @@ and open the template in the editor.
             }
             .demoHdr{
                 color:white;
+                position: absolute;
+                top: 10px;
+                font-weight: bold;
+                font-size: 22px;
+                font-family: sans-serif;
+                text-transform: uppercase;
+                left: 50px;
+            }
+            .demoPopover input[type="button"]{
+                padding: 2px 20px;
+                display: block;
+                background-color: #791C2D !important;
+                width: 275px;
+                font-size: 20px;
+                font-weight: bold;
+                font-family: sans-serif;
+                margin: 10px auto;
+            }
+            .demoBtnHelper{
+                position: relative;
+                top: -10px;
+                color: #6D6E7B;
+                font-family: sans-serif;
+                font-size: 14px;
+                margin: 0 auto;
+            }
+            .pageShade{
+                position: absolute;
+                top: 0;
+                left:0;
+                height: 100%;
+                width: 100%;
+                background-color: black;
+                opacity: .6;
+                display: none;
+                z-index: 1;
+            }
+            #help_ordering{
+                color: white;
+                font-weight: bold;
+                font-family: sans-serif;
+                padding-bottom: 6px;
+                font-size: 18px;
             }
             
         </style>
@@ -191,7 +247,9 @@ and open the template in the editor.
             <div href="../brokenBooks/home.html" id="hdrLogo">
                 <img id="BBlogo" src="../brokenBooks/images/bblogo.png" />
             </div>
-            <input type="button" id="exploreDemo" value="explore the demo" onclick="$('#demoPopover').show();" />
+            <div id="exploreWrap">
+                <input type="button" id="exploreDemo" value="explore the demo" onclick="demoPopover();" />
+            </div>
         </div>
         <div id="homeInfo">
             <h3>
@@ -277,22 +335,32 @@ and open the template in the editor.
         
         <div class="leafPopover"></div>
         <div class="demoPopover">
-            <div class="leafPopClose" onclick="$('#demoPopover').hide();">X</div>
+            <div class="leafPopClose" onclick="$('.demoPopover').hide(); $('.pageShade').hide();">X</div>
             <div class="demoHdr">Demo</div>
             <div class="demoContent">
                 <div class="demoHdrTxt">
                     In this demo you will be able to create a leaf and order the leaves in this Project
                     and view the project in its assembled form. In doing this you will act as a
                     contributor to the project. The project Creator has more options and a regular
-                    user would only able to view the publicly accessable assembled form.
-                    <input class="demobtn" type="button" onclick="$('.leafPopover').show();" value="Contribute" />
-                    <input class="demobtn" type="button" onclick="$('#orderWrap').show();" value="Arrange" />
-                    <input class="demobtn" type="button" href="../brokenBooks/demoManifest.html" target="_blank" value="View" />
+                    user would only able to view the publicly accessible assembled form.
                 </div>
-            </div>
+                <div class="demobtn">
+                    <input type="button" onclick="$('.leafPopover').show();  $('.pageShade').show();" value="Contribute" />
+                    <div class="demoBtnHelper">Combine data or materials to create a leaf</div>
+                </div>
+                <div class="demobtn">
+                    <input type="button" onclick="$('#orderWrap').show(); $('.pageShade').show();" value="Arrange" />
+                    <div class="demoBtnHelper">Create structure and add arrange the leaves</div>
+                </div>
+                <div class="demobtn">
+                    <input type="button" href="../brokenBooks/demoManifest.html" target="_blank" value="View" />
+                    <div class="demoBtnHelper">View the current state of the reassembled Llangantock Breviary</div>
+                </div>                
+            </div>        
+        </div>       
+        <div class="pageShade">
             
         </div>
-            
     </body>
 </html>
 <script>
@@ -300,6 +368,11 @@ and open the template in the editor.
     if(pageurl.indexOf("demo=1") === -1){
         document.location.href="http://localhost:8080/brokenBooks/home.html?demo=1";
     }
+    
+ function demoPopover(){
+     $(".demoPopover").show();
+     $(".pageShade").show();
+ }
  $(function(){
      var windowHeight = $(window).height();
      $("body").css("min-height", windowHeight+"px");

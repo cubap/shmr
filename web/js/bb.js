@@ -4790,7 +4790,7 @@ function populateAnnoForms(){
 
 function closeLeafPopover(){
   $(".popoverTrail").children(".rangeArrangementArea:first").find(".selectedSection").click();
-  $(".imgAdditionArea").hide();
+  $(".leafPopover").hide();
   $("#mainBlockCover").hide();
   $("#catalogueInfoFor").val(''); 
     $("#folioSide2").removeClass("selectedFolio");

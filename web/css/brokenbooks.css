@@ -32,7 +32,7 @@ and open the template in the editor.
                 padding: 10px 10px 10px 30px;
                 text-align: center;
                 background-color: black;
-                z-index: 2;
+                z-index: 4;
                 width: auto;
                 height: 100%;
             }
