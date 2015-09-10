@@ -252,11 +252,12 @@ and open the template in the editor.s
             }
             #mainBlockHelp{
                 display: none; 
-                z-index: 4;
+                z-index: 5;
+                height: 80%;
+                overflow-y: auto;
+                border-radius: 25px;
             }
-            #mainBlockHelp p{
-                color: white !important;
-            }
+
             p a {
                 text-decoration: underline;
             }
@@ -355,7 +356,7 @@ and open the template in the editor.s
         
         <div id="orderWrap">
             <div class="leafPopClose" onclick="$('#orderWrap').hide();">X</div>
-            <div class="popHdr"><span>Helper Text For Ordering</span>  <img onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
+            <div class="popHdr"><span>Llangantock Arrangement</span>  <img onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
                 class="helperIcon" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
             </div>
             <div id="orderMini" class="demoPopover">
@@ -409,7 +410,7 @@ and open the template in the editor.s
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href="http://localhost:8080/brokenBooks/home.html?demo=1";
+        document.location.href = "http://localhost:8080/brokenBooks/home.html?demo=1";
     }
     
  function demoPopover(){

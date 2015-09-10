@@ -2516,12 +2516,6 @@ function dragHelp(event){
 }
 
 function dropHelp(event){
-  /* TODO:
-   If the target is arrangeSection that is not expanded, it should go into that section.
-  if the target is an arrangeSection that is expanded, it should not appear because it should be in that expanded section's bucket.
-  if the target is rangeArrangementArea of an expanded arrangeSection, it should go into that section ordered at the end of the ordered pieces.  It can then be sorted from there.  
-  Figure out why this runs twice on a drop.
-   */
   var targetTag = event.target.tagName;
   var target = undefined;
   console.log("this is the target");
@@ -2590,7 +2584,11 @@ function dropHelp(event){
     }
     if(append){
       child.setAttribute("relation", relation);
+      //need to update range here
       target.appendChild(child);
+      
+      updateRange(target.attr("rangeid"), child.attr("rangeid")); //do not put the append flag, the following code handles that.
+      
       child.className = child.className.replace(/\bparent\b/,'');
       if(!child.className.indexOf("child") > -1)child.className = child.className+" child";
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
@@ -2644,14 +2642,16 @@ function gatherRangesForArrange(which){
 //this will be superfluous when the annotation store has ranges from other projects
     var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
-    //$.post(url, params)
-    //.done(function(data){
-        //if(windowurl.indexOf("demo=1") > -1){
+    $.post(url, params)
+    .done(function(data){
+        if(windowurl.indexOf("demo=1") > -1){
             rangeCollection = testManifest.structures;
-        //}
-        //else{
-           // rangeCollection = JSON.parse(data);
-        //}
+        }
+        else{
+            if(typeof rangeCollection !== "object"){
+                rangeCollection = JSON.parse(data);
+            }
+        }
         for(var i = rangeCollection.length - 1; i>=0; i--){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -2797,15 +2797,15 @@ function gatherRangesForArrange(which){
                 $(this).append(folioCountHTML);
            });
         }
-    //})
-//    .fail(function(){
-//        if(windowurl.indexOf("demo=1") > -1){
-//            rangeCollection = testManifest.structures;
-//        }
-//        else{
-//            alert("Could not get ranges");
-//        }
-//    });
+    })
+    .fail(function(){
+        if(windowurl.indexOf("demo=1") > -1){
+            rangeCollection = testManifest.structures;
+        }
+        else{
+            alert("Could not get ranges");
+        }
+    });
     
     
     
@@ -3742,6 +3742,8 @@ function populateAnnoForms(){
             $("#folioSide2").removeClass("selectedFolio");
             $("#folioSide1").removeClass("selectedFolio");
         });
+        
+        //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
 
         // if(section !== "bucket"){
         //     console.log("ADD TO SECTION");
@@ -4131,54 +4133,67 @@ function populateAnnoForms(){
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
 	*/
 	function updateRange(rangeID, leaf, arrange){
-		var currentRange = {};
-		$.each(testManifest.structures, function(){
-			if(this["@id"] === rangeID){
-        var sectionName = this.label;
-				if($.inArray(leaf, this.ranges) === -1){
-					this.ranges.push(leaf);
-          if(arrange == "arrange"){
-           $.each($(".selectedSection"), function(){
-              var thisRangeID = $(this).attr("rangeID");
-              var thisName = $(this).children("span").html();
-              if($(this).hasClass("unassigned")){
-                //do not add this to the crumb.
-              }
-              else{
-                addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
-                $("#arrangeCrumb").append(addedToSection);
-              }
+            var rangeToUpdate = {};
+            var pageURL = document.location.href;
+            $.each(testManifest.structures, function(){
+                if(this["@id"] === rangeID){
+                    var sectionName = this.label;
+                    rangeToUpdate = this;
+                    if($.inArray(leaf, this.ranges) === -1){
+                        this.ranges.push(leaf);
+                        if(arrange == "arrange"){
+                            $.each($(".selectedSection"), function(){
+                                var thisRangeID = $(this).attr("rangeID");
+                                var thisName = $(this).children("span").html();
+                                if($(this).hasClass("unassigned")){
+                                  //do not add this to the crumb.
+                                }
+                                else{
+                                  addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+                                  $("#arrangeCrumb").append(addedToSection);
+                                }
+                            });
+                        }
+                    }
+                    else{
+                        return false;
+                    }
+                }
             });
-          }
-				}
-				else{
-					return false;
-				}
-			}
-		});
 
     //^^ local
-
     //To make this work live get the ranges of rangeID, make sure the leaf is not already a part of the ranges, push the leaf to the ranges if not, then update on the server.
-    // var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
-    // var paramObj = {"@id":rangeID, "ranges" : this.ranges};
-    // var params = {"content" : JSON.stringify(paramObj)};
-    // $.post(newAnnoUrl, params, function(data){
-    //     console.log("Range updated");
-    //     var addedToSection = "";
-    //     $.each($(".selectedSection"), function(){
-    //       var thisRangeID = $(this).attr("rangeID");
-    //       var thisName = $(this).children("span").html();
-    //       console.log("add section "+thisName+" to arrange crumb.");
-    //       if($(this).hasClass("unassigned")){
-    //         //do not add this to the crumb.
-    //       }
-    //       else{
-    //         addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
-    //         $("#arrangeCrumb").append(addedToSection);
-    //       }
-    //     });
-    // });
+            if(pageURL.indexOf("demo=1") > -1){
+                return false;
+            }
+            var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+            if($.inArray(leaf, rangeToUpdate.ranges) === -1){
+               rangeToUpdate.ranges.push(leaf);
+            }
+            else{ //if the leaf is already in the array of children ranges, there is no need to update. 
+                return false;
+            }
+            var paramObj = {"@id":rangeID, "ranges" : rangeToUpdate.ranges};
+            var params = {"content" : JSON.stringify(paramObj)};
+            $.post(newAnnoUrl, params, function(data){
+                console.log("Range updated");
+                var addedToSection = "";
+                if(arrange == "arrange"){
+                    $.each($(".selectedSection"), function(){
+                      var thisRangeID = $(this).attr("rangeID");
+                      var thisName = $(this).children("span").html();
+                      console.log("add section "+thisName+" to arrange crumb.");
+                      if($(this).hasClass("unassigned")){
+                        //do not add this to the crumb.
+                      }
+                      else{
+                        addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+                        $("#arrangeCrumb").append(addedToSection);
+                      }
+                    });
+                }
+            });
+        //^^ live
 	}
 	
 	function resolveImageURI(rv){
@@ -4378,6 +4393,7 @@ function populateAnnoForms(){
 			      	"ranges" : [],
 		      		"isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
                                 "forProject": "broken_books",
+                                "within" : "",
 		      		"otherContent" : []
         		};
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
