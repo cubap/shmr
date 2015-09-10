@@ -357,7 +357,7 @@ and open the template in the editor.s
         <div id="orderWrap">
             <div class="leafPopClose" onclick="$('#orderWrap').hide();">X</div>
             <div class="popHdr"><span>Llangantock Arrangement</span>  <img onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
-                class="helperIcon" src="http://localhost:8080/brokenBooks/images/redI.jpg" />
+                class="helperIcon" src="http://165.134.241.141/brokenBooks/images/redI.jpg" />
             </div>
             <div id="orderMini" class="demoPopover">
                 <div class="leafPopClose" onclick="$('#orderMini').hide(); $(this).parent().next().find('.mainBlockCover').hide();">X</div>
@@ -389,7 +389,7 @@ and open the template in the editor.s
                     user would only able to view the publicly accessible assembled form.
                 </div>
                 <div class="demobtn">
-                    <input type="button" onclick="$('.leafPopover').show();" value="Contribute" />
+                    <input type="button" onclick="contribute();" value="Contribute" />
                     <div class="demoBtnHelper">Combine data or materials to create a leaf</div>
                 </div>
                 <div class="demobtn">
@@ -397,7 +397,7 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://localhost:8080/brokenBooks/demoManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/demoManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangantock Breviary</div>
                 </div>                
             </div>        
@@ -410,8 +410,15 @@ and open the template in the editor.s
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href = "http://localhost:8080/brokenBooks/home.html?demo=1";
+        document.location.href = "http://165.134.241.141/brokenBooks/home.html?demo=1";
     }
+ function contribute(){
+     $(".leafPopover").show();
+     $("#placement").children("input[type='button']").show();
+    $(".popoverTrail").find(".arrangeAreaCover").remove();
+    $("#placement").children("p:first").html("Here you can select the section of the breviary where you think the leaf belongs.");
+    $(".popoverTrail").find(".selectedSection:first").click();
+ }
     
  function demoPopover(){
      $("#demoStarter").show();
