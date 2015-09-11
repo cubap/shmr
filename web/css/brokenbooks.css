@@ -182,7 +182,7 @@ and open the template in the editor.
                 line-height: 145%;
                 font-size: 12pt;
                 padding: 0px 10px;
-                color: gray;
+                color: #6D6E7B;
             }
             /*.mainBlock{
                 position: relative;
@@ -377,6 +377,7 @@ and open the template in the editor.
                 left: 0;
                 right: 0;
                 margin: 0 auto;
+                background-color: #6D6E7B;
             }
             #fullImgContainer img{
                 top: 20px;

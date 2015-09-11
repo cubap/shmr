@@ -2691,7 +2691,7 @@ function gatherRangesForArrange(which){
           isLeaf = true;
           tag="child";
           dropAttribute = "";
-          lockit = "<div class='lockUp' onclick='lock('"+relation+"',\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock('"+relation+"',\"down\",event);'> &#8686;  </div>";
+          lockit = "<div class='lockUp' onclick=\"lock('"+relation+"','up',event);\"> &#8686;  </div><div class='lockDown' onclick=\"lock('"+relation+"','down',event);\"> &#8686;  </div>";
           //checkbox = "";
         }
         else{
@@ -2732,7 +2732,7 @@ function gatherRangesForArrange(which){
                         if(thisCanvases!==undefined && thisCanvases !== 0){
                           isLeaf = true;
                           dropAttribute = "";
-                          lockit2 = "<div class='lockUp' onclick='lock('"+this["@id"]+"',\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock('"+this["@id"]+"',\"down\",event);'> &#8686;  </div>";
+                          lockit2 = "<div class='lockUp' onclick=\"lock('"+this["@id"]+"','up',event);\"> &#8686;  </div><div class='lockDown' onclick=\"lock('"+this["@id"]+"','down',event);\"> &#8686;  </div>";
                         }
                         else{
                           isLeaf = false;
@@ -3375,11 +3375,14 @@ function populateAnnoForms(){
         var uriToSave = $("#catalogueInfoFor").val(); //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
-        if(windowURL.indexOf("demo=1") > -1)return false;
+        if(windowURL.indexOf("demo=1") > -1){
+            closeLeafPopover();
+            return false;
+        }
         $.each(testManifest.structures, function(){
             if (this["@id"] === uriToSave){
                 currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
-                $(".content").val();
+                $(".content").val("");
                 $(".rectoImg").attr("src", "");
                 $(".versoImg").attr("src", "");
                 $("#folioSide1").click();
@@ -4043,7 +4046,7 @@ function populateAnnoForms(){
       var leafCount = 0;
         if(title===""){
           $(".noTitleWarning").show();
-          setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
+          setTimeout($('.noTitleWarning').fadeOut(1000), 2000);
         }
         else{
             console.log("TITLE IS GOOD");
@@ -4215,13 +4218,14 @@ function populateAnnoForms(){
 
 	function cancelFolio(){
 		//Don't get data and return to image page
-		$(".start").hide("blind", "300ms", function(){
-			$(".imgAdditionArea").show("explode", "500ms");
-			$("#catalogueInfoFor").val(''); 
-			$("#folioSide2").removeClass("selectedFolio");
-			$("#folioSide1").removeClass("selectedFolio");
-			alpha = beta = zeta = false;
-		});
+                closeLeafPopover();
+//		$(".start").hide("blind", "300ms", function(){
+//			$(".imgAdditionArea").show("explode", "500ms");
+//			$("#catalogueInfoFor").val(''); 
+//			$("#folioSide2").removeClass("selectedFolio");
+//			$("#folioSide1").removeClass("selectedFolio");
+//			alpha = beta = zeta = false;
+//		});
 	}
 
 	/*
@@ -4562,36 +4566,46 @@ function populateAnnoForms(){
     console.log("Make new group at depth "+depth);
       var uniqueID = $(".adminTrail").find(".arrangeSection").length + 1;
       var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
-      var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+      var dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
       var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
       var title=$("#groupTitle").val();
+      var toggle1 = "onclick='toggleChildren($(this),\"admin\",event);'";
+      
       if(title == ""){
           $(".noTitleWarning").show();
-          setTimeOut($('.noTitleWarning').fadeOut(1000), 2000);
+          setTimeout($('.noTitleWarning').fadeOut(1000), 2000);
       }
       else{
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var leafCount = checkedLeaves.length;
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
-          var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
+          var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" "+toggle1+" ><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           if(depth ===1){
             newGroup.removeClass("child").addClass("parent");
           }
+          console.log("New group1");
+          console.log(newGroup);
           $.each(checkedLeaves, function(){
               var leafID = $(this).attr("rangeID");
               var leafLabel = $(this).attr("label");
+              var lockUp = "onclick='lock(\""+leafID+"\",\"up\",event);";
+              var lockDown = "onclick='lock(\""+leafID+"\",\"down\",event);";
               $.each(allLeaves, function(){
                   if(this["@id"] == leafID){
                       uniqueID += 1;
                       dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
-                      var lockit = "<div class='lockUp' onclick='lock('"+leafID+"',\"up\",event);'> &#8686;  </div><div class='lockDown' onclick='lock('"+leafID+"',\"down\",event);'> &#8686;  </div>";
-                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" "+lockit+" onclick=\"toggleChildren($(this),'admin',event);\"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' /></div>");
+                      var lockit = "<div class='lockUp' "+lockUp+"> &#8686;  </div><div class='lockDown' "+lockDown+"> &#8686;  </div>";
+                      var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" "+lockit+" "+toggle1+"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' /></div>");
                       newGroup.append(newLeaf);
+                      console.log("new leaf");
+                      console.log(newLeaf);
                   }
               })
           });
           newGroup.append(leafCountHTML);
+          console.log("Group to append");
+          console.log(newGroup);
           $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
           newGroup.show();
           $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
@@ -4934,7 +4948,9 @@ function closeLeafPopover(){
     $(".rectoImg").attr("src","");
     $(".versoImg").attr("src","");
     //$(".popoverTrail").find(".selectedSection:first").click();
+    annoListCollection = new Array(3);
     $("#folioSide1").click();
+    
 }
 
 
