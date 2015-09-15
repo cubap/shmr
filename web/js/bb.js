@@ -3316,9 +3316,10 @@ function populateAnnoForms(){
     */
    
     function enterCatalogueInfo(canvasID, canvas){
-        var previewImgSrc = $("."+canvas+"Img").attr("src");
-        $(".imgPreview").attr("src",previewImgSrc);
-        $(".content").val(""); //Reset all fields
+        if($("#catalogueInfoFor").val() === canvasID){
+            return false;
+        }
+        
             //$(".start").show("explode", "500ms");
             if(canvas == 'recto'){
                 $("#folioSide1").addClass("selectedFolio");
@@ -3349,6 +3350,9 @@ function populateAnnoForms(){
                 zeta = false;
             }
             else{
+                if($("#catalogueInfoFor").val() === currentLeafServerID){
+                    return false;
+                }
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -3360,6 +3364,9 @@ function populateAnnoForms(){
                 $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                 alpha = beta = zeta = true;
             }
+            var previewImgSrc = $("."+canvas+"Img").attr("src");
+            $(".imgPreview").attr("src",previewImgSrc);
+            $(".content").val(""); //Reset all fields
             populateAnnoForms();
             // $("#start").attr("onclick", "submitStart('"+canvas+"');");
         
@@ -3369,6 +3376,9 @@ function populateAnnoForms(){
 */
 
     function saveFolio(){
+        /* TODO
+         *FIX: Does not save annotation from form in order that they appear.  To do this, we probably cannot run the functions that gather annotations in parallel. 
+         */
         var windowURL = document.location.href;
         var currentLeafObject = {};
         var otherInfo = {};
@@ -3386,7 +3396,7 @@ function populateAnnoForms(){
                 $(".rectoImg").attr("src", "");
                 $(".versoImg").attr("src", "");
                 $("#folioSide1").click();
-                return false;
+                return 0;
             }
         });
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
@@ -3394,326 +3404,296 @@ function populateAnnoForms(){
             var entryValue = $(this).find(".content").val();
             var special = $(this).attr("special");
             if(entryValue === "" && (special === "" || special === undefined)){
-                return false;
+                
             }
-            var addedInfoList1 = {};
-            if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
-            else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
-            else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
-            var entryID = $(this).find(".content").attr("id");
-            var entryValue = $(this).find(".content").val();
-            var range = $(this).find(".content").attr("range");
-            range = (range !== undefined && range !== "");
-            var addedInfoLabel = $(this).find(".formLabel").html();
-            addedInfoLabel = addedInfoLabel.replace(":", "");
-            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-            console.log("content label:");
-            console.log(addedInfoLabel);
-            
-            var annotationObject = {
-                "@id" : "",
-                "@type" : "oa:Annotation",
-                "motivation" : "oa:commenting",
-                "label" : "",
-                "resource" : {
-                  "@type" : "cnt:ContentAsText",
-                  "cnt:chars" :""
-                },
-                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-            };
-//            var rangeObject = { //this will only be saved 
-//                "@id" : "",
-//                "@type" : "sc:Range",
-//                //"motivation" : "oa:commenting",
-//                "label" : "",
-//                "canvases": [],
-//                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range.  
-//                "resources" : [],
-//                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-//                "otherContent" : []
-//            };
-            if (special === "annotations"){
-                //console.log("Special Annos");
-                var inter = $("#interlinearAnnos").val();
-                var marginal = $("#marginalAnnos").val();
-                if(inter!==undefined && inter!==""){
-                    var annoCopy1 = jQuery.extend({}, annotationObject);
-                    //annoCopy1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                    annoCopy1.label = "Interlinear Annotations";
-                    annoCopy1.resource["cnt:chars"] = inter;
+            else{
+                var addedInfoList1 = {};
+                if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
+                else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
+                else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
+                var entryID = $(this).find(".content").attr("id");
+                var entryValue = $(this).find(".content").val();
+                var range = $(this).find(".content").attr("range");
+                range = (range !== undefined && range !== "");
+                var addedInfoLabel = $(this).find(".formLabel").html();
+                addedInfoLabel = addedInfoLabel.replace(":", "");
+                addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                console.log("content label:");
+                console.log(addedInfoLabel);
 
-                    createNewAnno(annoCopy1, "Interlinear Annotations", inter, addedInfoList1);
-                    // addedInfoList1.append("<li><span class='formLabel'>Annotations - Interlinear: </span> "+inter+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
+                var annotationObject = {
+                    "@id" : "",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "oa:commenting",
+                    "label" : "",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" :""
+                    },
+                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                };
+
+                if (special === "annotations"){
+                    //console.log("Special Annos");
+                    var inter = $("#interlinearAnnos").val();
+                    var marginal = $("#marginalAnnos").val();
+                    if(inter!==undefined && inter!==""){
+                        //setTimeout(function(){
+                               var annotationObject2 = {
+                                   "@id" : "",
+                                   "@type" : "oa:Annotation",
+                                   "motivation" : "oa:commenting",
+                                   "label" : "Interlinear Annotations",
+                                   "resource" : {
+                                     "@type" : "cnt:ContentAsText",
+                                     "cnt:chars" :inter
+                                   },
+                                   "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                               };
+                               createNewAnno(annotationObject2, "Interlinear Annotations", inter, addedInfoList1);
+                           //}
+                           //,400);
+                    }
+                    if(marginal!==undefined && marginal!==""){
+                       // setTimeout(function(){
+                               var annotationObject3 = {
+                                   "@id" : "",
+                                   "@type" : "oa:Annotation",
+                                   "motivation" : "oa:commenting",
+                                   "label" : "Marginal Annotations",
+                                   "resource" : {
+                                     "@type" : "cnt:ContentAsText",
+                                     "cnt:chars" :marginal
+                                   },
+                                   "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                               };
+                                createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1);
+                            //}
+                           //,400);                      
+                    }
                 }
-                if(marginal!==undefined && marginal!==""){
-                    var annoCopy2 = jQuery.extend({}, annotationObject);
-                    //annoCopy2["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                    annoCopy2.label = "Marginal Annotations";
-                    annoCopy2.resource["cnt:chars"] = marginal;
-                    createNewAnno(annoCopy2, "Marginal Annotations", marginal, addedInfoList1);
-                    // addedInfoList1.append("<li local ><span class='formLabel'>Annotations - Marginal: </span>"+marginal+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
-                }
-            }
-            else if(entryValue !== undefined && entryValue !== ""){
-                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-                //console.log("Anno Object @ID is being set to :" + newAnnoURI)
-                //annotationObject["@id"] = newAnnoURI;
-                annotationObject.resource["cnt:chars"] = entryValue;
-//                rangeObject["@id"] = newRangeURI;
-//                rangeObject.label = entryValue;
-//                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
-//                    var updateOrNew = "";
-//                    var rangeToUpdate = "";
-//                    for(var i=1; i<testManifest.structures.length; i++){
-//                        if (testManifest.structures[i].label === entryValue){
-//                            updateOrNew = "update";
-//                            rangeToUpdate = testManifest.structures[i]["@id"];
-//                            updateRange(rangeToUpdate, currentLeafServerID);
-//                            break;
-//                        }
-//                        else{
-//                            updateOrNew = "new";
-//                        }
-//                    }
-//                    if(updateOrNew === "new"){
-//                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList1);
-//                        // addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
-//                    }
-//                }
-                    //annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                    annotationObject.label = addedInfoLabel;
+                else if(entryValue !== undefined && entryValue !== ""){
+                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+
                     annotationObject.resource["cnt:chars"] = entryValue;
-                    createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1);
-                    // addedInfoList1.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li><span annoServerID='"+annoServerID+"' class='removeInfo'> X </span>");
-                    //There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-                //console.log(annotationObject);
+                        annotationObject.label = addedInfoLabel;
+                        annotationObject.resource["cnt:chars"] = entryValue;
+                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1);
+
+                }
             }
+            
         });
 
         $(".contextFormEntry").each(function(){
             var entryValue = $(this).find(".content").val();
             var special = $(this).attr("special");
             if(entryValue === "" && (special === "" || special === undefined)){
-                return false;
-            }
-            var addedInfoList2 = {};
-            //console.log(alpha, beta, zeta);
-            if(zeta){ addedInfoList2 = $("#zetaInformation").find(".contextList"); }
-            else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
-            else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
-            //console.log(addedInfoList2);
-            var entryID = $(this).find(".content").attr("id");
-            var range = $(this).find(".content").attr("range");
-            range = (range !== undefined && range !== "");
-            var addedInfoLabel = $(this).find(".formLabel").html();
-            addedInfoLabel = addedInfoLabel.replace(":", "");
-            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-            console.log("context label:");
-            console.log(addedInfoLabel);
-            //console.log(entryID, entryValue, range, addedInfoLabel);
-            var annotationObject = {
-                "@id" : "",
-                "@type" : "oa:Annotation",
-                "motivation" : "oa:commenting",
-                "label" : "",
-                "resource" : {
-                  "@type" : "cnt:ContentAsText",
-                  "cnt:chars" :""
-            },
-            "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-            };
-//            var rangeObject = { //this will only be saved 
-//                "@id" : "",
-//                "@type" : "sc:Range",
-//                "motivation" : "oa:commenting",
-//                "label" : "",
-//                "canvases": [],
-//                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. 
-//                "resources" : [],
-//                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-//            };
-            if(entryValue !== undefined && entryValue !== ""){
-                //console.log('HELLO')
-                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-                //console.log("Anno Object @ID is being set to :" + newAnnoURI)
-                annotationObject["@id"] = newAnnoURI;
-                annotationObject.resource["cnt:chars"] = entryValue;
-//                rangeObject["@id"] = newRangeURI;
-//                rangeObject.label = entryValue;
-//                if(range){ //there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
-//                    //console.log("RANGE")
-//                    var updateOrNew = "";
-//                    var rangeToUpdate = "";
-//                    for(var i=1; i<testManifest.structures.length; i++){
-//                        if (testManifest.structures[i].label === entryValue){
-//                            updateOrNew = "update";
-//                            rangeToUpdate = testManifest.structures[i]["@id"];
-//                            updateRange(rangeToUpdate, currentLeafServerID);
-//                            break;
-//                        }
-//                        else{
-//                            updateOrNew = "new";
-//                        }
-//                    }
-//                    if(updateOrNew === "new"){
-//                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList2);
-//                        // addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span rangeServerID='"+rangeServerID+"' class='removeInfo'> X </span></li>");
-//                    }
-//                }
-                    //console.log("ANNO")
-                    annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                    annotationObject.label = addedInfoLabel;
-                    annotationObject.resource["cnt:chars"] = entryValue;
-                    createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2);
-                    //console.log("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"</li>");
-                    // addedInfoList2.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
-                    //There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
                 
-                //console.log(annotationObject);
-            }       
+            }
+            else{
+                var addedInfoList2 = {};
+            //console.log(alpha, beta, zeta);
+                if(zeta){ addedInfoList2 = $("#zetaInformation").find(".contextList"); }
+                else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
+                else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
+                //console.log(addedInfoList2);
+                var entryID = $(this).find(".content").attr("id");
+                var range = $(this).find(".content").attr("range");
+                range = (range !== undefined && range !== "");
+                var addedInfoLabel = $(this).find(".formLabel").html();
+                addedInfoLabel = addedInfoLabel.replace(":", "");
+                addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                console.log("context label:");
+                console.log(addedInfoLabel);
+                //console.log(entryID, entryValue, range, addedInfoLabel);
+                var annotationObject = {
+                    "@id" : "",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "oa:commenting",
+                    "label" : "",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" :""
+                },
+                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                };
+
+                if(entryValue !== undefined && entryValue !== ""){
+                    //console.log('HELLO')
+                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+                    //console.log("Anno Object @ID is being set to :" + newAnnoURI)
+                    annotationObject["@id"] = newAnnoURI;
+                    annotationObject.resource["cnt:chars"] = entryValue;
+                        annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        annotationObject.label = addedInfoLabel;
+                        annotationObject.resource["cnt:chars"] = entryValue;
+                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2);
+                }       
+            }
+            
         });
 
         $(".carrierFormEntry").each(function(){
             var entryValue = $(this).find(".content").val();
             var special = $(this).attr("special");
             if(entryValue === "" && (special === "" || special === undefined)){
-                return false;
+                
             }
-            var addedInfoList3 = {};
-            if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
-            else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
-            else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
-            var entryID = $(this).find(".content").attr("id");
-            var range = $(this).find(".content").attr("range");
-            range = (range !== undefined && range !== "");
-            var addedInfoLabel = $(this).find(".formLabel").html();
-            addedInfoLabel = addedInfoLabel.replace(":", "");
-            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-            console.log("carrier label:");
-            console.log(addedInfoLabel);
+            else{
+                var addedInfoList3 = {};
+                if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
+                else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
+                else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
+                var entryID = $(this).find(".content").attr("id");
+                var range = $(this).find(".content").attr("range");
+                range = (range !== undefined && range !== "");
+                var addedInfoLabel = $(this).find(".formLabel").html();
+                addedInfoLabel = addedInfoLabel.replace(":", "");
+                addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                console.log("carrier label:");
+                console.log(addedInfoLabel);
 
-            ////console.log("RANGE T/F: "+range);
-            
-            var annotationObject = {
-                "@id" : "",
-                "@type" : "oa:Annotation",
-                "motivation" : "oa:commenting",
-                "label" : "",
-                "resource" : {
-                  "@type" : "cnt:ContentAsText",
-                  "cnt:chars" :""
-                },
-                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-            };
-//            var rangeObject = { //this will only be saved 
-//                "@id" : "",
-//                "@type" : "sc:Range",
-//                "motivation" : "oa:commenting",
-//                "label" : "",
-//                "canvases": [],
-//                "ranges" : [currentLeafServerID], //This is always the URI of the current leaf, and any new range created because of this leaf MUST contain this leaf URI since a range must include leafs or canvases to make it a range. .  
-//                "resources" : [],
-//                "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal"
-//            };
-            if(special !== undefined && special !== ""){
-                //console.log(special);
-                if(special === "dimensions"){
-                    //console.log("DIMENSIONS")
-                    var leafHeight = $("#leafHeight").val();
-                    var leafWidth = $("#leafWidth").val();
-                    var textHeight = $("#tbHeight").val();
-                    var textWidth = $("#tbWidth").val();
-                    var lineHeight = $("#lHeight").val();
-                    var lineWidth = $("#lWidth").val();
-                    if(leafHeight!== "" || leafWidth!==""){
-                        //console.log("LEAF IT")
-                        var annotationObject1 = jQuery.extend({}, annotationObject); //cannot just do = annotationObject.  It will cause scope issues.
-                        var annotationObject2 = jQuery.extend({}, annotationObject);
-                        annotationObject1.label = "Leaf Height";
-                        annotationObject1.resource["cnt:chars"] = leafHeight;
-                        annotationObject2.label = "Leaf Width";
-                        annotationObject2.resource["cnt:chars"] = leafWidth;
-                        //annotationObject1["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                        //console.log(annoID);
-                        createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3); //this will increment annoID by 1
-                        //console.log(annoID);
-                        //annotationObject2["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be saving the new annoID # 
-                        createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3);
-                        // addedInfoList3.append("<li><span class='formLabel'>Leaf Height: </span> "+leafHeight+" <span annoServerID='"+annoServerID1+"' class='removeInfo'> X </span></li>");
-                        // addedInfoList3.append("<li><span class='formLabel'>Leaf Width: </span> "+leafWidth+" <span annoServerID='"+annoServerID2+"' class='removeInfo'> X </span></li>");
-                    }
-                    if(textHeight !== "" || textWidth !==""){
-                        //console.log("TEXT IT")
-                        var annotationObject3 = jQuery.extend({}, annotationObject);
-                        var annotationObject4 = jQuery.extend({}, annotationObject);
-                        annotationObject3.label = "Text Height";
-                        annotationObject3.resource["cnt:chars"] = textHeight;
-                        annotationObject4.label = "Text Width";
-                        annotationObject4.resource["cnt:chars"] = textWidth;
-                        //annotationObject3["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                        //console.log(annoID);
-                        createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3); //this will increment annoID by 1
-                        //console.log(annoID);
-                        //annotationObject4["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
-                        createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3);
-                        // addedInfoList3.append("<li><span class='formLabel'>Text Height: </span> "+textHeight+" <span annoServerID='"+annoServerID3+"' class='removeInfo'> X </span></li>");
-                        // addedInfoList3.append("<li><span class='formLabel'>Text Width: </span> "+textWidth+" <span annoServerID='"+annoServerID4+"' class='removeInfo'> X </span></li>");
-                    }
-                    if(lineHeight !== "" || lineWidth !== ""){
-                        //console.log("LINE IT");
-                        var annotationObject5 = jQuery.extend({}, annotationObject);
-                        var annotationObject6 = jQuery.extend({}, annotationObject);
-                        annotationObject5.label = "Line Height";
-                        annotationObject5.resource["cnt:chars"] = lineHeight;
-                        annotationObject6.label = "Line Width";
-                        annotationObject6.resource["cnt:chars"] = lineWidth;
-                        //annotationObject5["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                        //console.log(annoID);
-                        createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3); //this will increment annoID by 1
-                        //console.log(annoID);
-                       // annotationObject6["@id"]="http://www.example.org/iiif/LlangBrev/annos/" +(annoID); //should be savind the new annoID # 
-                        createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3);
-                        // addedInfoList3.append("<li><span class='formLabel'>Line Height: </span> "+lineHeight+" <span annoServerID='"+annoServerID5+"' class='removeInfo'> X </span></li>");
-                        // addedInfoList3.append("<li><span class='formLabel'>Line Width: </span> "+lineWidth+" <span annoServerID='"+annoServerID6+"' class='removeInfo'> X </span></li>");
+                var annotationObject = {
+                    "@id" : "",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "oa:commenting",
+                    "label" : "",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" :""
+                    },
+                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                };
+
+                if(special !== undefined && special !== ""){
+                    //console.log(special);
+                    if(special === "dimensions"){
+                        //console.log("DIMENSIONS")
+                        var leafHeight = $("#leafHeight").val();
+                        var leafWidth = $("#leafWidth").val();
+                        var textHeight = $("#tbHeight").val();
+                        var textWidth = $("#tbWidth").val();
+                        var lineHeight = $("#lHeight").val();
+                        var lineWidth = $("#lWidth").val();
+                        if(leafHeight!== "" || leafWidth!==""){
+                           // setTimeout(function(){
+                                var annotationObject1 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "label" : "Leaf Height",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :leafHeight
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3);
+                            //}, 400);
+
+                            //setTimeout(function(){
+                                var annotationObject2 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "label" : "Leaf Width",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :leafWidth
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3);
+                            //}
+                            //,400);
+                        }
+                        if(textHeight !== "" || textWidth !==""){
+                            console.log("TEXT IT "+textHeight+", "+textWidth);
+                             //setTimeout(function(){
+                                var annotationObject3 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "label" : "Text Height",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :textHeight
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                 createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3);
+                             //}
+                            //,400);
+                            
+                            //setTimeout(function(){
+                                var annotationObject4 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "label" : "Text Width",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :textWidth
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                            //this will increment annoID by 1
+                            createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3);
+                            //}
+                            //,400);
+                            
+                        }
+                        if(lineHeight !== "" || lineWidth !== ""){
+                            console.log("LINE IT "+lineHeight+", "+lineWidth);
+                            //setTimeout(function(){
+                                var annotationObject5 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "label" : "Line Height",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :lineHeight
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                 createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3);
+                                //}
+                                //,400);
+                            
+                            //setTimeout(function(){
+                                var annotationObject6 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "label" : "Line Width",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :lineWidth
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                            //this will increment annoID by 1
+                            createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3);
+                            //}
+                            //,400);
+                        }
                     }
                 }
-            }
-            else if(entryValue !== undefined && entryValue !== ""){
-                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-                //annotationObject["@id"] = newAnnoURI;
-                annotationObject.resource["cnt:chars"] = entryValue;
-//                rangeObject["@id"] = newRangeURI;
-//                if(range){//there are no longer any ranges to update.  This code will not run, so it has not been kept up with the rest of the code.  It may be needed in the future if users are allowed to create new ranges or update existing ones through the form.  
-//                    var updateOrNew = "";
-//                    var rangeToUpdate = "";
-//                    for(var i=1; i<testManifest.structures.length; i++){
-//                        if (testManifest.structures[i].label === entryValue){
-//                            updateOrNew = "update";
-//                            rangeToUpdate = testManifest.structures[i]["@id"];
-//                            updateRange(rangeToUpdate, currentLeafServerID);
-//                            break;
-//                        }
-//                        else{
-//                            updateOrNew = "new";
-//                        }
-//                    }
-//                    if(updateOrNew === "new"){
-//                        createNewRange(rangeObject, "", addedInfoLabel, entryValue, addedInfoList3);
-//                        // addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span rangeServerID='"+rangeServerID2+"' class='removeInfo'> X </span></li>");
-//                    }
-//                }
-                //else{
-                    //annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                else if(entryValue !== undefined && entryValue !== ""){
+                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+                    annotationObject.resource["cnt:chars"] = entryValue;
                     annotationObject.label = addedInfoLabel;
                     annotationObject.resource["cnt:chars"] = entryValue;
                     createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3);
-                    // addedInfoList3.append("<li><span class='formLabel'>"+addedInfoLabel+" </span> "+entryValue+"<span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
-                    //There can be multiple annotations of the same label.  We have to allow this to allow for conflicts to be discovered, or allow for the case where it is simply true that the annotation of the same label exists twice with different data in each instance.  For example, one person could make an anntoation saying the author is mozart and another saying the author is davinci, which could be true and therefore must be allowed.  
-                //}
-            }   
+
+                }   
+            }
+           
         });
 
         //Grab the additional notes field and save it as an annotation
@@ -3748,11 +3728,66 @@ function populateAnnoForms(){
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
         
         updateLabels(); //Need to also make sure new labels the user input are up-to-date.
+        //Need to wait for annos to be created and assigned to annoListCollection[x] before running update.
+        setTimeout(function(){updateList();}, 3000);
         // if(section !== "bucket"){
         //     console.log("ADD TO SECTION");
         //   updateRange(section, currentLeafServerID);
         // }
        
+    }
+    
+    function updateList(){  
+        var objectID = $("#catalogueInfoFor").val();
+            $.each(annoListCollection, function(){
+                if (this.on === objectID){ //this is our annotation list to add the annotation to 
+                        var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
+                        var newResources = this.resources;
+                        var updateContent = newResources;
+                        console.log(updateContent);
+                        var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
+                        var params = {"content":JSON.stringify(paramsObj)};
+                        $.post(updateAnnoListURL, params, function(data){
+                            if(zeta){
+                                $.each(testManifest.structures, function(){
+                                        if (this["@id"] === objectID){ 
+                                                var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
+                                                var listIncluded = false;
+                                                $.each(this.otherContent,function(){
+                                                        if(this["@id"] === annoListCollection[2]["@id"]){
+                                                                listIncluded = true;
+                                                                return false;
+                                                        }
+                                                });
+                                                if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                        }
+                                });//local. adds the annotation list uri to the other content field.  
+                            }
+                            else{
+                                    var annoListID = -1;
+                                    $.each(testManifest.sequences[0].canvases, function(){
+                                            if (this["@id"] === objectID){ //this is our canvas object
+                                                    if(alpha){
+                                                            annoListID = annoListCollection[0]["@id"];
+                                                    }
+                                                    else{
+                                                            annoListID = annoListCollection[1]["@id"];
+                                                    }
+                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
+                                                    var listIncluded = false;
+                                                    $.each(this.otherContent,function(){
+                                                            if(this["@id"] === annoListID){
+                                                                    listIncluded = true;
+                                                                    return false;
+                                                            }
+                                                    });
+                                                    if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
+                                            }
+                                    });
+                            }//local
+                        });
+                }
+        });
     }
 
     function savePlacement(){
@@ -3911,71 +3946,24 @@ function populateAnnoForms(){
 		$.post(newAnnoUrl, params, function(data){
 			data=JSON.parse(data);
 			annoObject["@id"] = data["@id"];
+                        
 			if(zeta){
-				annoListCollection[2].resources.push(annoObject); //live
+                            console.log("New anno, push to resources2");
+                            console.log(annoObject);
+		            annoListCollection[2].resources.push(annoObject); //live
+                            
 			}
 			else if(alpha){
+                            console.log("New anno, push to resources0");
+                            console.log(annoObject);
 				annoListCollection[0].resources.push(annoObject); //live
 			}
 			else{
+                            console.log("New anno, push to resources1");
+                            console.log(annoObject);
 				annoListCollection[1].resources.push(annoObject); //live
 			}
-			$.each(annoListCollection, function(){
-				if (this.on === objectID){ //this is our annotation list to add the annotation to 
-					//this.resources.push(annoObject); //push the annotation to the appropriate list.
-					// console.log("ANNO ADDED TO THIS LIST "+objectID);
-					// console.log(annoObject);
-					//Image annotation vs. line annotation?
-					var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
-					var newResources = this.resources;
-					var updateContent = newResources;
-					// console.log("anno list");
-					// console.log(this);
-					// console.log(this["@id"]);
-					var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
-					var params = {"content":JSON.stringify(paramsObj)};
-					
-					$.post(updateAnnoListURL, params, function(data){
-                                            if(zeta){
-                                                $.each(testManifest.structures, function(){
-                                                        if (this["@id"] === objectID){ 
-                                                                var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
-                                                                var listIncluded = false;
-                                                                $.each(this.otherContent,function(){
-                                                                        if(this["@id"] === annoListCollection[2]["@id"]){
-                                                                                listIncluded = true;
-                                                                                return false;
-                                                                        }
-                                                                });
-                                                                if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
-                                                        }
-                                                });//local. adds the annotation list uri to the other content field.  
-                                            }
-                                            else{
-                                                    var annoListID = -1;
-                                                    $.each(testManifest.sequences[0].canvases, function(){
-                                                            if (this["@id"] === objectID){ //this is our canvas object
-                                                                    if(alpha){
-                                                                            annoListID = annoListCollection[0]["@id"];
-                                                                    }
-                                                                    else{
-                                                                            annoListID = annoListCollection[1]["@id"];
-                                                                    }
-                                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
-                                                                    var listIncluded = false;
-                                                                    $.each(this.otherContent,function(){
-                                                                            if(this["@id"] === annoListID){
-                                                                                    listIncluded = true;
-                                                                                    return false;
-                                                                            }
-                                                                    });
-                                                                    if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
-                                                            }
-                                                    });
-                                            }//local
-					});
-				}
-			}); 
+ 
 				
 		});  //live. 		 
 		
@@ -3995,7 +3983,7 @@ function populateAnnoForms(){
                     newRangeObject["@id"] = data["@id"]; //live
                     testManifest.structures.push(newRangeObject); //live
                     if(current === 'currentLeaf'){
-                            currentLeafServerID = newRangeObject["@id"];
+                            currentLeafServerID = data["@id"];
                             currentLeaf = currentLeafServerID;
                         $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
                     }
@@ -4013,17 +4001,24 @@ function populateAnnoForms(){
         	var listURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
         	$.post(listURL, listParams, function(data2){
-        		data2 = JSON.parse(data2);
-                        if(current = "currentLeaf"){
-                            annoListCollection[2] = newRangeAnnoList;
-                            annoListCollection[2]["@id"] = newRangeAnnoList["@id"];
-                        }
-        		var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
-        		var paramObj = {"@id":currentLeafServerID, "otherContent":[{"@id":data["@id"], "@type":"sc:AnnotationList"}]};
-        		var params = {"content":JSON.stringify(paramObj)};
-        		$.post(updateCanvasURL, params, function(data){
-                            
-        		});
+                    data2 = JSON.parse(data2);
+                    var newLeafList = {
+                        "@id":data2["@id"],
+                        "@type":"sc:AnnotationList",
+                        "resources" : [],
+                        "on" :newRangeObject["@id"],
+                        "forProject": "broken_books"
+                    };
+
+                    if(current = "currentLeaf"){
+                        annoListCollection[2] = newLeafList;
+                    }
+                    var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+                    var paramObj = {"@id":currentLeafServerID, "otherContent":[{"@id":newLeafList["@id"], "@type":"sc:AnnotationList"}]};
+                    var params = {"content":JSON.stringify(paramObj)};
+                    $.post(updateCanvasURL, params, function(data){
+
+                    });
         	});
             });
 		
@@ -4272,7 +4267,7 @@ function populateAnnoForms(){
             var newCanvas1 = {
                 //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag, //local
                 "@type" : "sc:Canvas",
-                "label" : "Llang_"+canvasTag,
+                "label" : "Llang_Leaf",
                 "height" : 1000,
                 "width" : 667,
                 "images" : [],
@@ -4335,7 +4330,7 @@ function populateAnnoForms(){
                 annoListID++;
                 var urlCanvas = {
                             "@type" : "sc:Canvas",
-                            "label" : "Llang_"+canvasTag,
+                            "label" : "Llang_Leaf",
                             "height" : 1000,
                             "width" : 667,
                             "images" : [],
@@ -4387,7 +4382,7 @@ function populateAnnoForms(){
 	            var leafRangeObject = {
 	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
 			      	"@type":"sc:Range",
-			      	"label":"Llangantock Breviary Page_"+rangeID ,
+			      	"label":"Llangantock Breviary Page" ,
 			      	"canvases" : [
 			          //newCanvas1["@id"], //local
 			          //newCanvas2["@id"] //local
@@ -4517,19 +4512,63 @@ function populateAnnoForms(){
         });
       }
   }
+  
+  function removeRange(rangeID){
+      var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+      var paramObj = {"@id" : rangeID};
+      var params = {"content" : JSON.stringify(paramObj)}; 
+      $.post(removeURL, params, function(){
+          $(targetToBreak).remove();
+      });
+  }
+  
+  function removeAndUpdate(remove, update, bringup){
+      var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+      var paramObj = {"@id" : update};
+      var params = {"content" : JSON.stringify(paramObj)};
+      $.post(getURL, params, function(data){
+          var range = JSON.parse(data);
+          var rangeList = range.ranges;
+          console.log("Original Range List");
+          console.log(rangeList);
+          rangeList = rangeList.splice( $.inArray(remove, rangeList), 1 ); //remove range list that is being deleted;
+          if(bringup !== undefined){ //There are children that need to be brought up from the section being removed.
+              //bringup is an array of those children's ids, merge them at the end of the current range list.  
+              $.merge(rangeList, bringup);
+          }
+          console.log("Spliced range list");
+          console.log(rangeList);
+          var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+           var paramObj1 = {"@id" : update, "ranges" : rangeList};
+           var params1 = {"content" : JSON.stringify(paramObj1)};
+           $.post(updateURL, params1, function(){
+               
+           });
+           removeRange(remove); //delte the range entirely from the db
+      });
+  }
+  
+  function bringUp(childrenArray, rangeInto){
+     
+  }
 
-  function breakUp(targetID){
+  function breakUp(){
       var group = $(targetToBreak);
+      var parent = group.parent();
       $(".breakConfirm").remove();
       var childrenToBringUp = undefined;
       var depth = -1;
       if(group.attr("leaf") == "true"){
-          group.remove();
+          //group.remove();
+          removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"));
       }
       else{
           childrenToBringUp = group.children(".child");
+          var childrenArray = [];
+          
           depth = parseInt(group.parent().parent().attr("depth"));
           $.each(childrenToBringUp, function(){
+              childrenArray.push($(this).attr("rangeID"));
               console.log("moveing child");
               console.log($(this));
               console.log("into");
@@ -4538,7 +4577,7 @@ function populateAnnoForms(){
               $(this).show();
           });
           console.log("children moved.  Remove group.");
-          group.remove();
+          removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
       }
         
   }
@@ -4601,20 +4640,60 @@ function populateAnnoForms(){
                       console.log("new leaf");
                       console.log(newLeaf);
                   }
-              })
+              });
           });
           newGroup.append(leafCountHTML);
           console.log("Group to append");
           console.log(newGroup);
-          $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
-          newGroup.show();
-          $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
-          $(".adminTrail").find("div[depth='"+depth+"']").children(".makeGroup").show();
-          if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
-            $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
-          }
-          cancelNewGroupForm();
+          //$(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
+          var rangeForNewGroup = $(".adminTrail").find("div[depth='"+depth+"']").attr("rangeID");
+          var childrenToGroup = [];
+          $.each($(".adminTrail").find("div[depth='"+depth+"']").children(".child"), function(){
+              childrenToGroup.push($(this).attr("rangeID"));
+          });
+          newGroupUpdate(rangeForNewGroup, childrenToGroup, newGroup, depth);
       }
+  }
+  
+  function newGroupUpdate(range, children, $newGroup, depth){
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var paramObj = {"@id" : range};
+    var params = {"content" : JSON.stringify(paramObj)};
+    $.post(getURL, params, function(data){ //get list of ranges currently in parent receiving grouping
+        var rangeObj  = JSON.parse(data);
+        var rangeList = rangeObj.ranges;
+        $.each(children, function(){ //remove the children being grouped from the parent
+            rangeList = rangeList.splice( $.inArray(this, rangeList), 1 );
+        });
+        var newRangeObject = {
+            "@type":"sc:Range",
+            "label": $("#groupTitle").val(),
+            "ranges" : children,
+            "canvases" :[],
+            "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+            "otherContent" : []
+          };
+        var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+        var params2 = {"content" : JSON.stringify(newRangeObject)};
+        $.post(saveURL, params2, function(data){ //save the new group
+            data = JSON.parse(data);
+            var newGroupID = data["@id"];
+            rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
+            var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+            var paramObj2 = {"@id" : range, "ranges" : rangeList};
+            var params3 = {"content" : JSON.stringify(paramObj2)};
+            $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
+                $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append($newGroup); //append the new group object to the DOM
+                $newGroup.show();
+                $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
+                $(".adminTrail").find("div[depth='"+depth+"']").children(".makeGroup").show();
+                if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
+                  $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
+                }
+                cancelNewGroupForm();
+            });
+        });
+    });
   }
 
   function cancelNewGroupForm(){
@@ -4624,12 +4703,13 @@ function populateAnnoForms(){
     $("#groupTitle").val("");
   }
 
-  function updateLabels(canvas1, canvas2, leaf){
+  function updateLabels(){
+      console.log("Updating labels. ");
         var canvas1 = $("#folioSide1").attr("canvas");
         var canvas2 = $("#folioSide2").attr("canvas");
         var leaf = currentLeafServerID;
-        var label1 = $("#folioLabel1").val();
-        var label2 = $("#folioLabel2").val();
+        var label1 = $("#folio1Label").val();
+        var label2 = $("#folio2Label").val();
         var leafLabel = $("#oneAndtwoLabel").val();
         
         var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";

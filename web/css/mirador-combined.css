@@ -3909,7 +3909,7 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
     display: block;
 }
 
-/* Custom BB CSS */
+/* BH edit: Custom BB CSS */
 .bbAnnosContainer{
   display: none;
   position: absolute;
@@ -3919,4 +3919,18 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
   z-index: 100;
   color: black;
   border: 2px solid blue;
+  max-height: 90%;
+  overflow: auto;
+}
+
+.bbAnnoLabel{
+  font-size: 18px;
+}
+
+.bbAnnoText{
+  font-size: 17px;
+}
+
+.bbAnno{
+  margin: 5px 2px;
 }
