@@ -2516,6 +2516,7 @@ function dragHelp(event){
 }
 
 function dropHelp(event){
+    var windowURL = document.location.href;
   var targetTag = event.target.tagName;
   var target = undefined;
   console.log("this is the target");
@@ -2588,6 +2589,9 @@ function dropHelp(event){
       target.appendChild(child);
       
       updateRange(target.attr("rangeid"), child.attr("rangeid")); //do not put the append flag, the following code handles that.
+      if(windowURL.indexOf("demo=1") === -1){
+          moveAndUpdate(child.attr("rangeid"), areaTakenFrom, target.attr("rangeid"));
+      }
       
       child.className = child.className.replace(/\bparent\b/,'');
       if(!child.className.indexOf("child") > -1)child.className = child.className+" child";
@@ -2617,10 +2621,40 @@ function dropHelp(event){
     else{
       event.preventDefault();
       return false;
-    }
-    
-    
-    //We would then need to submit the new range order to the datbase via 2 updates: 1 for the range losing a range URI and another for the range gaining a range URI.
+    }    
+}
+function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
+    //Remove rangeMoved from rangeMovedFrom's range list
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var paramObj = {"@id" : rangeMovedFrom};
+    var params = {"content" : JSON.stringify(paramObj)};
+    $.post(getURL, params, function(data){
+        var range = JSON.parse(data);
+        var rangeList = range.ranges;
+        console.log("Original Range List");
+        console.log(rangeList);
+        rangeList = rangeList.splice( $.inArray(rangeMoved, rangeList), 1 ); //remove range that is being moved
+        console.log("Spliced range list");
+        console.log(rangeList);
+        var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
+         var paramObj1 = {"@id" : rangeMovedFrom, "ranges" : rangeList};
+         var params1 = {"content" : JSON.stringify(paramObj1)};
+         $.post(updateURL, params1, function(){
+             //update list where range being moved was droped
+            var paramObj2 = {"@id" : rangeMovedTo};
+            var params2 = {"content" : JSON.stringify(paramObj2)};
+            $.post(getURL, params2, function(data2){
+                var range2 = JSON.parse(data2);
+                var rangeList2 = range2.ranges;
+                rangeList2.push(rangeMoved);
+                var paramObj3 = {"@id" : rangeMovedTo, "ranges" : rangeList2};
+                var params3 = {"content" : JSON.stringify(paramObj3)};
+                $.post(updateURL, params3, function(){
+                    //update list where range being moved was droped
+                });
+            });
+         });
+    });
 }
 function dragOverHelp(event){
     event.preventDefault();
@@ -3230,57 +3264,64 @@ function populateAnnoForms(){
                 }
             }
         }
-        //console.log("annos are");
-        //console.log(annos);
+
         $.each($(".contextFormEntry"), function(){
             var label1 = $(this).find('.formLabel').html().replace(":", "").trim();
             label1 = label1.replace(/\(.*?\)\s?/g, ''); // replace (stuff)
             //need to get rid of trailing text between and including ()
             var currentEntry1 = $(this).find(".content");
-            $.each(annos, function(){
-                var checkLabel1 = this.resource.label.replace(":", "").trim();  
-                checkLabel1 = checkLabel1.replace(/\(.*?\)\s?/g, '');
-                //need to get rid of trailing text between and including ()
-                if (checkLabel1 == label1){
-                    currentEntry1.val(this.resource["cnt:chars"]);
-                }             
-            });
+            if(annos && annos.length > 0){
+                $.each(annos, function(){
+                    var checkLabel1 = this.label.replace(":", "").trim();  
+                    checkLabel1 = checkLabel1.replace(/\(.*?\)\s?/g, '');
+                    //need to get rid of trailing text between and including ()
+                    if (checkLabel1 == label1){
+                        currentEntry1.val(this.resource["cnt:chars"]);
+                    }             
+                });
+            }
         });
         $.each($(".contentFormEntry"), function(){
             var label2 = $(this).find('.formLabel').html().replace(":", "").trim();
             //need to get rid of trailing text between and including ()
             label2 = label2.replace(/\(.*?\)\s?/g, '');
             var currentEntry2 = $(this).find(".content");
-            $.each(annos, function(){
-                var checkLabel2 = this.resource.label.replace(":", "").trim();
-                checkLabel2 = checkLabel2.replace(/\(.*?\)\s?/g, '');
-                //need to get rid of trailing text between and including ()
-                if (checkLabel2 == label2){
-                    currentEntry2.val(this.resource["cnt:chars"]);
-                }
-            });
+            if(annos && annos.length > 0){
+                $.each(annos, function(){
+                    var checkLabel2 = this.label.replace(":", "").trim();
+                    checkLabel2 = checkLabel2.replace(/\(.*?\)\s?/g, '');
+                    //need to get rid of trailing text between and including ()
+                    if (checkLabel2 == label2){
+                        currentEntry2.val(this.resource["cnt:chars"]);
+                    }
+                });
+            }
         });
         $.each($(".carrierFormEntry"), function(){
             var label3 = $(this).find('.formLabel').html().replace(":", "").trim();
             label3 = label3.replace(/\(.*?\)\s?/g, '');
             //need to get rid of trailing text between and including ()
             var currentEntry3 = $(this).find(".content");
-            $.each(annos, function(){
-                var checkLabel3 = this.resource.label.replace(":", "").trim();
-                checkLabel3 = checkLabel3.replace(/\(.*?\)\s?/g, '');
-                //need to get rid of trailing text between and including ()
-                if (checkLabel3 == label3){
-                    currentEntry3.val(this.resource["cnt:chars"]);
-                }
-            });
+            if(annos && annos.length > 0){
+                $.each(annos, function(){
+                    var checkLabel3 = this.label.replace(":", "").trim();
+                    checkLabel3 = checkLabel3.replace(/\(.*?\)\s?/g, '');
+                    //need to get rid of trailing text between and including ()
+                    if (checkLabel3 == label3){
+                        currentEntry3.val(this.resource["cnt:chars"]);
+                    }
+                });
+            }
         });
         
-        populateSpecialEntries(annos);
+        if(annos && annos.length > 0){
+            populateSpecialEntries(annos);
+        }
     };
     
     function populateSpecialEntries(annos){
         $.each(annos, function(){
-                var checkLabel3 = this.resource.label.replace(":", "").trim();
+                var checkLabel3 = this.label.replace(":", "").trim();
                 checkLabel3 = checkLabel3.replace(/\(.*?\)\s?/g, '');
                 if(checkLabel3 == "General Metadata"){
                     $("#notes").val(this.resource["cnt:chars"]);
@@ -3319,8 +3360,8 @@ function populateAnnoForms(){
         if($("#catalogueInfoFor").val() === canvasID){
             return false;
         }
-        
-            //$(".start").show("explode", "500ms");
+            //saveFolio();
+            //Should I save the entries already entered, or should the user be forced to hit submit before switching pieces
             if(canvas == 'recto'){
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -3872,37 +3913,38 @@ function populateAnnoForms(){
 		return theReturn;
 	}
 
-	function updateAnnotation(annoURI, annoObj, arrange){
+	function updateAnnotation(annoURI, annoObj){
 		var resourceObj = annoObj.resource;
 		var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
 		var paramObj = {"@id":annoURI, "resource": resourceObj};
 		var params = {"content":JSON.stringify(paramObj)};
-		$.post(updateAnnoURL, params, function(data){
-                    //Also need to update the annotation in the list.  
-                    if(zeta){
+                //This action will happen outside the post because its timing effects saveFolio() and updateList()
+                if(zeta){
                     $.each(annoListCollection[2].resources, function(){
                         if(this["@id"] == annoURI){
                             this.resource = annoObj.resource;
                             //actually update the annoList since we put the whole resource there and not just he URI.
                         }
                     });
-                    }
-                    else if (alpha){
-                        $.each(annoListCollection[0].resources, function(){
-                            if(this["@id"] == annoURI){
-                                this.resource = annoObj.resource;
-                                //actually update the annoList since we put the whole resource there and not just he URI.
-                            }
-                        });
-                    }
-                    else{
-                        $.each(annoListCollection[1].resources, function(){
-                            if(this["@id"] == annoURI){
-                                this.resource = annoObj.resource;
-                                //actually update the annoList since we put the whole resource there and not just he URI.
-                            }
-                        });
-                    }
+                }
+                else if (alpha){
+                    $.each(annoListCollection[0].resources, function(){
+                        if(this["@id"] == annoURI){
+                            this.resource = annoObj.resource;
+                            //actually update the annoList since we put the whole resource there and not just he URI.
+                        }
+                    });
+                }
+                else{
+                    $.each(annoListCollection[1].resources, function(){
+                        if(this["@id"] == annoURI){
+                            this.resource = annoObj.resource;
+                            //actually update the annoList since we put the whole resource there and not just he URI.
+                        }
+                    });
+                }
+		$.post(updateAnnoURL, params, function(data){
+ 
 		});
 		
 	}
@@ -3935,7 +3977,7 @@ function populateAnnoForms(){
 		}
 		$.each(tmpAnnos.resources, function(){
                     //scrub the labels?
-			if(this.label == labelToCheckFor){
+			if(this.label === labelToCheckFor){
                                 // this annotation exists.  Update annotation and list.
 				updateAnnotation(this["@id"], annoObject);
 			}
@@ -4320,11 +4362,9 @@ function populateAnnoForms(){
                                 $("#folioSide1").click();
                             });
         		});
-        		
-                        
-                        
+      
         	});
-                $("#folioSide1").click();
+                
       	 	newCanvas1ServerID = newCanvas1["@id"];
   	        canvasTag = parseInt(canvasTag) + 1;
                 annoListID++;
@@ -4337,8 +4377,7 @@ function populateAnnoForms(){
                             "forProject" : "broken_books",
                             "otherContent" : []
                 };
-                
-                        
+                                       
 	      	var params2 = {'content': JSON.stringify(urlCanvas)};
 	      	$.post(url, params2, function(data){
                         var newCanvas2 = urlCanvas;
@@ -4603,6 +4642,7 @@ function populateAnnoForms(){
 
   function saveNewGroupForm(depth){
     console.log("Make new group at depth "+depth);
+    var windowURL = document.location.href;
       var uniqueID = $(".adminTrail").find(".arrangeSection").length + 1;
       var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
       var dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
@@ -4651,7 +4691,20 @@ function populateAnnoForms(){
           $.each($(".adminTrail").find("div[depth='"+depth+"']").children(".child"), function(){
               childrenToGroup.push($(this).attr("rangeID"));
           });
-          newGroupUpdate(rangeForNewGroup, childrenToGroup, newGroup, depth);
+          if(windowURL.indexOf("demo=1") > -1){
+               $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append(newGroup); //append the new group object to the DOM
+                newGroup.show();
+                $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
+                $(".adminTrail").find("div[depth='"+depth+"']").children(".makeGroup").show();
+                if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
+                  $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
+                }
+                cancelNewGroupForm();
+          }
+          else{
+              newGroupUpdate(rangeForNewGroup, childrenToGroup, newGroup, depth);
+          }
+          
       }
   }
   
