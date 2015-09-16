@@ -3357,11 +3357,21 @@ function populateAnnoForms(){
     */
    
     function enterCatalogueInfo(canvasID, canvas){
+        //var flag = false;
         if($("#catalogueInfoFor").val() === canvasID){
             return false;
         }
-            //saveFolio();
-            //Should I save the entries already entered, or should the user be forced to hit submit before switching pieces
+        console.log("cat info");
+        //check all the fields.  If user has filled one out, we should save them.  
+//            $.each($(".content"), function(){
+//                if($(this).val() !== ""){
+//                    console.log("there was content, we are saving");
+//                    flag = true;
+//                    
+//                    return false;
+//                }
+//            });
+            var objectURI = $(".selectedFolio").attr("canvas");
             if(canvas == 'recto'){
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -3370,11 +3380,6 @@ function populateAnnoForms(){
                 $("#folioSide1").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
                 $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
-
-                $("#catalogueInfoFor").val(canvasID); //alpha
-                alpha = true;
-                beta= false;
-                zeta = false;
             }
             else if (canvas == 'verso'){
                 $("#folioSide2").addClass("selectedFolio");;
@@ -3384,16 +3389,8 @@ function populateAnnoForms(){
                 $("#folioSide1").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
                 $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
-
-                $("#catalogueInfoFor").val(canvasID); //beta
-                beta = true;
-                alpha = false;
-                zeta = false;
             }
             else{
-                if($("#catalogueInfoFor").val() === currentLeafServerID){
-                    return false;
-                }
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -3402,13 +3399,14 @@ function populateAnnoForms(){
                 $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
 
-                $("#catalogueInfoFor").val(currentLeafServerID); //zeta
-                alpha = beta = zeta = true;
             }
-            var previewImgSrc = $("."+canvas+"Img").attr("src");
-            $(".imgPreview").attr("src",previewImgSrc);
-            $(".content").val(""); //Reset all fields
-            populateAnnoForms();
+            saveFolio(true, canvas, objectURI);
+
+//            console.log("The flag is "+flag);
+//            if(flag === false){
+//                $(".content").val(""); //Reset all fields so that they can be populated with the new focused side's annotations
+//                populateAnnoForms();
+//            }
             // $("#start").attr("onclick", "submitStart('"+canvas+"');");
         
     }
@@ -3416,14 +3414,22 @@ function populateAnnoForms(){
     When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range. Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that. It also keeps content, context and carrier information separate from each other so we can track them as such.  
 */
 
-    function saveFolio(){
+    function saveFolio(flag, canvas, thisFolio){
         /* TODO
          *FIX: Does not save annotation from form in order that they appear.  To do this, we probably cannot run the functions that gather annotations in parallel. 
          */
+        if(flag === false){
+            canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
+            thisFolio = $(".selectedFolio").attr("canvas");
+        }
+        console.log("save folio for " + $("#catalogueInfoFor").val());
+        if(thisFolio !== undefined && thisFolio !== ''){
+            $("#saveCover").show();
+        }
         var windowURL = document.location.href;
         var currentLeafObject = {};
         var otherInfo = {};
-        var uriToSave = $("#catalogueInfoFor").val(); //alpha URI, beta URI, or leaf URI
+        var uriToSave = thisFolio; //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
         if(windowURL.indexOf("demo=1") > -1){
@@ -3433,11 +3439,11 @@ function populateAnnoForms(){
         $.each(testManifest.structures, function(){
             if (this["@id"] === uriToSave){
                 currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
-                $(".content").val("");
-                $(".rectoImg").attr("src", "");
-                $(".versoImg").attr("src", "");
-                $("#folioSide1").click();
-                return 0;
+//                $(".content").val("");
+//                $(".rectoImg").attr("src", "");
+//                $(".versoImg").attr("src", "");
+//                $("#folioSide1").click();
+                return false;
             }
         });
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
@@ -3491,7 +3497,7 @@ function populateAnnoForms(){
                                    },
                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                };
-                               createNewAnno(annotationObject2, "Interlinear Annotations", inter, addedInfoList1);
+                               createNewAnno(annotationObject2, "Interlinear Annotations", inter, addedInfoList1, uriToSave);
                            //}
                            //,400);
                     }
@@ -3508,7 +3514,7 @@ function populateAnnoForms(){
                                    },
                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                };
-                                createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1);
+                                createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1, uriToSave);
                             //}
                            //,400);                      
                     }
@@ -3520,7 +3526,7 @@ function populateAnnoForms(){
                     annotationObject.resource["cnt:chars"] = entryValue;
                         annotationObject.label = addedInfoLabel;
                         annotationObject.resource["cnt:chars"] = entryValue;
-                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1);
+                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1, uriToSave);
 
                 }
             }
@@ -3571,7 +3577,7 @@ function populateAnnoForms(){
                         annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annotationObject.label = addedInfoLabel;
                         annotationObject.resource["cnt:chars"] = entryValue;
-                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2);
+                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2, uriToSave);
                 }       
             }
             
@@ -3632,7 +3638,7 @@ function populateAnnoForms(){
                                     },
                                     "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                 };
-                                createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3);
+                                createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3, uriToSave);
                             //}, 400);
 
                             //setTimeout(function(){
@@ -3647,7 +3653,7 @@ function populateAnnoForms(){
                                     },
                                     "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                 };
-                                createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3);
+                                createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3, uriToSave);
                             //}
                             //,400);
                         }
@@ -3665,7 +3671,7 @@ function populateAnnoForms(){
                                     },
                                     "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                 };
-                                 createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3);
+                                 createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3, uriToSave);
                              //}
                             //,400);
                             
@@ -3682,7 +3688,7 @@ function populateAnnoForms(){
                                     "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                 };
                             //this will increment annoID by 1
-                            createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3);
+                            createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3, uriToSave);
                             //}
                             //,400);
                             
@@ -3701,7 +3707,7 @@ function populateAnnoForms(){
                                     },
                                     "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                 };
-                                 createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3);
+                                 createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3, uriToSave);
                                 //}
                                 //,400);
                             
@@ -3718,7 +3724,7 @@ function populateAnnoForms(){
                                     "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
                                 };
                             //this will increment annoID by 1
-                            createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3);
+                            createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3, uriToSave);
                             //}
                             //,400);
                         }
@@ -3730,7 +3736,7 @@ function populateAnnoForms(){
                     annotationObject.resource["cnt:chars"] = entryValue;
                     annotationObject.label = addedInfoLabel;
                     annotationObject.resource["cnt:chars"] = entryValue;
-                    createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3);
+                    createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3, uriToSave);
 
                 }   
             }
@@ -3741,9 +3747,7 @@ function populateAnnoForms(){
 
         var canvasNotes = $("#notes").val();
         if(canvasNotes !== ""){
-            var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-            var canvasURI = $("#catalogueInfoFor").val();
-            
+            var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID;             
             var annoObject = {
                 //"@id" : newAnnoURI,
                 "@type" : "oa:Annotation",
@@ -3755,22 +3759,24 @@ function populateAnnoForms(){
                 },
                 "on" : canvasURI
             };
-            createNewAnno(annoObject, "General Metadata", canvasNotes, otherInfoList);
+            createNewAnno(annoObject, "General Metadata", canvasNotes, otherInfoList, uriToSave);
             // otherInfoList.append("<li><span class='formLabel'>General Notes: </span> "+canvasNotes+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
         }
 
-        $(".start").hide("blind", "300ms", function(){
-            $(".imgAdditionArea").show("explode", "500ms");
-            $("#catalogueInfoFor").val(''); 
-            $("#folioSide2").removeClass("selectedFolio");
-            $("#folioSide1").removeClass("selectedFolio");
-        });
+//        $(".start").hide("blind", "300ms", function(){
+//            $(".imgAdditionArea").show("explode", "500ms");
+//            $("#catalogueInfoFor").val(''); 
+//            $("#folioSide2").removeClass("selectedFolio");
+//            $("#folioSide1").removeClass("selectedFolio");
+//        });
         
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
-        
-        updateLabels(); //Need to also make sure new labels the user input are up-to-date.
+        if(flag === undefined){
+            flag = false;
+        }
+        updateLabels(flag, uriToSave, canvas); //Need to also make sure new labels the user input are up-to-date.
         //Need to wait for annos to be created and assigned to annoListCollection[x] before running update.
-        setTimeout(function(){updateList();}, 3000);
+        
         // if(section !== "bucket"){
         //     console.log("ADD TO SECTION");
         //   updateRange(section, currentLeafServerID);
@@ -3778,14 +3784,53 @@ function populateAnnoForms(){
        
     }
     
-    function updateList(){  
-        var objectID = $("#catalogueInfoFor").val();
+    function updateLabels(flag, uri, canvas){
+      console.log("Updating labels. ");
+        var canvas1 = $("#folioSide1").attr("canvas");
+        var canvas2 = $("#folioSide2").attr("canvas");
+        var leaf = currentLeafServerID;
+        var label1 = $("#folio1Label").val();
+        var label2 = $("#folio2Label").val();
+        var leafLabel = $("#oneAndtwoLabel").val();
+        
+        var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+        var updateRangeURL = "http://165.134.241.141/brokenBooks/updateRange";
+        
+        if(label1 !== undefined && label1!==""){
+        var paramObj1 = {"@id": canvas1, "label":label1};
+        var params1 = {"content":JSON.stringify(paramObj1)};
+            $.post(updateCanvasURL, params1, function(data1){
+
+            });
+        }
+        if(label2 !== undefined && label2!==""){
+        var paramObj2 = {"@id": canvas2, "label":label2};
+        var params2 = {"content":JSON.stringify(paramObj2)};
+            $.post(updateCanvasURL, params2, function(data2){
+
+            });
+        }
+        if(leafLabel !== undefined && leafLabel !==""){
+        var paramObj3 = {"@id": leaf, "label":leafLabel};
+        var params3 = {"content":JSON.stringify(paramObj3)};
+            $.post(updateRangeURL, params3, function(data3){
+
+            });
+        }
+        setTimeout(function(){updateList(flag, uri, canvas);}, 1000);
+    }
+    
+    function updateList(flag, uri, canvas){  
+        var objectID = uri;
+        console.log("update list where .on is " + uri);
             $.each(annoListCollection, function(){
                 if (this.on === objectID){ //this is our annotation list to add the annotation to 
+                        console.log(this.on +" == "+objectID);
+                        console.log("list is "+this["@id"]);
                         var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
                         var newResources = this.resources;
                         var updateContent = newResources;
-                        console.log(updateContent);
+                        
                         var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
                         var params = {"content":JSON.stringify(paramsObj)};
                         $.post(updateAnnoListURL, params, function(data){
@@ -3807,11 +3852,14 @@ function populateAnnoForms(){
                             else{
                                     var annoListID = -1;
                                     $.each(testManifest.sequences[0].canvases, function(){
+                                        console.log("Test manifest, looking for canvas "+objectID);
                                             if (this["@id"] === objectID){ //this is our canvas object
                                                     if(alpha){
+                                                        console.log("side A anno list is "+annoListCollection[0]["@id"]);
                                                             annoListID = annoListCollection[0]["@id"];
                                                     }
                                                     else{
+                                                         console.log("side B anno list is "+annoListCollection[1]["@id"]);
                                                             annoListID = annoListCollection[1]["@id"];
                                                     }
                                                     var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
@@ -3826,6 +3874,36 @@ function populateAnnoForms(){
                                             }
                                     });
                             }//local
+                            $("#saveCover").hide();
+                            if(flag){
+                                console.log("content cleared and annos populated after side change.")
+                                $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
+                                var canvasID = "";
+                                if(canvas == 'recto'){
+                                    canvasID = $("#folioSide1").attr("canvas");
+                                    $("#catalogueInfoFor").val(canvasID); //alpha
+                                    alpha = true;
+                                    beta= false;
+                                    zeta = false;
+                                }
+                                else if (canvas == 'verso'){
+                                    canvasID = $("#folioSide2").attr(canvas);
+                                    $("#catalogueInfoFor").val(canvasID); //beta
+                                    beta = true;
+                                    alpha = false;
+                                    zeta = false;
+                                }
+                                else{
+                                    if(uri === currentLeafServerID){
+                                        return false;
+                                    }
+                                    $("#catalogueInfoFor").val(currentLeafServerID); //zeta
+                                    alpha = beta = zeta = true;
+                                }
+                                var previewImgSrc = $("."+canvas+"Img").attr("src");
+                                $(".imgPreview").attr("src",previewImgSrc);
+                                populateAnnoForms();
+                            }
                         });
                 }
         });
@@ -3952,10 +4030,10 @@ function populateAnnoForms(){
 	/*
 		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range. 
 	*/
-	function createNewAnno(annoObject, newLabel, value, list){
+	function createNewAnno(annoObject, newLabel, value, list, uri){
 		// A.K.A update annotationList
 		annoID ++;
-		var objectID = $("#catalogueInfoFor").val(); //which object are we saving to
+		var objectID = uri; //which object are we saving to
 		var annoServerID = -1;
 		annoObject.on = objectID; //set the on property to be what object we are saving to 
 		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
@@ -4255,7 +4333,15 @@ function populateAnnoForms(){
 
 	function cancelFolio(){
 		//Don't get data and return to image page
-                closeLeafPopover();
+                var windowURL = document.location.href;
+                
+                if(windowURL.indexOf("demo=1") > -1){
+                    closeLeafPopover();
+                }
+                else{
+                    $(".content").val("");
+                }
+                
 //		$(".start").hide("blind", "300ms", function(){
 //			$(".imgAdditionArea").show("explode", "500ms");
 //			$("#catalogueInfoFor").val(''); 
@@ -4278,7 +4364,7 @@ function populateAnnoForms(){
                 gatherRangesForArrange(1); //Should we populate this for the demo
                 return false;
             }
-            
+            gatherRangesForArrange(1);
             var newCanvas1ServerID = -1;
             var newCanvas2ServerID = -1;
             annoListCollection = new Array(3);
@@ -4360,6 +4446,10 @@ function populateAnnoForms(){
                             var params = {"content":JSON.stringify(paramObj)};
                             $.post(updateCanvasURL, params, function(data){
                                 $("#folioSide1").click();
+                                $("#catalogueInfoFor").val(newCanvas1["@id"]);
+                                alpha = true;
+                                beta= false;
+                                zeta = false;
                             });
         		});
       
@@ -4437,7 +4527,7 @@ function populateAnnoForms(){
         		};
 				currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
     				createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
-                                gatherRangesForArrange(1);
+                                
                     });
   	 	});
             
@@ -4756,40 +4846,7 @@ function populateAnnoForms(){
     $("#groupTitle").val("");
   }
 
-  function updateLabels(){
-      console.log("Updating labels. ");
-        var canvas1 = $("#folioSide1").attr("canvas");
-        var canvas2 = $("#folioSide2").attr("canvas");
-        var leaf = currentLeafServerID;
-        var label1 = $("#folio1Label").val();
-        var label2 = $("#folio2Label").val();
-        var leafLabel = $("#oneAndtwoLabel").val();
-        
-        var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
-        var updateRangeURL = "http://165.134.241.141/brokenBooks/updateRange";
-        
-        if(label1 !== undefined && label1!==""){
-        var paramObj1 = {"@id": canvas1, "label":label1};
-        var params1 = {"content":JSON.stringify(paramObj1)};
-            $.post(updateCanvasURL, params1, function(data1){
-
-            });
-        }
-        if(label2 !== undefined && label2!==""){
-        var paramObj2 = {"@id": canvas2, "label":label2};
-        var params2 = {"content":JSON.stringify(paramObj2)};
-            $.post(updateCanvasURL, params2, function(data2){
-
-            });
-        }
-        if(leafLabel !== undefined && leafLabel !==""){
-        var paramObj3 = {"@id": leaf, "label":leafLabel};
-        var params3 = {"content":JSON.stringify(paramObj3)};
-            $.post(updateRangeURL, params3, function(data3){
-
-            });
-        }
-    }
+  
 
 function existing(leaf, leafIsIn){
         var windowURL = document.location.href;
