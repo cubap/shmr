@@ -3933,4 +3933,6 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
 
 .bbAnno{
   margin: 5px 2px;
+  text-align: left;
+  max-width: 400px;
 }

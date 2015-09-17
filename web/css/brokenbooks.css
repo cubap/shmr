@@ -284,7 +284,7 @@ and open the template in the editor.
                 position: relative;
                 display: block;
                 height: 170px;
-                width: 165px;
+                width: 100%;
                 margin-right:25px;
                 background-color: black;
                 color: white;
@@ -302,7 +302,7 @@ and open the template in the editor.
                 position: relative;
                 display: block;
                 height: 170px;
-                width: 165px;
+                width: 100%;
                 background-color: black;
                 color: white;
             }
@@ -310,7 +310,7 @@ and open the template in the editor.
                 position: relative;
                 display: block;
                 height: 206px;
-                width: 245px;
+                width: 100%;
                 background-color: black;
                 color: white;
                 margin-bottom: 5px;
