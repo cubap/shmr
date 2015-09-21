@@ -101,10 +101,53 @@ and open the template in the editor.
             }
             /*.rectoImg, .versoImg{
                 background-image : url("http://165.134.241.141/brokenBooks/images/imgNotFound.png") !important;
-            } */        
+            } */    
+            
+            
+/*            .demoContent{
+                background-color: white;
+                border: 2px solid #6D6E7B;
+                font-family: sans-serif;
+            }
+            .popHdr{
+                color:white;
+                position: absolute;
+                top: 10px;
+                font-weight: bold;
+                font-size: 22px;
+                font-family: sans-serif;
+                text-transform: uppercase;
+                left: 50px;
+            }
+            .demoPopover input[type="button"]{
+                padding: 2px 20px;
+                display: block;
+                background-color: #791C2D !important;
+                width: 275px;
+                font-size: 20px;
+                font-weight: bold;
+                font-family: sans-serif;
+                margin: 10px auto;
+            }
+            .demoPopover{
+                position: fixed;
+                left: 0px;
+                right: 0px;
+                margin: 0px auto;
+                top: 5%;
+                background-color: #000;
+                padding: 37px 45px;
+                display: none;
+                width: 497px;
+                z-index: 5;
+                overflow-y : auto;
+                max-height: 85%;
+            }*/
         </style>
     </head>
     <body>
+        <img onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
+        class="helperIcon" src="http://165.134.241.141/brokenBooks/images/redinfo1.png" />
         <div class="mainBlock">
             <div class="mainBlockCover"></div>
             <div class="arrangeTrail adminTrail">
@@ -112,7 +155,7 @@ and open the template in the editor.
                    <div class="rAreaLabel">Llangantock Subsections</div>
                    
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>Bucket</span></div>
+                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>BUCKET</span></div>
                    <input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>
                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
@@ -247,6 +290,7 @@ and open the template in the editor.
             
             gatherRangesForArrange(2); //populate the admin interface
         });
+        
 
     </script>
 </html>

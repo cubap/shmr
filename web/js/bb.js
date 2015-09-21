@@ -10,6 +10,7 @@ var alpha, beta, zeta = false;
 var annoListCollection = new Array(3);
 var putInBucketDemo = false;
 var thisURL = document.location.href;
+var bucketID = "";
 if(thisURL.indexOf("demo=1") > -1 ){
     putInBucketDemo = true; 
 }
@@ -2588,7 +2589,8 @@ function dropHelp(event){
       //need to update range here
       target.appendChild(child);
       
-      updateRange(target.attr("rangeid"), child.attr("rangeid")); //do not put the append flag, the following code handles that.
+      updateRange(target.getAttribute("rangeid"), child.getAttribute("rangeid")); //do not put the append flag, the following code handles that.
+      
       if(windowURL.indexOf("demo=1") === -1){
           moveAndUpdate(child.attr("rangeid"), areaTakenFrom, target.attr("rangeid"));
       }
@@ -2629,7 +2631,8 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
     var paramObj = {"@id" : rangeMovedFrom};
     var params = {"content" : JSON.stringify(paramObj)};
     $.post(getURL, params, function(data){
-        var range = JSON.parse(data);
+        var data = JSON.parse(data);
+        var range = data[0];
         var rangeList = range.ranges;
         console.log("Original Range List");
         console.log(rangeList);
@@ -2644,7 +2647,8 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
             var paramObj2 = {"@id" : rangeMovedTo};
             var params2 = {"content" : JSON.stringify(paramObj2)};
             $.post(getURL, params2, function(data2){
-                var range2 = JSON.parse(data2);
+                var data2 = JSON.parse(data2);
+                var range2 = data2[0];
                 var rangeList2 = range2.ranges;
                 rangeList2.push(rangeMoved);
                 var paramObj3 = {"@id" : rangeMovedTo, "ranges" : rangeList2};
@@ -2666,6 +2670,28 @@ function dragOverHelp(event){
     event.preventDefault();
 }
 
+//function getParentAggregator(which){
+//    //ensure parent aggr is first in the array if it exists.
+//    var properties={"parent" : "paggr"};
+//    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+//    var params = {"content" : JSON.stringify(properties)};
+//    parentAggr = "";
+//    $.post(url, params)
+//        .done(function(data){
+//            if(typeof data === "object"){
+//                parentAggr = data[0];
+//            }
+//            else{
+//                data=JSON.parse(data);
+//                parentAggr = data[0];
+//            }
+//            gatherRangesForArrange(which);
+//        })
+//        .fail(function(){
+//            gatherRangesForArrange(which);
+//        });
+//}
+
 function gatherRangesForArrange(which){
     var existingRanges = [];
     var uniqueID = 0;
@@ -2684,15 +2710,30 @@ function gatherRangesForArrange(which){
     var params = {"content" : JSON.stringify(properties)};
     $.post(url, params)
     .done(function(data){
+        console.log("Got the ranges");
         if(windowurl.indexOf("demo=1") > -1){
+            console.log("demo page, make ranges from test manifest");
             rangeCollection = testManifest.structures;
         }
         else{
-            if(typeof rangeCollection !== "object"){
+            console.log("Not the demo, use the data");
+            if(typeof data === "object"){
+                console.log("No parsing necessary");
+                rangeCollection = data;
+//                if(parentAggr!==""){
+//                    rangeCollection.splice(0, 0, parentAggr);
+//                }
+            }
+            else{
+                console.log("parse the data");
                 rangeCollection = JSON.parse(data);
+//                if(parentAggr!==""){
+//                    rangeCollection.splice(0, 0, parentAggr);
+//                }
             }
         }
-        for(var i = rangeCollection.length - 1; i>=0; i--){
+        console.log("Go through the collection");
+        for(var i = 0; i<rangeCollection.length; i++){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label+" <br>";
@@ -2710,9 +2751,12 @@ function gatherRangesForArrange(which){
         var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
         var lockit = "";
 
-        if(rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ //MUST BE FIRST IN THE RANGES ARRAY
+        if(rangeCollection[i].parent && rangeCollection[i].parent==="paggr" || rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ 
           tag = "parent pAggr";
           outerRangeLabel = "";
+          console.log("Set depth 1 to range id");
+          bucketID = rangeCollection[i]["@id"];
+          $("div[rangeid='bucket']").attr("rangeid",rangeCollection[i]["@id"]);
         }
         relation = rangeCollection[i]["@id"];
 
@@ -2742,9 +2786,15 @@ function gatherRangesForArrange(which){
         currentRange = $("<div isOrdred='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" "+rightClick+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+relation+"'><span>"+outerRangeLabel+"</span> "+checkbox+" "+lockit+"  </div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
-          outer.find(".rangeArrangementArea").find('.notBucket').append(currentRange);
           if(isLeaf){
             allLeaves.push(rangeCollection[i]);
+            outer.find(".rangeArrangementArea").find('.unassigned').append(currentRange);
+            var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html());
+            oldFolioCount = oldFolioCount+1;
+            outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html(oldFolioCount);
+          }
+          else{
+              outer.find(".rangeArrangementArea").find('.notBucket').append(currentRange);
           }
         }
         else{
@@ -2805,6 +2855,7 @@ function gatherRangesForArrange(which){
             }
         }
         else{ //There are no inner ranges. It could be a section with no children or a leaf.  
+
         }
         }
         //get leaves into the bucket.  This is just for now.  This makes leaves unordered and I TODO: need to put in an isOrdered tag with these ranges.  
@@ -2839,6 +2890,7 @@ function gatherRangesForArrange(which){
         }
     })
     .fail(function(){
+        console.log("did not get the ranges, default to test manifest.");
         if(windowurl.indexOf("demo=1") > -1){
             rangeCollection = testManifest.structures;
         }
@@ -3364,7 +3416,7 @@ function populateAnnoForms(){
    
     function enterCatalogueInfo(canvasID, canvas){
         //var flag = false;
-        if($("#catalogueInfoFor").val() === canvasID){
+        if($("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
             return false;
         }
         console.log("cat info");
@@ -3406,24 +3458,13 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
 
             }
-            saveFolio(true, canvas, objectURI);
-
-//            console.log("The flag is "+flag);
-//            if(flag === false){
-//                $(".content").val(""); //Reset all fields so that they can be populated with the new focused side's annotations
-//                populateAnnoForms();
-//            }
-            // $("#start").attr("onclick", "submitStart('"+canvas+"');");
-        
+            saveFolio(true, canvas, objectURI);       
     }
     /*
     When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range. Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that. It also keeps content, context and carrier information separate from each other so we can track them as such.  
 */
 
     function saveFolio(flag, canvas, thisFolio){
-        /* TODO
-         *FIX: Does not save annotation from form in order that they appear.  To do this, we probably cannot run the functions that gather annotations in parallel. 
-         */
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
         if(flag === false){
             canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
@@ -3449,18 +3490,17 @@ function populateAnnoForms(){
                 return false;
             }
         });
-        content(canvasURI, flag, canvas);
-        
-        
-       
+        context(canvasURI, flag, canvas);
+
     }
     
     function content(canvasURI, flag, canvas){
+        console.log("content");
             var uriToSave = canvasURI;
             for(var i=0; i<$(".contentFormEntry").length; i++){
                 var _this = $(".contentFormEntry")[i];
-                var entryValue = _this.find(".content").val();
-                var special = _this.attr("special");
+                var entryValue = $(_this).find(".content").val();
+                var special = $(_this).attr("special");
                 if(entryValue === "" && (special === "" || special === undefined)){
 
                 }
@@ -3469,11 +3509,11 @@ function populateAnnoForms(){
                     if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
                     else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
                     else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
-                    var entryID = _this.find(".content").attr("id");
-                    var entryValue = _this.find(".content").val();
-                    var range = _this.find(".content").attr("range");
+                    var entryID = $(_this).find(".content").attr("id");
+                    var entryValue = $(_this).find(".content").val();
+                    var range = $(_this).find(".content").attr("range");
                     range = (range !== undefined && range !== "");
-                    var addedInfoLabel = _this.find(".formLabel").html();
+                    var addedInfoLabel = $(_this).find(".formLabel").html();
                     addedInfoLabel = addedInfoLabel.replace(":", "");
                     addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
                     console.log("content label:");
@@ -3534,18 +3574,19 @@ function populateAnnoForms(){
                     }
                 }
                 if(i===$(".contentFormEntry").length-1){
-                    context(canvasURI, flag, canvas);
+                    notes(canvasURI, flag, canvas);
                 }
             }
         }
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
         
         function context(canvasURI, flag, canvas){
+            console.log("context");
             var uriToSave = canvasURI;
             for(var j = 0; j<$(".contextFormEntry").length; j++){
                 var _this = $(".contextFormEntry")[j];
-                var entryValue = _this.find(".content").val();
-                var special = _this.attr("special");
+                var entryValue = $(_this).find(".content").val();
+                var special = $(_this).attr("special");
                 if(entryValue === "" && (special === "" || special === undefined)){
 
                 }
@@ -3556,10 +3597,10 @@ function populateAnnoForms(){
                     else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
                     else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
                     //console.log(addedInfoList2);
-                    var entryID = _this.find(".content").attr("id");
-                    var range = _this.find(".content").attr("range");
+                    var entryID = $(_this).find(".content").attr("id");
+                    var range = $(_this).find(".content").attr("range");
                     range = (range !== undefined && range !== "");
-                    var addedInfoLabel = _this.find(".formLabel").html();
+                    var addedInfoLabel = $(_this).find(".formLabel").html();
                     addedInfoLabel = addedInfoLabel.replace(":", "");
                     addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
                     console.log("context label:");
@@ -3597,10 +3638,12 @@ function populateAnnoForms(){
         }
         
         function carrier(canvasURI, flag, canvas){
+            console.log("carrier");
+            var uriToSave = canvasURI;
             for(var k = 0; k<$(".carrierFormEntry").length; k++){
               var _this = $(".carrierFormEntry")[k];
-              var entryValue = _this.find(".content").val();
-              var special = _this.attr("special");
+              var entryValue = $(_this).find(".content").val();
+              var special = $(_this).attr("special");
               if(entryValue === "" && (special === "" || special === undefined)){
 
               }
@@ -3609,10 +3652,10 @@ function populateAnnoForms(){
                   if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
                   else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
                   else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
-                  var entryID = _this.find(".content").attr("id");
-                  var range = _this.find(".content").attr("range");
+                  var entryID = $(_this).find(".content").attr("id");
+                  var range = $(_this).find(".content").attr("range");
                   range = (range !== undefined && range !== "");
-                  var addedInfoLabel = _this.find(".formLabel").html();
+                  var addedInfoLabel = $(_this).find(".formLabel").html();
                   addedInfoLabel = addedInfoLabel.replace(":", "");
                   addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
                   console.log("carrier label:");
@@ -3756,12 +3799,13 @@ function populateAnnoForms(){
                   }   
               }
               if(k===$(".carrierFormEntry").length-1){
-                  notes(canvasURI, flag, canvas);
+                  content(canvasURI, flag, canvas);
               }
           }  
     }
     
     function notes(canvasURI, flag, canvas){
+        console.log("notes");
         var uriToSave = canvasURI;
         var canvasNotes = $("#notes").val();
         if(canvasNotes !== ""){
@@ -3778,9 +3822,9 @@ function populateAnnoForms(){
                 "on" : canvasURI
             };
             createNewAnno(annoObject, "General Metadata", canvasNotes, '', uriToSave);
-            updateLabels(flag, canvasURI, canvas);
             // otherInfoList.append("<li><span class='formLabel'>General Notes: </span> "+canvasNotes+" <span annoServerID='"+annoServerID+"' class='removeInfo'> X </span></li>");
         }
+        updateLabels(flag, canvasURI, canvas);
     }
     
     function updateLabels(flag, uri, canvas){
@@ -4030,6 +4074,7 @@ function populateAnnoForms(){
 		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range. 
 	*/
 	function createNewAnno(annoObject, newLabel, value, list, uri){
+            //TODO FIX: Does not allow annotations to be saved in order
 		// A.K.A update annotationList
 		annoID ++;
 		var objectID = uri; //which object are we saving to
@@ -4065,29 +4110,31 @@ function populateAnnoForms(){
 		if(annoExists(annoObject)){ /* Works with the code block above this.  Check if this annotation exists and if so, we do not want to run any of the code below.  */
 			return false;
 		}
-		$.post(newAnnoUrl, params, function(data){
-			data=JSON.parse(data);
-			annoObject["@id"] = data["@id"];
-                        
-			if(zeta){
-                            console.log("New anno, push to resources2");
-                            console.log(annoObject);
-		            annoListCollection[2].resources.push(annoObject); //live
-                            
-			}
-			else if(alpha){
-                            console.log("New anno, push to resources0");
-                            console.log(annoObject);
-				annoListCollection[0].resources.push(annoObject); //live
-			}
-			else{
-                            console.log("New anno, push to resources1");
-                            console.log(annoObject);
-				annoListCollection[1].resources.push(annoObject); //live
-			}
- 
-				
-		});  //live. 		 
+                else{
+                    $.post(newAnnoUrl, params, function(data){
+                            data=JSON.parse(data);
+                            annoObject["@id"] = data["@id"];
+
+                            if(zeta){
+                                console.log("New anno, push to resources2");
+                                console.log(annoObject);
+                                annoListCollection[2].resources.push(annoObject); //live
+
+                            }
+                            else if(alpha){
+                                console.log("New anno, push to resources0");
+                                console.log(annoObject);
+                                    annoListCollection[0].resources.push(annoObject); //live
+                            }
+                            else{
+                                console.log("New anno, push to resources1");
+                                console.log(annoObject);
+                                    annoListCollection[1].resources.push(annoObject); //live
+                            }
+
+
+                    });  //live. 
+                }
 		
 	}
 
@@ -4155,12 +4202,13 @@ function populateAnnoForms(){
     $('.adminTrail').append(newTitleRequest);
     $(".mainBlockCover").show();
     theArea = inThisArea;
-    
   }
 
   function makeAgroup(title){
-      console.log("MAKE GROUP");
-      var leafCount = 0;
+      title = $("#newGroupTitle").val();
+      var windowurl = document.location.href;
+       var leafCount = "TO DO";
+       var children = [];
         if(title===""){
           $(".noTitleWarning").show();
           setTimeout($('.noTitleWarning').fadeOut(1000), 2000);
@@ -4169,18 +4217,18 @@ function populateAnnoForms(){
             console.log("TITLE IS GOOD");
           var childrenForGroup = [];
           $.each(theArea.find("input:checked"), function(){
-            childrenForGroup.push($(this).parent());
-            var leaves = parseInt($(this).parent().children(".folioCount").html());
-            leafCount += leaves;
+              console.log("one of the children for group");
+              console.log($(this).parent());
+              childrenForGroup.push($(this).parent());
+              children.push($(this).parent().attr("rangeID"));
           });
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var uniqueID = $(".arrangeSection").length + 1;
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
-          var inABucket = false;
+          console.log("depth to check: " + depthToCheck);
           var areaForNewGroup = "";
           if($(".adminTrail").find("div[depth='"+depthToCheck+"']").children(".unassigned").hasClass("selectedSection")){
-              inABucket = true;
-              console.log("From unassigned")
+              console.log("From unassigned");
               areaForNewGroup = $(".adminTrail").find("div[depth='"+depthToCheck+"']");
           }
           else{
@@ -4193,22 +4241,105 @@ function populateAnnoForms(){
             var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
             var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
             var newGroup = $("<div rangeID='"+mockID+"' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" leaf='false' onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
-            $.each(childrenForGroup, function(){
+             $.each(childrenForGroup, function(){
               var newChild = $(this);
+              console.log("append this to new group.");
+              console.log(newChild);
               if(newChild.hasClass("parent")){
                 newChild.removeClass("parent").addClass("child");
                 newGroup.removeClass("child").addClass("parent");
               }
-              newGroup.append($(this));
+              newGroup.append(newChild);
             });
             newGroup.append(leafCountHTML);
+            var depth = theArea.attr("depth");
             areaForNewGroup.children(".notBucket").append(newGroup);
             areaForNewGroup.children(".notBucket").children(".arrangeSection").show();
             newGroup.children(".arrangeSection").hide();
-            //newGroup.show();
+            newGroup.show();
             $('#newGroupTitleArea').remove();
             $(".mainBlockCover").hide();
             areaForNewGroup.children(".selectedSection").click();
+            $(".adminTrail").find("div[depth='"+depth+"']").children(".makeSortable").show();
+            $(".adminTrail").find("div[depth='"+depth+"']").children(".makeGroup").show();
+            if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
+              $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
+            }
+            if(windowurl.indexOf("demo=1") === -1){
+                console.log("get area for new group info");
+                var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+                var paramObj = {"@id" : areaForNewGroup.attr("rangeID")};
+                var params = {"content" : JSON.stringify(paramObj)};
+                $.post(getURL, params, function(data){ //get list of ranges currently in parent receiving grouping
+                    var data  = JSON.parse(data); //array of one range
+                    var rangeObj = data[0];
+                    var rangeList = new Array();
+                    if(rangeObj.ranges.length > 0){
+                        console.log("range list is range object ranges");
+                        rangeList = rangeObj.ranges;
+                    }
+                    console.log("Here is ranges for are getting new group");
+                    console.log(rangeList);
+                    $.each(childrenForGroup, function(){ //remove the children being grouped from the parent
+                        console.log("if "+$(this).attr("rangeID")+" is in the list, then remove it. ");
+                        console.log($.inArray($(this).attr("rangeID"), rangeList));
+                        if($.inArray($(this).attr("rangeID"), rangeList) > -1){
+                            console.log("remove it");
+                            rangeList = rangeList.splice( $.inArray($(this).attr("rangeID"), rangeList), 1 );
+                        }
+                    });
+                    console.log("here is the new range list");
+                    console.log(rangeList);
+                    var newRangeObject = {
+                        "@type":"sc:Range",
+                        "label": title,
+                        "ranges" : children,
+                        "canvases" :[],
+                        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                        "otherContent" : [],
+                        "forProject" : "broken_books",
+                        "within" : areaForNewGroup.attr("rangeid")
+                      };
+                    var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                    var params2 = {"content" : JSON.stringify(newRangeObject)};
+                    var useBackup = false;
+                    if(rangeList instanceof Array){
+                        console.log("range list is an array");
+                    }
+                    else{
+                        console.log("range list is not an array.  What should I do?");
+                        useBackup = true;
+                    }
+                    console.log("save new group");
+                    $.post(saveURL, params2, function(data){ //save the new group
+                        data = JSON.parse(data);
+                        var backupArray = new Array();
+                        var newGroupID = data["@id"];
+                        console.log("add new group id to range list: "+newGroupID);
+                        console.log(rangeList instanceof Array);
+                        console.log(rangeList);
+                        if(useBackup){
+                            console.log("I had to use backup");
+                            backupArray.push(newGroupID);
+                            rangeList = backupArray;
+                        }
+                        else{
+                            rangeList.push(newGroupID);
+                        }
+                         //add new group ID to the range's range collection receiving the new group
+                        var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+                        console.log("update area receiving new group list as this list:");
+                        console.log(rangeList);
+                        var paramObj2 = {"@id" : areaForNewGroup.attr("rangeID"), "ranges" : rangeList};
+                        var params3 = {"content" : JSON.stringify(paramObj2)};
+                        $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
+                            console.log("Update complete.  Group receiving group has groups being grouped moved into the group grouping them.")
+                            cancelNewGroupForm();
+                        });
+                    });
+                }); 
+            }
+           
         }
         //TODO: createNewRange for the new group, updateRange of range that got the new group.  
     }
@@ -4224,30 +4355,43 @@ function populateAnnoForms(){
     console.log("Remove section from crumb");
     $(".parentSection").remove();
     $(".selectedSection[rangeID='"+rangeID+"']").click();
-    savePlacement();
     //ensure the one clicked is also unselected. 
     if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
       $(".parentSection").remove();
       $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
     }
     //^^ local
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var paramObj1 = {"@id" : rangeID};
+    var params1 = {"content" : JSON.stringify(paramObj1)};
+    $.post(getURL, params1, function(data){
+        if(typeof data === "object"){
 
-    //Get the ranges of the rangeID we are updating and remove the leaf from it, then update to make this work live!
-    // var newAnnoUrl = "http://165.134.241.141/brokenBooks/updateRange";
-    // var paramObj = {"@id":rangeID, "ranges" : this.ranges};
-    // var params = {"content" : JSON.stringify(paramObj)};
-    // $.post(newAnnoUrl, params, function(data){
-    //     console.log("Remove section from crumb");
-    //     $(".parentSection").remove();
-    //     $(".selectedSection[rangeID='"+rangeID+"']").click();
-    //     savePlacement();
-    //     //ensure the one clicked is also unselected. 
-    //     if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
-    //       $(".parentSection").remove();
-    //       $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
-    //     }
-    // });
-    
+        }
+        else{
+            data=JSON.parse(data);
+        }
+        var range = data[0];
+        var rangeList = range.ranges;
+        var index = rangeList.indexOf(leaf);
+        if(index >= 0){
+            rangeList = rangeList.splice(index, 1);
+            var newAnnoUrl = "http://165.134.241.141/brokenBooks/updateRange";
+            var paramObj = {"@id":rangeID, "ranges" : rangeList};
+            var params = {"content" : JSON.stringify(paramObj)};
+            $.post(newAnnoUrl, params, function(data){
+                console.log("Remove section from crumb");
+                $(".parentSection").remove();
+                $(".selectedSection[rangeID='"+rangeID+"']").click();
+                savePlacement();
+                //ensure the one clicked is also unselected. 
+                if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
+                  $(".parentSection").remove();
+                  $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
+                }
+            });
+        }
+    });  
   }
 	/*
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
@@ -4743,7 +4887,6 @@ function populateAnnoForms(){
   }
 
   function saveNewGroupForm(depth){
-    console.log("Make new group at depth "+depth);
     var windowURL = document.location.href;
       var uniqueID = $(".adminTrail").find(".arrangeSection").length + 1;
       var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
@@ -4751,6 +4894,7 @@ function populateAnnoForms(){
       var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
       var title=$("#groupTitle").val();
       var toggle1 = "onclick='toggleChildren($(this),\"admin\",event);'";
+      var childLeaves = [];
       
       if(title == ""){
           $(".noTitleWarning").show();
@@ -4764,9 +4908,7 @@ function populateAnnoForms(){
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" "+toggle1+" ><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           if(depth ===1){
             newGroup.removeClass("child").addClass("parent");
-          }
-          console.log("New group1");
-          console.log(newGroup);
+          };
           $.each(checkedLeaves, function(){
               var leafID = $(this).attr("rangeID");
               var leafLabel = $(this).attr("label");
@@ -4774,25 +4916,19 @@ function populateAnnoForms(){
               var lockDown = "onclick='lock(\""+leafID+"\",\"down\",event);";
               $.each(allLeaves, function(){
                   if(this["@id"] == leafID){
+                      childLeaves.push(this["@id"]);
                       uniqueID += 1;
                       dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);'";
                       var lockit = "<div class='lockUp' "+lockUp+"> &#8686;  </div><div class='lockDown' "+lockDown+"> &#8686;  </div>";
                       var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" "+lockit+" "+toggle1+"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' /></div>");
                       newGroup.append(newLeaf);
-                      console.log("new leaf");
-                      console.log(newLeaf);
                   }
               });
           });
           newGroup.append(leafCountHTML);
-          console.log("Group to append");
-          console.log(newGroup);
           //$(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
           var rangeForNewGroup = $(".adminTrail").find("div[depth='"+depth+"']").attr("rangeID");
-          var childrenToGroup = [];
-          $.each($(".adminTrail").find("div[depth='"+depth+"']").children(".child"), function(){
-              childrenToGroup.push($(this).attr("rangeID"));
-          });
+          
           if(windowURL.indexOf("demo=1") > -1){
                $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append(newGroup); //append the new group object to the DOM
                 newGroup.show();
@@ -4804,39 +4940,44 @@ function populateAnnoForms(){
                 cancelNewGroupForm();
           }
           else{
-              newGroupUpdate(rangeForNewGroup, childrenToGroup, newGroup, depth);
+              newGroupUpdate(rangeForNewGroup, childLeaves, newGroup, depth);
           }
           
       }
   }
   
   function newGroupUpdate(range, children, $newGroup, depth){
+    //save the range
+    console.log("Add group to "+range);
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var paramObj = {"@id" : range};
     var params = {"content" : JSON.stringify(paramObj)};
     $.post(getURL, params, function(data){ //get list of ranges currently in parent receiving grouping
-        var rangeObj  = JSON.parse(data);
+        data= JSON.parse(data);
+        var rangeObj = data[0];
         var rangeList = rangeObj.ranges;
-        $.each(children, function(){ //remove the children being grouped from the parent
-            rangeList = rangeList.splice( $.inArray(this, rangeList), 1 );
-        });
         var newRangeObject = {
             "@type":"sc:Range",
             "label": $("#groupTitle").val(),
             "ranges" : children,
             "canvases" :[],
             "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-            "otherContent" : []
+            "otherContent" : [],
+            "within": range,
+            "forProject" : "broken_books"
           };
         var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         var params2 = {"content" : JSON.stringify(newRangeObject)};
+        console.log("Got range list. Save new group ID to it");
         $.post(saveURL, params2, function(data){ //save the new group
             data = JSON.parse(data);
             var newGroupID = data["@id"];
+            console.log("New group id of range list: "+newGroupID);
             rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
             var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
             var paramObj2 = {"@id" : range, "ranges" : rangeList};
             var params3 = {"content" : JSON.stringify(paramObj2)};
+            console.log("put "+newGroupID+" into "+range+"'s ranges list vai an update");
             $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
                 $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append($newGroup); //append the new group object to the DOM
                 $newGroup.show();
@@ -4845,6 +4986,14 @@ function populateAnnoForms(){
                 if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
                   $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
                 }
+                $.each(children, function(){
+                    var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+                    var paramObj3 = {"@id" : this, "within" : newGroupID};
+                    var params4 = {"content" : JSON.stringify(paramObj3)};
+                    $.post(updateURL, params4, function(){
+                        
+                    });
+                })
                 cancelNewGroupForm();
             });
         });
@@ -5155,15 +5304,27 @@ function closeLeafPopover(){
     
 }
 
+//db.annotation.insert({
+//    "@type" : "sc:Range",
+//    "label" : "Llangantock Leaf_1",
+//    "ranges" : [ ],
+//    "canvases" : [
+//            "http://165.134.241.141/annotationstore/annotation/demoCanvas_1",
+//
+//            "http://165.134.241.141/annotationstore/annotation/demoCanvas_2"
+//    ],
+//    "isPartOf" : "http://165.134.241.141/iiif/LlangBrev/sequence/normal",
+//    "otherContent" : [ ],
+//    "forProject" : "broken_books",
+//    "parent" : "paggr"
+//});
+
 
 //db.annotation.update(
-//   { "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd1d43ac6df4463633908" },
+//    { "parent" : "paggr" },
 //    {
 //     $set: {
-//                "resources" : [{"@type":"oa:Annotation","motivation":"oa:commenting","label":"General Metadata",
-//                "resource":{"@type":"cnt:ContentAsText","cnt:chars":"Not much to know."},
-//                "on":"http://165.134.241.141/annotationstore/annotation/55e46661788de057f2208aba",
-//                "@id":"http://165.134.241.141/annotationstore/annotation/55e4670e788de057f2208ac8"}]
+//        "forProject" : "broken_books",
 //     }
 //   }
 //)
