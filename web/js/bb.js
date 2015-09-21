@@ -3328,6 +3328,7 @@ function populateAnnoForms(){
             label1 = label1.replace(/ *\([^)]*\) */g, ""); // replace (stuff)
             //need to get rid of trailing text between and including ()
             var currentEntry1 = $(this).find(".content");
+            var row = $(this);
             if(annos && annos.length > 0){
                 $.each(annos, function(){
                     var checkLabel1 = this.label.replace(":", "").trim();  
@@ -3335,7 +3336,7 @@ function populateAnnoForms(){
                     //need to get rid of trailing text between and including ()
                     if (checkLabel1 == label1){
                         currentEntry1.val(this.resource["cnt:chars"]);
-                        currentEntry1.attr("set", "set");
+                        row.attr("set", "set");
                     }             
                 });
             }
@@ -3343,7 +3344,8 @@ function populateAnnoForms(){
         $.each($(".contentFormEntry"), function(){
             var label2 = $(this).find('.formLabel').html().replace(":", "").trim();
             //need to get rid of trailing text between and including ()
-            label2 = label2.replace(/ *\([^)]*\) */g, "")
+            label2 = label2.replace(/ *\([^)]*\) */g, "");
+            var row = $(this);
             var currentEntry2 = $(this).find(".content");
             if(annos && annos.length > 0){
                 $.each(annos, function(){
@@ -3352,7 +3354,7 @@ function populateAnnoForms(){
                     //need to get rid of trailing text between and including ()
                     if (checkLabel2 == label2){
                         currentEntry2.val(this.resource["cnt:chars"]);
-                        currentEntry2.attr("set", "set");
+                        row.attr("set", "set");
                     }
                 });
             }
@@ -3362,6 +3364,7 @@ function populateAnnoForms(){
             label3 = label3.replace(/ *\([^)]*\) */g, "");
             //need to get rid of trailing text between and including ()
             var currentEntry3 = $(this).find(".content");
+            var row = $(this);
             if(annos && annos.length > 0){
                 $.each(annos, function(){
                     var checkLabel3 = this.label.replace(":", "").trim();
@@ -3369,7 +3372,7 @@ function populateAnnoForms(){
                     //need to get rid of trailing text between and including ()
                     if (checkLabel3 == label3){
                         currentEntry3.val(this.resource["cnt:chars"]);
-                        currentEntry3.attr("set", "set");
+                        row.attr("set", "set");
                     }
                 });
             }
@@ -3432,15 +3435,7 @@ function populateAnnoForms(){
             return false;
         }
         console.log("cat info");
-        //check all the fields.  If user has filled one out, we should save them. TODO: We want this, but perhaps saving/updating all fields to empty needs to be an option. 
-//            $.each($(".content"), function(){
-//                if($(this).val() !== ""){
-//                    console.log("there was content, we are saving");
-//                    flag = true;
-//                    
-//                    return false;
-//                }
-//            });
+
             var objectURI = $(".selectedFolio").attr("canvas");
             if(canvas == 'recto'){
                 $("#folioSide1").addClass("selectedFolio");
@@ -3514,91 +3509,90 @@ function populateAnnoForms(){
     
     function content(canvasURI, flag, canvas){
         console.log("content");
-            var uriToSave = canvasURI;
-            for(var i=0; i<$(".contentFormEntry").length; i++){
-                var _this = $(".contentFormEntry")[i];
-                var entryValue = $(_this).find(".content").val();
-                var special = $(_this).attr("special");
-                if(entryValue === "" && (special === "" || special === undefined)){
-
+        var uriToSave = canvasURI;
+        for(var i=0; i<$(".contentFormEntry").length; i++){
+            var _this = $(".contentFormEntry")[i];
+            var entryValue = $(_this).find(".content").val();
+            var special = $(_this).attr("special");
+            var addedInfoList1 = {};
+            if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
+            else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
+            else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
+            var entryID = $(_this).find(".content").attr("id");
+            var entryValue = $(_this).find(".content").val();
+            var range = $(_this).find(".content").attr("range");
+            range = (range !== undefined && range !== "");
+            var addedInfoLabel = $(_this).find(".formLabel").html();
+            addedInfoLabel = addedInfoLabel.replace(":", "");
+            addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+            console.log("content label:");
+            console.log(addedInfoLabel);
+            var annotationObject = {
+                "@id" : "",
+                "@type" : "oa:Annotation",
+                "motivation" : "oa:commenting",
+                "forProject" : "broken_books",
+                "label" : "",
+                "resource" : {
+                  "@type" : "cnt:ContentAsText",
+                  "cnt:chars" :""
+                },
+                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+            };
+            if (special === "annotations"){
+                //console.log("Special Annos");
+                var inter = $("#interlinearAnnos").val();
+                var marginal = $("#marginalAnnos").val();
+                if((inter!==undefined && inter!=="") || $("#interlinearAnnos").attr("set") === "set"){
+                           var annotationObject2 = {
+                               "@id" : "",
+                               "@type" : "oa:Annotation",
+                               "motivation" : "oa:commenting",
+                               "forProject" : "broken_books",
+                               "label" : "Interlinear Annotations",
+                               "resource" : {
+                                 "@type" : "cnt:ContentAsText",
+                                 "cnt:chars" :inter
+                               },
+                               "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                           };
+                           $("#interlinearAnnos").attr("set", "set");
+                           createNewAnno(annotationObject2, "Interlinear Annotations", inter, addedInfoList1, uriToSave);
                 }
-                else{
-                    var addedInfoList1 = {};
-                    if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
-                    else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
-                    else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
-                    var entryID = $(_this).find(".content").attr("id");
-                    var entryValue = $(_this).find(".content").val();
-                    var range = $(_this).find(".content").attr("range");
-                    range = (range !== undefined && range !== "");
-                    var addedInfoLabel = $(_this).find(".formLabel").html();
-                    addedInfoLabel = addedInfoLabel.replace(":", "");
-                    addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-                    console.log("content label:");
-                    console.log(addedInfoLabel);
-                    var annotationObject = {
-                        "@id" : "",
-                        "@type" : "oa:Annotation",
-                        "motivation" : "oa:commenting",
-                        "label" : "",
-                        "resource" : {
-                          "@type" : "cnt:ContentAsText",
-                          "cnt:chars" :""
-                        },
-                        "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                    };
-                    if (special === "annotations"){
-                        //console.log("Special Annos");
-                        var inter = $("#interlinearAnnos").val();
-                        var marginal = $("#marginalAnnos").val();
-                        if(inter!==undefined && inter!=="" || $("#interlinearAnnos").attr("set") === "set"){
-                                   var annotationObject2 = {
-                                       "@id" : "",
-                                       "@type" : "oa:Annotation",
-                                       "motivation" : "oa:commenting",
-                                       "label" : "Interlinear Annotations",
-                                       "resource" : {
-                                         "@type" : "cnt:ContentAsText",
-                                         "cnt:chars" :inter
-                                       },
-                                       "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                   };
-                                   $("#interlinearAnnos").attr("set", "set");
-                                   createNewAnno(annotationObject2, "Interlinear Annotations", inter, addedInfoList1, uriToSave);
-                        }
-                        if(marginal!==undefined && marginal!=="" || $("#marginalAnnos").attr("set") === "set"){
-                                   var annotationObject3 = {
-                                       "@id" : "",
-                                       "@type" : "oa:Annotation",
-                                       "motivation" : "oa:commenting",
-                                       "label" : "Marginal Annotations",
-                                       "resource" : {
-                                         "@type" : "cnt:ContentAsText",
-                                         "cnt:chars" :marginal
-                                       },
-                                       "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                   };
-                                   $("#marginalAnnos").attr("set", "set");
-                                    createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1, uriToSave);                      
-                        }
-                    }
-                    else if(entryValue !== undefined && entryValue !== "" || _this.attr("set") === "set"){
-                        var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                        var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-
-                        annotationObject.resource["cnt:chars"] = entryValue;
-                            annotationObject.label = addedInfoLabel;
-                            annotationObject.resource["cnt:chars"] = entryValue;
-                            _this.attr("set", "set");
-                            createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1, uriToSave);
-
-                    }
-                }
-                if(i===$(".contentFormEntry").length-1){
-                    notes(canvasURI, flag, canvas);
+                if((marginal!==undefined && marginal!=="") || $("#marginalAnnos").attr("set") === "set"){
+                           var annotationObject3 = {
+                               "@id" : "",
+                               "@type" : "oa:Annotation",
+                               "motivation" : "oa:commenting",
+                               "forProject" : "broken_books",
+                               "label" : "Marginal Annotations",
+                               "resource" : {
+                                 "@type" : "cnt:ContentAsText",
+                                 "cnt:chars" :marginal
+                               },
+                               "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                           };
+                           $("#marginalAnnos").attr("set", "set");
+                            createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1, uriToSave);                      
                 }
             }
+            else if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
+                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+
+                annotationObject.resource["cnt:chars"] = entryValue;
+                    annotationObject.label = addedInfoLabel;
+                    annotationObject.resource["cnt:chars"] = entryValue;
+                    $(_this).attr("set", "set");
+                    createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList1, uriToSave);
+
+            }
+
+            if(i===$(".contentFormEntry").length-1){
+                notes(canvasURI, flag, canvas);
+            }
         }
+    }
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
         
         function context(canvasURI, flag, canvas){
@@ -3608,51 +3602,48 @@ function populateAnnoForms(){
                 var _this = $(".contextFormEntry")[j];
                 var entryValue = $(_this).find(".content").val();
                 var special = $(_this).attr("special");
-                if(entryValue === "" && (special === "" || special === undefined)){
+                var addedInfoList2 = {};
+            //console.log(alpha, beta, zeta);
+                if(zeta){ addedInfoList2 = $("#zetaInformation").find(".contextList"); }
+                else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
+                else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
+                //console.log(addedInfoList2);
+                var entryID = $(_this).find(".content").attr("id");
+                var range = $(_this).find(".content").attr("range");
+                range = (range !== undefined && range !== "");
+                var addedInfoLabel = $(_this).find(".formLabel").html();
+                addedInfoLabel = addedInfoLabel.replace(":", "");
+                addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                console.log("context label:");
+                console.log(addedInfoLabel);
+                //console.log(entryID, entryValue, range, addedInfoLabel);
+                var annotationObject = {
+                    "@id" : "",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "oa:commenting",
+                    "forProject" : "broken_books",
+                    "label" : "",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" :""
+                },
+                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                };
 
-                }
-                else{
-                    var addedInfoList2 = {};
-                //console.log(alpha, beta, zeta);
-                    if(zeta){ addedInfoList2 = $("#zetaInformation").find(".contextList"); }
-                    else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
-                    else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
-                    //console.log(addedInfoList2);
-                    var entryID = $(_this).find(".content").attr("id");
-                    var range = $(_this).find(".content").attr("range");
-                    range = (range !== undefined && range !== "");
-                    var addedInfoLabel = $(_this).find(".formLabel").html();
-                    addedInfoLabel = addedInfoLabel.replace(":", "");
-                    addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-                    console.log("context label:");
-                    console.log(addedInfoLabel);
-                    //console.log(entryID, entryValue, range, addedInfoLabel);
-                    var annotationObject = {
-                        "@id" : "",
-                        "@type" : "oa:Annotation",
-                        "motivation" : "oa:commenting",
-                        "label" : "",
-                        "resource" : {
-                          "@type" : "cnt:ContentAsText",
-                          "cnt:chars" :""
-                    },
-                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                    };
-
-                    if(entryValue !== undefined && entryValue !== "" || _this.attr("set") === "set"){
-                        //console.log('HELLO')
-                        var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                        var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-                        //console.log("Anno Object @ID is being set to :" + newAnnoURI)
-                        annotationObject["@id"] = newAnnoURI;
+                if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
+                    //console.log('HELLO')
+                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+                    //console.log("Anno Object @ID is being set to :" + newAnnoURI)
+                    annotationObject["@id"] = newAnnoURI;
+                    annotationObject.resource["cnt:chars"] = entryValue;
+                        annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
+                        annotationObject.label = addedInfoLabel;
                         annotationObject.resource["cnt:chars"] = entryValue;
-                            annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
-                            annotationObject.label = addedInfoLabel;
-                            annotationObject.resource["cnt:chars"] = entryValue;
-                            _this.attr("set", "set")
-                            createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2, uriToSave);
-                    }       
-                }
+                        $(_this).attr("set", "set")
+                        createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2, uriToSave);
+                }       
+                
                 if(j===$(".contextFormEntry").length-1){
                     carrier(canvasURI, flag, canvas);
                 }
@@ -3663,180 +3654,182 @@ function populateAnnoForms(){
             console.log("carrier");
             var uriToSave = canvasURI;
             for(var k = 0; k<$(".carrierFormEntry").length; k++){
-              var _this = $(".carrierFormEntry")[k];
-              var entryValue = $(_this).find(".content").val();
-              var special = $(_this).attr("special");
-              if(entryValue === "" && (special === "" || special === undefined)){
+                var _this = $(".carrierFormEntry")[k];
+                var entryValue = $(_this).find(".content").val();
+                var special = $(_this).attr("special");
+                var addedInfoList3 = {};
+                if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
+                else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
+                else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
+                var entryID = $(_this).find(".content").attr("id");
+                var range = $(_this).find(".content").attr("range");
+                range = (range !== undefined && range !== "");
+                var addedInfoLabel = $(_this).find(".formLabel").html();
+                addedInfoLabel = addedInfoLabel.replace(":", "");
+                addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                console.log("carrier label:");
+                console.log(addedInfoLabel);
 
-              }
-              else{
-                  var addedInfoList3 = {};
-                  if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
-                  else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
-                  else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
-                  var entryID = $(_this).find(".content").attr("id");
-                  var range = $(_this).find(".content").attr("range");
-                  range = (range !== undefined && range !== "");
-                  var addedInfoLabel = $(_this).find(".formLabel").html();
-                  addedInfoLabel = addedInfoLabel.replace(":", "");
-                  addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-                  console.log("carrier label:");
-                  console.log(addedInfoLabel);
+                var annotationObject = {
+                    "@id" : "",
+                    "@type" : "oa:Annotation",
+                    "motivation" : "oa:commenting",
+                    "forProject" : "broken_books",
+                    "label" : "",
+                    "resource" : {
+                      "@type" : "cnt:ContentAsText",
+                      "cnt:chars" :""
+                    },
+                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                };
 
-                  var annotationObject = {
-                      "@id" : "",
-                      "@type" : "oa:Annotation",
-                      "motivation" : "oa:commenting",
-                      "label" : "",
-                      "resource" : {
-                        "@type" : "cnt:ContentAsText",
-                        "cnt:chars" :""
-                      },
-                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                  };
+                if(special !== undefined && special !== ""){
+                    //console.log(special);
+                    if(special === "dimensions"){
+                        //console.log("DIMENSIONS")
+                        var leafHeight = $("#leafHeight").val();
+                        var leafWidth = $("#leafWidth").val();
+                        var leafHeightSet = $("#leafHeight").attr("set");
+                        var leafWidthSet = $("#leafWidth").attr("set");
 
-                  if(special !== undefined && special !== ""){
-                      //console.log(special);
-                      if(special === "dimensions"){
-                          //console.log("DIMENSIONS")
-                          var leafHeight = $("#leafHeight").val();
-                          var leafWidth = $("#leafWidth").val();
-                          var leafHeightSet = $("#leafHeight").attr("set");
-                          var leafWidthSet = $("#leafWidth").attr("set");
-                          
-                          var textHeight = $("#tbHeight").val();
-                          var textWidth = $("#tbWidth").val();
-                          var tbHeightSet = $("#tbHeight").attr("set");
-                          var tbWidthSet = $("#tbWidth").attr("set");
-                          
-                          var lineHeight = $("#lHeight").val();
-                          var lineWidth = $("#lWidth").val();
-                          var lineHeightSet = $("#lHeight").attr("set");
-                          var lineWidthSet = $("#lWidth").attr("set");
-                          
-                          if(leafHeight!== "" || leafWidth!=="" || leafHeightSet === "set" || leafWidthSet === "set"){
-                             // setTimeout(function(){
-                                  var annotationObject1 = {
-                                      "@id" : "",
-                                      "@type" : "oa:Annotation",
-                                      "motivation" : "oa:commenting",
-                                      "label" : "Leaf Height",
-                                      "resource" : {
-                                        "@type" : "cnt:ContentAsText",
-                                        "cnt:chars" :leafHeight
-                                      },
-                                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                  };
-                                  $("#leafHeight").attr("set", "set");
-                                  
-                                  createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3, uriToSave);
-                              //}, 400);
+                        var textHeight = $("#tbHeight").val();
+                        var textWidth = $("#tbWidth").val();
+                        var tbHeightSet = $("#tbHeight").attr("set");
+                        var tbWidthSet = $("#tbWidth").attr("set");
 
-                              //setTimeout(function(){
-                                  var annotationObject2 = {
-                                      "@id" : "",
-                                      "@type" : "oa:Annotation",
-                                      "motivation" : "oa:commenting",
-                                      "label" : "Leaf Width",
-                                      "resource" : {
-                                        "@type" : "cnt:ContentAsText",
-                                        "cnt:chars" :leafWidth
-                                      },
-                                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                  };
-                                  $("#leafWidth").attr("set", "set");
-                                  createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3, uriToSave);
-                              //}
-                              //,400);
-                          }
-                          if(textHeight !== "" || textWidth !=="" || tbHeightSet === "set" || tbWidthSet === "set"){
-                              console.log("TEXT IT "+textHeight+", "+textWidth);
-                               //setTimeout(function(){
-                                  var annotationObject3 = {
-                                      "@id" : "",
-                                      "@type" : "oa:Annotation",
-                                      "motivation" : "oa:commenting",
-                                      "label" : "Text Height",
-                                      "resource" : {
-                                        "@type" : "cnt:ContentAsText",
-                                        "cnt:chars" :textHeight
-                                      },
-                                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                  };
-                                  $("#tbHeight").attr("set", "set");
-                                   createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3, uriToSave);
-                               //}
-                              //,400);
+                        var lineHeight = $("#lHeight").val();
+                        var lineWidth = $("#lWidth").val();
+                        var lineHeightSet = $("#lHeight").attr("set");
+                        var lineWidthSet = $("#lWidth").attr("set");
 
-                              //setTimeout(function(){
-                                  var annotationObject4 = {
-                                      "@id" : "",
-                                      "@type" : "oa:Annotation",
-                                      "motivation" : "oa:commenting",
-                                      "label" : "Text Width",
-                                      "resource" : {
-                                        "@type" : "cnt:ContentAsText",
-                                        "cnt:chars" :textWidth
-                                      },
-                                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                  };
-                              //this will increment annoID by 1
-                              $("#tbWidth").attr("set", "set");
-                              createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3, uriToSave);
-                              //}
-                              //,400);
+                        if(leafHeight!== "" || leafWidth!=="" || leafHeightSet === "set" || leafWidthSet === "set"){
+                           // setTimeout(function(){
+                                var annotationObject1 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "forProject" : "broken_books",
+                                    "label" : "Leaf Height",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :leafHeight
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                $("#leafHeight").attr("set", "set");
 
-                          }
-                          if(lineHeight !== "" || lineWidth !== "" || lineHeightSet === "set" || lineWidthSet === "set"){
-                              console.log("LINE IT "+lineHeight+", "+lineWidth);
-                              //setTimeout(function(){
-                                  var annotationObject5 = {
-                                      "@id" : "",
-                                      "@type" : "oa:Annotation",
-                                      "motivation" : "oa:commenting",
-                                      "label" : "Line Height",
-                                      "resource" : {
-                                        "@type" : "cnt:ContentAsText",
-                                        "cnt:chars" :lineHeight
-                                      },
-                                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                  };
-                                  $("#lHeight").attr("set", "set");
-                                   createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3, uriToSave);
-                                  //}
-                                  //,400);
+                                createNewAnno(annotationObject1, "Leaf Height", leafHeight, addedInfoList3, uriToSave);
+                            //}, 400);
 
-                              //setTimeout(function(){
-                                  var annotationObject6 = {
-                                      "@id" : "",
-                                      "@type" : "oa:Annotation",
-                                      "motivation" : "oa:commenting",
-                                      "label" : "Line Width",
-                                      "resource" : {
-                                        "@type" : "cnt:ContentAsText",
-                                        "cnt:chars" :lineWidth
-                                      },
-                                      "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
-                                  };
-                              //this will increment annoID by 1
-                              $("#lWidth").attr("set", "set");
-                              createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3, uriToSave);
-                              //}
-                              //,400);
-                          }
-                      }
-                  }
-                  else if(entryValue !== undefined && entryValue !== "" || _this.attr("set") === "set"){
-                      var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                      var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
-                      annotationObject.resource["cnt:chars"] = entryValue;
-                      annotationObject.label = addedInfoLabel;
-                      annotationObject.resource["cnt:chars"] = entryValue;
-                      _this.attr("set", "set");
-                      createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3, uriToSave);
+                            //setTimeout(function(){
+                                var annotationObject2 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "forProject" : "broken_books",
+                                    "label" : "Leaf Width",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :leafWidth
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                $("#leafWidth").attr("set", "set");
+                                createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3, uriToSave);
+                            //}
+                            //,400);
+                        }
+                        if(textHeight !== "" || textWidth !=="" || tbHeightSet === "set" || tbWidthSet === "set"){
+                            console.log("TEXT IT "+textHeight+", "+textWidth);
+                             //setTimeout(function(){
+                                var annotationObject3 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "forProject" : "broken_books",
+                                    "label" : "Text Height",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :textHeight
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                $("#tbHeight").attr("set", "set");
+                                 createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3, uriToSave);
+                             //}
+                            //,400);
 
-                  }   
-              }
+                            //setTimeout(function(){
+                                var annotationObject4 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "forProject" : "broken_books",
+                                    "label" : "Text Width",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :textWidth
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                            //this will increment annoID by 1
+                            $("#tbWidth").attr("set", "set");
+                            createNewAnno(annotationObject4, "Text Width", textWidth, addedInfoList3, uriToSave);
+                            //}
+                            //,400);
+
+                        }
+                        if(lineHeight !== "" || lineWidth !== "" || lineHeightSet === "set" || lineWidthSet === "set"){
+                            console.log("LINE IT "+lineHeight+", "+lineWidth);
+                            //setTimeout(function(){
+                                var annotationObject5 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "forProject" : "broken_books",
+                                    "label" : "Line Height",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :lineHeight
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                                $("#lHeight").attr("set", "set");
+                                 createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3, uriToSave);
+                                //}
+                                //,400);
+
+                            //setTimeout(function(){
+                                var annotationObject6 = {
+                                    "@id" : "",
+                                    "@type" : "oa:Annotation",
+                                    "motivation" : "oa:commenting",
+                                    "forProject" : "broken_books",
+                                    "label" : "Line Width",
+                                    "resource" : {
+                                      "@type" : "cnt:ContentAsText",
+                                      "cnt:chars" :lineWidth
+                                    },
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                };
+                            //this will increment annoID by 1
+                            $("#lWidth").attr("set", "set");
+                            createNewAnno(annotationObject6, "Line Width", lineWidth, addedInfoList3, uriToSave);
+                            //}
+                            //,400);
+                        }
+                    }
+                }
+                else if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
+                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
+                    annotationObject.resource["cnt:chars"] = entryValue;
+                    annotationObject.label = addedInfoLabel;
+                    annotationObject.resource["cnt:chars"] = entryValue;
+                    $(_this).attr("set", "set");
+                    createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3, uriToSave);
+                }   
+              
               if(k===$(".carrierFormEntry").length-1){
                   content(canvasURI, flag, canvas);
               }
@@ -3853,6 +3846,7 @@ function populateAnnoForms(){
                 //"@id" : newAnnoURI,
                 "@type" : "oa:Annotation",
                 "motivation" : "oa:commenting",
+                "forProject" : "broken_books",
                 "label" : "General Metadata",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3907,87 +3901,89 @@ function populateAnnoForms(){
         var objectID = uri;
         console.log("update list where .on is " + uri);
             $.each(annoListCollection, function(){
-                if (this.on === objectID){ //this is our annotation list to add the annotation to 
-                        console.log(this.on +" == "+objectID);
-                        console.log("list is "+this["@id"]);
-                        var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
-                        var newResources = this.resources;
-                        var updateContent = newResources;
-                        
-                        var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
-                        var params = {"content":JSON.stringify(paramsObj)};
-                        $.post(updateAnnoListURL, params, function(data){
-                            if(zeta){
-                                $.each(testManifest.structures, function(){
-                                        if (this["@id"] === objectID){ 
-                                                var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
+                if(this.on === objectID){ //this is our annotation list to add the annotation to 
+                    console.log(this.on +" == "+objectID);
+                    console.log("list is "+this["@id"]);
+                    var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
+                    var newResources = this.resources;
+                    var updateContent = newResources;
+
+                    var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
+                    var params = {"content":JSON.stringify(paramsObj)};
+                    $.post(updateAnnoListURL, params, function(data){
+                        if(zeta){
+                            $.each(testManifest.structures, function(){
+                                    if (this["@id"] === objectID){ 
+                                            var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
+                                            var listIncluded = false;
+                                            $.each(this.otherContent,function(){
+                                                    if(this["@id"] === annoListCollection[2]["@id"]){
+                                                            listIncluded = true;
+                                                            return false;
+                                                    }
+                                            });
+                                            if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                    }
+                            });//local. adds the annotation list uri to the other content field.  
+                        }
+                        else{
+                                var annoListID = -1;
+                                $.each(testManifest.sequences[0].canvases, function(){
+                                    console.log("Test manifest, looking for canvas "+objectID);
+                                        if (this["@id"] === objectID){ //this is our canvas object
+                                                if(alpha){
+                                                    console.log("side A anno list is "+annoListCollection[0]["@id"]);
+                                                        annoListID = annoListCollection[0]["@id"];
+                                                }
+                                                else{
+                                                     console.log("side B anno list is "+annoListCollection[1]["@id"]);
+                                                        annoListID = annoListCollection[1]["@id"];
+                                                }
+                                                var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
                                                 var listIncluded = false;
                                                 $.each(this.otherContent,function(){
-                                                        if(this["@id"] === annoListCollection[2]["@id"]){
+                                                        if(this["@id"] === annoListID){
                                                                 listIncluded = true;
                                                                 return false;
                                                         }
                                                 });
-                                                if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                                if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
                                         }
-                                });//local. adds the annotation list uri to the other content field.  
+                                });
+                        }//local
+                        $("#saveCover").hide();
+                        if(flag){
+                            console.log("content cleared and annos populated after side change.")
+                            $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
+                            var canvasID = "";
+                            if(canvas == 'recto'){
+                                canvasID = $("#folioSide1").attr("canvas");
+                                $("#catalogueInfoFor").val(canvasID); //alpha
+                                alpha = true;
+                                beta= false;
+                                zeta = false;
+                            }
+                            else if (canvas == 'verso'){
+                                canvasID = $("#folioSide2").attr(canvas);
+                                $("#catalogueInfoFor").val(canvasID); //beta
+                                beta = true;
+                                alpha = false;
+                                zeta = false;
                             }
                             else{
-                                    var annoListID = -1;
-                                    $.each(testManifest.sequences[0].canvases, function(){
-                                        console.log("Test manifest, looking for canvas "+objectID);
-                                            if (this["@id"] === objectID){ //this is our canvas object
-                                                    if(alpha){
-                                                        console.log("side A anno list is "+annoListCollection[0]["@id"]);
-                                                            annoListID = annoListCollection[0]["@id"];
-                                                    }
-                                                    else{
-                                                         console.log("side B anno list is "+annoListCollection[1]["@id"]);
-                                                            annoListID = annoListCollection[1]["@id"];
-                                                    }
-                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
-                                                    var listIncluded = false;
-                                                    $.each(this.otherContent,function(){
-                                                            if(this["@id"] === annoListID){
-                                                                    listIncluded = true;
-                                                                    return false;
-                                                            }
-                                                    });
-                                                    if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
-                                            }
-                                    });
-                            }//local
-                            $("#saveCover").hide();
-                            if(flag){
-                                console.log("content cleared and annos populated after side change.")
-                                $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
-                                var canvasID = "";
-                                if(canvas == 'recto'){
-                                    canvasID = $("#folioSide1").attr("canvas");
-                                    $("#catalogueInfoFor").val(canvasID); //alpha
-                                    alpha = true;
-                                    beta= false;
-                                    zeta = false;
+                                if(uri === currentLeafServerID){
+                                    return false;
                                 }
-                                else if (canvas == 'verso'){
-                                    canvasID = $("#folioSide2").attr(canvas);
-                                    $("#catalogueInfoFor").val(canvasID); //beta
-                                    beta = true;
-                                    alpha = false;
-                                    zeta = false;
-                                }
-                                else{
-                                    if(uri === currentLeafServerID){
-                                        return false;
-                                    }
-                                    $("#catalogueInfoFor").val(currentLeafServerID); //zeta
-                                    alpha = beta = zeta = true;
-                                }
-                                var previewImgSrc = $("."+canvas+"Img").attr("src");
-                                $(".imgPreview").attr("src",previewImgSrc);
-                                populateAnnoForms();
+                                $("#catalogueInfoFor").val(currentLeafServerID); //zeta
+                                alpha = beta = zeta = true;
                             }
-                        });
+                            var previewImgSrc = $("."+canvas+"Img").attr("src");
+                            $(".imgPreview").attr("src",previewImgSrc);
+                            $("tr[set='set']").attr("set", "");
+                            $("#notes").attr("set", "");
+                            populateAnnoForms();
+                        }
+                    });
                 }
         });
     }
@@ -4533,7 +4529,20 @@ function populateAnnoForms(){
                     closeLeafPopover();
                 }
                 else{
-                    $(".content").val("");
+                    $.each($("#formTabs").find("tr"), function(){
+                        if($(this).attr("set") === "set"){
+                            
+                        }
+                        else{
+                            $(this).find(".content").val("");
+                        }
+                    });
+                    if($("#notes").attr("set") === "set"){
+                            
+                    }
+                    else{
+                        $("#notes").val("");
+                    }
                 }
                 
 //		$(".start").hide("blind", "300ms", function(){
@@ -5332,6 +5341,8 @@ function lock(leafURI, direction, event){
 function closeLeafPopover(){
     $(".leafPopover").hide();
     $(".content").val("");
+    $("tr[set='set']").attr("set", "");
+    $("#notes").attr("set", "");
     $("#leafLabel").val("");
     $("#folio1Label").val("");
     $("#folio2Label").val("");
