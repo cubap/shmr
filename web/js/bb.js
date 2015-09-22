@@ -3292,19 +3292,21 @@ function populateAnnoForms(){
                     
                 }
                 else{
+                    annos.replace('\"', '"');
                     annos = JSON.parse(annos);
                 }
             }
         }
         else if(alpha){
             //console.log("for alpha");
-            annos = annoListCollection[0].resources;
+            annos = annoListCollection[0].resources;           
              //console.log(typeof annos + "    2");
             if(annos.length > 0){
                 if(typeof annos == "object"){
                     
                 }
                 else{
+                    annos.replace('\"', '"');
                     annos = JSON.parse(annos);
                 }
             }
@@ -3318,6 +3320,7 @@ function populateAnnoForms(){
                     
                 }
                 else{
+                    annos.replace('\"', '"');
                     annos = JSON.parse(annos);
                 }
             }
@@ -3429,9 +3432,12 @@ function populateAnnoForms(){
         Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
     */
    
-    function enterCatalogueInfo(canvasID, canvas){
+    function enterCatalogueInfo(canvasID, canvas, existingtag){
         //must have check for undefined because the first time it loads, it will not have a class yet which just means that the code needs to run.
-        if($("div[canvas='"+canvasID+"']").attr("class") !== undefined && $("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
+        if(canvasID !== "leaf" && $("div[canvas='"+canvasID+"']").attr("class") !== undefined && $("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
+            return false;
+        }
+        if(canvasID === "leaf" && $("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
             return false;
         }
         console.log("cat info");
@@ -3465,7 +3471,9 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
 
             }
-            saveFolio(true, canvas, objectURI);       
+            if(existingtag === undefined){
+                saveFolio(true, canvas, objectURI);     
+            }
     }
     
     /*
@@ -3874,27 +3882,36 @@ function populateAnnoForms(){
         var updateRangeURL = "http://165.134.241.141/brokenBooks/updateRange";
         
         if(label1 !== undefined){
-        var paramObj1 = {"@id": canvas1, "label":label1};
-        var params1 = {"content":JSON.stringify(paramObj1)};
-            $.post(updateCanvasURL, params1, function(data1){
+            if(label1 === ""){
+                label1 = "Side A";
+            }
+            var paramObj1 = {"@id": canvas1, "label":label1};
+            var params1 = {"content":JSON.stringify(paramObj1)};
+                $.post(updateCanvasURL, params1, function(data1){
 
-            });
+                });
         }
         if(label2 !== undefined){
-        var paramObj2 = {"@id": canvas2, "label":label2};
-        var params2 = {"content":JSON.stringify(paramObj2)};
-            $.post(updateCanvasURL, params2, function(data2){
+            if(label2 === ""){
+                label2 = "Side B";
+            }
+            var paramObj2 = {"@id": canvas2, "label":label2};
+            var params2 = {"content":JSON.stringify(paramObj2)};
+                $.post(updateCanvasURL, params2, function(data2){
 
-            });
+                });
         }
         if(leafLabel !== undefined){
-        var paramObj3 = {"@id": leaf, "label":leafLabel};
-        var params3 = {"content":JSON.stringify(paramObj3)};
-            $.post(updateRangeURL, params3, function(data3){
+            if(leafLabel === ""){
+                leafLabel = "Llangantock Breviary Page";
+            }
+            var paramObj3 = {"@id": leaf, "label":leafLabel};
+            var params3 = {"content":JSON.stringify(paramObj3)};
+                $.post(updateRangeURL, params3, function(data3){
 
-            });
-        }
-        setTimeout(function(){updateList(flag, uri, canvas);}, 1800);
+                });
+            }
+            setTimeout(function(){updateList(flag, uri, canvas);}, 1800);
     }
     
     function updateList(flag, uri, canvas){  
@@ -4048,26 +4065,33 @@ function populateAnnoForms(){
 		@see createNewAnno()
 	*/
 	function annoExists(annoObject){
-		var labelToCheckFor = annoObject.label;
-		var tmpAnnos = [];
-		var theReturn = false;
-		var theURI = "";
-		if(zeta){
-            tmpAnnos = annoListCollection[2];
-		}
-		else if(alpha){
-            tmpAnnos = annoListCollection[0];
-		}
-		else{
-            tmpAnnos = annoListCollection[1];
-		}
-            $.each(tmpAnnos.resources, function(){
-            if(this.label == labelToCheckFor){
-	            theReturn = true;
-	            return -1;
+            var labelToCheckFor = annoObject.label;
+            var tmpAnnos = [];
+            var theReturn = false;
+            var theURI = "";
+            if(zeta){
+                tmpAnnos = annoListCollection[2];
             }
-		});
-		return theReturn;
+            else if(alpha){
+                tmpAnnos = annoListCollection[0];
+            }
+            else{
+                tmpAnnos = annoListCollection[1];
+            }
+            var annoResources = [];
+            if(!tmpAnnos.resources instanceof Array){
+                annoResources = JSON.parse(tmpAnnos.resources);
+            }
+            else{
+                annoResources = tmpAnnos.resources;
+            }
+            for(var i=0; i<annoResources.length; i++){
+                if(annoResources[i].label === labelToCheckFor){
+                    theReturn = true;
+                    return true;
+                }
+            }
+            return theReturn;
 	}
 
 	function updateAnnotation(annoURI, annoObj){
@@ -4126,23 +4150,31 @@ function populateAnnoForms(){
 
 		/* See if the annotation exists and if so, update the annotation isntead of saving a new one. */
 		if(zeta){
-			tmpAnnos = annoListCollection[2];
+                    tmpAnnos = annoListCollection[2];
 		}
 		else if (alpha){
-			tmpAnnos = annoListCollection[0];
+                    tmpAnnos = annoListCollection[0];
 		}
 		else{
-			tmpAnnos = annoListCollection[1];
+                    tmpAnnos = annoListCollection[1];
 		}
-		$.each(tmpAnnos.resources, function(){
-                    //scrub the labels?
-                    var labelForCheck = this.label;
-                    
-			if(labelForCheck === labelToCheckFor){
-                                // this annotation exists.  Update annotation and list.
-				updateAnnotation(this["@id"], annoObject);
-			}
-		});
+                var annoResources = [];
+                if(!tmpAnnos.resources instanceof Array){
+                    annoResources = JSON.parse(tmpAnnos.resources);
+                }
+                else{
+                    annoResources = tmpAnnos.resources;
+                }
+                for(var i=0; i<annoResources.length; i++){
+                    var labelForCheck = annoResources[i].label;                   
+                    if(labelForCheck === labelToCheckFor){
+                            // this annotation exists.  Update annotation and list.
+                            console.log("updateAnno");
+                            updateAnnotation(annoResources[i]["@id"], annoObject);
+                    }
+                }
+                console.log("Does anno exist?");
+                console.log(annoExists(annoObject));
 		if(annoExists(annoObject)){ /* Works with the code block above this.  Check if this annotation exists and if so, we do not want to run any of the code below.  */
 			return false;
 		}
@@ -5042,7 +5074,7 @@ function populateAnnoForms(){
                     $.post(updateURL, params4, function(){
                         
                     });
-                })
+                });
                 cancelNewGroupForm();
             });
         });
@@ -5056,16 +5088,14 @@ function populateAnnoForms(){
     $("#groupTitle").val("");
   }
 
-  
-
 function existing(leaf, leafIsIn){
         var windowURL = document.location.href;
         var alphaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/1";
         var betaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/2";
         var alphaCanvasObj = {};
         var betaCanvasObj = {};
-        var alphaImage  = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
-        var betaImage = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+        var alphaImage  = "http://165.134.241.141/brokenBooks/images/addImg.jpg";
+        var betaImage = "http://165.134.241.141/brokenBooks/images/addImg.jpg";
         var alphaLabel = "Folio Side A Label";
         var betaLabel = "Folio Side B Label";
         var leafLabel = "Leaf Label";
@@ -5086,8 +5116,18 @@ function existing(leaf, leafIsIn){
                 if(this.label !== ""){
                   leafLabel = this.label;
                 }
-                
                 var leafAnnoList = this.otherContent[0]["@id"]; //anno list URIS
+                $.ajax({
+                    "url":leafAnnoList,
+                    success: function(annoList3){
+                        annoList3 = JSON.parse(annoList3);
+                        annoListCollection[2] = annoList3;
+                    }
+                });//live
+                $("#oneAndtwo").attr("canvas", leaf);
+                $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); ;
+                $("#leafLabel").val(leafLabel);
+                $("#oneAndtwoLabel").val(leafLabel);
                 var alphaAnnoList = {};
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
@@ -5100,8 +5140,13 @@ function existing(leaf, leafIsIn){
                         if(this.label !== ""){
                           alphaLabel = this.label;
                         }
-                        if(this.images.length > 0){
-                          alphaImage = this.images[0].resource["@id"];
+                        if(this.images && this.images.length > 0){
+                            if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else{
+                                alphaImage = this.images[0].resource["@id"];
+                            }
                         }
                       }
                     });
@@ -5121,11 +5166,33 @@ function existing(leaf, leafIsIn){
                             alphaAnnoList = [];
                         }
                         if(alphaCanvasData.label !== undefined && alphaCanvasData.label !== ""){
-                          alphaLabel = this.label;
+                          alphaLabel = alphaCanvasData.label;
                         }
-                        if(alphaCanvasData.images.length > 0){
-                          alphaImage = this.images[0].resource["@id"];
+                        if(alphaCanvasData.images && alphaCanvasData.images.length > 0){
+                            if(alphaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else{
+                                alphaImage = alphaCanvasData.images[0].resource["@id"];
+                            }
                         }
+                        var alphaAnnoList = alphaCanvasObj.otherContent[0]["@id"];
+                        $.ajax({
+                            "url":alphaAnnoList,
+                            success: function(annoList1){
+                                annoList1 = JSON.parse(annoList1);
+                                annoListCollection[0] = annoList1;
+                                $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto', 'existing');"); 
+                                $("#folioSide1").attr("canvas", alphaCanvasURI);
+                                $("#folioSide1").click();
+                                populateAnnoForms();
+                            }
+                        }); //live
+                        
+                        $(".rectoImg").attr("src", alphaImage);
+                        //$("#folioSide1").addClass("selectedFolio");
+                        $("#folio1Label").val(alphaLabel);
+                        
                     }
                     }); //live
                 }
@@ -5141,8 +5208,13 @@ function existing(leaf, leafIsIn){
                         if(this.label!== ""){
                           betaLabel = this.label;
                         }
-                        if(this.images.length > 0){
-                          betaImage = this.images[0].resource["@id"];
+                        if(this.images && this.images.length > 0){
+                            if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else{
+                                betaImage = this.images[0].resource["@id"];
+                            }
                         }
                       }
                     });
@@ -5161,11 +5233,28 @@ function existing(leaf, leafIsIn){
                             betaAnnoList = [];
                         }
                         if(betaCanvasData.label !== undefined && betaCanvasData.label !== ""){
-                          betaLabel = this.label;
+                          betaLabel = betaCanvasData.label;
                         }
-                        if(this.images.length > 0){
-                          betaImage = betaCanvasData.images[0].resource["@id"];
+                        if(betaCanvasData.images && betaCanvasData.images.length > 0){
+                            if(betaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else{
+                                betaImage = betaCanvasData.images[0].resource["@id"];
+                            }
                         }
+                        var betaAnnoList = betaCanvasObj.otherContent[0]["@id"];
+                        $.ajax({
+                            "url":betaAnnoList,
+                            success: function(annoList2){
+                                annoList2 = JSON.parse(annoList2);
+                                annoListCollection[1] = annoList2;
+                            }
+                        });//live
+                        $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
+                        $("#folioSide2").attr("canvas", betaCanvasURI);   
+                        $(".versoImg").attr("src", betaImage);
+                        $("#folio2Label").val(betaLabel);
                     }
                     }); //live
                 }
@@ -5188,50 +5277,24 @@ function existing(leaf, leafIsIn){
                       }
                     });
                 }
-                else{
-                    console.log("Canvas Race test need to be true: " + race1);
-                    var alphaAnnoList = alphaCanvasObj.otherContent[0]["@id"];
-                    $.ajax({
-                        "url":alphaAnnoList,
-                        success: function(annoList1){
-                            annoList1 = JSON.parse(annoList1);
-                            annoListCollection[0] = annoList1;
-                        }
-                    }); //live
-                    console.log("Canvas Race test need to be true: " + race2);
-                    var betaAnnoList = betaCanvasObj.otherContent[0]["@id"];
-                    $.ajax({
-                        "url":betaAnnoList,
-                        success: function(annoList2){
-                            annoList2 = JSON.parse(annoList2);
-                            annoListCollection[1] = annoList2;
-                        }
-                    });//live
-                    var leafAnnoList = this.otherContent[0]["@id"]; //anno list URIS
-                    $.ajax({
-                        "url":leafAnnoList,
-                        success: function(annoList3){
-                            annoList3 = JSON.parse(annoList3);
-                            annoListCollection[2] = annoList3;
-                        }
-                    });//live
-                }
+
             }
-        });       
+        });
+        
     }
-    $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
-    $("#folioSide1").attr("canvas", alphaCanvasURI);
-    $(".rectoImg").attr("src", alphaImage);
-    $("#folioSide1").addClass("selectedFolio");
-    $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
-    $("#folioSide2").attr("canvas", betaCanvasURI);   
-    $(".versoImg").attr("src", betaImage);
-    $("#oneAndtwo").attr("canvas", leaf);
-    $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-    $("#folio1Label").val(alphaLabel);
-    $("#folio2Label").val(betaLabel);
-    $("#leafLabel").val(leafLabel);
-    $("#oneAndtwoLabel").val(leafLabel);
+//    $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
+//    $("#folioSide1").attr("canvas", alphaCanvasURI);
+//    $(".rectoImg").attr("src", alphaImage);
+//    $("#folioSide1").addClass("selectedFolio");
+//    $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
+//    $("#folioSide2").attr("canvas", betaCanvasURI);   
+//    $(".versoImg").attr("src", betaImage);
+//    $("#oneAndtwo").attr("canvas", leaf);
+//    $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
+//    $("#folio1Label").val(alphaLabel);
+//    $("#folio2Label").val(betaLabel);
+//    $("#leafLabel").val(leafLabel);
+//    $("#oneAndtwoLabel").val(leafLabel);
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
@@ -5254,7 +5317,7 @@ function existing(leaf, leafIsIn){
     zeta = false;
     //$(".popoverTrail").find(".selectedSection:first").click(); //collapse the tree
     selectInTree(leafIsIn); //This has broken as of 9/10/15
-    $("#folioSide1").click();
+    //$("#folioSide1").click();
     $(".popoverTrail").children(".rangeArrangementArea").append(arrangeAreaCover);
 
 }
