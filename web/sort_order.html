@@ -268,10 +268,33 @@ and open the template in the editor.
         column.children(".doneSortable").show();
     }
     function stopSorting(column){
-        column.children(".notBucket").sortable("destroy");
-        $(".areaCover").remove();
-        column.children(".makeSortable").show();
-        column.children(".doneSortable").hide();
+        var windowurl = document.location.href;
+        var children = column.children(".notBucket").children(".arrangeSection");
+        var childrenArray = [];
+        if(windowurl.indexOf("demo=1") >-1){
+            column.children(".notBucket").sortable("destroy");
+            $(".areaCover").remove();
+            column.children(".makeSortable").show();
+            column.children(".doneSortable").hide();
+        }
+        else{
+            $.each(children, function(){
+                childrenArray.push($(this).attr("rangeID"));
+            });
+            console.log("update "+column.attr("rangeID") +"with ordered array");
+            console.log(childrenArray);
+        //need to update this column range id with the new order of ranges
+            var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
+            var paramObj1 = {"@id" : column.attr("rangeID"), "ranges" : childrenArray};
+            var params1 = {"content" : JSON.stringify(paramObj1)};
+            $.post(updateURL, params1, function(){
+               column.children(".notBucket").sortable("destroy");
+               $(".areaCover").remove();
+               column.children(".makeSortable").show();
+               column.children(".doneSortable").hide();
+            });
+        }
+        
     }
     function resetFolioCount(){
         if($(".rangeArrangementArea:first").find(".selectedSection").length > 0){

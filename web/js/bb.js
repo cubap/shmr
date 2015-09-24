@@ -2260,9 +2260,7 @@ function changeLabel(range, paginate, event){
 function updateLabel(range, currentLabel){
     var windowurl = document.location.href;
     var newLabel = $("div[lblrange='"+range+"']").find(".newLabel").val();
-    console.log("update with new label "+newLabel);
     if(newLabel!==undefined && newLabel !== currentLabel){
-        console.log("update on server");
         if(newLabel === ""){
             newLabel = "unlabeled";
         }
@@ -2287,9 +2285,7 @@ function updateLabel(range, currentLabel){
 }
 function toggleChildren(parentRange, admin, event){
     if(event.ctrlKey){
-        console.log("shift");
         if(admin === "admin"){
-            console.log("shift key was pressed, change label for "+parentRange.attr("rangeID"));
             changeLabel(parentRange.attr("rangeID"), false, event);
             return false;
         }
@@ -2305,7 +2301,6 @@ function toggleChildren(parentRange, admin, event){
     return false;
   }
   if(event.target.className.indexOf("lockUp") > -1 || event.target.className.indexOf("lockDown") > -1){
-      console.log("Lock click");
       return false;
   }
   var children = [];
@@ -2446,7 +2441,6 @@ function toggleChildren(parentRange, admin, event){
           else if(deepest.children(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
             //THIS CAUSES ERRORS.  
             if(deepest.find(".selectedSection").length > 0){
-              console.log("Leaf from unassigned area is highlighted.  Click it.");
               deepest.find(".selectedSection").click();
             }
           }
@@ -2571,10 +2565,7 @@ function dropHelp(event){
     var windowURL = document.location.href;
   var targetTag = event.target.tagName;
   var target = undefined;
-  console.log("this is the target");
-  console.log(event.target);
     if(targetTag == "SPAN" || targetTag.indexOf("INPUT")>-1){
-        console.log("Change target");
         var eventParent = event.target.parentNode;
         target = eventParent;
     }
@@ -2584,7 +2575,6 @@ function dropHelp(event){
     event.preventDefault();
     var data = "";
     data = event.dataTransfer.getData("text");
-    console.log("Drop help called w/ data ========== "+data);
     var droppedClass = $("#"+data).attr("class");
     var areaTakenFrom = $("#"+data).closest(".rangeArrangementArea").attr("rangeID");
     var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
@@ -2593,8 +2583,6 @@ function dropHelp(event){
     
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
-    console.log("This is the child");
-    console.log(child);
     if(child === null || child === undefined) return false;
     if(targetClass.indexOf("selectedSection") > -1 || droppedClass.indexOf("selectedSection") > -1) return false; //cannot drop into a selected section, cannot drop a selected section
     if(targetClass.indexOf('notBucket') > -1){
@@ -2615,7 +2603,6 @@ function dropHelp(event){
     }
     var append = true;
     if(target.id === data || target.id === data+"_tmp"){
-        console.log("Target is self");
         child.id = child.id.replace("_tmp", "");
         child.style.display = "block";
         append = false;
@@ -2628,7 +2615,6 @@ function dropHelp(event){
     else{
       for (var i = 0; i < target.childNodes.length; i++) {
         if(target.childNodes[i].id+"_tmp" == child.id || target.childNodes[i].id == child.id ) { //prevent dropping into same column or on self
-          console.log("child already here");
           append = false;
           child.id = child.id.replace("_tmp", "");
           child.style.display = "block";
@@ -2685,11 +2671,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
         var data = JSON.parse(data);
         var range = data[0];
         var rangeList = range.ranges;
-        console.log("Original Range List");
-        console.log(rangeList);
         rangeList = rangeList.splice( $.inArray(rangeMoved, rangeList), 1 ); //remove range that is being moved
-        console.log("Spliced range list");
-        console.log(rangeList);
         var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
          var paramObj1 = {"@id" : rangeMovedFrom, "ranges" : rangeList};
          var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -2761,31 +2743,23 @@ function gatherRangesForArrange(which){
     var params = {"content" : JSON.stringify(properties)};
     $.post(url, params)
     .done(function(data){
-        console.log("Got the ranges");
         if(windowurl.indexOf("demo=1") > -1){
-            console.log("demo page, make ranges from test manifest");
             rangeCollection = testManifest.structures;
         }
         else{
-            console.log("Not the demo, use the data");
             if(typeof data === "object"){
-                console.log("No parsing necessary");
                 rangeCollection = data;
-                console.log(data);
 //                if(parentAggr!==""){
 //                    rangeCollection.splice(0, 0, parentAggr);
 //                }
             }
             else{
-                console.log("parse the data");
                 rangeCollection = JSON.parse(data);
-                console.log(data);
 //                if(parentAggr!==""){
 //                    rangeCollection.splice(0, 0, parentAggr);
 //                }
             }
         }
-        console.log("Go through the collection of " +rangeCollection.length);
         for(var i = 0; i<rangeCollection.length; i++){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -2807,7 +2781,6 @@ function gatherRangesForArrange(which){
         if(rangeCollection[i].parent && rangeCollection[i].parent==="paggr" || rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ 
           tag = "parent pAggr";
           outerRangeLabel = "";
-          console.log("Set depth 1 to range id");
           bucketID = rangeCollection[i]["@id"];
           $("div[rangeid='bucket']").attr("rangeid",rangeCollection[i]["@id"]);
         }
@@ -2943,7 +2916,6 @@ function gatherRangesForArrange(which){
         }
     })
     .fail(function(){
-        console.log("did not get the ranges, default to test manifest.");
         if(windowurl.indexOf("demo=1") > -1){
             rangeCollection = testManifest.structures;
         }
@@ -3498,11 +3470,9 @@ function populateAnnoForms(){
         }
         if($(".selectedFolio").length === 0){
             //Then it has just been loaded and folio 1 is being clicked, dont save but do the UI stuff.
-            console.log("no selected folio so dont save this one.");
             dontsave = true;
             
         }
-        console.log("cat info");
             var previouslySelectedURI = "";
             if(canvas == 'recto'){
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
@@ -3723,7 +3693,6 @@ function populateAnnoForms(){
                         annotationObject.label = addedInfoLabel;
                         annotationObject.resource["cnt:chars"] = entryValue;
                         $(_this).attr("set", "set");
-                        console.log("create anno for " + addedInfoLabel+".  == " + entryValue);
                         createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2, uriToSave);
                 }       
                 
@@ -3990,18 +3959,13 @@ function populateAnnoForms(){
     
     function updateList(flag, uri, canvas){  
         var objectID = uri;
-        console.log("update list where .on is " + uri);
             $.each(annoListCollection, function(){
                 if(this.on === objectID){ //this is our annotation list to add the annotation to 
-                    console.log(this.on +" == "+objectID);
-                    console.log("list is "+this["@id"]);
                     var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
                     var newResources = [];
                     newResources = this.resources;
                     var updateContent = newResources;
                     
-                    console.log("update list " + this["@id"] + " with these resources");
-                    console.log(updateContent);
                     var paramsObj = {"@id": this["@id"], "resources":updateContent};
                     var params = {"content":JSON.stringify(paramsObj)};
                     $.post(updateAnnoListURL, params, function(data){
@@ -4023,14 +3987,11 @@ function populateAnnoForms(){
                         else{
                                 var annoListID = -1;
                                 $.each(testManifest.sequences[0].canvases, function(){
-                                    console.log("Test manifest, looking for canvas "+objectID);
                                         if (this["@id"] === objectID){ //this is our canvas object
                                                 if(alpha){
-                                                    console.log("side A anno list is "+annoListCollection[0]["@id"]);
                                                         annoListID = annoListCollection[0]["@id"];
                                                 }
                                                 else{
-                                                     console.log("side B anno list is "+annoListCollection[1]["@id"]);
                                                         annoListID = annoListCollection[1]["@id"];
                                                 }
                                                 var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
@@ -4047,7 +4008,6 @@ function populateAnnoForms(){
                         }//local
                         $("#saveCover").hide();
                         if(flag){
-                            console.log("content cleared and annos populated after side change.");
                             $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
                             var canvasID = "";
                             if(canvas == 'recto'){
@@ -4198,8 +4158,6 @@ function populateAnnoForms(){
                         }
                     });
                 }
-                console.log("update annotation params");
-                console.log(params);
 		$.post(updateAnnoURL, params, function(data){
  
 		});
@@ -4212,8 +4170,6 @@ function populateAnnoForms(){
 	function createNewAnno(annoObject, newLabel, value, list, uri){
             //TODO FIX: Does not allow annotations to be saved in order
 		// A.K.A update annotationList
-                console.log("creating this anno");
-                console.log(annoObject);
 		annoID ++;
 		var objectID = uri; //which object are we saving to
 		var annoServerID = -1;
@@ -4247,24 +4203,18 @@ function populateAnnoForms(){
                     var labelForCheck = annoResources[i].label;                   
                     if(labelForCheck === labelToCheckFor){
                             // this annotation exists.  Update annotation and list.
-                            console.log("update, not save");
                             updateAnnotation(annoResources[i]["@id"], annoObject);
                     }
                 }
-                console.log("Does anno exist?");
-                console.log(annoExists(annoObject));
 		if(annoExists(annoObject)){ /* Works with the code block above this.  Check if this annotation exists and if so, we do not want to run any of the code below.  */
 			return false;
 		}
                 else{
-                    console.log("saving new anno...");
                     $.post(newAnnoUrl, params, function(data){
                             data=JSON.parse(data);
                             annoObject["@id"] = data["@id"];
 
                             if(zeta){
-                                console.log("New anno, push to resources2");
-                                console.log(annoObject);
                                 if(annoListCollection[2].resources === "[]"){
                                     annoListCollection[2].resources = [];
                                 }
@@ -4272,16 +4222,12 @@ function populateAnnoForms(){
 
                             }
                             else if(alpha){
-                                console.log("New anno, push to resources0");
-                                console.log(annoObject);
                                 if(annoListCollection[0].resources === "[]"){
                                     annoListCollection[0].resources = [];
                                 }
                                 annoListCollection[0].resources.push(annoObject); //live
                             }
                             else{
-                                console.log("New anno, push to resources1");
-                                console.log(annoObject);
                                 if(annoListCollection[1].resources === "[]"){
                                     annoListCollection[1].resources = [];
                                 }
@@ -4430,8 +4376,6 @@ function populateAnnoForms(){
                             rangeList = rangeList.splice( $.inArray($(this).attr("rangeID"), rangeList), 1 );
                         }
                     });
-                    console.log("here is the new range list");
-                    console.log(rangeList);
                     var newRangeObject = {
                         "@type":"sc:Range",
                         "label": title,
@@ -4463,8 +4407,6 @@ function populateAnnoForms(){
                         }
                          //add new group ID to the range's range collection receiving the new group
                         var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
-                        console.log("update area receiving new group list as this list:");
-                        console.log(rangeList);
                         var paramObj2 = {"@id" : areaForNewGroup.attr("rangeID"), "ranges" : rangeList};
                         var params3 = {"content" : JSON.stringify(paramObj2)};
                         $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
@@ -4488,12 +4430,10 @@ function populateAnnoForms(){
   function removeFromSection(leaf, rangeID){
     $.each(testManifest.structures, function(){
       if(this["@id"] === rangeID){
-          console.log("found it");
           var index = this.ranges.indexOf(leaf);
           this.ranges.splice(index, 1);
       }
     });
-    console.log("Remove section from crumb");
     $(".parentSection").remove();
     $(".selectedSection[rangeID='"+rangeID+"']").click();
     //ensure the one clicked is also unselected. 
@@ -4521,7 +4461,6 @@ function populateAnnoForms(){
             var paramObj = {"@id":rangeID, "ranges" : rangeList};
             var params = {"content" : JSON.stringify(paramObj)};
             $.post(newAnnoUrl, params, function(data){
-                console.log("Remove section from crumb");
                 $(".parentSection").remove();
                 $(".selectedSection[rangeID='"+rangeID+"']").click();
                 savePlacement();
@@ -4586,8 +4525,6 @@ function populateAnnoForms(){
                 }
                 
                 var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
-                console.log("here is the range to update");
-                console.log(rangeToUpdate[0]);
                 if($.inArray(leaf, rangeToUpdate.ranges) === -1){
                    rangeToUpdate[0].ranges.push(leaf);
                 }
@@ -4598,13 +4535,11 @@ function populateAnnoForms(){
                 var params = {"content" : JSON.stringify(paramObj)};
                 //update the the range recieving the child's ranges array by pushing in the range being added in.
                 $.post(updateURL, params, function(data){
-                    console.log("Range updated");
                     var addedToSection = "";
                     if(arrange == "arrange"){
                         $.each($(".selectedSection"), function(){
                           var thisRangeID = $(this).attr("rangeID");
                           var thisName = $(this).children("span").html();
-                          console.log("add section "+thisName+" to arrange crumb.");
                           if($(this).hasClass("unassigned")){
                             //do not add this to the crumb.
                           }
@@ -4769,8 +4704,6 @@ function populateAnnoForms(){
                             var paramObj = {"@id":newCanvas1["@id"], "otherContent":[{"@id":listID,"@type":"sc:AnnotationList"}]};
                             var params = {"content":JSON.stringify(paramObj)};
                             $.post(updateCanvasURL, params, function(data){
-                                console.log("click folio side 1");
-                                console.log($("#folioSide1").attr("onclick"));
                                 $("#folioSide1").click();
                                 $("#catalogueInfoFor").val(newCanvas1["@id"]);
                                 alpha = true;
@@ -4969,9 +4902,6 @@ function populateAnnoForms(){
   }
   
   function removeRange(rangeID){
-      console.log("remove this range: "+rangeID);
-      console.log("remove target");
-      console.log($(targetToBreak));
       var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
       var paramObj = {"@id" : rangeID};
       var params = {"content" : JSON.stringify(paramObj)}; 
@@ -4981,17 +4911,12 @@ function populateAnnoForms(){
   }
   
   function removeAndUpdate(remove, update, bringup){
-      console.log("remove and update");
-      console.log(remove);
-      console.log(update);
       var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
       var paramObj = {"@id" : update};
       var params = {"content" : JSON.stringify(paramObj)};
       $.post(getURL, params, function(data){
           var range = JSON.parse(data);
           var rangeList = range.ranges;
-          console.log("Original Range List");
-          console.log(rangeList);
           if(rangeList!==undefined && rangeList.length > 0){
               rangeList = rangeList.splice( $.inArray(remove, rangeList), 1 ); //remove range list that is being deleted;
           }
@@ -5004,8 +4929,6 @@ function populateAnnoForms(){
               //bringup is an array of those children's ids, merge them at the end of the current range list.  
               $.merge(rangeList, bringup);
           }
-          console.log("Spliced range list");
-          console.log(rangeList);
           var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
            var paramObj1 = {"@id" : update, "ranges" : rangeList};
            var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -5019,9 +4942,6 @@ function populateAnnoForms(){
   function breakUp(){
       var group = $(targetToBreak);
       var parent = group.closest(".rangeArrangementArea");
-      console.log("BREAK UP");
-      console.log(group);
-      console.log(parent);
       
       $(".breakConfirm").remove();
       var childrenToBringUp = undefined;
@@ -5037,14 +4957,9 @@ function populateAnnoForms(){
           depth = parseInt(group.parent().parent().attr("depth"));
           $.each(childrenToBringUp, function(){
               childrenArray.push($(this).attr("rangeID"));
-              console.log("moveing child");
-              console.log($(this));
-              console.log("into");
-              console.log($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket"));
               $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append($(this));
               $(this).show();
           });
-          console.log("children moved.  Remove group.");
           removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
       }
         
@@ -5131,7 +5046,6 @@ function populateAnnoForms(){
   
   function newGroupUpdate(range, children, $newGroup, depth){
     //save the range
-    console.log("Add group to "+range);
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var paramObj = {"@id" : range};
     var params = {"content" : JSON.stringify(paramObj)};
@@ -5151,16 +5065,13 @@ function populateAnnoForms(){
         };
         var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         var params2 = {"content" : JSON.stringify(newRangeObject)};
-        console.log("Got range list. Save new group ID to it");
         $.post(saveURL, params2, function(data){ //save the new group
             data = JSON.parse(data);
             var newGroupID = data["@id"];
-            console.log("New group id of range list: "+newGroupID);
             rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
             var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
             var paramObj2 = {"@id" : range, "ranges" : rangeList};
             var params3 = {"content" : JSON.stringify(paramObj2)};
-            console.log("put "+newGroupID+" into "+range+"'s ranges list vai an update");
             $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
                 $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append($newGroup); //append the new group object to the DOM
                 $newGroup.show();
@@ -5176,8 +5087,6 @@ function populateAnnoForms(){
                     var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                     var paramObj3 = {"@id" : this, "within" : newGroupID};
                     var params4 = {"content" : JSON.stringify(paramObj3)};
-                    console.log("check to remove from bucket "+this);
-                    console.log($("div[depth='1']").find(".unassigned").find("div[rangeID='"+this+"']"));
                     $("div[depth='1']").find(".unassigned").children("div[rangeID='"+this+"']").remove();
                     $.post(updateURL, params4, function(){
                         
@@ -5228,12 +5137,8 @@ function existing(leaf, leafIsIn){
                 $.ajax({
                     "url":leafAnnoList,
                     success: function(annoList3){
-                        console.log("leaf anno list");
-                        console.log(annoList3);
                         annoList3 = JSON.parse(annoList3);
                         var tmpResources = annoList3.resources;
-                        console.log(tmpResources);
-                        console.log("R3: "+typeof tmpResources);
                         if(typeof tmpResources !== "object"){
                             tmpResources = tmpResources.replace('\"', '"');
                             tmpResources = JSON.parse(tmpResources);
@@ -5293,14 +5198,11 @@ function existing(leaf, leafIsIn){
                                 alphaImage = alphaCanvasData.images[0].resource["@id"];
                             }
                         }
-                        console.log("AAL: "+alphaAnnoList);
                         $.ajax({
                             "url":alphaAnnoList,
                             success: function(annoList1){
                                 annoList1 = JSON.parse(annoList1);
                                 var tmpResources = annoList1.resources;
-                                console.log("R1: "+typeof tmpResources);
-                                console.log(tmpResources);
                                 if(typeof tmpResources !== "object"){
                                     tmpResources = tmpResources.replace('\"', '"');
                                     tmpResources = JSON.parse(tmpResources);
@@ -5368,17 +5270,13 @@ function existing(leaf, leafIsIn){
                                 betaImage = betaCanvasData.images[0].resource["@id"];
                             }
                         }
-                        console.log("BAL: "+betaAnnoList);
                         $.ajax({
                             "url":betaAnnoList,
                             success: function(annoList2){
-                                console.log("AL2");
-                                console.log(annoList2);
-                                console.log(annoList2.length);
+                                
                                 annoList2 = JSON.parse(annoList2);
                                 var tmpResources = annoList2.resources;
-                                console.log(tmpResources);
-                                console.log("R2: "+typeof tmpResources);
+                               
                                 if(typeof tmpResources !== "object"){
                                     tmpResources = tmpResources.replace('\"', '"');
                                     tmpResources = JSON.parse(tmpResources);
