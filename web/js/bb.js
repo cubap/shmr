@@ -2643,7 +2643,7 @@ function dropHelp(event){
       updateRange(target.getAttribute("rangeid"), child.getAttribute("rangeid")); //do not put the append flag, the following code handles that.
       
       if(windowURL.indexOf("demo=1") === -1){
-          moveAndUpdate(child.attr("rangeid"), areaTakenFrom, target.attr("rangeid"));
+          moveAndUpdate(child.getAttribute("rangeid"), areaTakenFrom, target.getAttribute("rangeid"));
       }
       
       child.className = child.className.replace(/\bparent\b/,'');
@@ -3981,7 +3981,7 @@ function populateAnnoForms(){
             var params3 = {"content":JSON.stringify(paramObj3)};
                 $.post(updateRangeURL, params3, function(data3){
                     //must paginate because these are in the leaf popover and admin interface.
-                    $(".arrangeSection[range='"+leaf+"']").children("span:first").html(leafLabel);
+                    $(".arrangeSection[rangeID='"+leaf+"']").children("span:first").html(leafLabel);
                     $("#leafLabel").val(leafLabel);
                 });
             }
@@ -4362,7 +4362,7 @@ function populateAnnoForms(){
   function makeAgroup(title){
       title = $("#newGroupTitle").val();
       var windowurl = document.location.href;
-       var leafCount = "TO DO";
+       var leafCount = 0;
        var children = [];
         if(title===""){
           $(".noTitleWarning").show();
@@ -4373,8 +4373,10 @@ function populateAnnoForms(){
           $.each(theArea.find("input:checked"), function(){
               childrenForGroup.push($(this).parent());
               children.push($(this).parent().attr("rangeID"));
+              var addLeaves = parseInt($(this).parent().children(".folioCount").html());
+              leafCount += addLeaves;
           });
-          var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
+          
           var uniqueID = $(".arrangeSection").length + 1;
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
           var areaForNewGroup = "";
@@ -4397,6 +4399,7 @@ function populateAnnoForms(){
               }
               newGroup.append(newChild);
             });
+            var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
             newGroup.append(leafCountHTML);
             var depth = theArea.attr("depth");
             areaForNewGroup.children(".notBucket").append(newGroup);
@@ -4571,40 +4574,54 @@ function populateAnnoForms(){
             if(pageURL.indexOf("demo=1") > -1){
                 return false;
             }
-            var newAnnoUrl = "http://165.134.241.141/brokenBooks/updateRange";
-            if($.inArray(leaf, rangeToUpdate.ranges) === -1){
-               rangeToUpdate.ranges.push(leaf);
-            }
-            else{ //if the leaf is already in the array of children ranges, there is no need to update. 
-                return false;
-            }
-            var paramObj = {"@id":rangeID, "ranges" : rangeToUpdate.ranges};
-            var params = {"content" : JSON.stringify(paramObj)};
-            //update the the range recieving the child's ranges array by pushing in the range being added in.
-            $.post(newAnnoUrl, params, function(data){
-                console.log("Range updated");
-                var addedToSection = "";
-                if(arrange == "arrange"){
-                    $.each($(".selectedSection"), function(){
-                      var thisRangeID = $(this).attr("rangeID");
-                      var thisName = $(this).children("span").html();
-                      console.log("add section "+thisName+" to arrange crumb.");
-                      if($(this).hasClass("unassigned")){
-                        //do not add this to the crumb.
-                      }
-                      else{
-                        addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
-                        $("#arrangeCrumb").append(addedToSection);
-                      }
-                    });
-                    var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
-                    var paramObj1 = {"@id":leaf, "within":rangeID};
-                    var params1 = {"content": JSON.stringify(paramObj1)};
-                    $.post(updateURL, params1, function(){ //update the range being added in's within field to be within the range it was added to
-                        
-                    });
+            var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+            var paramObj2 = {"@id" : rangeID};
+            var params2 = {"content" : JSON.stringify(paramObj2)};
+            $.post(getURL, params2, function(data){
+                if(typeof data !== "object"){
+                    rangeToUpdate = JSON.parse(data);
                 }
-            });
+                else{
+                    rangeToUpdate = data;
+                }
+                
+                var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+                console.log("here is the range to update");
+                console.log(rangeToUpdate[0]);
+                if($.inArray(leaf, rangeToUpdate.ranges) === -1){
+                   rangeToUpdate[0].ranges.push(leaf);
+                }
+                else{ //if the leaf is already in the array of children ranges, there is no need to update. 
+                    return false;
+                }
+                var paramObj = {"@id":rangeID, "ranges" : rangeToUpdate[0].ranges};
+                var params = {"content" : JSON.stringify(paramObj)};
+                //update the the range recieving the child's ranges array by pushing in the range being added in.
+                $.post(updateURL, params, function(data){
+                    console.log("Range updated");
+                    var addedToSection = "";
+                    if(arrange == "arrange"){
+                        $.each($(".selectedSection"), function(){
+                          var thisRangeID = $(this).attr("rangeID");
+                          var thisName = $(this).children("span").html();
+                          console.log("add section "+thisName+" to arrange crumb.");
+                          if($(this).hasClass("unassigned")){
+                            //do not add this to the crumb.
+                          }
+                          else{
+                            addedToSection = $("<div rangeID='"+thisRangeID+"' class='parentSection'><div class='parentSectionName'>"+thisName+"</div> <div class='sectionRemove' onclick=\"removeFromSection('"+leaf+"','"+thisRangeID+"');\">X</div></div>");
+                            $("#arrangeCrumb").append(addedToSection);
+                          }
+                        });
+                        var paramObj1 = {"@id":leaf, "within":rangeID};
+                        var params1 = {"content": JSON.stringify(paramObj1)};
+                        $.post(updateURL, params1, function(){ //update the range being added in's within field to be within the range it was added to
+
+                        });
+                    }
+                });
+            })
+            
         //^^ live
 	}
 	
@@ -5156,6 +5173,7 @@ function populateAnnoForms(){
                     var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                     var paramObj3 = {"@id" : this, "within" : newGroupID};
                     var params4 = {"content" : JSON.stringify(paramObj3)};
+                    $("div[depth='1']").find(".unassigned").find("div[rangeID='"+this+"']").remove();
                     $.post(updateURL, params4, function(){
                         
                     });
