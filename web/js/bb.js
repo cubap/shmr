@@ -2242,8 +2242,51 @@ function getAllCanvases(){
   });
 }
 
+function changeLabel(range, paginate, event){
+    var currentLabel = $("div[rangeid='"+range+"']").children("span:first").html();
+    var labelConfirm = $("<div class='labelConfirm'><span>Change Label</span><br><input class='newLabel' type='text' placeholder='"+currentLabel+"'/> <br>\n\
+                      <input value='Save' type='button' onclick=\"updateLabel('"+range+"', '"+currentLabel+"');\" /><input value='Cancel' type='button' onclick='$(this).parent().remove()'/></div>");
+    var x = event.pageX;
+    var y = event.pageY;
+    //if($(".labelConfirm").length == 0){
+      $('body').append(labelConfirm);
+      labelConfirm.css({
+        "left" : x+"px",
+        "top" : y+"px"
+      });
+    //}
+}
+
+function updateLabel(range, currentLabel){
+    var newLabel = $("div[lblrange='"+range+"']").find(".newLabel").val();
+    if(newLabel !== currentLabel){
+        var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
+         var paramObj1 = {"@id" : range, "label" : newLabel};
+         var params1 = {"content" : JSON.stringify(paramObj1)};
+         $.post(updateURL, params1, function(){
+             $("div[lblrange='"+range+"']").html("<span class='updated'>updated!</span>");
+             $("div[range='"+range+"']").children("span:first").html(newLabel);
+             setTimeout(function(){$("div[lblrange='"+range+"']").remove();},2000);
+         });
+        
+    }
+    
+}
 function toggleChildren(parentRange, admin, event){
-  var outer= '';
+    console.log("Toggle.  Check control.");
+    console.log(event.ctrlKey);
+    console.log(event.ctrlKey === true);
+    console.log(admin === "admin");
+    
+    if(event.ctrlKey){
+        console.log("shift");
+        if(admin === "admin"){
+            console.log("shift key was pressed, change label for "+parentRange.attr("rangeID"));
+            changeLabel(parentRange.attr("rangeID"), false, event);
+            return false;
+        }
+    }
+    var outer= '';
     if(admin == "admin"){
         outer = $(".adminTrail");
     }
@@ -2295,7 +2338,7 @@ function toggleChildren(parentRange, admin, event){
   else{
     intendedDepth = parseInt(parentRange.parent().parent().attr("depth")) + 1;
   }
-  var newArea = $("<div  depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'>"+labelHTML+"<div "+dropAttribute+" class='notBucket'></div></div>");
+  var newArea = $("<div depth='"+intendedDepth+"' relation='"+relation+"' rangeID='"+relation+"' class='rangeArrangementArea'>"+labelHTML+"<div "+dropAttribute+" class='notBucket'></div></div>");
   var newAreaBucket = $('<div onclick=\'toggleChildren($(this), "admin", event);\' '+dropAttribute+' rangeID="'+relation+'"" class="arrangeSection parent unassigned '+sortOrder+'"><span>Unassigned</span></div>'+extraButtons);
   newArea.append(newAreaBucket);
   //newArea.disableSelection();
@@ -2720,6 +2763,7 @@ function gatherRangesForArrange(which){
             if(typeof data === "object"){
                 console.log("No parsing necessary");
                 rangeCollection = data;
+                console.log(data);
 //                if(parentAggr!==""){
 //                    rangeCollection.splice(0, 0, parentAggr);
 //                }
@@ -2727,12 +2771,13 @@ function gatherRangesForArrange(which){
             else{
                 console.log("parse the data");
                 rangeCollection = JSON.parse(data);
+                console.log(data);
 //                if(parentAggr!==""){
 //                    rangeCollection.splice(0, 0, parentAggr);
 //                }
             }
         }
-        console.log("Go through the collection");
+        console.log("Go through the collection of " +rangeCollection.length);
         for(var i = 0; i<rangeCollection.length; i++){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
@@ -3402,19 +3447,19 @@ function populateAnnoForms(){
                     $("#leafWidth").val(this.resource["cnt:chars"]);
                     $("#leafWidth").attr("set", "set");
                 }
-                else if(checkLabel3 === "Single Line Height"){
+                else if(checkLabel3 === "Line Height"){
                     $("#lHeight").val(this.resource["cnt:chars"]);
                     $("#lHeight").attr("set", "set");
                 }
-                else if(checkLabel3 === "Single Line Width"){
+                else if(checkLabel3 === "Line Width"){
                     $("#lWidth").val(this.resource["cnt:chars"]);
                     $("#lWidth").attr("set", "set");
                 }
-                else if(checkLabel3 === "Text Block Height"){
+                else if(checkLabel3 === "Text Height"){
                     $("#tbHeight").val(this.resource["cnt:chars"]);
                     $("#tbHeight").attr("set", "set");
                 }
-                else if(checkLabel3 === "Text Block Width"){
+                else if(checkLabel3 === "Text Width"){
                     $("#tbWidth").val(this.resource["cnt:chars"]);
                     $("#tbWidth").attr("set", "set");
                 }
@@ -3432,18 +3477,30 @@ function populateAnnoForms(){
         Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
     */
    
-    function enterCatalogueInfo(canvasID, canvas, existingtag){
+    function enterCatalogueInfo(canvasID, canvas){
         //must have check for undefined because the first time it loads, it will not have a class yet which just means that the code needs to run.
+        var dontsave = false;
         if(canvasID !== "leaf" && $("div[canvas='"+canvasID+"']").attr("class") !== undefined && $("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
+            //if it is not the leaf selected and the canvasID matches the canvas attribute of the side selected, then we have selected the already selected side.  get out of the function!
             return false;
         }
         if(canvasID === "leaf" && $("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
+            // if the canvasID is for the leaf and the leaf is selected, then we have selected the already selected side.  get out of the function!
             return false;
         }
+        if($(".selectedFolio").length === 0){
+            //Then it has just been loaded and folio 1 is being clicked, dont save but do the UI stuff.
+            console.log("no selected folio so dont save this one.");
+            dontsave = true;
+            
+        }
         console.log("cat info");
-
-            var objectURI = $(".selectedFolio").attr("canvas");
+            var previouslySelectedURI = "";
             if(canvas == 'recto'){
+                previouslySelectedURI = $(".selectedFolio").attr("canvas");
+                if(previouslySelectedURI === "leaf"){
+                    previouslySelectedURI = currentLeafServerID;
+                }
                 $("#folioSide1").addClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -3453,6 +3510,10 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else if (canvas == 'verso'){
+                previouslySelectedURI = $(".selectedFolio").attr("canvas");
+                if(previouslySelectedURI === "leaf"){
+                    previouslySelectedURI = currentLeafServerID;
+                }
                 $("#folioSide2").addClass("selectedFolio");;
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -3462,6 +3523,8 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else{
+                previouslySelectedURI = $(".selectedFolio").attr("canvas");
+                canvasID = currentLeafServerID;
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -3469,10 +3532,12 @@ function populateAnnoForms(){
                 $("#folioSide1").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
                 $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
+            }
+            if(dontsave){
 
             }
-            if(existingtag === undefined){
-                saveFolio(true, canvas, objectURI);     
+            else{
+                saveFolio(true, canvas, previouslySelectedURI);    
             }
     }
     
@@ -3488,10 +3553,15 @@ function populateAnnoForms(){
     function saveFolio(flag, canvas, thisFolio){ 
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
         if(flag === false){
-            canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
-            thisFolio = $(".selectedFolio").attr("canvas");
+            if($("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
+                canvas = "leaf";
+                thisFolio = currentLeafServerID;
+            }
+            else{
+                canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
+                thisFolio = $(".selectedFolio").attr("canvas");
+            }
         }
-        console.log("save folio for " + $("#catalogueInfoFor").val());
         if(thisFolio !== undefined && thisFolio !== ''){
             $("#saveCover").show();
         }
@@ -3533,8 +3603,6 @@ function populateAnnoForms(){
             var addedInfoLabel = $(_this).find(".formLabel").html();
             addedInfoLabel = addedInfoLabel.replace(":", "");
             addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-            console.log("content label:");
-            console.log(addedInfoLabel);
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
@@ -3622,8 +3690,6 @@ function populateAnnoForms(){
                 var addedInfoLabel = $(_this).find(".formLabel").html();
                 addedInfoLabel = addedInfoLabel.replace(":", "");
                 addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-                console.log("context label:");
-                console.log(addedInfoLabel);
                 //console.log(entryID, entryValue, range, addedInfoLabel);
                 var annotationObject = {
                     "@id" : "",
@@ -3648,7 +3714,8 @@ function populateAnnoForms(){
                         annotationObject["@id"] = "http://www.example.org/iiif/LlangBrev/annos/" +(annoID);
                         annotationObject.label = addedInfoLabel;
                         annotationObject.resource["cnt:chars"] = entryValue;
-                        $(_this).attr("set", "set")
+                        $(_this).attr("set", "set");
+                        console.log("create anno for " + addedInfoLabel+".  == " + entryValue);
                         createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2, uriToSave);
                 }       
                 
@@ -3675,9 +3742,6 @@ function populateAnnoForms(){
                 var addedInfoLabel = $(_this).find(".formLabel").html();
                 addedInfoLabel = addedInfoLabel.replace(":", "");
                 addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
-                console.log("carrier label:");
-                console.log(addedInfoLabel);
-
                 var annotationObject = {
                     "@id" : "",
                     "@type" : "oa:Annotation",
@@ -3908,10 +3972,12 @@ function populateAnnoForms(){
             var paramObj3 = {"@id": leaf, "label":leafLabel};
             var params3 = {"content":JSON.stringify(paramObj3)};
                 $.post(updateRangeURL, params3, function(data3){
-
+                    //must paginate because these are in the leaf popover and admin interface.
+                    $("div[range='"+uri+"']").children("span:first").html(leafLabel);
+                    $("#leafLabel").val(leafLabel);
                 });
             }
-            setTimeout(function(){updateList(flag, uri, canvas);}, 1800);
+            setTimeout(function(){updateList(flag, uri, canvas);}, 2400);
     }
     
     function updateList(flag, uri, canvas){  
@@ -3922,10 +3988,13 @@ function populateAnnoForms(){
                     console.log(this.on +" == "+objectID);
                     console.log("list is "+this["@id"]);
                     var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
-                    var newResources = this.resources;
+                    var newResources = [];
+                    newResources = this.resources;
                     var updateContent = newResources;
-
-                    var paramsObj = {"@id": this["@id"], "resources":JSON.stringify(updateContent)};
+                    
+                    console.log("update list " + this["@id"] + " with these resources");
+                    console.log(updateContent);
+                    var paramsObj = {"@id": this["@id"], "resources":updateContent};
                     var params = {"content":JSON.stringify(paramsObj)};
                     $.post(updateAnnoListURL, params, function(data){
                         if(zeta){
@@ -3970,7 +4039,7 @@ function populateAnnoForms(){
                         }//local
                         $("#saveCover").hide();
                         if(flag){
-                            console.log("content cleared and annos populated after side change.")
+                            console.log("content cleared and annos populated after side change.");
                             $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
                             var canvasID = "";
                             if(canvas == 'recto'){
@@ -3987,10 +4056,7 @@ function populateAnnoForms(){
                                 alpha = false;
                                 zeta = false;
                             }
-                            else{
-                                if(uri === currentLeafServerID){
-                                    return false;
-                                }
+                            else{                                 
                                 $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                                 alpha = beta = zeta = true;
                             }
@@ -4124,6 +4190,8 @@ function populateAnnoForms(){
                         }
                     });
                 }
+                console.log("update annotation params");
+                console.log(params);
 		$.post(updateAnnoURL, params, function(data){
  
 		});
@@ -4136,6 +4204,8 @@ function populateAnnoForms(){
 	function createNewAnno(annoObject, newLabel, value, list, uri){
             //TODO FIX: Does not allow annotations to be saved in order
 		// A.K.A update annotationList
+                console.log("creating this anno");
+                console.log(annoObject);
 		annoID ++;
 		var objectID = uri; //which object are we saving to
 		var annoServerID = -1;
@@ -4169,7 +4239,7 @@ function populateAnnoForms(){
                     var labelForCheck = annoResources[i].label;                   
                     if(labelForCheck === labelToCheckFor){
                             // this annotation exists.  Update annotation and list.
-                            console.log("updateAnno");
+                            console.log("update, not save");
                             updateAnnotation(annoResources[i]["@id"], annoObject);
                     }
                 }
@@ -4179,6 +4249,7 @@ function populateAnnoForms(){
 			return false;
 		}
                 else{
+                    console.log("saving new anno...");
                     $.post(newAnnoUrl, params, function(data){
                             data=JSON.parse(data);
                             annoObject["@id"] = data["@id"];
@@ -4186,20 +4257,28 @@ function populateAnnoForms(){
                             if(zeta){
                                 console.log("New anno, push to resources2");
                                 console.log(annoObject);
+                                if(annoListCollection[2].resources === "[]"){
+                                    annoListCollection[2].resources = [];
+                                }
                                 annoListCollection[2].resources.push(annoObject); //live
 
                             }
                             else if(alpha){
                                 console.log("New anno, push to resources0");
                                 console.log(annoObject);
-                                    annoListCollection[0].resources.push(annoObject); //live
+                                if(annoListCollection[0].resources === "[]"){
+                                    annoListCollection[0].resources = [];
+                                }
+                                annoListCollection[0].resources.push(annoObject); //live
                             }
                             else{
                                 console.log("New anno, push to resources1");
                                 console.log(annoObject);
-                                    annoListCollection[1].resources.push(annoObject); //live
+                                if(annoListCollection[1].resources === "[]"){
+                                    annoListCollection[1].resources = [];
+                                }
+                                annoListCollection[1].resources.push(annoObject); //live
                             }
-
 
                     });  //live. 
                 }
@@ -4282,25 +4361,19 @@ function populateAnnoForms(){
           setTimeout($('.noTitleWarning').fadeOut(1000), 2000);
         }
         else{
-            console.log("TITLE IS GOOD");
           var childrenForGroup = [];
           $.each(theArea.find("input:checked"), function(){
-              console.log("one of the children for group");
-              console.log($(this).parent());
               childrenForGroup.push($(this).parent());
               children.push($(this).parent().attr("rangeID"));
           });
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var uniqueID = $(".arrangeSection").length + 1;
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
-          console.log("depth to check: " + depthToCheck);
           var areaForNewGroup = "";
           if($(".adminTrail").find("div[depth='"+depthToCheck+"']").children(".unassigned").hasClass("selectedSection")){
-              console.log("From unassigned");
               areaForNewGroup = $(".adminTrail").find("div[depth='"+depthToCheck+"']");
           }
           else{
-              console.log("not from unassigned");
                 areaForNewGroup = theArea;
           }
             var mockID = "http://www.example.org/iiif/LlangBrev/range/"+$(".arrangeSection").length;
@@ -4310,8 +4383,6 @@ function populateAnnoForms(){
             var newGroup = $("<div rangeID='"+mockID+"' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" leaf='false' onclick=\"toggleChildren($(this),'admin',event);\"><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
              $.each(childrenForGroup, function(){
               var newChild = $(this);
-              console.log("append this to new group.");
-              console.log(newChild);
               if(newChild.hasClass("parent")){
                 newChild.removeClass("parent").addClass("child");
                 newGroup.removeClass("child").addClass("parent");
@@ -4333,7 +4404,6 @@ function populateAnnoForms(){
               $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
             }
             if(windowurl.indexOf("demo=1") === -1){
-                console.log("get area for new group info");
                 var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
                 var paramObj = {"@id" : areaForNewGroup.attr("rangeID")};
                 var params = {"content" : JSON.stringify(paramObj)};
@@ -4342,16 +4412,10 @@ function populateAnnoForms(){
                     var rangeObj = data[0];
                     var rangeList = new Array();
                     if(rangeObj.ranges.length > 0){
-                        console.log("range list is range object ranges");
                         rangeList = rangeObj.ranges;
                     }
-                    console.log("Here is ranges for are getting new group");
-                    console.log(rangeList);
                     $.each(childrenForGroup, function(){ //remove the children being grouped from the parent
-                        console.log("if "+$(this).attr("rangeID")+" is in the list, then remove it. ");
-                        console.log($.inArray($(this).attr("rangeID"), rangeList));
                         if($.inArray($(this).attr("rangeID"), rangeList) > -1){
-                            console.log("remove it");
                             rangeList = rangeList.splice( $.inArray($(this).attr("rangeID"), rangeList), 1 );
                         }
                     });
@@ -4371,22 +4435,15 @@ function populateAnnoForms(){
                     var params2 = {"content" : JSON.stringify(newRangeObject)};
                     var useBackup = false;
                     if(rangeList instanceof Array){
-                        console.log("range list is an array");
                     }
                     else{
-                        console.log("range list is not an array.  What should I do?");
                         useBackup = true;
                     }
-                    console.log("save new group");
                     $.post(saveURL, params2, function(data){ //save the new group
                         data = JSON.parse(data);
                         var backupArray = new Array();
                         var newGroupID = data["@id"];
-                        console.log("add new group id to range list: "+newGroupID);
-                        console.log(rangeList instanceof Array);
-                        console.log(rangeList);
                         if(useBackup){
-                            console.log("I had to use backup");
                             backupArray.push(newGroupID);
                             rangeList = backupArray;
                         }
@@ -4400,7 +4457,14 @@ function populateAnnoForms(){
                         var paramObj2 = {"@id" : areaForNewGroup.attr("rangeID"), "ranges" : rangeList};
                         var params3 = {"content" : JSON.stringify(paramObj2)};
                         $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
-                            console.log("Update complete.  Group receiving group has groups being grouped moved into the group grouping them.")
+                            //update the ranges within that are being grouped in the new group.
+                            $.each(children, function(){
+                                var range = this;
+                                var within = newGroupID;
+                                var paramObj10={"@id" : range, "within" : within};
+                                var params10 = {"content":JSON.stringify(paramObj10)};
+                                $.post(updateURL, params10);
+                            })
                             cancelNewGroupForm();
                         });
                     });
@@ -4880,6 +4944,9 @@ function populateAnnoForms(){
   }
   
   function removeRange(rangeID){
+      console.log("remove this range: "+rangeID);
+      console.log("remove target");
+      console.log($(targetToBreak));
       var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
       var paramObj = {"@id" : rangeID};
       var params = {"content" : JSON.stringify(paramObj)}; 
@@ -4889,6 +4956,9 @@ function populateAnnoForms(){
   }
   
   function removeAndUpdate(remove, update, bringup){
+      console.log("remove and update");
+      console.log(remove);
+      console.log(update);
       var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
       var paramObj = {"@id" : update};
       var params = {"content" : JSON.stringify(paramObj)};
@@ -4897,7 +4967,14 @@ function populateAnnoForms(){
           var rangeList = range.ranges;
           console.log("Original Range List");
           console.log(rangeList);
-          rangeList = rangeList.splice( $.inArray(remove, rangeList), 1 ); //remove range list that is being deleted;
+          if(rangeList!==undefined && rangeList.length > 0){
+              rangeList = rangeList.splice( $.inArray(remove, rangeList), 1 ); //remove range list that is being deleted;
+          }
+          else{
+              //we are removing something from the bucket.  Just remove it
+              removeRange(remove);
+              return false;
+          }
           if(bringup !== undefined){ //There are children that need to be brought up from the section being removed.
               //bringup is an array of those children's ids, merge them at the end of the current range list.  
               $.merge(rangeList, bringup);
@@ -4913,14 +4990,14 @@ function populateAnnoForms(){
            removeRange(remove); //delte the range entirely from the db
       });
   }
-  
-  function bringUp(childrenArray, rangeInto){
-     
-  }
 
   function breakUp(){
       var group = $(targetToBreak);
-      var parent = group.parent();
+      var parent = group.closest(".rangeArrangementArea");
+      console.log("BREAK UP");
+      console.log(group);
+      console.log(parent);
+      
       $(".breakConfirm").remove();
       var childrenToBringUp = undefined;
       var depth = -1;
@@ -5046,7 +5123,7 @@ function populateAnnoForms(){
             "otherContent" : [],
             "within": range,
             "forProject" : "broken_books"
-          };
+        };
         var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         var params2 = {"content" : JSON.stringify(newRangeObject)};
         console.log("Got range list. Save new group ID to it");
@@ -5120,7 +5197,17 @@ function existing(leaf, leafIsIn){
                 $.ajax({
                     "url":leafAnnoList,
                     success: function(annoList3){
+                        console.log("leaf anno list");
+                        console.log(annoList3);
                         annoList3 = JSON.parse(annoList3);
+                        var tmpResources = annoList3.resources;
+                        console.log(tmpResources);
+                        console.log("R3: "+typeof tmpResources);
+                        if(typeof tmpResources !== "object"){
+                            tmpResources = tmpResources.replace('\"', '"');
+                            tmpResources = JSON.parse(tmpResources);
+                        }
+                        annoList3.resources = tmpResources;
                         annoListCollection[2] = annoList3;
                     }
                 });//live
@@ -5128,7 +5215,7 @@ function existing(leaf, leafIsIn){
                 $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); ;
                 $("#leafLabel").val(leafLabel);
                 $("#oneAndtwoLabel").val(leafLabel);
-                var alphaAnnoList = {};
+                var alphaAnnoList = "";
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == alphaCanvasURI){
@@ -5156,14 +5243,13 @@ function existing(leaf, leafIsIn){
                     $.ajax({
                     "url":alphaCanvasURI,
                     success: function(alphaCanvasData){
-                        race1 = true;
                         alphaCanvasData = JSON.parse(alphaCanvasData);
                         alphaCanvasObj = alphaCanvasData;
                         if(alphaCanvasData.otherContent && alphaCanvasData.otherContent[0]){
                              alphaAnnoList = alphaCanvasData.otherContent[0]["@id"];
                         }
                         else{
-                            alphaAnnoList = [];
+                            alphaAnnoList = "";
                         }
                         if(alphaCanvasData.label !== undefined && alphaCanvasData.label !== ""){
                           alphaLabel = alphaCanvasData.label;
@@ -5176,13 +5262,21 @@ function existing(leaf, leafIsIn){
                                 alphaImage = alphaCanvasData.images[0].resource["@id"];
                             }
                         }
-                        var alphaAnnoList = alphaCanvasObj.otherContent[0]["@id"];
+                        console.log("AAL: "+alphaAnnoList);
                         $.ajax({
                             "url":alphaAnnoList,
                             success: function(annoList1){
                                 annoList1 = JSON.parse(annoList1);
+                                var tmpResources = annoList1.resources;
+                                console.log("R1: "+typeof tmpResources);
+                                console.log(tmpResources);
+                                if(typeof tmpResources !== "object"){
+                                    tmpResources = tmpResources.replace('\"', '"');
+                                    tmpResources = JSON.parse(tmpResources);
+                                }
+                                annoList1.resources = tmpResources;
                                 annoListCollection[0] = annoList1;
-                                $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto', 'existing');"); 
+                                $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
                                 $("#folioSide1").attr("canvas", alphaCanvasURI);
                                 $("#folioSide1").click();
                                 populateAnnoForms();
@@ -5197,7 +5291,7 @@ function existing(leaf, leafIsIn){
                     }); //live
                 }
                 betaCanvasURI = this.canvases[1];
-                var betaAnnoList = [];
+                var betaAnnoList = "";
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == betaCanvasURI){
@@ -5230,7 +5324,7 @@ function existing(leaf, leafIsIn){
                              betaAnnoList = betaCanvasData.otherContent[0]["@id"];
                         }
                         else{
-                            betaAnnoList = [];
+                            betaAnnoList = "";
                         }
                         if(betaCanvasData.label !== undefined && betaCanvasData.label !== ""){
                           betaLabel = betaCanvasData.label;
@@ -5243,11 +5337,22 @@ function existing(leaf, leafIsIn){
                                 betaImage = betaCanvasData.images[0].resource["@id"];
                             }
                         }
-                        var betaAnnoList = betaCanvasObj.otherContent[0]["@id"];
+                        console.log("BAL: "+betaAnnoList);
                         $.ajax({
                             "url":betaAnnoList,
                             success: function(annoList2){
+                                console.log("AL2");
+                                console.log(annoList2);
+                                console.log(annoList2.length);
                                 annoList2 = JSON.parse(annoList2);
+                                var tmpResources = annoList2.resources;
+                                console.log(tmpResources);
+                                console.log("R2: "+typeof tmpResources);
+                                if(typeof tmpResources !== "object"){
+                                    tmpResources = tmpResources.replace('\"', '"');
+                                    tmpResources = JSON.parse(tmpResources);
+                                }
+                                annoList2.resources = tmpResources;
                                 annoListCollection[1] = annoList2;
                             }
                         });//live
@@ -5414,7 +5519,8 @@ function closeLeafPopover(){
     $(".versoImg").attr("src","");
     //$(".popoverTrail").find(".selectedSection:first").click();
     annoListCollection = new Array(3);
-    $("#folioSide1").click();
+    $(".selectedFolio").removeClass("selectedFolio");
+    alpha=beta=zeta=false;
     
 }
 

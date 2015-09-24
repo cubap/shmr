@@ -753,6 +753,15 @@ and open the template in the editor.
                 border: 2px solid black;
                 height: 53px;
             }
+            .labelConfirm{
+                position: absolute;
+                z-index: 6;
+                background-color: gray;
+                text-align: center;
+                border: 2px solid black;
+                height: 81px;
+                padding-top: 8px;
+            }
             .rAreaLabel{
                 display: block;
                 position: relative;
@@ -788,6 +797,7 @@ and open the template in the editor.
                 font-weight: bold;
                 right: 26px;
                 z-index: 3 !important;
+                display: none;
             }
             .lockDown{
                 position: absolute;
@@ -800,6 +810,7 @@ and open the template in the editor.
                 -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
                 transform: rotate(180deg);
                 z-index: 3!important;
+                display: none;
             }
             .lockDown:hover{
                 background-color: green;

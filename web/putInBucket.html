@@ -79,6 +79,7 @@ var contributer = true;
                                 reader.readAsDataURL(files[0]); // read the local file
                                 reader.onloadend = function(){ // set image data as background of div
                                     $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                    $("."+rv+"Img").css("background-image", "none");
                                     $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
                                     $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
                                     var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
