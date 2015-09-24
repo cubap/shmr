@@ -5169,11 +5169,16 @@ function populateAnnoForms(){
                 if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
                   $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
                 }
+                if($("div[depth='1']").find(".unassigned").attr("class").indexOf("selectedSection") > -1){
+                    $("div[depth='1']").find(".unassigned").click();
+                }
                 $.each(children, function(){
                     var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                     var paramObj3 = {"@id" : this, "within" : newGroupID};
                     var params4 = {"content" : JSON.stringify(paramObj3)};
-                    $("div[depth='1']").find(".unassigned").find("div[rangeID='"+this+"']").remove();
+                    console.log("check to remove from bucket "+this);
+                    console.log($("div[depth='1']").find(".unassigned").find("div[rangeID='"+this+"']"));
+                    $("div[depth='1']").find(".unassigned").children("div[rangeID='"+this+"']").remove();
                     $.post(updateURL, params4, function(){
                         
                     });
