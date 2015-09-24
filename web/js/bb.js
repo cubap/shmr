@@ -2243,8 +2243,8 @@ function getAllCanvases(){
 }
 
 function changeLabel(range, paginate, event){
-    var currentLabel = $("div[rangeid='"+range+"']").children("span:first").html();
-    var labelConfirm = $("<div class='labelConfirm'><span>Change Label</span><br><input class='newLabel' type='text' placeholder='"+currentLabel+"'/> <br>\n\
+    var currentLabel = $("div[rangeid='"+range+"']").children("span:first").html().replace("<br>", "");
+    var labelConfirm = $("<div class='labelConfirm' lblrange='"+range+"'><span>Change Label</span><br><input class='newLabel' type='text' placeholder='"+currentLabel+"'/> <br>\n\
                       <input value='Save' type='button' onclick=\"updateLabel('"+range+"', '"+currentLabel+"');\" /><input value='Cancel' type='button' onclick='$(this).parent().remove()'/></div>");
     var x = event.pageX;
     var y = event.pageY;
@@ -2258,26 +2258,34 @@ function changeLabel(range, paginate, event){
 }
 
 function updateLabel(range, currentLabel){
+    var windowurl = document.location.href;
     var newLabel = $("div[lblrange='"+range+"']").find(".newLabel").val();
-    if(newLabel !== currentLabel){
+    console.log("update with new label "+newLabel);
+    if(newLabel!==undefined && newLabel !== currentLabel){
+        console.log("update on server");
+        if(newLabel === ""){
+            newLabel = "unlabeled";
+        }
         var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
-         var paramObj1 = {"@id" : range, "label" : newLabel};
-         var params1 = {"content" : JSON.stringify(paramObj1)};
-         $.post(updateURL, params1, function(){
-             $("div[lblrange='"+range+"']").html("<span class='updated'>updated!</span>");
-             $("div[range='"+range+"']").children("span:first").html(newLabel);
-             setTimeout(function(){$("div[lblrange='"+range+"']").remove();},2000);
-         });
+        var paramObj1 = {"@id" : range, "label" : newLabel};
+        var params1 = {"content" : JSON.stringify(paramObj1)};
+        if(windowurl.indexOf("demo=1") > -1){
+           $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
+           $(".arrangeSection[rangeID='"+range+"']").children("span:first").html(newLabel);
+           setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1500);
+        }
+        else{
+           $.post(updateURL, params1, function(){
+               $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
+               $(".arrangeSection[rangeID='"+range+"']").children("span:first").html(newLabel);
+               setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1500);
+           });
+        }
         
     }
     
 }
 function toggleChildren(parentRange, admin, event){
-    console.log("Toggle.  Check control.");
-    console.log(event.ctrlKey);
-    console.log(event.ctrlKey === true);
-    console.log(admin === "admin");
-    
     if(event.ctrlKey){
         console.log("shift");
         if(admin === "admin"){
@@ -3973,7 +3981,7 @@ function populateAnnoForms(){
             var params3 = {"content":JSON.stringify(paramObj3)};
                 $.post(updateRangeURL, params3, function(data3){
                     //must paginate because these are in the leaf popover and admin interface.
-                    $("div[range='"+uri+"']").children("span:first").html(leafLabel);
+                    $(".arrangeSection[range='"+leaf+"']").children("span:first").html(leafLabel);
                     $("#leafLabel").val(leafLabel);
                 });
             }
