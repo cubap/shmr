@@ -29,6 +29,7 @@ import net.sf.json.JSONObject;
  * @author hanyan
  */
 public class GetManifestServlet extends HttpServlet {
+    private String username;
     private static String url = "";
     private static final String context = "http://www.shared-canvas.org/ns/context.json";
     private static final String type = "sc:Manifest";
@@ -37,13 +38,16 @@ public class GetManifestServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         url = request.getContextPath() + "/getManifest";
         //get ranges
-        String ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books\"}");
-        JSONArray ja_ranges;
-        if(null != ranges && "" != ranges){
-            ja_ranges = JSONArray.fromObject(ranges);
-        }else{
-            ja_ranges = new JSONArray();
+        //get ranges
+        String ranges = "";
+        if(username.equals("debra")){
+            ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_debra\"}");
+        }else if(username.equals("lisa")){
+            ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_lisa\"}");
         }
+        JSONArray ja_ranges = JSONArray.fromObject(ranges);
+        //get cavanses
+        
         
         //get cavanses
         JSONArray ja_canvases;
@@ -52,7 +56,12 @@ public class GetManifestServlet extends HttpServlet {
         jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");
         jo_sequence.element("@type", "sc:Sequence");
         jo_sequence.element("label", "Llangantock Canvases");
-        String canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books\"}");
+        String canvases = "";
+        if(username.equals("debra")){
+            canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_debra\"}");
+        }else if(username.equals("lisa")){
+            canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_lisa\"}");
+        }
         if(null != canvases && "" != canvases){
             ja_canvases  = JSONArray.fromObject(canvases);
             jo_sequence.element("canvases", ja_canvases);

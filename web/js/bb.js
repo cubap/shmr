@@ -2204,7 +2204,8 @@ function getManifest(){
 }
 function getAllRanges(){
   //THERE WILL AT LEAST BE ONE RANGE
-  var properties={"@type" : "sc:Range", "forProject":"broken_books"};
+  var forProject = detectWho();
+  var properties={"@type" : "sc:Range", "forProject":forProject};
   //this will be superfluous when the annotation store has ranges from other projects
   var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
@@ -2218,7 +2219,8 @@ function getAllRanges(){
 
 function getAllAnnotations(){
   //THERE MAY BE NO ANNOTATIONS
-  var properties={"@type" : "sc:AnnotationList", "forProject" : "broken_books"};
+  var forProject = detectWho();
+  var properties={"@type" : "sc:AnnotationList", "forProject" : forProject};
   //this will be superfluous when the annotation store has lists from other projects
   var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
   var properties={"@type" : "sc:AnnotationList"};
@@ -2232,7 +2234,8 @@ function getAllAnnotations(){
 
 function getAllCanvases(){
   //THERE WILL AT LEAST BE 2 CANVASES
-  var properties={"@type" : "sc:Canvas", "forProject":"broken_books"};
+  var forProject = detectWho();
+  var properties={"@type" : "sc:Canvas", "forProject":forProject};
   var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
@@ -2737,7 +2740,8 @@ function gatherRangesForArrange(which){
         outer = $(".adminTrail");
     }
     var windowurl = document.location.href;
-    var properties={"@type" : "sc:Range", "forProject":"broken_books"};
+    var forProject = detectWho();
+    var properties={"@type" : "sc:Range", "forProject":forProject};
 //this will be superfluous when the annotation store has ranges from other projects
     var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
@@ -3581,11 +3585,12 @@ function populateAnnoForms(){
             var addedInfoLabel = $(_this).find(".formLabel").html();
             addedInfoLabel = addedInfoLabel.replace(":", "");
             addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+            var forProject = detectWho();
             var annotationObject = {
                 "@id" : "",
                 "@type" : "oa:Annotation",
                 "motivation" : "oa:commenting",
-                "forProject" : "broken_books",
+                "forProject" : forProject,
                 "label" : "",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3602,7 +3607,7 @@ function populateAnnoForms(){
                                "@id" : "",
                                "@type" : "oa:Annotation",
                                "motivation" : "oa:commenting",
-                               "forProject" : "broken_books",
+                               "forProject" : forProject,
                                "label" : "Interlinear Annotations",
                                "resource" : {
                                  "@type" : "cnt:ContentAsText",
@@ -3618,7 +3623,7 @@ function populateAnnoForms(){
                                "@id" : "",
                                "@type" : "oa:Annotation",
                                "motivation" : "oa:commenting",
-                               "forProject" : "broken_books",
+                               "forProject" : forProject,
                                "label" : "Marginal Annotations",
                                "resource" : {
                                  "@type" : "cnt:ContentAsText",
@@ -3668,12 +3673,13 @@ function populateAnnoForms(){
                 var addedInfoLabel = $(_this).find(".formLabel").html();
                 addedInfoLabel = addedInfoLabel.replace(":", "");
                 addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                var forProject = detectWho();
                 //console.log(entryID, entryValue, range, addedInfoLabel);
                 var annotationObject = {
                     "@id" : "",
                     "@type" : "oa:Annotation",
                     "motivation" : "oa:commenting",
-                    "forProject" : "broken_books",
+                    "forProject" : forProject,
                     "label" : "",
                     "resource" : {
                       "@type" : "cnt:ContentAsText",
@@ -3719,11 +3725,12 @@ function populateAnnoForms(){
                 var addedInfoLabel = $(_this).find(".formLabel").html();
                 addedInfoLabel = addedInfoLabel.replace(":", "");
                 addedInfoLabel = addedInfoLabel.replace(/ *\([^)]*\) */g, "");
+                var forProject = detectWho();
                 var annotationObject = {
                     "@id" : "",
                     "@type" : "oa:Annotation",
                     "motivation" : "oa:commenting",
-                    "forProject" : "broken_books",
+                    "forProject" : forProject,
                     "label" : "",
                     "resource" : {
                       "@type" : "cnt:ContentAsText",
@@ -3757,7 +3764,7 @@ function populateAnnoForms(){
                                     "@id" : "",
                                     "@type" : "oa:Annotation",
                                     "motivation" : "oa:commenting",
-                                    "forProject" : "broken_books",
+                                    "forProject" : forProject,
                                     "label" : "Leaf Height",
                                     "resource" : {
                                       "@type" : "cnt:ContentAsText",
@@ -3775,7 +3782,7 @@ function populateAnnoForms(){
                                     "@id" : "",
                                     "@type" : "oa:Annotation",
                                     "motivation" : "oa:commenting",
-                                    "forProject" : "broken_books",
+                                    "forProject" : forProject,
                                     "label" : "Leaf Width",
                                     "resource" : {
                                       "@type" : "cnt:ContentAsText",
@@ -3795,7 +3802,7 @@ function populateAnnoForms(){
                                     "@id" : "",
                                     "@type" : "oa:Annotation",
                                     "motivation" : "oa:commenting",
-                                    "forProject" : "broken_books",
+                                    "forProject" : forProject,
                                     "label" : "Text Height",
                                     "resource" : {
                                       "@type" : "cnt:ContentAsText",
@@ -3813,7 +3820,7 @@ function populateAnnoForms(){
                                     "@id" : "",
                                     "@type" : "oa:Annotation",
                                     "motivation" : "oa:commenting",
-                                    "forProject" : "broken_books",
+                                    "forProject" : forProject,
                                     "label" : "Text Width",
                                     "resource" : {
                                       "@type" : "cnt:ContentAsText",
@@ -3835,7 +3842,7 @@ function populateAnnoForms(){
                                     "@id" : "",
                                     "@type" : "oa:Annotation",
                                     "motivation" : "oa:commenting",
-                                    "forProject" : "broken_books",
+                                    "forProject" : forProject,
                                     "label" : "Line Height",
                                     "resource" : {
                                       "@type" : "cnt:ContentAsText",
@@ -3853,7 +3860,7 @@ function populateAnnoForms(){
                                     "@id" : "",
                                     "@type" : "oa:Annotation",
                                     "motivation" : "oa:commenting",
-                                    "forProject" : "broken_books",
+                                    "forProject" : forProject,
                                     "label" : "Line Width",
                                     "resource" : {
                                       "@type" : "cnt:ContentAsText",
@@ -3889,13 +3896,14 @@ function populateAnnoForms(){
         console.log("notes");
         var uriToSave = canvasURI;
         var canvasNotes = $("#notes").val();
+        var forProject = detectWho();
         if(canvasNotes !== "" || $("#notes").attr("set") === "set"){
             var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID;             
             var annoObject = {
                 //"@id" : newAnnoURI,
                 "@type" : "oa:Annotation",
                 "motivation" : "oa:commenting",
-                "forProject" : "broken_books",
+                "forProject" : forProject,
                 "label" : "General Metadata",
                 "resource" : {
                   "@type" : "cnt:ContentAsText",
@@ -3959,6 +3967,7 @@ function populateAnnoForms(){
     
     function updateList(flag, uri, canvas){  
         var objectID = uri;
+        var forProject = detectWho();
             $.each(annoListCollection, function(){
                 if(this.on === objectID){ //this is our annotation list to add the annotation to 
                     var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
@@ -3972,7 +3981,7 @@ function populateAnnoForms(){
                         if(zeta){
                             $.each(testManifest.structures, function(){
                                     if (this["@id"] === objectID){ 
-                                            var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
+                                            var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
                                             var listIncluded = false;
                                             $.each(this.otherContent,function(){
                                                     if(this["@id"] === annoListCollection[2]["@id"]){
@@ -3994,7 +4003,7 @@ function populateAnnoForms(){
                                                 else{
                                                         annoListID = annoListCollection[1]["@id"];
                                                 }
-                                                var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": "broken_books"};
+                                                var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
                                                 var listIncluded = false;
                                                 $.each(this.otherContent,function(){
                                                         if(this["@id"] === annoListID){
@@ -4260,13 +4269,13 @@ function populateAnnoForms(){
                     else{
                             //list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
                     }
-			
+		var forProject = detectWho();	
         	var newRangeAnnoList = {
                     //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
                     "@type":"sc:AnnotationList",
                     "resources" : [],
                     "on" :newRangeObject["@id"],
-                    "forProject": "broken_books"
+                    "forProject": forProject
         	};
         	var listURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         	var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
@@ -4277,7 +4286,7 @@ function populateAnnoForms(){
                         "@type":"sc:AnnotationList",
                         "resources" : [],
                         "on" :newRangeObject["@id"],
-                        "forProject": "broken_books"
+                        "forProject": forProject
                     };
 
                     if(current = "currentLeaf"){
@@ -4376,6 +4385,7 @@ function populateAnnoForms(){
                             rangeList = rangeList.splice( $.inArray($(this).attr("rangeID"), rangeList), 1 );
                         }
                     });
+                    var forProject = detectWho();
                     var newRangeObject = {
                         "@type":"sc:Range",
                         "label": title,
@@ -4383,7 +4393,7 @@ function populateAnnoForms(){
                         "canvases" :[],
                         "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
                         "otherContent" : [],
-                        "forProject" : "broken_books",
+                        "forProject" : forProject,
                         "within" : areaForNewGroup.attr("rangeid")
                       };
                     var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
@@ -4614,6 +4624,7 @@ function populateAnnoForms(){
 		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
 	*/
 	function submitIntro(test){
+            var forProject = detectWho();    
             var windowURL = document.location.href;
             $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
             if(test === "testEdit"){
@@ -4650,7 +4661,7 @@ function populateAnnoForms(){
                     },
                     "on":""
                 };
-                
+            
             var newCanvas1 = {
                 //"@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag, //local
                 "@type" : "sc:Canvas",
@@ -4658,7 +4669,7 @@ function populateAnnoForms(){
                 "height" : 1000,
                 "width" : 667,
                 "images" : [],
-                "forProject" : "broken_books",
+                "forProject" : forProject,
                 "otherContent": []
             };
             
@@ -4677,7 +4688,7 @@ function populateAnnoForms(){
 				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
-                                "forProject": "broken_books",
+                                "forProject": forProject,
 				"on" : newCanvas1["@id"]
        	 	}; //local
                 
@@ -4723,7 +4734,7 @@ function populateAnnoForms(){
                             "height" : 1000,
                             "width" : 667,
                             "images" : [],
-                            "forProject" : "broken_books",
+                            "forProject" : forProject,
                             "otherContent" : []
                 };
                                        
@@ -4742,7 +4753,7 @@ function populateAnnoForms(){
 	                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
-                        "forProject": "broken_books",
+                        "forProject": forProject,
 	                "on" :  newCanvas2["@id"]
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
@@ -4780,7 +4791,7 @@ function populateAnnoForms(){
 			      	"resources" : [],
 			      	"ranges" : [],
 		      		"isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-                                "forProject": "broken_books",
+                                "forProject": forProject,
                                 "within" : "root",
 		      		"otherContent" : []
         		};
@@ -5049,6 +5060,7 @@ function populateAnnoForms(){
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var paramObj = {"@id" : range};
     var params = {"content" : JSON.stringify(paramObj)};
+    var forProject = detectWho();
     $.post(getURL, params, function(data){ //get list of ranges currently in parent receiving grouping
         data= JSON.parse(data);
         var rangeObj = data[0];
@@ -5061,7 +5073,7 @@ function populateAnnoForms(){
             "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
             "otherContent" : [],
             "within": range,
-            "forProject" : "broken_books"
+            "forProject" : forProject
         };
         var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         var params2 = {"content" : JSON.stringify(newRangeObject)};
@@ -5127,6 +5139,8 @@ function existing(leaf, leafIsIn){
             var race1 = false;
             var race2 = false;
             //For the demo, you can cheat and not make the calls by making a mock list above and using it.  
+            console.log("Looking for "+leaf);
+            console.log("this one is "+this["@id"]);
             if(this["@id"] == leaf){
                 leafObject = this;
                 alphaCanvasURI = this.canvases[0];
@@ -5212,6 +5226,7 @@ function existing(leaf, leafIsIn){
                                 $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
                                 $("#folioSide1").attr("canvas", alphaCanvasURI);
                                 $("#folioSide1").click();
+                                console.log("populate from existing");
                                 populateAnnoForms();
                             }
                         }); //live
@@ -5451,6 +5466,21 @@ function closeLeafPopover(){
     $(".selectedFolio").removeClass("selectedFolio");
     alpha=beta=zeta=false;
     
+}
+
+function detectWho(){
+    var windowURL = document.location.href;
+    var who = "";
+    if(windowURL.indexOf("LFD") > -1){
+        who = "broken_books_lisa";
+    }
+    else if(windowURL.indexOf("DTC") > -1){
+        who = "broken_books_debra";
+    }
+    else{
+        who = "broken_books_debra";
+    }
+    return who;
 }
 
 //db.annotation.insert({
