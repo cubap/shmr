@@ -2352,6 +2352,8 @@ a {
   white-space: nowrap;
   padding-left: 10px;
   margin: 8px 0px 8px 0px;
+  font-weight: bold;
+  font-size: 1.3em;
 }
 
 .window-manifest-navigation {
@@ -2484,11 +2486,14 @@ a {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow:hidden;
+  font-size: 1.15em;
 }
 .items-listing h3 {
   color:rgba(0,0,0,0.8);
   font-weight:bold;
   margin-top:2px;
+  font-weight: bold;
+  font-size: 1.3em;
 }
 .repo-image, .select-metadata, .preview-images {
   float:left;
@@ -2763,12 +2768,27 @@ li.highlight {
   overflow: hidden;
   transition: all 0.3s ease;
 }
+.sidePanel a:hover {
+  text-decoration: none;
+}
 .sidePanel h1, .sidePanel h2, .sidePanel h3, .sidePanel h4 {
   margin:0;
   padding:0;
   font-weight: normal;
 }
 .sidePanel h1:hover, .sidePanel h2:hover, .sidePanel h3:hover, .sidePanel h4:hover {
+}
+.sidePanel h2 {
+  font-size: 1.5em;
+}
+.sidePanel h3 {
+  font-size: 1.25em;
+}
+.sidePanel h4 {
+  font-size: 1.0em;
+}
+.sidePanel h5 {
+  font-size: .75em;
 }
 .toc {
   margin:0;
@@ -2829,7 +2849,7 @@ li.highlight {
 .toc li.has-child i.star {
   display: none;
 }
-.toc li.leaf-item i.caret {
+.toc li.leaf-item i.toc-caret {
   display: none
 }
 .toc li.leaf-item i.star {
@@ -2841,7 +2861,7 @@ li.highlight {
 .toc li.selected>h2 .toc-link .star, .toc li.selected>h3 .toc-link .star, .toc li.selected>h4 .toc-link .star, .toc li.selected>h5 .toc-link .star .toc li.hovered>h2 .toc-link .star, .toc li.hovered>h3 .toc-link .star, .toc li.hovered>h4 .toc-link .star, .toc li.hovered>h5 .toc-link .star {
   color:black;
 }
-.toc li.open>h2 .toc-link .caret, .toc li.open>h3 .toc-link .caret, .toc li.open>h4 .toc-link .caret, .toc li.open>h5 .toc-link .caret  {
+.toc li.open>h2 .toc-link .toc-caret, .toc li.open>h3 .toc-link .toc-caret, .toc li.open>h4 .toc-link .toc-caret, .toc li.open>h5 .toc-link .toc-caret  {
   transition: all 0.2s linear;
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
@@ -2911,7 +2931,7 @@ li.highlight {
   z-index: 4;
   overflow:hidden;
   display: none;
-  transition:all 0.3s ease;
+  transition:transform 0.3s ease;
 }
 .bottomPanel.minimized {
   transform:translateY(130px);
@@ -2951,7 +2971,6 @@ li.highlight {
     height: 100%;
     width: 100%;
     overflow-x: scroll;
-    margin-top: 10px;
     overflow-y: hidden;
 }
 
@@ -2960,7 +2979,7 @@ li.highlight {
   list-style: none;
   padding: 0;
   white-space: nowrap;
-  margin-top: 4px;
+  margin-top: 10px;
   margin-bottom: 4px;
 }
 
@@ -2969,7 +2988,7 @@ li.highlight {
   /*float: left;*/
   /*margin: 0 0 15px 0;*/
   padding: 0px 10px 0px 10px;
-  transition: all 0.05s ease-out;
+  /*transition: all 0.03s ease-out;*/
   display: inline-block;
 }
 
@@ -3043,7 +3062,7 @@ li.highlight {
 }
 .mirador-osd-edit-mode.selected, .mirador-osd-annotations-layer.selected {
   opacity: 1;
-  transition: none;
+  /*transition: none;*/
 }
 .mirador-osd-previous {
   position:absolute;
@@ -3536,7 +3555,7 @@ ul.scroll-listing-thumbs li {
   box-sizing:border-box;
   margin: 0 0 15px 0;
   padding: 10px 10px 10px 10px;
-  transition: all 0.05s ease-out;
+  /*transition: all 0.05s ease-out;*/
   display: inline-block;
 }
 
@@ -3577,7 +3596,7 @@ ul.scroll-listing-thumbs li .thumb-label {
   float: left;
   margin: 0 0 15px 0;
   padding: 10px 10px 10px 10px;
-  transition: all 0.05s ease-out;
+  /*transition: all 0.05s ease-out;*/
 }
 
 .mirador-viewer ul.listing-thumbs li img {
@@ -3587,7 +3606,7 @@ ul.scroll-listing-thumbs li .thumb-label {
   margin: 0 auto;
   display: block;
   box-sizing:border-box;
-  transition: all 0.2 ease-out;
+  /*transition: all 0.2 ease-out;*/
 }
 .mirador-viewer ul.listing-thumbs li img:hover {
   border:3px solid rgba(0,191,255,0.7);
@@ -3821,7 +3840,8 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
   clear: both;
 }
 .qtip-content {
-  max-height: 185px;
+  min-width: 200px;
+  max-height: 200px;
   overflow: auto;
 }
 .annotation-tooltip {

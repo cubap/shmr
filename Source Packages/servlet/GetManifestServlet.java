@@ -40,27 +40,54 @@ public class GetManifestServlet extends HttpServlet {
         //get ranges
         //get ranges
         String ranges = "";
+        JSONArray a_metadata = new JSONArray();
         if(username.equals("debra")){
             ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_debra\"}");
+            JSONObject metadata1 = new JSONObject();
+            JSONObject metadata2 = new JSONObject();
+            JSONObject metadata3 = new JSONObject();
+            metadata1.element("label", "Title");
+            metadata1.element("value", "Llangantock Breviary Reconstruction");
+            metadata2.element("label", "Created By");
+            metadata2.element("value", "Debra Cashion");
+            metadata3.element("label", "Host Institution");
+            metadata3.element("value", "SLU Center for Digital Humanities");
+            a_metadata.add(metadata1);
+            a_metadata.add(metadata2);
+            a_metadata.add(metadata3);
         }else if(username.equals("lisa")){
             ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_lisa\"}");
+            JSONObject metadata1 = new JSONObject();
+            JSONObject metadata2 = new JSONObject();
+            JSONObject metadata3 = new JSONObject();
+            metadata1.element("label", "Title");
+            metadata1.element("value", "Beauvais Missal Reconstruction");
+            metadata2.element("label", "Created By");
+            metadata2.element("value", "Lisa Fagin Davis");
+            metadata3.element("label", "Host Institution");
+            metadata3.element("value", "SLU Center for Digital Humanities");
+            a_metadata.add(metadata1);
+            a_metadata.add(metadata2);
+            a_metadata.add(metadata3);
         }
         JSONArray ja_ranges = JSONArray.fromObject(ranges);
         //get cavanses
-        
-        
         //get cavanses
         JSONArray ja_canvases;
         JSONArray ja_sequences = new JSONArray();
         JSONObject jo_sequence = new JSONObject();
         jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");
         jo_sequence.element("@type", "sc:Sequence");
-        jo_sequence.element("label", "Llangantock Canvases");
+        JSONObject rv = new JSONObject();
         String canvases = "";
         if(username.equals("debra")){
             canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_debra\"}");
+            jo_sequence.element("label", "Llangantock Canvases");
+            rv.element("label", "Llangantock Breviary");
         }else if(username.equals("lisa")){
             canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_lisa\"}");
+            jo_sequence.element("label", "Beauvais Missal Canvases");
+            rv.element("label", "Beauvais Missal");
         }
         if(null != canvases && "" != canvases){
             ja_canvases  = JSONArray.fromObject(canvases);
@@ -70,16 +97,6 @@ public class GetManifestServlet extends HttpServlet {
             jo_sequence.element("canvases", ja_canvases);
         }
         ja_sequences.add(jo_sequence);
-        JSONArray a_metadata = new JSONArray();
-        JSONObject metadata1 = new JSONObject();
-        JSONObject metadata2 = new JSONObject();
-        metadata1.element("label", "Title");
-        metadata1.element("value", "Llangantock Breviary Reconstruction");
-        metadata2.element("label", "Created By");
-        metadata2.element("value", "SLU Center for Digital Humanities");
-        a_metadata.add(metadata1);
-        a_metadata.add(metadata2);
-        JSONObject rv = new JSONObject();
         rv.element("@id", url);
         rv.element("@context", context);
         rv.element("@type", type);
@@ -87,7 +104,7 @@ public class GetManifestServlet extends HttpServlet {
         rv.element("structures", ja_ranges);
         //the canvases need to go into the first object of this array
         rv.element("sequences", ja_sequences);
-        rv.element("label", "The Llangantock Breviary");
+        
         response.getWriter().print(rv.toString());
     }
 
