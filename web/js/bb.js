@@ -4878,12 +4878,22 @@ function populateAnnoForms(){
 		$("#beContributer").hide();
 	}
         
-  function updateImageAnno(which){
-      if(which === "alpha"){
-              var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
-              var image = $('textarea[rv="recto"]').val();
-              var canvas = $("#folioSide1").attr("canvas");
-              var anno = {
+    function updateImageAnno(which){
+        console.log("IMAGE!");
+        if(which === "alpha"){
+            var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+            var image = $('textarea[rv="recto"]').val();
+            var canvas = $("#folioSide1").attr("canvas");
+            var img = new Image();
+            img.onload = function(){
+              var height = img.height;
+              var width = img.width;
+              console.log("image loaded, pass w and h"+width,height);
+              updateCanvasDimensions(canvas,width, height);
+              // code here to use the dimensions
+            }
+            img.src = image;
+            var anno = {
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
                             "resource":
@@ -4908,9 +4918,18 @@ function populateAnnoForms(){
               });
       }
       else{
-              var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
-              var image = $('textarea[rv="verso"]').val();
-              var canvas = $("#folioSide2").attr("canvas");
+            var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+            var image = $('textarea[rv="verso"]').val();
+            var canvas = $("#folioSide2").attr("canvas");
+            var img = new Image();
+            img.onload = function(){
+              var height = img.height;
+              var width = img.width;
+              console.log("image loaded, pass w and h"+width,height);
+              updateCanvasDimensions(canvas,width, height);
+              // code here to use the dimensions
+            }
+            img.src = image;
               var anno = {
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
@@ -4936,6 +4955,16 @@ function populateAnnoForms(){
       }
       $(".uploadness").hide();
   }
+  
+    function updateCanvasDimensions(canvas, width, height){
+        
+        console.log("updating canvas "+canvas+" with dimensions "+width+" x "+height);
+        var updateURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+        var paramObj = {"@id": canvas, "height":height, "width":width};
+        var params = {"content":JSON.stringify(paramObj)};
+        $.post(updateURL, params, function(data){
+        });
+    }
 
   function breakUpConfirm(event){
       var tagName = event.target.tagName;
