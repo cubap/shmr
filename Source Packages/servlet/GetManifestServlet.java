@@ -37,11 +37,10 @@ public class GetManifestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         url = request.getContextPath() + "/getManifest";
-        //get ranges
-        //get ranges
+        username = request.getParameter("username");
         String ranges = "";
         JSONArray a_metadata = new JSONArray();
-        if(username.equals("debra")){
+        if(null == username || username.equals("debra")){
             ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_debra\"}");
             JSONObject metadata1 = new JSONObject();
             JSONObject metadata2 = new JSONObject();
@@ -55,7 +54,8 @@ public class GetManifestServlet extends HttpServlet {
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
             a_metadata.add(metadata3);
-        }else if(username.equals("lisa")){
+        }
+        else if(username.equals("lisa")){
             ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_lisa\"}");
             JSONObject metadata1 = new JSONObject();
             JSONObject metadata2 = new JSONObject();
@@ -147,5 +147,5 @@ public class GetManifestServlet extends HttpServlet {
         }
         return sb.toString();
     }
-    
+       
 }

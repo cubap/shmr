@@ -107,7 +107,7 @@ and open the template in the editor.
        else{
            manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
        }
-       
+        window.history.pushState("Object", "Title", "http://165.134.241.141/brokenBooks/getManifest.html");
         var windowHeight = window.innerHeight - 25;
         $("#focusedRange").css("height", windowHeight+"px");
         Mirador({
@@ -140,4 +140,5 @@ and open the template in the editor.
         });
         
    });
+   
 </script>

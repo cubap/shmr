@@ -100,7 +100,7 @@ and open the template in the editor.
                 
             }
             .leafPopover{
-                z-index: 4;
+                z-index: 6;
             }
             /*.rectoImg, .versoImg{
                 background-image : url("http://165.134.241.141/brokenBooks/images/imgNotFound.png") !important;
@@ -146,11 +146,28 @@ and open the template in the editor.
                 overflow-y : auto;
                 max-height: 85%;
             }
+            
+            #gotoMirador{
+                padding: 3px 0px;
+                display: inline-block;
+                background-color: #791C2D !important;
+                width: auto;
+                font-size: 16px;
+                font-weight: bold;
+                font-family: sans-serif;
+                text-align: center;
+                color: white;
+                left: 0;
+                position: relative;
+                margin-left: 164px;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
         <img onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
         class="helperIcon" src="http://165.134.241.141/brokenBooks/images/redinfo1.png" />
+        <input id="gotoMirador" class="helperIcon" onclick="" value="View In Mirador" />
         <div class="mainBlock">
             <div class="mainBlockCover"></div>
             <div class="arrangeTrail adminTrail">
@@ -236,7 +253,9 @@ and open the template in the editor.
                         already populated.  The leaf metadata can be altered.  
                     </p>
                     <p>Hold Ctrl when clicking on a section or leaf to see a pop-up to change its title.</p>
-                    <input type="button" onclick="$('#mainBlockHelp').hide(); $(this).parent().parent().find('.mainBlockCover').hide();" value="Close" />
+                    <p>You cannot drop a leaf into the first area...this area is only for groups.</p>
+                    <p>You cannot drop into a currently selected section, you cannot drag and drop a currently selected section.</p>
+                    <input type="button" onclick="$('#mainBlockHelp').hide(); $('.mainBlockCover').hide();" value="Close" />
                 </div>
             </div>
         <div id="newGroupForm">
@@ -313,81 +332,91 @@ and open the template in the editor.
 
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
-            $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
-                $(".leaf").load("../brokenBooks/leafInformation.html", function(){
-                        console.log("SET TABS");
-                        $("#formTabs").tabs({
-                            activate: function(event ,ui){
-                            //console.log(event);
-                            if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
-                                $(".sideBarInfo").hide();
-                                $("#sideBarArrange").show();
+            var windowURL = document.location.href;
+            if(windowURL.indexOf("LFD") > -1){
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?LFD';");
+            }
+            else if(windowURL.indexOf("DTC")){
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest/html?DTC';");
+            }
+            else if(windowURL.indexOf("demo=1")>-1){
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/demoManifest.html';");
+            }
+            else{
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html';");
+            }
+            if(windowURL.indexOf("home.html") < 0){
+                $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
+                    $(".leaf").load("../brokenBooks/leafInformation.html", function(){
+                            console.log("SET TABS");
+                            $("#formTabs").tabs({
+                                activate: function(event ,ui){
+                                //console.log(event);
+                                if(ui.newTab.index() === 4){ //check for the selection of the arrante tab to change the side bar
+                                    $(".sideBarInfo").hide();
+                                    $("#sideBarArrange").show();
+                                }
+                                else{
+                                    $(".sideBarInfo").show();
+                                    $("#sideBarArrange").hide();
+                                }
                             }
-                            else{
-                                $(".sideBarInfo").show();
-                                $("#sideBarArrange").hide();
-                            }
-                        }
-                        });
-                        $('.canvasImageFile').on("change", function(event){
-                            var target = event.target;
-                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
-                            var files = !!this.files ? this.files : [];
-                            var canvasURI = $(this).parent().parent().attr("canvas"); //local
-                            if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
+                            });
+                            $('.canvasImageFile').on("change", function(event){
+                                var target = event.target;
+                                var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
+                                var files = !!this.files ? this.files : [];
+                                var canvasURI = $(this).parent().parent().attr("canvas"); //local
+                                if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
 
-                            if (/^image/.test( files[0].type)){ // only image file
-                                    var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
-                                var reader = new FileReader(); // instance of the FileReader
-                                reader.readAsDataURL(files[0]); // read the local file
-                                reader.onloadend = function(){ // set image data as background of div
-                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                                    $("."+rv+"Img").css("background-image", "none");
-                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                                     var annotationObject = {
-                                        "format":"image/jpg",
-                                        "@type":"dctypes:Image",
-                                        "resource":
-                                        {
-                                            "@id": this.result,
-                                            "service":
-                                                {                                       
-                                                    "@context": "http://iiif.io/api/image/2/context.json",
-                                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                                    "@id" : this.result
-                                                },
-                                            "width": 667, //how should I set these?
-                                            "height":1000 //how should I set these?
-                                        },
-                                        "on" : canvasURI
+                                if (/^image/.test( files[0].type)){ // only image file
+                                        var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
+                                    var reader = new FileReader(); // instance of the FileReader
+                                    reader.readAsDataURL(files[0]); // read the local file
+                                    reader.onloadend = function(){ // set image data as background of div
+                                        $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                        $("."+rv+"Img").css("background-image", "none");
+                                        $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                        $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                         var annotationObject = {
+                                            "format":"image/jpg",
+                                            "@type":"dctypes:Image",
+                                            "resource":
+                                            {
+                                                "@id": this.result,
+                                                "service":
+                                                    {                                       
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                                        "@id" : this.result
+                                                    },
+                                                "width": 667, //how should I set these?
+                                                "height":1000 //how should I set these?
+                                            },
+                                            "on" : canvasURI
+                                        };
+                                                        //$("#catalogueInfoFor").val(canvasURI);
+                                        //(annotationObject, canvasURI); // local
+                                        addImage(annotationObject, canvasURI); // live\
+                                        target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                        target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                            target.click();
+                                        };
                                     };
-                                                    //$("#catalogueInfoFor").val(canvasURI);
-                                    //(annotationObject, canvasURI); // local
-                                    addImage(annotationObject, canvasURI); // live\
-                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
-                                        target.click();
-                                    };
-                                };
-                            }
+                                }
+                            });
+                            //gatherRangesForArrange(1); //populate the popover.  It cannot be altered on this page, so do not populate it.
+                            $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/demo1', 'recto');"); //local
+                            $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/demo1"); //local
+                            $("#folioSide2").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/demo2', 'verso');"); //local
+                            $("#folioSide2").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/demo2"); //local
+                            $("#folioSide1").click();
                         });
-                        //gatherRangesForArrange(1); //populate the popover.  It cannot be altered on this page, so do not populate it.
-                        $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/demo1', 'recto');"); //local
-                        $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/demo1"); //local
-                        $("#folioSide2").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/demo2', 'verso');"); //local
-                        $("#folioSide2").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/demo2"); //local
-                        $("#folioSide1").click();
-                    });
-            });
-            
+                });
+            }
             gatherRangesForArrange(2); //populate the admin interface
-            
         });
         
-        $(function(){
-            
-        })
 
     </script>
 </html>
