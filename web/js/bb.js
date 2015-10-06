@@ -2271,15 +2271,21 @@ function updateLabel(range, currentLabel){
         var paramObj1 = {"@id" : range, "label" : newLabel};
         var params1 = {"content" : JSON.stringify(paramObj1)};
         if(windowurl.indexOf("demo=1") > -1){
-           $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
-           $(".arrangeSection[rangeID='"+range+"']").children("span:first").html(newLabel);
-           setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1500);
+            $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
+            console.log("update "+range+" with label "+newLabel);
+            $.each($(".arrangeSection[rangeid='"+range+"']"), function(){
+                $(this).children("span:first").html(newLabel);
+            });
+           setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1000);
         }
         else{
            $.post(updateURL, params1, function(){
                $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
-               $(".arrangeSection[rangeID='"+range+"']").children("span:first").html(newLabel);
-               setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1500);
+               console.log("update "+range+" with label "+newLabel);
+               $.each($(".arrangeSection[rangeid='"+range+"']"), function(){
+                   $(this).children("span:first").html(newLabel);
+               });
+               setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1000);
            });
         }
         
