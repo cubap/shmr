@@ -8689,7 +8689,7 @@ window.Mirador = window.Mirador || function(config) {
           // console.log(_this.osdOptions.osdBounds);
           if (_this.osdOptions.osdBounds) {
             //var rect = new OpenSeadragon.Rect(0, 0, 1000, 1500);
-            var rect = new OpenSeadragon.Rect(0, 0, _this.osdOptions.osdBounds.width, _this.osdOptions.osdBounds.height);
+            var rect = new OpenSeadragon.Rect(0, 0, parseInt(currentCanvasWidth), parseInt(currentCanvasHeight));
             _this.osd.viewport.fitBounds(rect, true);
             //_this.osd.container.fitBounds(rect, true);
           }

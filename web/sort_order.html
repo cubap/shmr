@@ -319,15 +319,18 @@ and open the template in the editor.
         if($(".rangeArrangementArea:first").find(".selectedSection").length > 0){
             $(".rangeArrangementArea:first").find(".selectedSection").click();
         }
-        $.each($(".arrangeSection"), function(){
-            $(this).children(".folioCount").remove();
-            var folioCount = $(this).find("div[leaf='true']").length;
-            var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
-            if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
-            }      
-         $(this).append(folioCountHTML);
-       });
+        //wait for click event to resolve
+        setTimeout(function(){
+            $.each($(".arrangeSection"), function(){
+                $(this).children(".folioCount").remove();
+                var folioCount = $(this).find("div[leaf='true']").length;
+                var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+                if($(this).attr("leaf") === "true"){
+                    folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                }      
+                $(this).append(folioCountHTML);
+            });
+        },500);
     }
 
         $(function(){

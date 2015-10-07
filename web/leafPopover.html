@@ -32,9 +32,9 @@ and open the template in the editor.
                 <span>Side A Label: </span><input type="text" id="folio1Label" />
                 <div class="uploadness">
                     <div class="leafPopClose" onclick="$(this).parent().hide();">X</div>
-                    Enter Image Uri:&nbsp;&nbsp;<textarea rv="recto" class="canvasImageSource"></textarea><button onclick='updateImageAnno("alpha");'>Save</button><br>
-                    OR<br>
-                    <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+                    Enter Image Uri:<textarea rv="recto" class="canvasImageSource"></textarea><button onclick='updateImageAnno("alpha");'>Save</button><br>
+<!--                    OR<br>
+                    <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />-->
                 </div>
                 <img onclick="$(this).parent().find('.uploadness').show();" class="rectoImg" src=""/>
                 <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide1');"/>
@@ -44,9 +44,9 @@ and open the template in the editor.
                 <span>Side B Label: </span><input type="text" id="folio2Label"/>
                  <div class="uploadness">
                      <div class="leafPopClose" onclick="$(this).parent().hide();">X</div>
-                    Enter Image Uri:&nbsp;&nbsp;<textarea rv="verso" class="canvasImageSource"></textarea><button onclick='updateImageAnno("beta");'>Save</button><br>
-                    OR<br>
-                    <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />
+                    Enter Image Uri:;<textarea rv="verso" class="canvasImageSource"></textarea><button onclick='updateImageAnno("beta");'>Save</button><br>
+<!--                    OR<br>
+                    <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />-->
                 </div>
                 <img onclick="$(this).parent().find('.uploadness').show();" class="versoImg" src=""/>
                 <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide2');"/>

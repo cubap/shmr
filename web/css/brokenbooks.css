@@ -548,6 +548,7 @@ and open the template in the editor.
             .canvasImageFile{
                 display: none;
             }
+            
             .addImgBtn{
                 border: 1px solid black;
                 height: 100px;
@@ -574,9 +575,15 @@ and open the template in the editor.
             }
             .uploadness textarea{
                 display: inline-table;
+                height: 65px;
+                width: 207px;
+                margin-right: 0px;
+                
             }
             .uploadness input{
-                display: inline-table;
+                top: -6px;
+                display: inline-block;
+                position: relative;
             }
             /*img{
                 height:300px;
