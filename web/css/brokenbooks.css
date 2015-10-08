@@ -798,33 +798,69 @@ and open the template in the editor.
             }
             .lockUp{
                 position: absolute;
-                top: -11px;
+                top: -1px;
                 color: #008000;
                 font-size: 21px;
                 font-weight: bold;
                 right: 26px;
                 z-index: 3 !important;
-                display: none;
+                background-image: url("../images/lockoffup.png");
+                background-size: 25px 25px;
+                height: 25px;
+                width: 25px;
             }
             .lockDown{
                 position: absolute;
-                top: 15px;
+                top: 21px;
                 color: #008000;
                 font-size: 20px;
                 font-weight: bold;
-                right: 27px;
-                -ms-transform: rotate(180deg); /* IE 9 */
-                -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
-                transform: rotate(180deg);
+                right: 26px;
+/*                -ms-transform: rotate(180deg);  IE 9 
+                -webkit-transform: rotate(180deg);  Chrome, Safari, Opera 
+                transform: rotate(180deg);*/
                 z-index: 3!important;
-                display: none;
+                background-image: url("../images/lockoffdown.png");
+                background-size: 25px 25px;
+                height: 25px;
+                width: 25px;
             }
             .lockDown:hover{
-                background-color: green;
+                cursor: pointer;
             }
             .lockUp:hover{
-                background-color: green;
+                cursor: pointer;
             }
+            .lockedDown{
+                position: absolute;
+                top: 21px;
+                color: #008000;
+                font-size: 20px;
+                font-weight: bold;
+                right: 26px;
+/*                -ms-transform: rotate(180deg);  IE 9 
+                -webkit-transform: rotate(180deg);  Chrome, Safari, Opera 
+                transform: rotate(180deg);*/
+                z-index: 3!important;
+                background-image: url("../images/lockondown.png");
+                background-size: 25px 25px;
+                height: 25px;
+                width: 25px;
+            }
+            .lockedUp{
+                position: absolute;
+                top: -1px;
+                color: #008000;
+                font-size: 21px;
+                font-weight: bold;
+                right: 26px;
+                z-index: 3 !important;
+                background-image: url("../images/lockonup.png");
+                background-size: 25px 25px;
+                height: 25px;
+                width: 25px;
+            }
+            
             .bbAnchor{
                 max-height: 40px;
                 max-width: 40px;

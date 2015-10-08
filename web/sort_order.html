@@ -59,7 +59,7 @@ and open the template in the editor.
                 display: none !important;
             }
             .arrangeSection, .unassigned{
-                padding: 8px 50px 8px 21px !important;
+                padding: 13px 50px 13px 21px !important
             }
             .notBucket{
                 padding: 4px 4px 45px 4px;
@@ -161,6 +161,14 @@ and open the template in the editor.
                 position: relative;
                 margin-left: 164px;
                 cursor: pointer;
+            }
+            .ui-sortable-helper{
+                display: block;
+                position: relative;
+                text-align: center;
+                padding: 8px 32px 8px 21px;
+                border: 2px solid black;
+                width: auto;
             }
         </style>
     </head>
@@ -276,15 +284,114 @@ and open the template in the editor.
     function makeSortable(column){
         //Will sortable overrule draggable? 
         var columnDepth = column.attr("depth");
-        column.children('.notBucket').sortable({helper:'clone'});
         $.each($(".adminTrail").find(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
             var overDiv = $("<div class='areaCover'></div>");
-            console.log("Append over div to");
-            console.log($(this));
             $(this).append(overDiv);
         });
         column.children(".makeSortable").hide();
         column.children(".doneSortable").show();
+        column.children('.notBucket').sortable(
+            {
+                cursorAt: {
+                    left: 50,
+                    top: 45
+                },
+                helper: function (event, item) {
+                    // make sure at least one item is selected.
+
+                    if (!item.hasClass("ui-state-active")) {
+                        item.addClass("ui-state-active").siblings().removeClass("ui-state-active");
+                    }
+                    //maybe class it as notBucket?
+                    var $helper = $("<div></div>");
+                    
+                    if(item.find(".lockedUp").length>0){
+                        console.log("locked up");
+                        var consecutive = item.prev();
+                        console.log(consecutive.attr("leaf"));
+                        console.log(consecutive.find(".lockedDown").length);
+                        while(consecutive.attr("leaf") === "true"){
+                            if(consecutive.find(".lockedDown").length > 0){
+                                console.log("up add active");
+                                consecutive.addClass("ui-state-active");
+                                consecutive = consecutive.prev();
+                            }
+                            else{ //reverse order
+//                                for(var i=lockedWith.length-1; i>-1; i--){
+//                                    stringToPass1 += lockedWith[i] + ",";
+//                                }
+                                console.log("end c1");
+                                break;
+                            }
+
+                        }
+
+                    }
+                    if (item.find(".lockedDown").length>0){
+                        console.log("locked down");
+                        var consecutive2 = item.next();
+                        console.log(consecutive2);
+                        //stringToPass2 += $("#"+event.target.id).attr("rangeID") +",";
+                        while(consecutive2.attr("leaf") === "true"){
+                            if(consecutive2.find(".lockedUp").length > 0){
+                                console.log("down add active")
+                                consecutive2.addClass("ui-state-active");
+                                consecutive2 = consecutive2.next();
+                            }
+                            else{
+                                console.log("end c2");
+                                break;
+                            }
+                        }
+                    }
+                        var $selected = item.parent().children(".ui-state-active");
+                        console.log("SELECTED");
+                        console.log($selected);
+                        var $cloned = $selected.clone();
+                        console.log("CLONED");
+                        console.log($cloned);
+                        $helper.append($cloned);
+                        // hide it, don't remove!
+                        $selected.hide();
+                        // save the selected items
+                        item.data("multi-sortable", $cloned);
+                        console.log("Return");
+                        console.log($helper);
+                        return $helper;
+                    
+                    
+                },
+
+                stop: function (event, ui) {
+                    // add the cloned ones
+                    console.log("stop");
+                    console.log(ui.item);
+                    var $cloned = ui.item.data("multi-sortable");
+                    ui.item.removeData("multi-sortable");
+                    console.log($cloned);
+                    // append it
+                    if(ui.item.next().find(".lockedUp") > 0){
+                        console.log("Dropping inbetween a lock1");
+                        //How should we handle this?
+                    }
+                    else if(ui.item.prev().find(".lockedDown") > 0){
+                        console.log("Dropping inbetween a lock2");
+                        //How should we handle this?
+                    }
+                    else{
+                        console.log("allowed sort");
+                        ui.item.after($cloned);
+                    }
+                    
+                    // remove the hidden ones
+                    ui.item.siblings(":hidden").remove();
+
+                    // remove self, it's duplicated
+                    ui.item.remove();
+                }
+                    
+            });
+        
     }
     function stopSorting(column){
         var windowurl = document.location.href;
