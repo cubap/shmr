@@ -5572,8 +5572,8 @@ function closeLeafPopover(){
     $("#folio1Label").val("");
     $("#folio2Label").val("");
     $("#oneAndtwoLabel").val("");
-    $(".rectoImg").attr("src","");
-    $(".versoImg").attr("src","");
+    $(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+    $(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
     //$(".popoverTrail").find(".selectedSection:first").click();
     annoListCollection = new Array(3);
     $(".selectedFolio").removeClass("selectedFolio");
