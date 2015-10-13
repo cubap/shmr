@@ -864,8 +864,11 @@ and open the template in the editor.
                 width: 25px;
                 display: block;
             }
-            div[isOrdered="true"]{
-                display: block;
+            .ordered{
+                padding: 0px !important;
+                border: none;
+                margin: 0px;
+                display: block !important;
             }
             
             .bbAnchor{
