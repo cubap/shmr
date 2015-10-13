@@ -632,7 +632,7 @@ and open the template in the editor.
             }
 
             .arrangeSection.sortOrder{
-                padding: 8px 32px 8px 21px;
+                padding: 13px 32px 13px 21px;
             }
 
             .arrangeSection.parent{
@@ -866,9 +866,17 @@ and open the template in the editor.
             }
             .ordered{
                 padding: 0px !important;
-                border: none;
+                border: none !important;
                 margin: 0px;
                 display: block !important;
+            }
+            
+            .parent .ordered{
+                display: none !important;
+            }
+            
+            .child .ordered{
+                display: none !important;
             }
             
             .bbAnchor{
