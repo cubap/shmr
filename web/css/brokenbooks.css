@@ -808,6 +808,7 @@ and open the template in the editor.
                 background-size: 25px 25px;
                 height: 25px;
                 width: 25px;
+                display: block;
             }
             .lockDown{
                 position: absolute;
@@ -824,6 +825,7 @@ and open the template in the editor.
                 background-size: 25px 25px;
                 height: 25px;
                 width: 25px;
+                display: block;
             }
             .lockDown:hover{
                 cursor: pointer;
@@ -846,6 +848,7 @@ and open the template in the editor.
                 background-size: 25px 25px;
                 height: 25px;
                 width: 25px;
+                display: block;
             }
             .lockedUp{
                 position: absolute;
@@ -859,6 +862,10 @@ and open the template in the editor.
                 background-size: 25px 25px;
                 height: 25px;
                 width: 25px;
+                display: block;
+            }
+            div[isOrdered="true"]{
+                display: block;
             }
             
             .bbAnchor{
@@ -912,5 +919,17 @@ and open the template in the editor.
                 font-size: 33px;
                 margin: 0 auto;
                 font-weight: bold;
+            }
+            .dragHelper{
+                border: 2px solid greenyellow;
+                position: absolute;
+                display: block;
+            }
+            .dragCover{
+                background-color:white;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                z-index: 10;
             }
             
