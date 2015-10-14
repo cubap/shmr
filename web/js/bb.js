@@ -5759,7 +5759,7 @@ function lock(leafURI, direction, event){
                             var range = rangedata[0];
                             var rangeList = range.ranges;
                             var index = $.inArray(leafToLock.parent().attr("rangeid"),rangeList);
-                            console.log("remove "+leafToLock.parent().attr("rangeid")+" from:");
+                            console.log("remove "+leafToLock.parent().attr("rangeid")+" from area:");
                             console.log(rangeList);
                             rangeList.splice(index,1);
                             console.log("result");
@@ -5780,7 +5780,7 @@ function lock(leafURI, direction, event){
                                     console.log(rangeList2);
                                     var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                     var params4 = {"content":JSON.stringify(paramObj4)};
-                                    $.post(updateAnnoURL, params2, function(){
+                                    $.post(updateAnnoURL, params4, function(){
 
                                     });
                                 });
@@ -5792,7 +5792,7 @@ function lock(leafURI, direction, event){
             }
             else{
                 console.log("It is not ordered, we either need to make a new ordered range or include into the existing one");
-                if(leafToLockWith.find(".lockedUp").length > 0){
+                if(leafToLock.find(".lockedDown").length > 0){
                     console.log("we need to include into the existing one");
                     var existingRangeDOM = leafToLock.parent();
                     existingRangeDOM.prepend(leafToLockWith);
@@ -5821,12 +5821,12 @@ function lock(leafURI, direction, event){
                                 var rangeList2 = range2.ranges;
                                 console.log("prepend "+leafToLockWith.attr("rangeid")+" to:");
                                 console.log(rangeList2);
-                                rangeList2.prepend(leafToLockWith.attr("rangeid"));
+                                rangeList2.unshift(leafToLockWith.attr("rangeid"));
                                 console.log("result");
                                 console.log(rangeList2);
                                 var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                 var params4 = {"content":JSON.stringify(paramObj4)};
-                                $.post(updateAnnoURL, params2, function(){
+                                $.post(updateAnnoURL, params4, function(){
                                     
                                 });
                             });
@@ -5893,8 +5893,7 @@ function lock(leafURI, direction, event){
                     });
                 }
                 
-            }
-            
+            }           
             //paginate lock icons and their onclick functions
             area.find(".arrangeSection[rangeid='"+leafURI+"']").find(".lockUp").attr("class","lockedUp").attr("onclick","unlock('"+leafURI+"','up',event);");
             area.find(".arrangeSection[rangeid='"+leafToLockWith.attr('rangeid')+"']")
@@ -6020,7 +6019,7 @@ function lock(leafURI, direction, event){
                                     console.log(rangeList2);
                                     var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                     var params4 = {"content":JSON.stringify(paramObj4)};
-                                    $.post(updateAnnoURL, params2, function(){
+                                    $.post(updateAnnoURL, params4, function(){
 
                                     });
                                 });
@@ -6032,7 +6031,7 @@ function lock(leafURI, direction, event){
             }
             else{
                 console.log("It is not ordered, we either need to make a new ordered range or include into the existing one");
-                if(leafToLockWith.find(".lockedDown").length > 0){
+                if(leafToLock.find(".lockedUp").length > 0){
                     console.log("we need to include into the existing one");
                     var existingRangeDOM = leafToLock.parent();
                     existingRangeDOM.append(leafToLockWith);
@@ -6066,7 +6065,7 @@ function lock(leafURI, direction, event){
                                 console.log(rangeList2);
                                 var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                 var params4 = {"content":JSON.stringify(paramObj4)};
-                                $.post(updateAnnoURL, params2, function(){
+                                $.post(updateAnnoURL, params4, function(){
                                     
                                 });
                             });
@@ -6180,7 +6179,7 @@ function unlock(leafURI, direction, event){
             });
             if(numOrdered > 2){
                 //update leaf being locked to know it is locked up.  This helps tremendously with the UI.
-                leafURI = leafToLock.parent.attr("rangeid");
+                leafURI = leafToLock.parent().attr("rangeid");
                 var rangeBefore = leafToLock.parent().prev();
                 var paramObj = {"@id":leafURI};
                 var params = {"content":JSON.stringify(paramObj)};
@@ -6194,7 +6193,7 @@ function unlock(leafURI, direction, event){
                     console.log(rangeList);
                     while(rangeBefore.attr("isOrdered")==="true" || rangeBefore.attr("leaf")==="true"){
                         rangeList.splice( $.inArray(rangeBefore.attr("rangeid"), rangeList), 1 );
-                        rangesRemoved.prepend(rangeBefore); //preserve order with prepend
+                        rangesRemoved.unshift(rangeBefore); //preserve order with prepend
                         rangeBefore = rangeBefore.prev();
                     }
                     console.log("ranges after");
@@ -6390,13 +6389,13 @@ function unlock(leafURI, direction, event){
             $.post(getURL, params, function(data){
                 if(numOrdered > 2){
                     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
-                    leafURI = leafToLock.parent.attr("rangeid");
+                    leafURI = leafToLock.parent().attr("rangeid");
                     var rangeAfter = leafToLock.parent().next();
-                    var paramObj = {"@id":leafURI};
-                    var params = {"content":JSON.stringify(paramObj)};
+                    var paramObj11 = {"@id":leafURI};
+                    var params11 = {"content":JSON.stringify(paramObj11)};
                     var newWithin = area.attr("rangeid");
                     var copy1 = leafToLockWith.clone();
-                    $.post(getURL, params, function(data){
+                    $.post(getURL, params11, function(data){
                         var rangeObj = JSON.parse(data)[0];
                         var rangeList = rangeObj.ranges;
                         var rangesRemoved = [];
@@ -6404,7 +6403,7 @@ function unlock(leafURI, direction, event){
                         console.log(rangeList);
                         while(rangeBefore.attr("isOrdered")==="true" || rangeBefore.attr("leaf")==="true"){
                             rangeList.splice( $.inArray(rangeBefore.attr("rangeid"), rangeList), 1 );
-                            rangesRemoved.append(rangeAfter); //preserve order with prepend
+                            rangesRemoved.append(rangeAfter); 
                             rangeAfter = rangeAfter.next();
                         }
                         console.log("ranges after");
@@ -6434,8 +6433,8 @@ function unlock(leafURI, direction, event){
                                     orderedRangeObject.ranges.append($(this).attr("rangeid"));
                                 });
                                 var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
-                                var params = {"content":JSON.stringify(orderedRangeObject)};
-                                $.post(newURL, params, function(data){
+                                var params31 = {"content":JSON.stringify(orderedRangeObject)};
+                                $.post(newURL, params31, function(data){
                                     console.log("saved range, update URI");
                                     var rangeForUpdate = JSON.parse(data);
                                     var rangeToInclude = rangeForUpdate["@id"];
