@@ -2312,7 +2312,7 @@ function toggleChildren(parentRange, admin, event){
   }
   
   if(event.target.className.indexOf("lockUp") > -1 || event.target.className.indexOf("lockDown") > -1
-    || event.target.className.indexOf("lockedUp") > -1||event.target.className.indexOf("lockedUp") > -1){
+    || event.target.className.indexOf("lockedUp") > -1||event.target.className.indexOf("lockedDown") > -1){
       return false;
   }
   var children = [];
@@ -5655,6 +5655,7 @@ function lock(leafURI, direction, event){
     var forProject = detectWho();
     var windowURL = document.location.href;
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
     if(windowURL.indexOf("demo=1") > -1){
         return false; 
     }
@@ -5663,7 +5664,7 @@ function lock(leafURI, direction, event){
     var leafToLockWith = "";
     var newRange = "";
     if(direction === "up"){
-        var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
+        
         if(leafToLock.parent().attr("isOrdered")==="true"){
             leafToLockWith = leafToLock.parent().prev();
         }
@@ -5873,14 +5874,15 @@ function lock(leafURI, direction, event){
                         var paramObj12 = {"@id":getID};
                         var params12 = {"content":JSON.stringify(paramObj12)};
                         $.post(getURL, params12, function(data){
-                            var obj = JSON.parse(data)[0];
-                            var currentRanges2 = obj.ranges;
+                            var obj = JSON.parse(data);
+                            var theobj = obj[0];
+                            var currentRanges2 = theobj.ranges;
                             console.log("current ranges");
                             console.log(currentRanges2);
                             var index = $.inArray(leafToLockWith.attr('rangeid'), currentRanges2);
                             currentRanges2.splice(index,0,rangeToInclude);
                             currentRanges2.splice( $.inArray(leafToLock.attr("rangeid"), currentRanges2), 1 );
-                            currentRanges2.splice( $.inArray(leafToLockWith.attr("rangeid"), currentRanges2), 1 );
+                            currentRanges2.splice( $.inArray(leafToLockWith.attr("rangeid"), currentRanges2), 1);
                             console.log("new current ranges 2");
                             console.log(currentRanges2);
                             var rangeparamsobj = {"@id":getID,"ranges":currentRanges2};
@@ -6107,14 +6109,15 @@ function lock(leafURI, direction, event){
                         newRange.append(copy2);
                         leafToLock.before(newRange);
                        
-                        console.log("update the ranges 1 field of "+getID);
+                        console.log("update the ranges 2 field of "+getID);
                         var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
                         var paramObj12 = {"@id":getID};
                         var params12 = {"content":JSON.stringify(paramObj12)};
                         $.post(getURL, params12, function(data){
-                            var obj = JSON.parse(data)[0];
-                            var currentRanges2 = obj.ranges;
-                            console.log("current ranges");
+                            var obj = JSON.parse(data);
+                            var theobj = obj[0];
+                            var currentRanges2 = theobj.ranges;
+                            console.log("current ranges 2");
                             console.log(currentRanges2);
                             var index = $.inArray(leafToLock.attr('rangeid'), currentRanges2);
                             currentRanges2.splice(index,0,rangeToInclude);
@@ -6122,9 +6125,9 @@ function lock(leafURI, direction, event){
                             currentRanges2.splice( $.inArray(leafToLockWith.attr("rangeid"), currentRanges2), 1 );
                             console.log("new current ranges 2");
                             console.log(currentRanges2);
-                            var rangeparamsobj = {"@id":getID,"ranges":currentRanges2};
-                            var rangeparams = {"content":JSON.stringify(rangeparamsobj)};
-                            $.post(updateAnnoURL, rangeparams, function(){
+                            var rangeparamsobj2 = {"@id":getID, "ranges":currentRanges2};
+                            var rangeparams2 = {"content":JSON.stringify(rangeparamsobj2)};
+                            $.post(updateAnnoURL, rangeparams2, function(){
                                 leafToLock.remove();
                                 leafToLockWith.remove();
                             });
