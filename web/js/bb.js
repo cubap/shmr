@@ -5214,6 +5214,10 @@ function populateAnnoForms(){
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var leafCount = checkedLeaves.length;
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
+          var bucket = $("div[depth='1']").find(".unassigned").children(".arrangeSection");
+          var bucketCount = parseInt(bucket.find(".folioCount").html());
+          
+          
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" "+toggle1+" ><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           if(depth ===1){
@@ -5222,14 +5226,14 @@ function populateAnnoForms(){
           $.each(checkedLeaves, function(){
               var leafID = $(this).attr("rangeID");
               var leafLabel = $(this).attr("label");
-              var lockUp = "onclick='lock(\""+leafID+"\",\"up\",event);";
-              var lockDown = "onclick='lock(\""+leafID+"\",\"down\",event);";
+              var lockUp = "lock('"+leafID+"','up',event);";
+              var lockDown = "lock('"+leafID+"','down',event);";
               $.each(allLeaves, function(){
                   if(this["@id"] == leafID){
                       childLeaves.push(this["@id"]);
                       uniqueID += 1;
                       dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-                      var lockit = "<div class='lockUp' "+lockUp+"> </div><div class='lockDown' "+lockDown+"> </div>";
+                      var lockit = "<div class='lockUp' onclick='"+lockUp+"'> </div><div class='lockDown' onclick='"+lockDown+"'> </div>";
                       var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" "+toggle1+"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' />"+lockit+"</div>");
                       newGroup.append(newLeaf);
                   }
@@ -5571,19 +5575,7 @@ function existing(leaf, leafIsIn){
         });
         
     }
-//    $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
-//    $("#folioSide1").attr("canvas", alphaCanvasURI);
-//    $(".rectoImg").attr("src", alphaImage);
-//    $("#folioSide1").addClass("selectedFolio");
-//    $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
-//    $("#folioSide2").attr("canvas", betaCanvasURI);   
-//    $(".versoImg").attr("src", betaImage);
-//    $("#oneAndtwo").attr("canvas", leaf);
-//    $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); 
-//    $("#folio1Label").val(alphaLabel);
-//    $("#folio2Label").val(betaLabel);
-//    $("#leafLabel").val(leafLabel);
-//    $("#oneAndtwoLabel").val(leafLabel);
+
     $(".leafPopover").show();
     var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
@@ -5593,9 +5585,6 @@ function existing(leaf, leafIsIn){
     }
     //If admins can see this area, then the following doesn't have to be hidden.
     $("#placement").children("input[type='button']").hide();
-    //$("#saveMetadata").hide();
-    //$("#cancelMetadata").hide();
-   // $(".content").attr("readonly", "readonly");
    
     $("#placement").children("p:first").html("This area shows where the leaf is positioned in the structure.  This cannot be altered here.  If you want to move your leaf to a new section \n\
       close this and use the drag and drop interface.");
@@ -5671,7 +5660,9 @@ function lock(leafURI, direction, event){
         else{
             leafToLockWith = leafToLock.prev();
         }
-        
+        if(leafToLockWith.attr("class").indexOf("ordered") > -1){
+            leafToLockWith = leafToLockWith.children(".arrangeSection:last");
+        }
         if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined 
         && leafToLockWith.attr("class").indexOf("arrangeSection")>-1 && leafToLockWith.attr("leaf") === "true"){
             leafToLock.attr("draggable", "false");
@@ -5864,7 +5855,9 @@ function lock(leafURI, direction, event){
                         var copy1 = leafToLock.clone();
                         var copy2 = leafToLockWith.clone();
                         var getID =  area.attr("rangeid");
-                        newRange = $("<div class='arrangeSection ordered child' isOrdered='true' rangeID='"+rangeToInclude+"'></div>");
+                        var uniqueID = $(".arrangeSection").length + 1;
+                        var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                        newRange = $("<div class='arrangeSection ordered child' draggable='true' "+dragAttribute+" isOrdered='true' rangeID='"+rangeToInclude+"'></div>");
                         newRange.append(copy2);
                         newRange.append(copy1);
                         leafToLockWith.before(newRange);
@@ -5911,6 +5904,9 @@ function lock(leafURI, direction, event){
         }
         else{
             leafToLockWith = leafToLock.next();
+        }
+        if(leafToLockWith.attr("class").indexOf("ordered") > -1){
+            leafToLockWith = leafToLockWith.children(".arrangeSection:first");
         }
         if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined 
         && leafToLockWith.attr("class").indexOf("arrangeSection")>-1 && leafToLockWith.attr("leaf") === "true"){
@@ -6104,7 +6100,9 @@ function lock(leafURI, direction, event){
                         var copy1 = leafToLock.clone();
                         var copy2 = leafToLockWith.clone();
                         var getID =  area.attr("rangeid");
-                        newRange = $("<div class='arrangeSection ordered child' isOrdered='true' rangeID='"+rangeToInclude+"'></div>");
+                        var uniqueID = $(".arrangeSection").length + 1;
+                        var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                        newRange = $("<div class='arrangeSection ordered child' draggable='true' "+dragAttribute+" isOrdered='true' rangeID='"+rangeToInclude+"'></div>");
                         newRange.append(copy1);
                         newRange.append(copy2);
                         leafToLock.before(newRange);
@@ -6264,7 +6262,7 @@ function unlock(leafURI, direction, event){
                                 var index = $.inArray(leafToLockWith.parent().attr("rangeid"), ranges);
                                 ranges.splice(index,0,leafToLockWith.attr("rangeid"));
                                 leafToLockWith.remove();
-                                copy1.attr("draggable", "true");
+                                copy1.attr("draggable", "true").css("display", "block");
                                 leafToLock.parent().before(copy1);
                                 console.log("update range recieving popped out child");
                                 var paramObj6 = {"@id":newWithin, "ranges":ranges};
@@ -6295,6 +6293,9 @@ function unlock(leafURI, direction, event){
                 var rangeAfter = rangeToRemove.next();
                 var copy1 = leafToLock.clone();
                 var copy2 = leafToLockWith.clone();
+                
+                copy1.attr("draggable","true").css("display", "block");
+                copy2.attr("draggable","true").css("display", "block");
                 
                 console.log("ID to remove: "+removeID);
                 var paramObj = {"@id":removeID};
@@ -6471,7 +6472,7 @@ function unlock(leafURI, direction, event){
                                     var index = $.inArray(leafToLock.parent().attr("rangeid"), ranges);
                                     ranges.splice(index+1,0,leafToLockWith.attr("rangeid"));
                                     leafToLockWith.remove();
-                                    copy1.attr("draggable", "true");
+                                    copy1.attr("draggable", "true").css("display", "block");
                                     leafToLock.parent().after(copy1);
                                     console.log("update range recieving popped out child");
                                     var paramObj6 = {"@id":newWithin, "ranges":ranges};
@@ -6502,6 +6503,9 @@ function unlock(leafURI, direction, event){
                     var rangeAfter = rangeToRemove.next();
                     var copy1 = leafToLock.clone();
                     var copy2 = leafToLockWith.clone();
+                    
+                    copy1.attr("draggable","true").css("display", "block");
+                    copy2.attr("draggable","true").css("display", "block");
 
                     var paramObj = {"@id":removeID};
                     var params = {"content":JSON.stringify(paramObj)};
