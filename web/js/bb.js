@@ -5216,8 +5216,6 @@ function populateAnnoForms(){
           var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
           var bucket = $("div[depth='1']").find(".unassigned").children(".arrangeSection");
           var bucketCount = parseInt(bucket.find(".folioCount").html());
-          
-          
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" "+toggle1+" ><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           if(depth ===1){
@@ -5236,6 +5234,11 @@ function populateAnnoForms(){
                       var lockit = "<div class='lockUp' onclick='"+lockUp+"'> </div><div class='lockDown' onclick='"+lockDown+"'> </div>";
                       var newLeaf = $("<div rangeID='"+leafID+"' leaf='true' class='arrangeSection child sortOrder' "+dragAttribute+" "+rightClick+" "+toggle1+"><span>"+leafLabel+"</span><input class='putInGroup' type='checkbox' />"+lockit+"</div>");
                       newGroup.append(newLeaf);
+                      if(bucket.children(".arrangeSection[rangeid='"+leafID+"']").length > 0){
+                            bucket.children(".arrangeSection[rangeid='"+leafID+"']").remove();
+                            bucketCount -= 1;
+                            bucket.find(".folioCount").html(bucketCount);
+                      }
                   }
               });
           });
