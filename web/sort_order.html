@@ -60,7 +60,7 @@ and open the template in the editor.
             }
             
             .arrangeSection, .unassigned{
-                padding: 13px 50px 13px 21px;
+                padding: 13px 65px 13px 21px;
             }
             .notBucket{
                 padding: 4px 4px 45px 4px;
@@ -210,6 +210,8 @@ and open the template in the editor.
                         When you drag and drop, you are specifically moving one grouping to another.
                         The original positioning will be removed. You can drop into any group and into any
                         column's red area.  When you move a grouping, you also move all of its children with it.
+                        
+                        **If you attempt to drag a locked leaf, all leaves it is locked with will drag as well.
                     </p>
                     <h4>Create New Group</h4>     
                     <p>
@@ -226,12 +228,16 @@ and open the template in the editor.
                         you also want to remove all of its children. Breaking a group removes the parent
                         and brings up all the children. If you break a leaf or an empty group, you delete it.
                         Right click on an area to be given the option to break it.
+                        
+                        **You cannot break a locked leaf, you must be sure it has no lock dependencies.  
                     </p>
                     <h4>Order a Group</h4>
                     <p>
                         If you would like to order a group, click to expand its children to a column and click
                         the Sort button. You will not be able to do any dragging or area creation while you
                         are ordering a group. Either cancel or save to resume blocked functionality.
+                        
+                        **If you attempt to sort a locked leaf, all leaves it is locked with will sort with it.
                     </p>
                     <h4>Bucket/Unassigned</h4>
                     <p>
@@ -245,13 +251,15 @@ and open the template in the editor.
                         Each listed area can be clicked to reveal its children and unassigned area or to
                         close it.
                     </p>
-                    <h4>Leaf Locking (* in development)</h4>
+                    <h4>Leaf Locking (Unavailable in demo)</h4>
                     <p>
                         Each leaf has a lock icon with pointing up and down.  You can lock a leaf to its sibling by clicking
                         this lock icon.  The icon will appear locked if the leaf has already been locked.  When you lock a leaf,
                         all position reassigning done to one leaf will automatically happen to the other.  This represents leaves you
                         know are consecutive with each other, so if you want to move one to another section, you have to take all the 
                         consecutive locked siblings as well.
+                        
+                        **You cannot lock leaves together in the BUCKET.  
                     </p>
                     <h4>Miscellaneous</h4>
                     <p>
@@ -281,14 +289,13 @@ and open the template in the editor.
             <input type="button" onclick="cancelNewGroupForm();" value="Cancel"/>
         </div>
         <div class="leafPopover"></div>
-        <div id="dragHelpHide">
+<!--        <div id="dragHelpHide">
             
-        </div>
+        </div>-->
     </body>
     <script>
 
     function makeSortable(column){
-        //Will sortable overrule draggable? 
         var columnDepth = column.attr("depth");
         $.each($(".adminTrail").find(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
             var overDiv = $("<div class='areaCover'></div>");
@@ -384,42 +391,49 @@ and open the template in the editor.
                                 var target = event.target;
                                 var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
                                 var files = !!this.files ? this.files : [];
-                                var canvasURI = $(this).parent().parent().attr("canvas"); //local
+                                var canvasURI = $(this).parent().parent().attr("canvas"); 
                                 if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
 
                                 if (/^image/.test( files[0].type)){ // only image file
-                                        var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
+                                    var filename = files[0].name; //get the file name so we can pass it through the interfact for the user if we want.
                                     var reader = new FileReader(); // instance of the FileReader
                                     reader.readAsDataURL(files[0]); // read the local file
                                     reader.onloadend = function(){ // set image data as background of div
-                                        $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                                        $("."+rv+"Img").css("background-image", "none");
-                                        $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                                        $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                                         var annotationObject = {
-                                            "format":"image/jpg",
-                                            "@type":"dctypes:Image",
-                                            "resource":
-                                            {
-                                                "@id": this.result,
-                                                "service":
-                                                    {                                       
-                                                        "@context": "http://iiif.io/api/image/2/context.json",
-                                                        "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                                        "@id" : this.result
-                                                    },
-                                                "width": 667, //how should I set these?
-                                                "height":1000 //how should I set these?
-                                            },
-                                            "on" : canvasURI
-                                        };
-                                                        //$("#catalogueInfoFor").val(canvasURI);
-                                        //(annotationObject, canvasURI); // local
-                                        addImage(annotationObject, canvasURI); // live\
-                                        target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                                        target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
-                                            target.click();
-                                        };
+                                        if(this.result.indexOf(".jpg")===-1 && this.result.indexOf(".JPG")===-1){
+                                            alert("Our viewer only supports direct links to .jpg or .JPG file formats. If the image URL being submitted does not\n\
+                                            contain the .jpg file format, it is unsupported.  If your link resolves to a hosted .jpg image, resolve the link and get\n\
+                                            the URL that contains the .jpg format and submit that instead.");
+                                        }
+                                        else{
+                                           $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                            $("."+rv+"Img").css("background-image", "none");
+                                            $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                            $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                             var annotationObject = {
+                                                "format":"image/jpg",
+                                                "@type":"dctypes:Image",
+                                                "resource":
+                                                {
+                                                    "@id": this.result,
+                                                    "service":
+                                                        {                                       
+                                                            "@context": "http://iiif.io/api/image/2/context.json",
+                                                            "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                                            "@id" : this.result
+                                                        },
+                                                    "width": 667, //how should I set these?
+                                                    "height":1000 //how should I set these?
+                                                },
+                                                "on" : canvasURI
+                                            };
+                                                            //$("#catalogueInfoFor").val(canvasURI);
+                                            //(annotationObject, canvasURI); // local
+                                            addImage(annotationObject, canvasURI); // live\
+                                            target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                                target.click();
+                                            }; 
+                                        }
                                     };
                                 }
                             });

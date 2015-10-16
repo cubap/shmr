@@ -255,6 +255,20 @@ and open the template in the editor.s
                 text-decoration: underline;
             }
             
+            .lockUp, .lockDown{
+                display: none;
+            }
+            
+            .demoNotice{
+                display: block;
+                right: 0px;
+                position: absolute;
+                top: 26px;
+                color: rgb(121, 28, 45);
+                font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+                font-size: 12px;
+            }
+            
         </style>
     </head>
     <body>
@@ -269,7 +283,8 @@ and open the template in the editor.s
                 <img id="BBlogo" src="../brokenBooks/images/bblogo.png" />
             </div>
             <div id="exploreWrap">
-                <input type="button" id="exploreDemo" value="explore the demo" onclick="demoPopover();" />
+                <input type="button" id="exploreDemo" value="explore the demo" onclick="demoPopover();" /><br>
+                <span class="demoNotice">The demo only works in Mozilla Firefox at this time.</span>
             </div>
         </div>
         <div id="homeInfo">
@@ -415,12 +430,17 @@ and open the template in the editor.s
  }
     
  function demoPopover(){
-     $("#demoStarter").show();
-     $(".mainBlockCover").show();
-     $("#createMini").show();
-     $("#orderMini").show();
-     $(".pageShade").show();
-     $("#mainBlockHelp").hide();
+     if(navigator.userAgent.toLowerCase().indexOf("firefox") > -1){
+        $("#demoStarter").show();
+        $(".mainBlockCover").show();
+        $("#createMini").show();
+        $("#orderMini").show();
+        $(".pageShade").show();
+        $("#mainBlockHelp").hide();
+    }
+    else{
+        alert("The demo is unavailable in your browser at this time.  Please use Mozilla Firefox.");
+    }
  }
  function demoPopoverClose(){
      $('#demoStarter').hide(); 
@@ -460,34 +480,42 @@ and open the template in the editor.s
                                 var reader = new FileReader(); // instance of the FileReader
                                 reader.readAsDataURL(files[0]); // read the local file
                                 reader.onloadend = function(){ // set image data as background of div
-                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                                     var annotationObject = {
-                                        "format":"image/jpg",
-                                        "@type":"dctypes:Image",
-                                        "resource":
-                                        {
-                                            "@id": this.result,
-                                            "service":
-                                                {                                       
-                                                    "@context": "http://iiif.io/api/image/2/context.json",
-                                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                                    "@id" : this.result
+                                        if(this.result.indexOf(".jpg")===-1 && this.result.indexOf(".JPG")===-1){
+                                            alert("Our viewer only supports direct links to .jpg or .JPG file formats. If the image URL being submitted does not\n\
+                                            contain the .jpg file format, it is unsupported.  If your link resolves to a hosted .jpg image, resolve the link and get\n\
+                                            the URL that contains the .jpg format and submit that instead.");
+                                        }
+                                        else{
+                                            $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                            $("."+rv+"Img").css("background-image", "none");
+                                            $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                            $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                             var annotationObject = {
+                                                "format":"image/jpg",
+                                                "@type":"dctypes:Image",
+                                                "resource":
+                                                {
+                                                    "@id": this.result,
+                                                    "service":
+                                                        {                                       
+                                                            "@context": "http://iiif.io/api/image/2/context.json",
+                                                            "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                                            "@id" : this.result
+                                                        },
+                                                    "width": 667, //how should I set these?
+                                                    "height":1000 //how should I set these?
                                                 },
-                                            "width": 667, //how should I set these?
-                                            "height":1000 //how should I set these?
-                                        },
-                                        "on" : canvasURI
+                                                "on" : canvasURI
+                                            };
+                                                            //$("#catalogueInfoFor").val(canvasURI);
+                                            //(annotationObject, canvasURI); // local
+                                            addImage(annotationObject, canvasURI); // live\
+                                            target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                                target.click();
+                                            }; 
+                                        }
                                     };
-                                                    //$("#catalogueInfoFor").val(canvasURI);
-                                    //(annotationObject, canvasURI); // local
-                                    addImage(annotationObject, canvasURI); // live\
-                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
-                                        target.click();
-                                    };
-                                };
                             }
                         });
                         gatherRangesForArrange(1); //populate the popover

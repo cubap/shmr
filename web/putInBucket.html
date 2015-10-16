@@ -78,37 +78,42 @@ var contributer = true;
                                 var reader = new FileReader(); // instance of the FileReader
                                 reader.readAsDataURL(files[0]); // read the local file
                                 reader.onloadend = function(){ // set image data as background of div
-                                    $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
-                                    $("."+rv+"Img").css("background-image", "none");
-                                    $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                                    $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
-                                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                                    var newImageURI = "http://www.example.org/iiif/LlangBrev/images/" +imageID; 
-                                     var annotationObject = {
-                                        "format":"image/jpg",
-                                        "@type":"dctypes:Image",
-                                        "resource":
-                                        {
-                                            "@id": this.result,
-                                            "service":
-                                                {                                       
-                                                    "@context": "http://iiif.io/api/image/2/context.json",
-                                                    "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                                    "@id" : this.result
+                                        if(this.result.indexOf(".jpg")===-1 && this.result.indexOf(".JPG")===-1){
+                                            alert("Our viewer only supports direct links to .jpg or .JPG file formats. If the image URL being submitted does not\n\
+                                            contain the .jpg file format, it is unsupported.  If your link resolves to a hosted .jpg image, resolve the link and get\n\
+                                            the URL that contains the .jpg format and submit that instead.");
+                                        }
+                                        else{
+                                            $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                            $("."+rv+"Img").css("background-image", "none");
+                                            $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
+                                            $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                             var annotationObject = {
+                                                "format":"image/jpg",
+                                                "@type":"dctypes:Image",
+                                                "resource":
+                                                {
+                                                    "@id": this.result,
+                                                    "service":
+                                                        {                                       
+                                                            "@context": "http://iiif.io/api/image/2/context.json",
+                                                            "profile":"http://iiif.io/api/image/2/profiles/level2.json",
+                                                            "@id" : this.result
+                                                        },
+                                                    "width": 667, //how should I set these?
+                                                    "height":1000 //how should I set these?
                                                 },
-                                            "width": 667, //how should I set these?
-                                            "height":1000 //how should I set these?
-                                        },
-                                        "on" : canvasURI
+                                                "on" : canvasURI
+                                            };
+                                                            //$("#catalogueInfoFor").val(canvasURI);
+                                            //(annotationObject, canvasURI); // local
+                                            addImage(annotationObject, canvasURI); // live\
+                                            target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
+                                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                                target.click();
+                                            }; 
+                                        }
                                     };
-                                                    //$("#catalogueInfoFor").val(canvasURI);
-                                    //(annotationObject, canvasURI); // local
-                                    addImage(annotationObject, canvasServerURI); // live\
-                                    target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                                    target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
-                                        target.click();
-                                    };
-                                };
                             }
                         });
                     });
