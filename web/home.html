@@ -284,7 +284,7 @@ and open the template in the editor.s
             </div>
             <div id="exploreWrap">
                 <input type="button" id="exploreDemo" value="explore the demo" onclick="demoPopover();" /><br>
-                <span class="demoNotice">The demo only works in Mozilla Firefox at this time.</span>
+                <!--<span class="demoNotice">The demo only works in Mozilla Firefox at this time.</span>-->
             </div>
         </div>
         <div id="homeInfo">
@@ -406,7 +406,7 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/demoManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/getManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangantock Breviary</div>
                 </div>                
             </div>        
@@ -430,17 +430,18 @@ and open the template in the editor.s
  }
     
  function demoPopover(){
-     if(navigator.userAgent.toLowerCase().indexOf("firefox") > -1){
+//     if(navigator.userAgent.toLowerCase().indexOf("firefox") > -1){
+//        
+//    }
+//    else{
+//        alert("The demo is unavailable in your browser at this time.  Please use Mozilla Firefox.");
+//    }
         $("#demoStarter").show();
         $(".mainBlockCover").show();
         $("#createMini").show();
         $("#orderMini").show();
         $(".pageShade").show();
         $("#mainBlockHelp").hide();
-    }
-    else{
-        alert("The demo is unavailable in your browser at this time.  Please use Mozilla Firefox.");
-    }
  }
  function demoPopoverClose(){
      $('#demoStarter').hide(); 
@@ -449,7 +450,7 @@ and open the template in the editor.s
  $(function(){
      var windowHeight = $(window).height();
      $("body").css("min-height", windowHeight+"px");
-     $("#ordering").load("../brokenBooks/sort_order.html", function(){
+     $("#ordering").load("../brokenBooks/demoArrange.html", function(){
 
      });
      $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){

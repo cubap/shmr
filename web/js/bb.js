@@ -5667,11 +5667,12 @@ function lock(leafURI, direction, event){
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
     if(windowURL.indexOf("demo=1") > -1){
+        //figure out what to do for the demo.
         return false; 
     }
     if($("div[depth='1']").find(".unassigned").attr("class").indexOf("selectedSection") > -1){
         //cannot lock leaves in the bucket
-        console.log("cannot lock leaves in the bucket");
+        alert("cannot lock leaves in the bucket.  Assign to a section first.");
         return false;
     }
     var area = $(event.target).closest(".rangeArrangementArea");

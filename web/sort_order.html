@@ -7,7 +7,6 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="utf-8">
-        <!-- If these are uncommented, it causes conflicts on the home page.  The module on the home page needs to run by itself, and this needs to be its own page. -->
         <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -24,7 +23,7 @@ and open the template in the editor.
                 top: 25px;
             }
             .mainBlock{
-                background-color:white;
+                background-color:white !important;
             }
             .mainBlock.imgAdditionArea{
                 background-color:black !important;
@@ -35,6 +34,7 @@ and open the template in the editor.
             .rangeArrangementArea{ /* Force each area to be the same height in this case. */
                 height: 512px;
                 z-index: 2;
+                display: inline-table !important;
             }
             .arrangeSection{
                 z-index: 2;
@@ -60,7 +60,7 @@ and open the template in the editor.
             }
             
             .arrangeSection, .unassigned{
-                padding: 13px 65px 13px 21px;
+                padding: 13px 65px 13px 21px !important;
             }
             .notBucket{
                 padding: 4px 4px 45px 4px;
@@ -294,7 +294,7 @@ and open the template in the editor.
         </div>-->
     </body>
     <script>
-
+    var windowURL = document.location.href;
     function makeSortable(column){
         var columnDepth = column.attr("depth");
         $.each($(".adminTrail").find(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
@@ -354,10 +354,11 @@ and open the template in the editor.
             });
         },500);
     }
-
+    
+    
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
-            var windowURL = document.location.href;
+            
             if(windowURL.indexOf("LFD") > -1){
                 $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?LFD';");
             }
