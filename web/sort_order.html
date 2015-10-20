@@ -62,6 +62,14 @@ and open the template in the editor.
             .arrangeSection, .unassigned{
                 padding: 13px 65px 13px 21px !important;
             }
+            
+            .unassigned{
+                display: none;
+            }
+            
+            .bucket{
+                display: block !important;
+            }
             .notBucket{
                 padding: 4px 4px 45px 4px;
                 border: 1px solid red;
@@ -187,7 +195,7 @@ and open the template in the editor.
                    <div class="rAreaLabel">Llangantock Subsections</div>
                    
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>BUCKET</span></div>
+                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent bucket unassigned sortOrder"><span>BUCKET</span></div>
                    <input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>
                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>

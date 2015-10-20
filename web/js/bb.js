@@ -3608,21 +3608,29 @@ function populateAnnoForms(){
     function enterCatalogueInfo(canvasID, canvas){
         //must have check for undefined because the first time it loads, it will not have a class yet which just means that the code needs to run.
         var dontsave = false;
+        var leafFlag = false;
         if(canvasID !== "leaf" && $("div[canvas='"+canvasID+"']").attr("class") !== undefined && $("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
             //if it is not the leaf selected and the canvasID matches the canvas attribute of the side selected, then we have selected the already selected side.  get out of the function!
+            console.log("return false 1");
             return false;
         }
         if(canvasID === "leaf" && $("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
             // if the canvasID is for the leaf and the leaf is selected, then we have selected the already selected side.  get out of the function!
+            console.log("return false 2");
             return false;
         }
         if($(".selectedFolio").length === 0){
             //Then it has just been loaded and folio 1 is being clicked, dont save but do the UI stuff.
+            console.log("done save it SO TRUE");
             dontsave = true;
             
         }
+        if($("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio")>-1){
+            leafFlag = true;
+        }
             var previouslySelectedURI = "";
             if(canvas == 'recto'){
+                console.log("flag 1");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if(previouslySelectedURI === "leaf"){
                     previouslySelectedURI = currentLeafServerID;
@@ -3636,6 +3644,7 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else if (canvas == 'verso'){
+                console.log("flag 2");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if(previouslySelectedURI === "leaf"){
                     previouslySelectedURI = currentLeafServerID;
@@ -3649,6 +3658,7 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else{
+                console.log("flag 3");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 canvasID = currentLeafServerID;
                 $("#oneAndtwo").addClass("selectedFolio");
@@ -3660,10 +3670,11 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
             }
             if(dontsave){
-
+                console.log("DONT SAVE");
             }
             else{
-                saveFolio(true, canvas, previouslySelectedURI);    
+                console.log("SAVE.  wat is leafFlag: "+leafFlag);
+                saveFolio(true, canvas, previouslySelectedURI, leafFlag);    
             }
     }
     
@@ -3676,10 +3687,11 @@ function populateAnnoForms(){
     Combines content(), context(), carrier(), notes(), updateLabels(), savePlacement() and updateList() to gather all the information from a leaf form and update the various anno objects.
     TODO: Does not save annotations in order.  We want it to.  
     */
-    function saveFolio(flag, canvas, thisFolio){ 
+    function saveFolio(flag, canvas, thisFolio,leafFlag){ 
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
         if(flag === false){
-            if($("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
+            if($("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio")>-1){
+                console.log("this folio needs to be leaf1 "+currentLeafServerID);
                 canvas = "leaf";
                 thisFolio = currentLeafServerID;
             }
@@ -3688,7 +3700,16 @@ function populateAnnoForms(){
                 thisFolio = $(".selectedFolio").attr("canvas");
             }
         }
+        else{
+            if(leafFlag){
+                console.log("this folio needs to be leaf2 "+currentLeafServerID);
+                canvas = "leaf";
+                thisFolio = currentLeafServerID;
+            }
+        }
+        console.log("In save.  what is this folio: "+thisFolio);
         if(thisFolio !== undefined && thisFolio !== ''){
+            console.log("show save cover");
             $("#saveCover").show();
         }
         var windowURL = document.location.href;
@@ -4409,6 +4430,7 @@ function populateAnnoForms(){
                     newRangeObject["@id"] = data["@id"]; //live
                     testManifest.structures.push(newRangeObject); //live
                     if(current === 'currentLeaf'){
+                            console.log("set current leaf server id");
                             currentLeafServerID = data["@id"];
                             currentLeaf = currentLeafServerID;
                         $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
@@ -5076,7 +5098,7 @@ function populateAnnoForms(){
         $.post(updateURL, params, function(data){
         });
     }
-
+           
   function breakUpConfirm(event){
       var tagName = event.target.tagName;
       var className = event.target.className;
@@ -5156,8 +5178,8 @@ function populateAnnoForms(){
             lockedWithBefore = $(targetToBreak).prev();
             //TODO update lockedWithBefore lockedup to be ""
         }
-        if (targetToBreak.find(".lockedDown").length>0){
-            lockedWithAfter = targetToBreak.next();
+        if ($(targetToBreak).find(".lockedDown").length>0){
+            lockedWithAfter = $(targetToBreak).next();
             //TODO update lockedWithAfter lockeddown to be ""
         }
         console.log("leaf before needs to be unlocked "+lockedWithBefore.attr("rangeid"));
