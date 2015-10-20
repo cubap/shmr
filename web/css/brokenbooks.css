@@ -685,6 +685,7 @@ and open the template in the editor.
                 margin-right: 10px;
                 height: auto;
                 overflow-y: auto;
+                height: 512px;
             }
             .areaCover{
                 position: absolute;
