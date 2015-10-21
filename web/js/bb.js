@@ -2604,13 +2604,9 @@ function dropHelp(event){
     var areaTakenFromDepth = parseInt($("#"+data).closest(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
     var targetClass = target.className;
-    console.log("CLASSSS");
-    console.log(targetClass);
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
     if(child === null || child === undefined) return false;
-    console.log("PARENT NODE CLASSSS");
-    console.log(target.parentNode.className);
     if(target.parentNode.className.indexOf("ordered") > -1){
         //cannot drop into locked leaves
         console.log("cannot drop into locked leaves");
@@ -2660,7 +2656,7 @@ function dropHelp(event){
     console.log(append);
     if(append){
        // var consecutiveLocks = "";
-        var area = $("#"+data).closest(".rangeArrangementArea");
+        //var area = $("#"+data).closest(".rangeArrangementArea");
         //consecutiveLocks = event.dataTransfer.getData("moveWith");
 //        if(consecutiveLocks !== ""){
 //            console.log("move with consective children");
@@ -2728,8 +2724,12 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
         console.log("original range list");
         console.log(rangeList);
         //TODO need to do this for each consecutive range being moved
-        rangeList.splice( $.inArray(rangeMoved, rangeList), 1 );
-        var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
+        var index = $.inArray(rangeMoved, rangeList);
+        if(index > -1){
+            console.log("range in range list, splicing out.");
+            rangeList.splice( index, 1 );
+        }
+         var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
          var paramObj1 = {"@id" : rangeMovedFrom, "ranges" : rangeList};
          var params1 = {"content" : JSON.stringify(paramObj1)};
          console.log("you have spliced the range out, now update with list");
@@ -2745,12 +2745,11 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
                 var rangeList2 = range2.ranges;
                 console.log("original list 2");
                 console.log(rangeList2);
-                if($.inArray(this,rangeList2) === -1){
+                if($.inArray(rangeMoved,rangeList2) === -1){
+                    console.log("Push to it");
                     rangeList2.push(rangeMoved);
-                }
-                
-                console.log("range added to list, new list is");
-                console.log(rangeList2);
+                    console.log(rangeList2);
+                }                               
                 console.log("Update the range moved to ranges with the new list");
                 var paramObj3 = {"@id" : rangeMovedTo, "ranges" : rangeList2};
                 var params3 = {"content" : JSON.stringify(paramObj3)};
@@ -3607,6 +3606,7 @@ function populateAnnoForms(){
    
     function enterCatalogueInfo(canvasID, canvas){
         //must have check for undefined because the first time it loads, it will not have a class yet which just means that the code needs to run.
+        
         var dontsave = false;
         if(canvasID !== "leaf" && $("div[canvas='"+canvasID+"']").attr("class") !== undefined && $("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
             //if it is not the leaf selected and the canvasID matches the canvas attribute of the side selected, then we have selected the already selected side.  get out of the function!
@@ -3623,8 +3623,10 @@ function populateAnnoForms(){
         }
             var previouslySelectedURI = "";
             if(canvas == 'recto'){
+                console.log("recto selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if(previouslySelectedURI === "leaf"){
+                    console.log("previous was leaf1");
                     previouslySelectedURI = currentLeafServerID;
                 }
                 $("#folioSide1").addClass("selectedFolio");
@@ -3636,9 +3638,11 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else if (canvas == 'verso'){
+                console.log("verso selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if(previouslySelectedURI === "leaf"){
                     previouslySelectedURI = currentLeafServerID;
+                    console.log("previous was leaf2");
                 }
                 $("#folioSide2").addClass("selectedFolio");;
                 $("#folioSide1").removeClass("selectedFolio");
@@ -3649,8 +3653,9 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else{
+                console.log("leaf selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
-                canvasID = currentLeafServerID;
+                canvas = "leaf";
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -3660,9 +3665,12 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('selectedI');
             }
             if(dontsave){
-
+                $("#saveCover").hide();
+                $("#saveText").html("Saving...");
+                console.log("DONT SAVE");
             }
             else{
+                console.log("SAVE");
                 saveFolio(true, canvas, previouslySelectedURI);    
             }
     }
@@ -3678,16 +3686,27 @@ function populateAnnoForms(){
     */
     function saveFolio(flag, canvas, thisFolio){ 
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
+        console.log(flag, canvas, thisFolio);
         if(flag === false){
-            if($("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
-                canvas = "leaf";
+            console.log("flag was false");
+            canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
+            if(canvas === "leaf"){
+                console.log("SET THIS FOLIO TO THE LEAF2: " + currentLeafServerID);
                 thisFolio = currentLeafServerID;
             }
             else{
-                canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
                 thisFolio = $(".selectedFolio").attr("canvas");
             }
         }
+        else{
+            console.log("flag was true");
+            if(canvas === "leaf"){
+                console.log("SET THIS FOLIO TO THE LEAF2: " + currentLeafServerID);
+                thisFolio = currentLeafServerID;
+            }
+        }
+        
+        console.log("in save.  thisFolio = "+thisFolio);
         if(thisFolio !== undefined && thisFolio !== ''){
             $("#saveCover").show();
         }
@@ -4113,6 +4132,8 @@ function populateAnnoForms(){
     }
     
     function updateList(flag, uri, canvas){  
+        console.log("made it to update list with");
+        console.log(flag, uri, canvas);
         var objectID = uri;
         var forProject = detectWho();
             $.each(annoListCollection, function(){
@@ -4163,6 +4184,7 @@ function populateAnnoForms(){
                                 });
                         }//local
                         $("#saveCover").hide();
+                        console.log("Flag must be true to populate anno forms: "+flag);
                         if(flag){
                             $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
                             var canvasID = "";
@@ -4188,6 +4210,7 @@ function populateAnnoForms(){
                             $(".imgPreview").attr("src",previewImgSrc);
                             $("tr[set='set']").attr("set", "");
                             $("#notes").attr("set", "");
+                            console.log("we are populate anno forms");
                             populateAnnoForms();
                         }
                     });
@@ -4782,6 +4805,15 @@ function populateAnnoForms(){
 		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
 	*/
 	function submitIntro(test){
+            if(test === "testEdit"){
+                $("#saveText").html("Getting Leaf...");
+                $("#saveCover").show();
+            }
+            else{
+                $("#saveText").html("Creating Leaf...");
+                $("#saveCover").show();
+            }
+            
             var forProject = detectWho();    
             var windowURL = document.location.href;
             $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
@@ -5126,42 +5158,37 @@ function populateAnnoForms(){
       var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
       var paramObj = {"@id" : update};
       var params = {"content" : JSON.stringify(paramObj)};
+      var fireUpdate = true;
       $.post(getURL, params, function(data){
-          var range = JSON.parse(data);
+          var rangeobj = JSON.parse(data);
+          var range = rangeobj[0];
           var rangeList = range.ranges;
           if(rangeList!==undefined && rangeList.length > 0){
-              rangeList.splice( $.inArray(remove, rangeList), 1 ); //remove range list that is being deleted;
+              var index = $.inArray(remove, rangeList);
+              if(index === -1){
+                 console.log("removing from bucket, dont fire update");
+                 removeRange(remove);
+                 fireUpdate = false;
+              }
+              else{
+                  rangeList.splice(index , 1 ); //remove range list that is being deleted;
+              }
           }
-          else{
-              //we are removing something from the bucket.  Just remove it
-              removeRange(remove);
-              return false;
-          }
-          if(bringup !== undefined){ //There are children that need to be brought up from the section being removed.
-              //bringup is an array of those children's ids, merge them at the end of the current range list.  
-              $.merge(rangeList, bringup);
-          }
-          var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
-           var paramObj1 = {"@id" : update, "ranges" : rangeList};
-           var params1 = {"content" : JSON.stringify(paramObj1)};
-           $.post(updateURL, params1, function(){
-                
-           });
-           removeRange(remove); //delte the range entirely from the db
+          
+          if(fireUpdate){;
+            if(bringup.length > 0){ //There are children that need to be brought up from the section being removed.
+                //bringup is an array of those children's ids, merge them at the end of the current range list.  
+               rangeList =  $.merge(rangeList, bringup);
+            }
+             var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+             var paramObj1 = {"@id" : update, "ranges" : rangeList};
+             var params1 = {"content" : JSON.stringify(paramObj1)};
+             $.post(updateURL, params1, function(){
+
+             });
+             removeRange(remove); //delte the range entirely from the db
+        }
       });
-        var lockedWithBefore = "";
-        var lockedWithAfter = "";
-        var targetID= targetToBreak.getAttribute("rangeID");
-        if($(targetToBreak).find(".lockedUp").length>0){
-            lockedWithBefore = $(targetToBreak).prev();
-            //TODO update lockedWithBefore lockedup to be ""
-        }
-        if (targetToBreak.find(".lockedDown").length>0){
-            lockedWithAfter = targetToBreak.next();
-            //TODO update lockedWithAfter lockeddown to be ""
-        }
-        console.log("leaf before needs to be unlocked "+lockedWithBefore.attr("rangeid"));
-        console.log("leaf after needs to be unlocked " + lockedWithAfter.attr("rangeid"));
         
   }
 
@@ -5172,21 +5199,25 @@ function populateAnnoForms(){
       $(".breakConfirm").remove();
       var childrenToBringUp = undefined;
       var depth = -1;
-      if(group.attr("leaf") == "true"){
+      var childrenArray = [];
+      if(group.attr("leaf") === "true"){
           //group.remove();
-          removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"));
+          removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
       }
       else{
-          childrenToBringUp = group.children(".child");
-          var childrenArray = [];
-          
           depth = parseInt(group.parent().parent().attr("depth"));
-          $.each(childrenToBringUp, function(){
-              childrenArray.push($(this).attr("rangeID"));
-              $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append($(this));
-              $(this).show();
-          });
-          removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
+          if(group.children(".arrangeSection").length > 0){
+                childrenToBringUp = group.children(".arrangeSection");
+                $.each(childrenToBringUp, function(){
+                    childrenArray.push($(this).attr("rangeID"));
+                    $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append($(this));
+                    $(this).show();
+                });
+                removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
+          }
+          else{
+              removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
+          }
       }
        
   }
@@ -5287,36 +5318,36 @@ function populateAnnoForms(){
     //check if children are a part of the parent aggr ranges and if so, splice them
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var windowURL = document.location.href;
-    var paggr = {};
-    if(windowURL.indexOf("DTC") > -1){
-        paggr={"parent":"paggr_debra"};
-    }
-    else if (windowURL.indexOf("LFD") > -1){
-        paggr={"parent":"paggr_lisa"};
-    }
-    else{
-        paggr={"parent":"paggr_debra"};
-    }
-    var paggrParams = {"content":JSON.stringify(paggr)};
-    $.post(getURL, paggrParams, function(data){
-        var data = JSON.parse(data);
-        var paggrOBJ = data[0];
-        var paggrRanges = paggrOBJ.ranges;
-        console.log("original paggr ranges");
-        console.log(paggrRanges);
-        $.each(children,function(){
-            console.log("is "+this+" in the array?  If so, splice is");
-            console.log($.inArray(this, paggrRanges));
-            if($.inArray(this, paggrRanges) > -1){
-                paggrRanges.splice( $.inArray(this, paggrRanges), 1 );
-            }
-            
-        });
-        var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
-        var paramobj = {"@id" : paggrOBJ["@id"], "ranges" : paggrRanges};
-        var param = {"content" : JSON.stringify(paramobj)};
-        $.post(updateURL, param);
-    });
+//    var paggr = {};
+//    if(windowURL.indexOf("DTC") > -1){
+//        paggr={"parent":"paggr_debra"};
+//    }
+//    else if (windowURL.indexOf("LFD") > -1){
+//        paggr={"parent":"paggr_lisa"};
+//    }
+//    else{
+//        paggr={"parent":"paggr_debra"};
+//    }
+//    var paggrParams = {"content":JSON.stringify(paggr)};
+//    $.post(getURL, paggrParams, function(data){
+//        var data = JSON.parse(data);
+//        var paggrOBJ = data[0];
+//        var paggrRanges = paggrOBJ.ranges;
+//        console.log("original paggr ranges");
+//        console.log(paggrRanges);
+//        $.each(children,function(){
+//            console.log("is "+this+" in the array?  If so, splice is");
+//            console.log($.inArray(this, paggrRanges));
+//            if($.inArray(this, paggrRanges) > -1){
+//                paggrRanges.splice( $.inArray(this, paggrRanges), 1 );
+//            }
+//        });
+//        var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+//        var paramobj = {"@id" : paggrOBJ["@id"], "ranges" : paggrRanges};
+//        var param = {"content" : JSON.stringify(paramobj)};
+//        console.log("update paggr ranges");
+//        $.post(updateURL, param);
+//    });
     var paramObj = {"@id" : range};
     var params = {"content" : JSON.stringify(paramObj)};
     var forProject = detectWho();
@@ -5401,8 +5432,6 @@ function existing(leaf, leafIsIn){
         var leafObject = undefined;
         currentLeafServerID = leaf;
         $.each(rangeCollection, function(){
-            var race1 = false;
-            var race2 = false;
             //For the demo, you can cheat and not make the calls by making a mock list above and using it.  
             console.log("Looking for "+leaf);
             console.log("this one is "+this["@id"]);
@@ -5569,6 +5598,8 @@ function existing(leaf, leafIsIn){
                         $("#folioSide2").attr("canvas", betaCanvasURI);   
                         $(".versoImg").attr("src", betaImage);
                         $("#folio2Label").val(betaLabel);
+                        $("#saveCover").hide();
+                        $("#saveText").html("Saving...");
                     }
                     }); //live
                 }

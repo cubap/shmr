@@ -34,7 +34,6 @@ and open the template in the editor.
             .rangeArrangementArea{ /* Force each area to be the same height in this case. */
                 height: 512px;
                 z-index: 2;
-                display: inline-table !important;
             }
             .arrangeSection{
                 z-index: 2;
@@ -406,10 +405,10 @@ and open the template in the editor.
                                             the URL that contains the .jpg format and submit that instead.");
                                         }
                                         else{
-                                           $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
+                                            $("."+rv+"Img").attr("src", this.result).show("explode", "500ms");
                                             $("."+rv+"Img").css("background-image", "none");
                                             $("."+rv+"Canvas").find(".imgCatalogueInfo").show("explode", "500ms");
-                                            $("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
+                                            //$("textarea[rv='"+rv+"']").html(filename +" Uploaded!").attr("disabled", "disabled");
                                              var annotationObject = {
                                                 "format":"image/jpg",
                                                 "@type":"dctypes:Image",

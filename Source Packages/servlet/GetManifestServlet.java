@@ -48,9 +48,9 @@ public class GetManifestServlet extends HttpServlet {
             metadata1.element("label", "Title");
             metadata1.element("value", "Llangantock Breviary Reconstruction");
             metadata2.element("label", "Created By");
-            metadata2.element("value", "Debra Cashion");
-            metadata3.element("label", "Host Institution");
-            metadata3.element("value", "SLU Center for Digital Humanities");
+            metadata2.element("value", "SLU Center for Digital Humanities");
+            metadata3.element("label", "Anchor Object"); //<img class='bbanchor' src='../brokenBooks/images/anchor.png'/>
+            metadata3.element("value", "http://ds.lib.berkeley.edu/VFLMS002_44");
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
             a_metadata.add(metadata3);
@@ -64,11 +64,11 @@ public class GetManifestServlet extends HttpServlet {
             metadata1.element("value", "Beauvais Missal Reconstruction");
             metadata2.element("label", "Created By");
             metadata2.element("value", "Lisa Fagin Davis");
-            metadata3.element("label", "Host Institution");
-            metadata3.element("value", "SLU Center for Digital Humanities");
+            //metadata3.element("label", "Host Institution");
+            //metadata3.element("value", "SLU Center for Digital Humanities");
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
-            a_metadata.add(metadata3);
+            //a_metadata.add(metadata3);
         }
         JSONArray ja_ranges = JSONArray.fromObject(ranges);
         //get cavanses

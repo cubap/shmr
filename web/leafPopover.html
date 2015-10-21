@@ -23,7 +23,7 @@ and open the template in the editor.
     </div>
     <div class="sideBarInfo">
         <div id="whatPiece">
-            <div id="oneAndtwo">
+            <div id="oneAndtwo" canvas="leaf"><input type="file" rv="leaf" class="canvasImageFile" required="true" multiple="false" />
                 <span>Leaf Label: </span><input style="margin-bottom: 17px;" id="oneAndtwoLabel" /> 
                 <img style="z-index:2; left: 10px; top:10px;" class="rectoImg" src="http://165.134.241.141/brokenBooks/images/addImg.jpg" />
                 <img style="right: 60px; top: -10px; z-index: 1;" class="versoImg" src="http://165.134.241.141/brokenBooks/images/addImg.jpg" />
@@ -38,7 +38,7 @@ and open the template in the editor.
 <!--                    OR<br>
                     <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />-->
                 </div>
-                <img onclick="$(this).parent().find('.uploadness').show();" class="rectoImg" src="http://165.134.241.141/brokenBooks/images/addImg.jpg" />
+                <img onclick="showUploadness($(this).parent(), 'recto');" class="rectoImg" src="http://165.134.241.141/brokenBooks/images/addImg.jpg" />
                 <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide1');"/>
                 <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide1');"/>
                 </div>
@@ -50,7 +50,7 @@ and open the template in the editor.
 <!--                    OR<br>
                     <input type="file" rv="recto" class="canvasImageFile" required="true" multiple="false" />-->
                 </div>
-                <img onclick="$(this).parent().find('.uploadness').show();" class="versoImg" src="http://165.134.241.141/brokenBooks/images/addImg.jpg" />
+                <img onclick="showUploadness($(this).parent(), 'verso');" class="versoImg" src="http://165.134.241.141/brokenBooks/images/addImg.jpg" />
                 <img class="unselectedI" src='http://www.iconexperience.com/_img/i_collection_png/512x512/plain/eye.png' onclick="showFullImage('folioSide2');"/>
                 <img class="selectedI" src='https://cdn3.iconfinder.com/data/icons/pyconic-icons-1-2/512/eye-512.png' onclick="showFullImage('folioSide2');"/>
 <!--                <img class="unselectedI" src='http://165.134.241.141/brokenBooks/images/imagetool.png' onclick="showFullImage('folioSide2');"/>
@@ -75,6 +75,12 @@ and open the template in the editor.
     <div id="fullImageShade"></div>
 </div>	
 <script>
-
+    function showUploadness(parent, rv){
+        var url = $("."+rv+"Img:first").attr("src");
+        if(url.indexOf("addImg.jpg")===-1){
+            $("textarea[rv='"+rv+"']").val(url);
+        }
+        parent.find(".uploadness").show();
+    }
 
 </script>
