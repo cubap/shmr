@@ -2610,17 +2610,23 @@ function dropHelp(event){
     if(target.parentNode.className.indexOf("ordered") > -1){
         //cannot drop into locked leaves
         console.log("cannot drop into locked leaves");
+        alert("You cannot drop into a set of locked leaves");
         return false;
     }
-    if(targetClass.indexOf("selectedSection") > -1 || droppedClass.indexOf("selectedSection") > -1) return false; //cannot drop into a selected section, cannot drop a selected section
+    if(targetClass.indexOf("selectedSection") > -1 || droppedClass.indexOf("selectedSection") > -1){
+        //cannot drop into a selected section, cannot drop a selected section
+        alert("You cannot drag and drop or drop into opened sections.");
+        return false;
+    } 
     if(targetClass.indexOf("ordered")>-1){
         //cannot drop into locked leaves parent range
+        alert("You cannot drop into a set of locked leaves");
         return false;
     }
     if(targetClass.indexOf('notBucket') > -1){
       if($(target).closest(".rangeArrangementArea").attr("depth") === "1" && $("#"+data).attr("leaf") === "true"){
           //cannot drop leaves into the top level structure. 
-          console.log("cannot drop leaves into top level");
+          alert("You cannot drop leaves into the top level");
           return false;
       }
       child.style.display = "block";  
@@ -4593,6 +4599,8 @@ function populateAnnoForms(){
                         data = JSON.parse(data);
                         var backupArray = new Array();
                         var newGroupID = data["@id"];
+                        newGroup.attr("rangeid", newGroupID);
+                        newGroup.attr("relation", areaForNewGroup.attr("rangeid"));
                         if(useBackup){
                             backupArray.push(newGroupID);
                             rangeList = backupArray;
@@ -5122,6 +5130,10 @@ function populateAnnoForms(){
       var tagName = event.target.tagName;
       var className = event.target.className;
       targetToBreak = undefined;
+      if(className.indexOf("selectedSection") > -1){
+          alert("You cannot break an opened section.");
+          return false;
+      }
       if(tagName == "SPAN" || tagName == "INPUT" || className.indexOf("folioCount") > -1){
           var parent = event.target.parentNode;
           targetToBreak = parent;
@@ -5386,6 +5398,8 @@ function populateAnnoForms(){
             data = JSON.parse(data);
             var newGroupID = data["@id"];
             rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
+            var relation = $(".adminTrail").find("div[depth='"+depth+"']").attr("rangeid")
+            $newGroup.attr("rangeid", newGroupID).attr("relation", relation);
             var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
             var paramObj2 = {"@id" : range, "ranges" : rangeList};
             var params3 = {"content" : JSON.stringify(paramObj2)};

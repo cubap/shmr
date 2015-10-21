@@ -80,7 +80,9 @@ and open the template in the editor.
         if(url.indexOf("addImg.jpg")===-1){
             $("textarea[rv='"+rv+"']").val(url);
         }
+        else{
+            $("textarea[rv='"+rv+"']").val("");
+        }
         parent.find(".uploadness").show();
     }
-
 </script>
