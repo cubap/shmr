@@ -2806,8 +2806,8 @@ function gatherRangesForArrange(which){
     console.log("gather ranges "+which);
     var existingRanges = [];
     var uniqueID = 0;
-    var rangesMoved = 0;
     var outer = "";
+    var placedInUnassigned = false;
     if(which == 1){
         outer = $(".popoverTrail");
     }
@@ -2921,7 +2921,7 @@ function gatherRangesForArrange(which){
           if(isLeaf){
             allLeaves.push(rangeCollection[i]);
             //if(rangeCollection[i].parent !== undefined){
-                console.log("Put in unassigned.");
+                console.log("Put in unassigned."); 
                 outer.find(".rangeArrangementArea").find('.unassigned').append(currentRange);
                 var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html());
                 oldFolioCount = oldFolioCount+1;
@@ -3021,12 +3021,17 @@ function gatherRangesForArrange(which){
                             }
                         }
                         else{
-                            console.log("in array 2");
-                          rangesMoved += 1;
-                          var rangeToMove = outer.find(".arrangeSection[rangeID='"+this["@id"]+"']");
-                          currentRange.append(rangeToMove);
-                          /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
-                          rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
+                            console.log("in array 2");                          
+                            var rangeToMove = outer.find(".arrangeSection[rangeID='"+this["@id"]+"']");
+                            if(isLeaf2 && currentRange.attr("class").indexOf("pAggr") > -1 ){
+                                console.log("Leaf in paggr, remains in bucket");
+                            }
+                            else{
+                                currentRange.append(rangeToMove);
+                            /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
+                                rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
+                            }
+                            
                         }
                     } 
                 });
@@ -4441,6 +4446,10 @@ function populateAnnoForms(){
 		//testManifest.structures.push(newRangeObject); //local
 		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
 		var rangeServerID = -1;
+                var rangeToUpdateWithin1 = newRangeObject.canvases[0];
+                var rangeToUpdateWithin2 = newRangeObject.canvases[1];
+                var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+                
 		$.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
                     data=JSON.parse(data);
                     newRangeObject["@id"] = data["@id"]; //live
@@ -4477,13 +4486,19 @@ function populateAnnoForms(){
                     if(current = "currentLeaf"){
                         annoListCollection[2] = newLeafList;
                     }
-                    var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+                    
                     var paramObj = {"@id":currentLeafServerID, "otherContent":[{"@id":newLeafList["@id"], "@type":"sc:AnnotationList"}]};
                     var params = {"content":JSON.stringify(paramObj)};
                     $.post(updateCanvasURL, params, function(data){
 
                     });
         	});
+//                var paramObj1 = {"@id":rangeToUpdateWithin1, "within":currentLeafServerID};
+//                var params1 = {"content":JSON.stringify(paramObj1)};
+//                var paramObj2 = {"@id":rangeToUpdateWithin2, "within":currentLeafServerID};
+//                var params2 = {"content":JSON.stringify(paramObj2)};
+//                $.post(updateCanvasURL, params1);
+//                $.post(updateCanvasURL, params2);
             });
 		
 	}
@@ -4877,7 +4892,8 @@ function populateAnnoForms(){
                 "width" : 667,
                 "images" : [],
                 "forProject" : forProject,
-                "otherContent": []
+                "otherContent": [],
+                "within" : ""
             };
             
          annoListID++;
@@ -4942,7 +4958,8 @@ function populateAnnoForms(){
                             "width" : 667,
                             "images" : [],
                             "forProject" : forProject,
-                            "otherContent" : []
+                            "otherContent" : [],
+                            "within" : ""
                 };
                                        
 	      	var params2 = {'content': JSON.stringify(urlCanvas)};
@@ -5456,8 +5473,6 @@ function existing(leaf, leafIsIn){
         currentLeafServerID = leaf;
         $.each(rangeCollection, function(){
             //For the demo, you can cheat and not make the calls by making a mock list above and using it.  
-            console.log("Looking for "+leaf);
-            console.log("this one is "+this["@id"]);
             if(this["@id"] == leaf){
                 leafObject = this;
                 alphaCanvasURI = this.canvases[0];
@@ -5498,6 +5513,9 @@ function existing(leaf, leafIsIn){
                             if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
                                 
                             }
+                            else if (this.images[0].resource["@id"] === ""){
+                                
+                            }
                             else{
                                 alphaImage = this.images[0].resource["@id"];
                             }
@@ -5523,6 +5541,9 @@ function existing(leaf, leafIsIn){
                         }
                         if(alphaCanvasData.images && alphaCanvasData.images.length > 0){
                             if(alphaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else if (this.images[0].resource["@id"] === ""){
                                 
                             }
                             else{
@@ -5560,7 +5581,6 @@ function existing(leaf, leafIsIn){
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == betaCanvasURI){
-                        race2 = true;
                         if(this.otherContent && this.otherContent[0]){
                             betaAnnoList = this.otherContent[0];
                         }
@@ -5569,6 +5589,9 @@ function existing(leaf, leafIsIn){
                         }
                         if(this.images && this.images.length > 0){
                             if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else if (this.images[0].resource["@id"] === ""){
                                 
                             }
                             else{
@@ -5596,6 +5619,9 @@ function existing(leaf, leafIsIn){
                         }
                         if(betaCanvasData.images && betaCanvasData.images.length > 0){
                             if(betaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
+                                
+                            }
+                            else if (this.images[0].resource["@id"] === ""){
                                 
                             }
                             else{
