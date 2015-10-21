@@ -349,6 +349,7 @@ and open the template in the editor.
                 cursor: help;
                 width: 30px;
                 height: 26px;
+                display: inherit;
             }
             .helperContent{
                 display: none;
@@ -684,6 +685,7 @@ and open the template in the editor.
                 margin-right: 10px;
                 height: auto;
                 overflow-y: auto;
+                height: 512px;
             }
             .areaCover{
                 position: absolute;

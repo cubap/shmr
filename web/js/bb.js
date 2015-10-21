@@ -3608,18 +3608,25 @@ function populateAnnoForms(){
         //must have check for undefined because the first time it loads, it will not have a class yet which just means that the code needs to run.
         
         var dontsave = false;
+        var leafFlag = false;
         if(canvasID !== "leaf" && $("div[canvas='"+canvasID+"']").attr("class") !== undefined && $("div[canvas='"+canvasID+"']").attr("class").indexOf("selectedFolio") > -1){
             //if it is not the leaf selected and the canvasID matches the canvas attribute of the side selected, then we have selected the already selected side.  get out of the function!
+            console.log("return false 1");
             return false;
         }
         if(canvasID === "leaf" && $("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio") > -1){
             // if the canvasID is for the leaf and the leaf is selected, then we have selected the already selected side.  get out of the function!
+            console.log("return false 2");
             return false;
         }
         if($(".selectedFolio").length === 0){
             //Then it has just been loaded and folio 1 is being clicked, dont save but do the UI stuff.
+            console.log("done save it SO TRUE");
             dontsave = true;
             
+        }
+        if($("#oneAndtwo").attr("class")!==undefined && $("#oneAndtwo").attr("class").indexOf("selectedFolio")>-1){
+            leafFlag = true;
         }
             var previouslySelectedURI = "";
             if(canvas == 'recto'){
@@ -3684,7 +3691,7 @@ function populateAnnoForms(){
     Combines content(), context(), carrier(), notes(), updateLabels(), savePlacement() and updateList() to gather all the information from a leaf form and update the various anno objects.
     TODO: Does not save annotations in order.  We want it to.  
     */
-    function saveFolio(flag, canvas, thisFolio){ 
+    function saveFolio(flag, canvas, thisFolio,leafFlag){ 
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
         console.log(flag, canvas, thisFolio);
         if(flag === false){
@@ -3708,6 +3715,7 @@ function populateAnnoForms(){
         
         console.log("in save.  thisFolio = "+thisFolio);
         if(thisFolio !== undefined && thisFolio !== ''){
+            console.log("show save cover");
             $("#saveCover").show();
         }
         var windowURL = document.location.href;
@@ -4432,6 +4440,7 @@ function populateAnnoForms(){
                     newRangeObject["@id"] = data["@id"]; //live
                     testManifest.structures.push(newRangeObject); //live
                     if(current === 'currentLeaf'){
+                            console.log("set current leaf server id");
                             currentLeafServerID = data["@id"];
                             currentLeaf = currentLeafServerID;
                         $("#oneAndtwo").attr("onclick", "enterCatalogueInfo('leaf')");
@@ -5108,7 +5117,7 @@ function populateAnnoForms(){
         $.post(updateURL, params, function(data){
         });
     }
-
+           
   function breakUpConfirm(event){
       var tagName = event.target.tagName;
       var className = event.target.className;
@@ -5175,7 +5184,7 @@ function populateAnnoForms(){
               }
           }
           
-          if(fireUpdate){;
+          if(fireUpdate){
             if(bringup.length > 0){ //There are children that need to be brought up from the section being removed.
                 //bringup is an array of those children's ids, merge them at the end of the current range list.  
                rangeList =  $.merge(rangeList, bringup);
