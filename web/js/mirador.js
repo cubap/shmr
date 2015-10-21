@@ -10005,6 +10005,7 @@ window.Mirador = window.Mirador || function(config) {
 
     getImageUrl: function(image) {
       //bh edit:  if there is no image or a missing resource, then set the image id to be the default image
+      var id = "";
       if(!image.images[0] || !image.images[0].resource || image.images[0].resource["@id"] === ""){
         id = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
         return id;
@@ -10015,7 +10016,13 @@ window.Mirador = window.Mirador || function(config) {
         return id;
       }
       else{
-        var id = image.images[0].resource.service['@id'];
+        if(image.images[0].resource.service["@id"] === ""){
+          id = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+        }
+        else{
+          id = image.images[0].resource.service["@id"];
+        }
+        
         id = id.replace(/\/$/, "");
         return id;
       }
