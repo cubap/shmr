@@ -1638,8 +1638,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "BB Identifier",
           "resource" : {
-            "label" : "BB Identifier",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "BB_LLang_01"
           },
@@ -1649,8 +1649,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/2",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Nickname",
           "resource" : {
-            "label" : "Nickname",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Bryan's test"
           },
@@ -1660,8 +1660,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/3",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Date Acquired",
           "resource" : {
-            "label" : "Date Acquired",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "6/12/15"
           },
@@ -1681,8 +1681,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/4",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Place Of Origin",
           "resource" : {
-            "label" : "Place Of Origin",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "St. Louis"
           },
@@ -1692,8 +1692,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/5",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Condition",
           "resource" : {
-            "label" : "Condition",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Deplorable"
           },
@@ -1703,8 +1703,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/6",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Illustrations",
           "resource" : {
-            "label" : "Illustrations",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Smiley Face Doodles"
           },
@@ -1723,8 +1723,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/7",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "General Metadata",
           "resource" : {
-            "label" : "General Metadata",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "This is the very first leaf in the breviary.  An interesting face is that Leonardo da Vinci created it, which makes no sense."
           },
@@ -1734,8 +1734,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/8",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Title",
           "resource" : {
-            "label" : "Title",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Suspected da Vinci Writings"
           },
@@ -1745,8 +1745,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/9",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Other Content Info",
           "resource" : {
-            "label" : "Other Content Info",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "It takes up a much smaller portion of the page than usual."
           },
@@ -1765,8 +1765,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/10",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "BB Identifier",
           "resource" : {
-            "label" : "BB Identifier",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "BB_Llang_003_r"
           },
@@ -1776,8 +1776,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/11",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Institution or Repository",
           "resource" : {
-            "label" : "Institution or Repository",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Saint Louis University"
           },
@@ -1787,8 +1787,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/12",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Shelfmark",
           "resource" : {
-            "label" : "Shelfmark",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "SLU VFL MS 002, fol. b, recto"
           },
@@ -1798,8 +1798,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/13",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Date Acquired",
           "resource" : {
-            "label" : "Date Acquired",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "1962"
           },
@@ -1809,8 +1809,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/14",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Provenance",
           "resource" : {
-            "label" : "Provenance",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Milton& Gail Fischmann, 1962"
           },
@@ -1820,8 +1820,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/15",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Bibliography",
           "resource" : {
-            "label" : "Bibliography",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Evans, E.S. \"Medieval manuscripts at Saint Louis University: a catalogue,\" in Manuscripta 47/48 (2003/2004), p. 56-64."
           },
@@ -1831,8 +1831,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/16",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Language",
           "resource" : {
-            "label" : "Language",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Latin"
           },
@@ -1842,8 +1842,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/17",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Subject",
           "resource" : {
-            "label" : "Subject",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Catholic Church, Liturgy"
           },
@@ -1853,8 +1853,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/18",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Title (refers to contents)",
           "resource" : {
-            "label" : "Title (refers to contents)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Feast of Holy Innocents (Dec 28), Matins, Lessons 4-7"
           },
@@ -1864,8 +1864,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/19",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Incipit",
           "resource" : {
-            "label" : "Incipit",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "[Et ideo dignum...fuit causa]//p[o]ene, qui extitit et corone, ip[s]e odii c[aus]a qui p[rae]mii ..."
           },
@@ -1875,8 +1875,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/19",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Date",
           "resource" : {
-            "label" : "Date",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "1441-1448"
           },
@@ -1886,8 +1886,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/20",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Place Of Origin",
           "resource" : {
-            "label" : "Place Of Origin",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Ferrara, Italy"
           },
@@ -1897,8 +1897,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/21",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Format (single leaf, half bifolium, fragment)",
           "resource" : {
-            "label" : "Format (single leaf, half bifolium, fragment)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Single leaf"
           },
@@ -1908,8 +1908,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/22",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Dimensions",
           "resource" : {
-            "label" : "Dimensions",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "275 x 200 (170 x 130) mm"
           },
@@ -1919,8 +1919,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/23",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Columns",
           "resource" : {
-            "label" : "Columns",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "2"
           },
@@ -1930,8 +1930,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/24",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Lines",
           "resource" : {
-            "label" : "Lines",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "30"
           },
@@ -1941,8 +1941,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/25",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Script",
           "resource" : {
-            "label" : "Script",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Gothic textualis rotunda"
           },
@@ -1952,8 +1952,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/26",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Decorations",
           "resource" : {
-            "label" : "Decorations",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "4 two-line initials, two vertical bar extensions terminating in floral and foliate forms"
           },
@@ -1963,8 +1963,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/27",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Artist(s)",
           "resource" : {
-            "label" : "Artist(s)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
           },
@@ -1983,8 +1983,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/29",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "BB Identifier",
           "resource" : {
-            "label" : "BB Identifier",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "BB_Llang_003_v"
           },
@@ -1994,8 +1994,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/30",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Institution or Repository",
           "resource" : {
-            "label" : "Institution or Repository",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Saint Louis University"
           },
@@ -2005,8 +2005,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/31",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Shelfmark",
           "resource" : {
-            "label" : "Shelfmark",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "SLU VFL MS 002, fol. b, verso"
           },
@@ -2016,8 +2016,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/32",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Date Acquired",
           "resource" : {
-            "label" : "Date Acquired",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "1962"
           },
@@ -2027,8 +2027,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/33",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Provenance",
           "resource" : {
-            "label" : "Provenance",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Milton& Gail Fischmann, 1962"
           },
@@ -2038,8 +2038,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/34",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Bibliography",
           "resource" : {
-            "label" : "Bibliography",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Evans, E.S. \"Medieval manuscripts at Saint Louis University: a catalogue,\" in Manuscripta 47/48 (2003/2004), p. 56-64."
           },
@@ -2049,8 +2049,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/35",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Language",
           "resource" : {
-            "label" : "Language",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Latin"
           },
@@ -2060,8 +2060,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/36",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Subject",
           "resource" : {
-            "label" : "Subject",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Catholic Church, Liturgy"
           },
@@ -2071,8 +2071,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/37",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Title (refers to contents)",
           "resource" : {
-            "label" : "Title (refers to contents)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Feast of Holy Innocents (Dec 28), Matins, Lessons 7-9, Laud"
           },
@@ -2082,8 +2082,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/38",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Explicit",
           "resource" : {
-            "label" : "Explicit",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Cum rel[iquis] a[n]t[iphona]. A bymatu et infra occidit multos pueros hero//[des propter "
           },
@@ -2093,8 +2093,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/39",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Date",
           "resource" : {
-            "label" : "Date",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "1441-1448"
           },
@@ -2104,8 +2104,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/40",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Place Of Origin",
           "resource" : {
-            "label" : "Place Of Origin",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Ferrara, Italy"
           },
@@ -2115,8 +2115,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/41",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Format (single leaf, half bifolium, fragment)",
           "resource" : {
-            "label" : "Format (single leaf, half bifolium, fragment)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Single leaf"
           },
@@ -2126,8 +2126,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/42",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Dimensions",
           "resource" : {
-            "label" : "Dimensions",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "275 x 200 (170 x 130) mm"
           },
@@ -2137,8 +2137,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/43",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Columns",
           "resource" : {
-            "label" : "Columns",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "2"
           },
@@ -2148,8 +2148,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/44",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Lines",
           "resource" : {
-            "label" : "Lines",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "30"
           },
@@ -2159,8 +2159,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/45",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Script",
           "resource" : {
-            "label" : "Script",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Gothic textualis rotunda"
           },
@@ -2170,8 +2170,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/46",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Decorations",
           "resource" : {
-            "label" : "Decorations",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "2 two-line initials, two vertical bar extensions terminating in floral and foliate forms"
           },
@@ -2181,8 +2181,8 @@ var annotationLists = [
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/47",
           "@type" : "oa:Annotation",
           "motivation" : "oa:commenting",
+          "label" : "Artist(s)",
           "resource" : {
-            "label" : "Artist(s)",
             "@type" : "cnt:ContentAsText",
             "cnt:chars" : "Giorgio d'Alemagna (active 1441-1479) and others"
           },
@@ -3743,10 +3743,10 @@ function populateAnnoForms(){
         var uriToSave = thisFolio; //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
         var otherInfoList = {};
-        if(windowURL.indexOf("demo=1") > -1){
-            closeLeafPopover();
-            return false;
-        }
+//        if(windowURL.indexOf("demo=1") > -1){
+//            closeLeafPopover();
+//            return false;
+//        }
         $.each(testManifest.structures, function(){
             if (this["@id"] === uriToSave){
                 currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
@@ -5521,6 +5521,8 @@ function existing(leaf, leafIsIn){
                 $("#leafLabel").val(leafLabel);
                 $("#oneAndtwoLabel").val(leafLabel);
                 var alphaAnnoList = "";
+                var betaAnnoList = "";
+                var leafAnnoList = "";
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == alphaCanvasURI){
@@ -5542,6 +5544,7 @@ function existing(leaf, leafIsIn){
                                 alphaImage = this.images[0].resource["@id"];
                             }
                         }
+                        
                       }
                     });
                 }
@@ -5599,7 +5602,6 @@ function existing(leaf, leafIsIn){
                     }); //live
                 }
                 betaCanvasURI = this.canvases[1];
-                var betaAnnoList = "";
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(testManifest.sequences[0].canvases, function(){
                       if(this["@id"] == betaCanvasURI){
@@ -5675,10 +5677,17 @@ function existing(leaf, leafIsIn){
                     }); //live
                 }
                 
+                console.log("here are the anno lists");
+                console.log(annotationLists);
+                
+                console.log(alphaAnnoList);
+                console.log(betaAnnoList);
+                
                 if(windowURL.indexOf("demo=1") > -1){
                     $.each(annotationLists, function(){
                       if(this["@id"] == alphaAnnoList["@id"]){
                         annoListCollection[0] = this;
+                        
                       }
                     });
                     $.each(annotationLists, function(){
@@ -5717,8 +5726,19 @@ function existing(leaf, leafIsIn){
     beta = false;
     zeta = false;
     //$(".popoverTrail").find(".selectedSection:first").click(); //collapse the tree
-    selectInTree(leafIsIn); //This has broken as of 9/10/15
-    //$("#folioSide1").click();
+    selectInTree(leafIsIn); 
+    console.log("Click folio side 1, hide saveCover, change saveText");
+    
+    //$("#folioSide1").addClass("selectedSection");
+    if(windowURL.indexOf("demo=1")>-1){
+        console.log("demo, populate anno forms with annos:");
+        console.log(annoListCollection);
+        $("#folioSide1").addClass("selectedSection");
+        populateAnnoForms();
+        $("#saveCover").hide();
+        $("#saveText").html("Updating...");
+    }
+    
     $(".popoverTrail").children(".rangeArrangementArea").append(arrangeAreaCover);
 
 }
@@ -6200,6 +6220,8 @@ function lock(leafURI, direction, event){
                                 console.log("new current ranges 2");
                                 console.log(currentRanges2);
                                 this.ranges = currentRanges2;
+                                leafToLock.remove();
+                                leafToLockWith.remove();
                             }
                             
                         });
@@ -6271,6 +6293,8 @@ function lock(leafURI, direction, event){
                 
             }           
             //paginate lock icons and their onclick functions
+            console.log("paginate locks");
+            console.log(area);
             area.find(".arrangeSection[rangeid='"+leafURI+"']").find(".lockUp").attr("class","lockedUp").attr("onclick","unlock('"+leafURI+"','up',event);");
             area.find(".arrangeSection[rangeid='"+leafToLockWith.attr('rangeid')+"']")
             .find(".lockDown").attr("class","lockedDown").attr("onclick","unlock('"+leafToLockWith.attr('rangeid')+"','down',event);");
