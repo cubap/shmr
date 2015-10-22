@@ -5568,7 +5568,7 @@ function existing(leaf, leafIsIn){
                             if(alphaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
                                 
                             }
-                            else if (this.images[0].resource["@id"] === ""){
+                            else if (alphaCanvasData.images[0].resource["@id"] === ""){
                                 
                             }
                             else{
@@ -5645,7 +5645,7 @@ function existing(leaf, leafIsIn){
                             if(betaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
                                 
                             }
-                            else if (this.images[0].resource["@id"] === ""){
+                            else if (betaCanvasData.images[0].resource["@id"] === ""){
                                 
                             }
                             else{
