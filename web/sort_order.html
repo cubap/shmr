@@ -194,7 +194,7 @@ and open the template in the editor.
                    
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent bucket unassigned sortOrder"><span>BUCKET</span></div>
-                   <input class="makeGroup" value="Group" type="button" onclick="askForNewTitle($(this).parent());"/>
+                   <input class="makeGroup" value="Merge" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>
                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
                    <input class="resetCounts" value="Refresh Folio Count" type="button" onclick="resetFolioCount();"/>
@@ -224,7 +224,7 @@ and open the template in the editor.
                         You can create a new group in any column by clicking the 'Add' button. You will be given a list of leaves to add
                         to the area and a field to enter a label. You can make an empty group.
                         You can also group any existing groups or leaves together. Check their checkboxes
-                        and click 'Group' to group the select areas together. Leaves grouped in the
+                        and click 'Merge' to group the select areas together. Leaves grouped in the
                         unassigned areas will be removed from unassigned and ordered within the red
                         area.
                     </p>
