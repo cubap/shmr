@@ -945,4 +945,10 @@ and open the template in the editor.
                 right: 0;
                 z-index: 10;
             }
+            .customPlaceholder{
+                height: 48px;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                background-color: yellow;
+            }
             

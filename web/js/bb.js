@@ -2581,7 +2581,15 @@ function dragEnd(event){
 }
 
 function dragHelp(event){
+    //http://www.kryogenix.org/code/browser/custom-drag-image.html
     event.dataTransfer.setData("text", event.target.id);
+    //event.target.style.left = "15px";
+    console.log("drag help, here is the event");
+    console.log(event);
+    event.dragend = function(){
+        console.log("detected drag end");
+        event.target.style.left = "0px";
+    }
 }
 
 function dropHelp(event){
@@ -2610,6 +2618,7 @@ function dropHelp(event){
     var targetClass = target.className;
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
+    child.style.left = "0px";
     if(child === null || child === undefined) return false;
     if(target.parentNode.className.indexOf("ordered") > -1){
         //cannot drop into locked leaves
@@ -2687,7 +2696,14 @@ function dropHelp(event){
           console.log("move "+child.getAttribute("rangeid"));
           console.log("from "+areaTakenFrom);
           console.log("to "+target.getAttribute("rangeid"));
-          moveAndUpdate(child.getAttribute("rangeid"), areaTakenFrom, target.getAttribute("rangeid"));
+          var toTarget = "";
+          if(target.className.indexOf("notBucket") > -1){
+              toTarget = target.parentNode.getAttribute("rangeid");
+          }
+          else{
+              toTarget = target.gettAttribute("rangeid");
+          }
+          moveAndUpdate(child.getAttribute("rangeid"), areaTakenFrom, toTarget);
       }
       else{
           $("#"+data).remove();
@@ -5250,7 +5266,12 @@ function populateAnnoForms(){
                     var index = $.inArray(remove, rangeList);
                     if(index === -1){
                        console.log("removing from bucket, dont fire update");
-                       removeRange(remove);
+                       if(leaf === "leaf"){
+                           removeLeaf(remove, bringup);
+                       }
+                       else{
+                           removeRange(remove);
+                       }
                        fireUpdate = false;
                     }
                     else{
@@ -5283,8 +5304,6 @@ function populateAnnoForms(){
                         }
                         else{
                             removeRange(remove); //delte the range entirely from the db
-                            
-                            
                         }
                    }
                    

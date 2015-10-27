@@ -311,7 +311,9 @@ and open the template in the editor.
         column.children(".doneSortable").show();
         column.children('.notBucket').sortable({
             helper:"clone",
-            placeholder:"ui-state-highlight"
+            placeholder: "customPlaceholder",
+            forcePlaceholderSize: true,
+            axis:"y"
         });
     }
     function stopSorting(column){
