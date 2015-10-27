@@ -67,7 +67,7 @@ var testManifest = {
     "sequences" : [{
       "@id" : "http://www.example.org/iiif/LlangBrev/sequence/normal",
       "@type" : "sc:Sequence",
-      "label" : "Llangantock Bucket",
+      "label" : "Llangattock Bucket",
       "canvases" : [{
       //This will be the anchor canvas in the anchor range
           "@id" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor",
@@ -995,7 +995,7 @@ var testManifest = {
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/parent_aggr",
   "@type":"sc:Range",
-  "label":"Llangantock Breviary Structure",
+  "label":"Llangattock Breviary Structure",
   "ranges" : [
       "http://www.example.org/iiif/LlangBrev/range/1",
       "http://www.example.org/iiif/LlangBrev/range/2",
@@ -4142,7 +4142,7 @@ function populateAnnoForms(){
         }
         if(leafLabel !== undefined){
             if(leafLabel === ""){
-                leafLabel = "Llangantock Breviary Page";
+                leafLabel = "Langattock Breviary Page";
             }
             var paramObj3 = {"@id": leaf, "label":leafLabel};
             var params3 = {"content":JSON.stringify(paramObj3)};
@@ -5013,7 +5013,7 @@ function populateAnnoForms(){
 	            var leafRangeObject = {
 	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                         "@type":"sc:Range",
-                        "label":"Llangantock Breviary Page" ,
+                        "label":"Llangattock Breviary Page" ,
                         "canvases" : [
                           //newCanvas1["@id"], //local
                           //newCanvas2["@id"] //local
@@ -8284,7 +8284,7 @@ function detectWho(){
 //        "_id" : ObjectId("55d64092a2a95a836b3520c9"),
 //        "@id" : "http://165.134.241.141/annotationstore/annotation/demoRange",
 //        "@type" : "sc:Range",
-//        "label" : "Llangantock Leaf_1",
+//        "label" : "Llangattock Leaf_1",
 //        "ranges" : [ ],
 //        "canvases" : [
 //                "http://165.134.241.141/annotationstore/annotation/demoCanvas_1",
@@ -8300,7 +8300,7 @@ function detectWho(){
 //{
 //        "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd61111735b26766d59ac",
 //        "@type" : "sc:Range",
-//        "label" : "Llangantock Leaf_Test",
+//        "label" : "Llangattock Leaf_Test",
 //        "ranges" : [ ],
 //        "canvases" : [
 //                "http://165.134.241.141/annotationstore/annotation/55dcd35f3ac6df4463633909",

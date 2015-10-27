@@ -46,7 +46,7 @@ public class GetManifestServlet extends HttpServlet {
             JSONObject metadata2 = new JSONObject();
             JSONObject metadata3 = new JSONObject();
             metadata1.element("label", "Title");
-            metadata1.element("value", "Llangantock Breviary Reconstruction");
+            metadata1.element("value", "Llangattock Breviary Reconstruction");
             metadata2.element("label", "Created By");
             metadata2.element("value", "SLU Center for Digital Humanities");
             metadata3.element("label", "Anchor Object"); //<img class='bbanchor' src='../brokenBooks/images/anchor.png'/>
@@ -82,8 +82,8 @@ public class GetManifestServlet extends HttpServlet {
         String canvases = "";
         if(username.equals("debra")){
             canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_debra\"}");
-            jo_sequence.element("label", "Llangantock Canvases");
-            rv.element("label", "Llangantock Breviary");
+            jo_sequence.element("label", "Llangattock Canvases");
+            rv.element("label", "Llangattock Breviary");
         }else if(username.equals("lisa")){
             canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_lisa\"}");
             jo_sequence.element("label", "Beauvais Missal Canvases");

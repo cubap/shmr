@@ -50,7 +50,7 @@ public class GetDemoManifestServlet extends HttpServlet {
         JSONObject metadata3 = new JSONObject();
         
         metadata1.element("label", "Title");
-        metadata1.element("value", "Llangantock Breviary Reconstruction");
+        metadata1.element("value", "Llangattock Breviary Reconstruction");
         metadata2.element("label", "Created By");
         metadata2.element("value", "SLU Center for Digital Humanities");
         metadata3.element("label", "Anchor Object"); //<img class='bbanchor' src='../brokenBooks/images/anchor.png'/>
@@ -60,7 +60,7 @@ public class GetDemoManifestServlet extends HttpServlet {
         a_metadata.add(metadata3);
         jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");
         jo_sequence.element("@type", "sc:Sequence");
-        jo_sequence.element("label", "Llangantock Canvases");
+        jo_sequence.element("label", "Llangattock Canvases");
         String canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"demo\":\"bb_demo\"}");
         if(null != canvases && "" != canvases){
             ja_canvases  = JSONArray.fromObject(canvases);
@@ -78,7 +78,7 @@ public class GetDemoManifestServlet extends HttpServlet {
         rv.element("structures", ja_ranges);
         //the canvases need to go into the first object of this array
         rv.element("sequences", ja_sequences);
-        rv.element("label", "The Llangantock Breviary");
+        rv.element("label", "The Llangattock Breviary");
         response.getWriter().print(rv.toString());
     }
 
