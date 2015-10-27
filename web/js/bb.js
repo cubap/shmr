@@ -5191,6 +5191,34 @@ function populateAnnoForms(){
       }
   }
   
+  function removeLeaf(rangeID, canvases){
+      console.log("removing leaf: "+rangeID);
+      console.log("removing canvases: "+canvases);
+      var windowurl = document.location.href;
+      if(windowurl.indexOf("demo=1")>-1){
+          $(targetToBreak).remove();
+      }
+      else{
+        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+        var paramObj = {"@id" : rangeID};
+        var params = {"content" : JSON.stringify(paramObj)}; 
+        $.post(removeURL, params, function(){
+            $(targetToBreak).remove();
+            var paramObj2 = {"@id":canvases[0]};
+            var params2 = {"content" : JSON.stringify(paramObj2)}; 
+            $.post(removeURL, params2, function(){
+                
+            });
+            var paramObj3 = {"@id":canvases[1]};
+            var params3 = {"content" : JSON.stringify(paramObj3)}; 
+            $.post(removeURL, params3, function(){
+                
+            });
+            console.log("All 3 removed");
+        });
+      }
+  }
+  
   function removeRange(rangeID){
       var windowurl = document.location.href;
       if(windowurl.indexOf("demo=1")>-1){
@@ -5207,44 +5235,61 @@ function populateAnnoForms(){
       
   }
   
-  function removeAndUpdate(remove, update, bringup){
-      var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
-      var paramObj = {"@id" : update};
-      var params = {"content" : JSON.stringify(paramObj)};
+  function removeAndUpdate(remove, update, bringup, leaf){
       var fireUpdate = true;
       var windowurl = document.location.href;
+      var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
       if(windowurl.indexOf("demo=1")>-1){
           removeRange(remove);
       }
-      $.post(getURL, params, function(data){
-          var rangeobj = JSON.parse(data);
-          var range = rangeobj[0];
-          var rangeList = range.ranges;
-          if(rangeList!==undefined && rangeList.length > 0){
-              var index = $.inArray(remove, rangeList);
-              if(index === -1){
-                 console.log("removing from bucket, dont fire update");
-                 removeRange(remove);
-                 fireUpdate = false;
-              }
-              else{
-                  rangeList.splice(index , 1 ); //remove range list that is being deleted;
+      $.each(rangeCollection, function(){
+          if(this["@id"] === update){
+                var range = this;
+                var rangeList = range.ranges;
+                if(rangeList!==undefined && rangeList.length > 0){
+                    var index = $.inArray(remove, rangeList);
+                    if(index === -1){
+                       console.log("removing from bucket, dont fire update");
+                       removeRange(remove);
+                       fireUpdate = false;
+                    }
+                    else{
+                        rangeList.splice(index , 1 ); //remove range list that is being deleted;
+                    }
+                }
+
+                if(fireUpdate){
+                  if(bringup.length > 0 && (leaf===undefined || leaf !== "leaf")){ //There are children that need to be brought up from the section being removed.
+                      //bringup is an array of those children's ids, merge them at the end of the current range list.  If it is a leaf, those are canvases.  
+                     rangeList =  $.merge(rangeList, bringup);
+                     $.each(bringup, function(){
+                        var paramObj2 = {"@id" : this, "within" : update};
+                        var params2 = {"content" : JSON.stringify(paramObj2)};
+                        $.post(updateURL, params2);
+                    });
+                  }
+                   this.ranges = rangeList;
+                   
+                   var paramObj1 = {"@id" : update, "ranges" : rangeList};
+                   var params1 = {"content" : JSON.stringify(paramObj1)};
+                   if(windowurl.indexOf("demo=1")===-1){
+                        $.post(updateURL, params1, function(){
+                            // update within of children brought
+                            
+                        });
+                        if(leaf === "leaf"){
+                            console.log("Remove LLLLLLLLLLLLLEAF");
+                            removeLeaf(remove, bringup);
+                        }
+                        else{
+                            removeRange(remove); //delte the range entirely from the db
+                            
+                            
+                        }
+                   }
+                   
               }
           }
-          
-          if(fireUpdate){
-            if(bringup.length > 0){ //There are children that need to be brought up from the section being removed.
-                //bringup is an array of those children's ids, merge them at the end of the current range list.  
-               rangeList =  $.merge(rangeList, bringup);
-            }
-             var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
-             var paramObj1 = {"@id" : update, "ranges" : rangeList};
-             var params1 = {"content" : JSON.stringify(paramObj1)};
-             $.post(updateURL, params1, function(){
-
-             });
-             removeRange(remove); //delte the range entirely from the db
-        }
       });
         
   }
@@ -5259,7 +5304,14 @@ function populateAnnoForms(){
       var childrenArray = [];
       if(group.attr("leaf") === "true"){
           //group.remove();
-          removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
+          $.each(rangeCollection, function(){
+              if(this["@id"] === group.attr("rangeid")){
+                  var canvases = this.canvases;
+                  childrenArray = canvases;
+                  removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray, "leaf");
+              }
+          });
+          
       }
       else{
           depth = parseInt(group.parent().parent().attr("depth"));
