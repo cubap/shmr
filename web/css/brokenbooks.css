@@ -607,7 +607,7 @@ and open the template in the editor.
                 right: 3px;
                 height: 20px;
                 width: 20px;
-                border: 1px solid blue;
+                /*border: 1px solid blue;*/
             }
             
             .folioCount img{
@@ -623,6 +623,7 @@ and open the template in the editor.
                 padding: 8px 8px 8px 8px;
                 margin-bottom: 8px;
                 border: 2px solid black;
+                font-size: 13px;
                 /* user cannot select text */
                 -webkit-touch-callout: none;
                 -webkit-user-select: none;
@@ -949,10 +950,10 @@ and open the template in the editor.
                 height: 48px;
                 margin-top: 5px;
                 margin-bottom: 5px;
-                background-color: yellow;
+                background-color: rgb(53,15,191);
             }
             .dropColor{
                 color: white;
-                background-color: #791C2D;
+                background-color: rgb(53,15,191);
             }
             

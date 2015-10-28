@@ -2360,8 +2360,7 @@ function toggleChildren(parentRange, admin, event){
   var existingInCopy = [];
   var leafCount = 0;
   $.each(children, function(){
-    var rangeID = $(this).attr("rangeID");
-    var leaf = $(this).attr("leaf");
+    var rangeID = $(this).attr("rangeID");    
     if($.inArray(rangeID, existingInCopy) == -1){
         existingInCopy.push(rangeID);
         var child = $(this).clone();
@@ -2384,10 +2383,10 @@ function toggleChildren(parentRange, admin, event){
 //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
   });
-  var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
-  if(admin == "admin"){
-     newArea.children(".unassigned").append(leafCountHTML);
-  }
+//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
+//  if(admin == "admin"){
+//     newArea.children(".unassigned").append(leafCountHTML);
+//  }
   if(outer.find("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
     outer.append(newArea);
     if(unassigned){
@@ -2596,10 +2595,17 @@ function dropHelp(event){
     console.log("Drop help");
     var windowURL = document.location.href;
     var targetTag = event.target.tagName;
+    var targetClass = event.target.className;
     var target = undefined;
     
     if(targetTag == "SPAN" || targetTag.indexOf("INPUT")>-1){
-        var eventParent = event.target.parentNode;
+        var eventParent = "";
+        if(targetClass.indexOf("countInt")>-1){
+            eventParent = event.target.parentNode.parentNode;
+        }
+        else{
+            eventParent = event.target.parentNode;
+        }
         target = eventParent;
     }
     else{
@@ -2718,9 +2724,9 @@ function dropHelp(event){
       if(child.className.indexOf("child")==-1)child.className = child.className+" child";
     //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
       $.each($(".arrangeSection"), function(){
-          $(this).children(".folioCount").remove();
+           $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
-            var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+            var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
             var leafURL = child.getAttribute("rangeID");
             var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
             if($(this).attr("leaf") === "true"){
@@ -2963,9 +2969,9 @@ function gatherRangesForArrange(which){
             //if(rangeCollection[i].parent !== undefined){
                 console.log("Put in unassigned."); 
                 outer.find(".rangeArrangementArea").find('.unassigned').append(currentRange);
-                var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html());
+                var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
                 oldFolioCount = oldFolioCount+1;
-                outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html(oldFolioCount);
+                outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
             }
             else{
               console.log("put in not bucket");
@@ -3045,9 +3051,9 @@ function gatherRangesForArrange(which){
                         if($.inArray(this["@id"], existingRanges) == -1){
                             if(isLeaf2 && rangeCollection[i].parent !== undefined){ //we need to put this leaf into the unassigned area
                                 console.log("Leaf in paggr, put in bucket");
-                                var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html());
+                                var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
                                 oldFolioCount = oldFolioCount+1;
-                                outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").html(oldFolioCount);
+                                outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
                                 outer.find(".rangeArrangementArea").find('.unassigned').append(embedRange);
                             }
                             else{
@@ -3102,7 +3108,7 @@ function gatherRangesForArrange(which){
           $.each(outer.find(".arrangeSection"), function(){
              $(this).children(".folioCount").remove();
                 var folioCount = $(this).find("div[leaf='true']").length;
-                var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
+                var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
                 var leafURL = $(this).attr("rangeID");
                 if($(this).attr("leaf") === "true"){
                     var leafIsInURL = $(this).parent().attr("rangeID");
@@ -4573,7 +4579,7 @@ function populateAnnoForms(){
                   addLeaves = 1;
               }
               else{
-                  addLeaves = parseInt($(this).parent().children(".folioCount").html());
+                  addLeaves = parseInt($(this).parent().find(".folioCount").find(".countInt").html());
               }
               leafCount += addLeaves;
           });
@@ -4600,7 +4606,7 @@ function populateAnnoForms(){
               }
               newGroup.append(newChild);
             });
-            var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
+            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
             newGroup.append(leafCountHTML);
             var depth = theArea.attr("depth");
             areaForNewGroup.children(".notBucket").append(newGroup);
@@ -5193,7 +5199,13 @@ function populateAnnoForms(){
           return false;
       }
       if(tagName == "SPAN" || tagName == "INPUT" || className.indexOf("folioCount") > -1){
-          var parent = event.target.parentNode;
+          var parent = "";
+          if(className.indexOf("countInt") > -1){
+              parent = event.target.parentNode.parentNode;
+          }
+          else{
+              parent = event.target.parentNode;
+          }
           targetToBreak = parent;
       }
       else{
@@ -5404,9 +5416,9 @@ function populateAnnoForms(){
       else{
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var leafCount = checkedLeaves.length;
-          var leafCountHTML = $("<span class='folioCount'>"+leafCount+"</span>");
-          var bucket = $("div[depth='1']").find(".unassigned").children(".arrangeSection");
-          var bucketCount = parseInt(bucket.find(".folioCount").html());
+          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
+          var bucket = $("div[depth='1']").find(".unassigned");
+          var bucketCount = parseInt(bucket.find(".folioCount").find(".countInt").html());
           var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" "+toggle1+" ><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           if(depth ===1){
@@ -5430,15 +5442,13 @@ function populateAnnoForms(){
                       if(bucket.children(".arrangeSection[rangeid='"+leafID+"']").length > 0){
                             bucket.children(".arrangeSection[rangeid='"+leafID+"']").remove();
                             bucketCount -= 1;
-                            bucket.find(".folioCount").html(bucketCount);
+                            bucket.find(".folioCount").find(".countInt").html(bucketCount);
                       }
                   }
               });
           });
           newGroup.append(leafCountHTML);
-          //$(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").append(newGroup);
-          
-          
+
           if(windowURL.indexOf("demo=1") > -1){
                $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append(newGroup); //append the new group object to the DOM
                 newGroup.show();
