@@ -2605,6 +2605,7 @@ function dropHelp(event){
     else{
         target = event.target;
     }
+  
     var outer = $(target).closest(".arrangeTrail");
     console.log("Drop target");
     console.log(target);
@@ -2620,6 +2621,10 @@ function dropHelp(event){
     var child = document.getElementById(data);
     child.style.left = "0px";
     if(child === null || child === undefined) return false;
+    if(target.getAttribute("leaf") === "true"){
+        alert("You cannot drop into a leaf");
+        return false;
+    }
     if(target.parentNode.className.indexOf("ordered") > -1){
         //cannot drop into locked leaves
         console.log("cannot drop into locked leaves");
