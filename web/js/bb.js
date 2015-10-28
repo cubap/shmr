@@ -2690,7 +2690,14 @@ function dropHelp(event){
         child.setAttribute("relation", relation);
         target.appendChild(child);
         //TODO append consecutive leaves as well.
-        updateRange(target.getAttribute("rangeid"), child.getAttribute("rangeid"), ""); //do not put the append flag, the following code handles that.
+        var targetID= "";
+        if(target.className.indexOf("notBucket") > -1){
+              targetID = target.parentNode.getAttribute("rangeid");
+          }
+          else{
+              targetID = target.getAttribute("rangeid");
+          }
+        updateRange(targetID, child.getAttribute("rangeid"), ""); //do not put the append flag, the following code handles that.
       
       if(windowURL.indexOf("demo=1") === -1){
           console.log("move "+child.getAttribute("rangeid"));
@@ -2698,10 +2705,14 @@ function dropHelp(event){
           console.log("to "+target.getAttribute("rangeid"));
           var toTarget = "";
           if(target.className.indexOf("notBucket") > -1){
+              console.log("class name is notBucket.  Get parent");
+              console.log(target.parentNode.getAttribute("rangeid"));
               toTarget = target.parentNode.getAttribute("rangeid");
           }
           else{
-              toTarget = target.gettAttribute("rangeid");
+              console.log("dropped in an actual section.");
+              console.log(target.getAttribute("rangeid"));
+              toTarget = target.getAttribute("rangeid");
           }
           moveAndUpdate(child.getAttribute("rangeid"), areaTakenFrom, toTarget);
       }
@@ -2743,6 +2754,7 @@ function dropHelp(event){
 
 function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
     //Remove rangeMoved from rangeMovedFrom's range list
+    console.log("move and update with "+rangeMoved, rangeMovedFrom, rangeMovedTo)
     var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var paramObj = {"@id" : rangeMovedFrom};
     var params = {"content" : JSON.stringify(paramObj)};
@@ -4719,6 +4731,7 @@ function populateAnnoForms(){
 		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
 	*/
 	function updateRange(rangeID, leaf, arrange){
+            console.log("in update range with "+rangeID, leaf, arrange);
             var rangeToUpdate = {};
             var pageURL = document.location.href;
             var entry = {};
