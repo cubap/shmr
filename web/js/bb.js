@@ -2850,6 +2850,33 @@ function dragOverHelp(event){
 
 function gatherRangesForArrange(which){
     console.log("gather ranges "+which);
+    
+    var windowurl = document.location.href;
+    var forProject = detectWho();
+    var properties={"@type" : "sc:Range", "forProject":forProject};
+//this will be superfluous when the annotation store has ranges from other projects
+    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var params = {"content" : JSON.stringify(properties)};
+    if(windowurl.indexOf("demo=1") > -1){
+        rangeCollection = testManifest.structures;
+        populateRangesToDOM(which);
+    }
+    else{
+        $.post(url, params)
+        .done(function(data){
+                if(typeof data === "object"){
+                    rangeCollection = data;
+                }
+                else{
+                    rangeCollection = JSON.parse(data);
+                }
+               populateRangesToDOM(which);
+            });
+    }
+
+}
+
+function populateRangesToDOM(which){
     var existingRanges = [];
     var uniqueID = 0;
     var outer = "";
@@ -2860,276 +2887,236 @@ function gatherRangesForArrange(which){
     else if (which == 2){
         outer = $(".adminTrail");
     }
-    var windowurl = document.location.href;
-    var forProject = detectWho();
-    var properties={"@type" : "sc:Range", "forProject":forProject};
-//this will be superfluous when the annotation store has ranges from other projects
-    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
-    var params = {"content" : JSON.stringify(properties)};
-    $.post(url, params)
-    .done(function(data){
-        if(windowurl.indexOf("demo=1") > -1){
-            rangeCollection = testManifest.structures;
-        }
-        else{
-            if(typeof data === "object"){
-                rangeCollection = data;
-//                if(parentAggr!==""){
-//                    rangeCollection.splice(0, 0, parentAggr);
-//                }
-            }
-            else{
-                rangeCollection = JSON.parse(data);
-//                if(parentAggr!==""){
-//                    rangeCollection.splice(0, 0, parentAggr);
-//                }
-            }
-        }
         for(var i = 0; i<rangeCollection.length; i++){
-        uniqueID += 1;
-        var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
-        var outerRangeLabel = rangeCollection[i].label+" <br>";
-        var existingRangeToUpdate = ""; 
-        var tag = "parent";
-        var relation = "";
-        var isLeaf = false;
-        var admin = "";
-        var isOrdered = rangeCollection[i].isOrdered; //NEED TO DESIGN THIS TAG IN THE OBJECT
-        var currentRange = "";
-        var dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-        var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-        var canvases = rangeCollection[i].canvases;
-        var checkbox = "<input class='putInGroup' type='checkbox' />";
-        var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
-        var lockStatusUp = rangeCollection[i].lockedup;
-        var lockStatusDown = rangeCollection[i].lockeddown;
-        var lockitup = "";
-        var lockitdown = "";
-        var lockit = "";
+            uniqueID += 1;
+            var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
+            var outerRangeLabel = rangeCollection[i].label+" <br>";
+            var existingRangeToUpdate = ""; 
+            var tag = "parent";
+            var relation = "";
+            var isLeaf = false;
+            var admin = "";
+            var isOrdered = rangeCollection[i].isOrdered; //NEED TO DESIGN THIS TAG IN THE OBJECT
+            var currentRange = "";
+            var dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+            var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+            var canvases = rangeCollection[i].canvases;
+            var checkbox = "<input class='putInGroup' type='checkbox' />";
+            var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
+            var lockStatusUp = rangeCollection[i].lockedup;
+            var lockStatusDown = rangeCollection[i].lockeddown;
+            var lockitup = "";
+            var lockitdown = "";
+            var lockit = "";
 
-        if(rangeCollection[i].parent && rangeCollection[i].parent.indexOf("paggr")>-1 || rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ 
-          tag = "parent pAggr";
-          outerRangeLabel = "";
-          bucketID = rangeCollection[i]["@id"];
-          $("div[rangeid='bucket']").attr("rangeid",rangeCollection[i]["@id"]);
-        }
-        relation = rangeCollection[i]["@id"];
+            if(rangeCollection[i].parent && rangeCollection[i].parent.indexOf("paggr")>-1 || rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ 
+              tag = "parent pAggr";
+              outerRangeLabel = "";
+              bucketID = rangeCollection[i]["@id"];
+              $("div[rangeid='bucket']").attr("rangeid",rangeCollection[i]["@id"]);
+            }
+            relation = rangeCollection[i]["@id"];
 
-        if(which === 2){
-            tag += " sortOrder";
-            admin = "admin";
-            checkbox = "<input class='putInGroup' type='checkbox' />";
-        }
-        else{
-          dragAttribute = "";
-          dropAttribute = "";
-          rightClick = "";
-          checkbox = "";
-        }
-        if(canvases!==undefined && canvases.length !== 0){
-          isLeaf = true;
-          tag="child";
-          dropAttribute = "";
-          if(which == 2){
-            if(lockStatusUp!==undefined && lockStatusUp==="true"){
-                lockitup = "<div class='lockedUp' onclick=\"unlock('"+relation+"','up',event);\"> </div>";
-                dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-                console.log("outer with lock status, not draggable");
-            }
-            else{
-                lockitup = "<div class='lockUp' onclick=\"lock('"+relation+"','up',event);\"> </div>";
-            }
-            if(lockStatusDown!==undefined && lockStatusDown==="true"){
-                lockitdown = "<div class='lockedDown' onclick=\"unlock('"+relation+"','down',event);\"> </div>";
-                dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-                console.log("outer with lock status, not draggable");
-            }
-            else{
-                lockitdown = "<div class='lockDown' onclick=\"lock('"+relation+"','down',event);\"> </div>";
-            }
-            lockit = lockitup + lockitdown;
-        }
-          //checkbox = "";
-        }
-        else{
-          isLeaf = false;
-          // dragAttribute = "";
-          // dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-        }
-        if(isOrdered === "true"){
-            currentRange = $("<div class='arrangeSection ordered child' isOrdered='"+isOrdered+"' "+dragAttribute+" rangeID='"+relation+"'></div>");
-        }
-        else{
-            currentRange = $("<div isOrdered='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" "+rightClick+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+relation+"'><span>"+outerRangeLabel+"</span> "+checkbox+" "+lockit+"  </div>");
-        }
-        if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
-          existingRanges.push(rangeCollection[i]["@id"]);
-          if(isLeaf){
-            allLeaves.push(rangeCollection[i]);
-            //if(rangeCollection[i].parent !== undefined){
-                console.log("Put in unassigned."); 
-                outer.find(".rangeArrangementArea").find('.unassigned').append(currentRange);
-                var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
-                oldFolioCount = oldFolioCount+1;
-                outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
-            }
-            else{
-              console.log("put in not bucket");
-              outer.find(".rangeArrangementArea").find('.notBucket').append(currentRange);
-            }
-          //}
-        }
-        else{
-          //dragAttribute = "id='drag_"+uniqueID+"165.134.241.141' draggable='true' ondragstart='dragHelp(event);'";
-          console.log("in array 1");
-          currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
-        }
-        //Create an html range object that can be added
-        var innerRanges = rangeCollection[i].ranges;       
-        if(innerRanges.length > 0){ //If there are inner ranges
-            var tag2 = "child";
             if(which === 2){
-                tag2 += " sortOrder";
+                tag += " sortOrder";
+                admin = "admin";
+                checkbox = "<input class='putInGroup' type='checkbox' />";
             }
-            for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
-                uniqueID += 1;
-                dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-                var thisRange = innerRanges[j];
-                
-                var lockitup2 = "";
-                var lockitdown2 = "";
-                var lockit2 = "";
-                var isLeaf2 = false;
-                $.each(rangeCollection, function(){ //check each range in the collection
-                    if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
-                        var thisLabel = this.label;
-                        var thisCanvases = this.canvases;
-                        var thisIsOrdered = this.isOrdered;
-                        var checkbox2 = "<input class='putInGroup' type='checkbox' />";
-                        var lockStatusUp2 = this.lockedup;
-                        var lockStatusDown2 = this.lockeddown;
-                        if(thisCanvases!==undefined && thisCanvases.length !== 0){
-                            isLeaf2 = true;
-                            dropAttribute = "";
-                            if(which==2){
-                              if(lockStatusUp2!==undefined && lockStatusUp2==="true"){
-                                  console.log("inner with lock status, not draggable");
-                                  lockitup2 = "<div class='lockedUp' onclick=\"unlock('"+this['@id']+"','up',event);\"> </div>";
-                                  dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-                              }
-                              else{
-                                  lockitup2 = "<div class='lockUp' onclick=\"lock('"+this['@id']+"','up',event);\"> </div>";
-                              }
-                              if(lockStatusDown2!==undefined && lockStatusDown2==="true"){
-                                  console.log("inner with lock status, not draggable");
-                                  lockitdown2 = "<div class='lockedDown' onclick=\"unlock('"+this['@id']+"','down',event);\"> </div>";
-                                  dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
-                              }
-                              else{
-                                  lockitdown2 = "<div class='lockDown' onclick=\"lock('"+this['@id']+"','down',event);\"> </div>";
-                              }
-                              lockit2 = lockitup2 + lockitdown2;
-                            }
-                        }
-                        else{
-                          isLeaf2 = false;
-                          dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
-                        }
-                        if(which == 1){
-                          dropAttribute = "";
-                          dragAttribute = "";
-                          rightClick = "";
-                          checkbox2 = "";
-                        }
-                        var embedRange = "";
-                        if(thisIsOrdered === "true"){                          
-                            embedRange = $("<div class='arrangeSection ordered child' isOrdered='"+thisIsOrdered+"' "+dragAttribute+" rangeID='"+this['@id']+"'></div>");
-                        }
-                        else{
-                            embedRange = $("<div isOrdered='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf2+"' relation='"+relation+"' rangeID='"+this['@id']+"'><span>"+thisLabel+"</span> "+checkbox2+" "+lockit2+"</div>"); //Create an html range object for the inner range.
-                        }
-                        if($.inArray(this["@id"], existingRanges) == -1){
-                            if(isLeaf2 && rangeCollection[i].parent !== undefined){ //we need to put this leaf into the unassigned area
-                                console.log("Leaf in paggr, put in bucket");
-                                var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
-                                oldFolioCount = oldFolioCount+1;
-                                outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
-                                outer.find(".rangeArrangementArea").find('.unassigned').append(embedRange);
-                            }
-                            else{
-                                console.log("leaf in current range range.");
-                                currentRange.append(embedRange);
-                            }
-                            //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
-                            existingRanges.push(embedRange.attr("rangeID"));
-                            if(isLeaf2){
-                              allLeaves.push(this);
-                            }
-                        }
-                        else{
-                            console.log("in array 2");                          
-                            var rangeToMove = outer.find(".arrangeSection[rangeID='"+this["@id"]+"']");
-                            if(isLeaf2 && currentRange.attr("class").indexOf("pAggr") > -1 ){
-                                console.log("Leaf in paggr, remains in bucket");
-                            }
-                            else{
-                                currentRange.append(rangeToMove);
-                            /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
-                                rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
-                            }
-                            
-                        }
-                    } 
-                });
+            else{
+              dragAttribute = "";
+              dropAttribute = "";
+              rightClick = "";
+              checkbox = "";
             }
-        }
-        else{ //There are no inner ranges. It could be a section with no children or a leaf.  
+            if(canvases!==undefined && canvases.length !== 0){
+              isLeaf = true;
+              tag="child";
+              dropAttribute = "";
+              if(which == 2){
+                if(lockStatusUp!==undefined && lockStatusUp==="true"){
+                    lockitup = "<div class='lockedUp' onclick=\"unlock('"+relation+"','up',event);\"> </div>";
+                    dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                    console.log("outer with lock status, not draggable");
+                }
+                else{
+                    lockitup = "<div class='lockUp' onclick=\"lock('"+relation+"','up',event);\"> </div>";
+                }
+                if(lockStatusDown!==undefined && lockStatusDown==="true"){
+                    lockitdown = "<div class='lockedDown' onclick=\"unlock('"+relation+"','down',event);\"> </div>";
+                    dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                    console.log("outer with lock status, not draggable");
+                }
+                else{
+                    lockitdown = "<div class='lockDown' onclick=\"lock('"+relation+"','down',event);\"> </div>";
+                }
+                lockit = lockitup + lockitdown;
+            }
+              //checkbox = "";
+            }
+            else{
+              isLeaf = false;
+              // dragAttribute = "";
+              // dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+            }
+            if(isOrdered === "true"){
+                currentRange = $("<div class='arrangeSection ordered child' isOrdered='"+isOrdered+"' "+dragAttribute+" rangeID='"+relation+"'></div>");
+            }
+            else{
+                currentRange = $("<div isOrdered='"+isOrdered+"' "+dropAttribute+" "+dragAttribute+" "+rightClick+" leaf='"+isLeaf+"' onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag+"' rangeID='"+relation+"'><span>"+outerRangeLabel+"</span> "+checkbox+" "+lockit+"  </div>");
+            }
+            if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
+              existingRanges.push(rangeCollection[i]["@id"]);
+              if(isLeaf){
+                allLeaves.push(rangeCollection[i]);
+                //if(rangeCollection[i].parent !== undefined){
+                    console.log("Put in unassigned."); 
+                    outer.find(".rangeArrangementArea").find('.unassigned').append(currentRange);
+                    var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
+                    oldFolioCount = oldFolioCount+1;
+                    outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
+                }
+                else{
+                  console.log("put in not bucket");
+                  outer.find(".rangeArrangementArea").find('.notBucket').append(currentRange);
+                }
+              //}
+            }
+            else{
+              //dragAttribute = "id='drag_"+uniqueID+"165.134.241.141' draggable='true' ondragstart='dragHelp(event);'";
+              console.log("in array 1");
+              currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
+            }
+            //Create an html range object that can be added
+            var innerRanges = rangeCollection[i].ranges;       
+            if(innerRanges.length > 0){ //If there are inner ranges
+                var tag2 = "child";
+                if(which === 2){
+                    tag2 += " sortOrder";
+                }
+                for(var j = 0; j<innerRanges.length;j++){ //go over each inner range
+                    uniqueID += 1;
+                    dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                    var thisRange = innerRanges[j];
 
-        }
-        }
-        //get leaves into the bucket.  This is just for now.  This makes leaves unordered and I TODO: need to put in an isOrdered tag with these ranges.  
-        //var objectsForBucket = outer.find('.rangeArrangementArea').find('.notBucket').children('div[leaf="true"]');
-        //objectsForBucket.attr("isordered", "false");
-        //$(".unassigned").append(objectsForBucket);
-        //Undo the parent aggregator wrapper.
-        var pAggrChildren = outer.find('.pAggr').children('div');
-        outer.find('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
-        /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
-        pAggrChildren.removeClass("child").addClass("parent");
-        $.each(pAggrChildren,function(){
-            if($(this).attr("id") !== undefined){
-                var newID = $(this).attr("id").replace("_tmp", "");
-                $(this).attr("id", newID);
+                    var lockitup2 = "";
+                    var lockitdown2 = "";
+                    var lockit2 = "";
+                    var isLeaf2 = false;
+                    $.each(rangeCollection, function(){ //check each range in the collection
+                        if(this["@id"] === thisRange){ //find the object by ID among the collection.  When you find it, gets its information.
+                            var thisLabel = this.label;
+                            var thisCanvases = this.canvases;
+                            var thisIsOrdered = this.isOrdered;
+                            var checkbox2 = "<input class='putInGroup' type='checkbox' />";
+                            var lockStatusUp2 = this.lockedup;
+                            var lockStatusDown2 = this.lockeddown;
+                            if(thisCanvases!==undefined && thisCanvases.length !== 0){
+                                isLeaf2 = true;
+                                dropAttribute = "";
+                                if(which==2){
+                                  if(lockStatusUp2!==undefined && lockStatusUp2==="true"){
+                                      console.log("inner with lock status, not draggable");
+                                      lockitup2 = "<div class='lockedUp' onclick=\"unlock('"+this['@id']+"','up',event);\"> </div>";
+                                      dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                                  }
+                                  else{
+                                      lockitup2 = "<div class='lockUp' onclick=\"lock('"+this['@id']+"','up',event);\"> </div>";
+                                  }
+                                  if(lockStatusDown2!==undefined && lockStatusDown2==="true"){
+                                      console.log("inner with lock status, not draggable");
+                                      lockitdown2 = "<div class='lockedDown' onclick=\"unlock('"+this['@id']+"','down',event);\"> </div>";
+                                      dragAttribute = "id='drag_"+uniqueID+"_tmp' draggable='false' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
+                                  }
+                                  else{
+                                      lockitdown2 = "<div class='lockDown' onclick=\"lock('"+this['@id']+"','down',event);\"> </div>";
+                                  }
+                                  lockit2 = lockitup2 + lockitdown2;
+                                }
+                            }
+                            else{
+                              isLeaf2 = false;
+                              dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
+                            }
+                            if(which == 1){
+                              dropAttribute = "";
+                              dragAttribute = "";
+                              rightClick = "";
+                              checkbox2 = "";
+                            }
+                            var embedRange = "";
+                            if(thisIsOrdered === "true"){                          
+                                embedRange = $("<div class='arrangeSection ordered child' isOrdered='"+thisIsOrdered+"' "+dragAttribute+" rangeID='"+this['@id']+"'></div>");
+                            }
+                            else{
+                                embedRange = $("<div isOrdered='"+thisIsOrdered+"' "+dragAttribute+" "+dropAttribute+" "+rightClick+" onclick=\"toggleChildren($(this), '"+admin+"', event);\" class='arrangeSection "+tag2+"' leaf='"+isLeaf2+"' relation='"+relation+"' rangeID='"+this['@id']+"'><span>"+thisLabel+"</span> "+checkbox2+" "+lockit2+"</div>"); //Create an html range object for the inner range.
+                            }
+                            if($.inArray(this["@id"], existingRanges) == -1){
+                                if(isLeaf2 && rangeCollection[i].parent !== undefined){ //we need to put this leaf into the unassigned area
+                                    console.log("Leaf in paggr, put in bucket");
+                                    var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
+                                    oldFolioCount = oldFolioCount+1;
+                                    outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
+                                    outer.find(".rangeArrangementArea").find('.unassigned').append(embedRange);
+                                }
+                                else{
+                                    console.log("leaf in current range range.");
+                                    currentRange.append(embedRange);
+                                }
+                                //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
+                                existingRanges.push(embedRange.attr("rangeID"));
+                                if(isLeaf2){
+                                  allLeaves.push(this);
+                                }
+                            }
+                            else{
+                                console.log("in array 2");                          
+                                var rangeToMove = outer.find(".arrangeSection[rangeID='"+this["@id"]+"']");
+                                if(isLeaf2 && currentRange.attr("class").indexOf("pAggr") > -1 ){
+                                    console.log("Leaf in paggr, remains in bucket");
+                                }
+                                else{
+                                    currentRange.append(rangeToMove);
+                                /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
+                                    rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
+                                }
+
+                            }
+                        } 
+                    });
+                }
             }
-        });
-        $('.pAggr').remove();    
-        //set folio counts for all sections in the admin interface, ignore leaves.
-        if(which == 2){
-          $.each(outer.find(".arrangeSection"), function(){
-             $(this).children(".folioCount").remove();
-                var folioCount = $(this).find("div[leaf='true']").length;
-                var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
-                var leafURL = $(this).attr("rangeID");
-                if($(this).attr("leaf") === "true"){
-                    var leafIsInURL = $(this).parent().attr("rangeID");
-                    folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+            else{ //There are no inner ranges. It could be a section with no children or a leaf.  
+
+            }
+        }
+        var pAggrChildren = outer.find('.pAggr').children('div');
+            outer.find('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
+            /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
+            pAggrChildren.removeClass("child").addClass("parent");
+            $.each(pAggrChildren,function(){
+                if($(this).attr("id") !== undefined){
+                    var newID = $(this).attr("id").replace("_tmp", "");
+                    $(this).attr("id", newID);
                 }
-                else if($(this).attr("isOrdered") === "true"){
-                    folioCountHTML="";
-                }
-                $(this).append(folioCountHTML);
-           });
-        }
-    })
-    .fail(function(){
-        if(windowurl.indexOf("demo=1") > -1){
-            rangeCollection = testManifest.structures;
-        }
-        else{
-            //alert("Could not get ranges");
-        }
-    });
-    
+            });
+            $('.pAggr').remove();    
+            //set folio counts for all sections in the admin interface, ignore leaves.
+            if(which == 2){
+              $.each(outer.find(".arrangeSection"), function(){
+                 $(this).children(".folioCount").remove();
+                    var folioCount = $(this).find("div[leaf='true']").length;
+                    var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
+                    var leafURL = $(this).attr("rangeID");
+                    if($(this).attr("leaf") === "true"){
+                        var leafIsInURL = $(this).parent().attr("rangeID");
+                        folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                    }
+                    else if($(this).attr("isOrdered") === "true"){
+                        folioCountHTML="";
+                    }
+                    $(this).append(folioCountHTML);
+               });
+            }
 }
 
 /*
