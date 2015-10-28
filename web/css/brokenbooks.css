@@ -951,4 +951,8 @@ and open the template in the editor.
                 margin-bottom: 5px;
                 background-color: yellow;
             }
+            .dropColor{
+                color: white;
+                background-color: #791C2D;
+            }
             

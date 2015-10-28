@@ -2679,22 +2679,11 @@ function dropHelp(event){
     console.log("Append?");
     console.log(append);
     if(append){
-       // var consecutiveLocks = "";
-        //var area = $("#"+data).closest(".rangeArrangementArea");
-        //consecutiveLocks = event.dataTransfer.getData("moveWith");
-//        if(consecutiveLocks !== ""){
-//            console.log("move with consective children");
-//            console.log(consecutiveLocks);
-//        }
-//        consecutiveLocks = consecutiveLocks.split(",");
-//        console.log(consecutiveLocks);
-//        consecutiveLocks.append(child.attr("rangeid"));
-//        $.each(consecutiveLocks, function(){
 
-//        });
         child.setAttribute("relation", relation);
         target.appendChild(child);
-        //TODO append consecutive leaves as well.
+        //make the target flash
+        dropFlash($(target));
         var targetID= "";
         if(target.className.indexOf("notBucket") > -1){
               targetID = target.parentNode.getAttribute("rangeid");
@@ -2755,6 +2744,16 @@ function dropHelp(event){
       event.preventDefault();
       return false;
     }    
+}
+
+function dropFlash($elem){
+    if($elem.attr("class").indexOf("notBucket") === -1){
+        $elem.addClass("dropColor");
+    }
+    $elem.effect("bounce", {}, 400);
+    setTimeout(function(){
+        $elem.removeClass("dropColor");
+    }, 400);
 }
 
 function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
@@ -8426,18 +8425,5 @@ function detectWho(){
 //}
 //
 //{
-//        "@id" : "http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94",
-//        "@type" : "sc:Canvas",
-//        "demo" : "bb_demo",
-//        "forProject" : "broken_books",
-//        "height" : 300,
-//        "images" : [ ],
-//        "label" : "Cover Page: Missing Image",
-//        "otherContent" : [
-//                {
-//                        "@id" : "http://165.134.241.141/annotationstore/annotation/55dccff2b826ff620c6462b0",
-//                        "@type" : "sc:AnnotationList"
-//                }
-//        ],
-//        "width" : 200
-//}
+        
+
