@@ -49,6 +49,7 @@ and open the template in the editor.
             }
             .intro{
                 display: block;
+                font-family: sans-serif;
             }
             .start{
                 display: none;
@@ -365,6 +366,7 @@ and open the template in the editor.
                 white-space: normal;
                 padding: 5px;
                 color: wheat;
+                font-family: sans-serif;
             }
             #fullImgContainer{
                 position: absolute;
@@ -575,6 +577,7 @@ and open the template in the editor.
                 background-color: black;
                 color: white;
                 z-index: 2;
+                font-family: sans-serif;
             }
             .uploadness textarea{
                 display: inline-table;
@@ -983,7 +986,7 @@ and open the template in the editor.
                 position: absolute;
             }
             textarea, input[type="text"]{
-                font-family: serif;
+                font-family: serif!important ;
             }
             .ui-tabs-nav{
                 font-family: sans-serif;

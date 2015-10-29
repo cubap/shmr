@@ -2769,7 +2769,6 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
         var rangeList = range.ranges;
         console.log("original range list");
         console.log(rangeList);
-        //TODO need to do this for each consecutive range being moved
         var index = $.inArray(rangeMoved, rangeList);
         if(index > -1){
             console.log("range in range list, splicing out.");
@@ -2804,7 +2803,6 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
                     //update within of ranged dropped to the rangeID it was dropped into
                     console.log("update within of range moved to be within the range it was moved to");
                     console.log(rangeMoved, rangeMovedTo);
-                    //TODO need to do this for each consecutive range
                     var paramObj4 = {"@id":rangeMoved, "within":rangeMovedTo};
                     var params4 = {"content":JSON.stringify(paramObj4)};
                     $.post(updateURL, params4, function(){
@@ -3111,6 +3109,8 @@ function populateRangesToDOM(which){
                     $(this).append(folioCountHTML);
                });
             }
+            $("#saveText").html("Saving...");
+            $("#saveCover").hide();
 }
 
 /*
@@ -4468,6 +4468,7 @@ function populateAnnoForms(){
 		Add the range object to the structures array in the manifest object. 
 	*/
 	function createNewRange(newRangeObject, current, newLabel, value, list){
+            //TODO: we could make selected highlighted pices work in the demo, it would have to be done here.
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		//testManifest.structures.push(newRangeObject); //local
@@ -4796,14 +4797,7 @@ function populateAnnoForms(){
                             $("#arrangeCrumb").append(addedToSection);
                           }
                         });
-                        //TODO need to do this for each child moved as well.
-//                        $.each(consecutiveLocks, function(){
-//                            var paramObj1 = {"@id":this, "within":rangeID};
-//                            var params1 = {"content": JSON.stringify(paramObj1)};
-//                            $.post(updateURL, params1, function(){ //update the range being added in's within field to be within the range it was added to
-//
-//                            });
-//                        });
+
                     }
                 });
             });
@@ -6906,7 +6900,6 @@ function lock(leafURI, direction, event){
 }
 
 function unlock(leafURI, direction, event){
-    //TODO:  You now have to pop the unlocked leaf out of the ordered range and place immediately after, update the range popped out of and into.
     var leafURIcpy = leafURI;
     var windowURL = document.location.href;
     var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
