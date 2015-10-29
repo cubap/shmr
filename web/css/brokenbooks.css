@@ -177,7 +177,6 @@ and open the template in the editor.
                 width: 300px;
             }
             .formLabel{
-                /*font-family: helvetica;*/
                 font-family: sans-serif;
                 letter-spacing:0.1em;
                 text-align:center;
@@ -351,7 +350,7 @@ and open the template in the editor.
                 cursor: help;
                 width: 30px;
                 height: 26px;
-                display: inherit;
+                /*display: inherit;*/
             }
             .helperContent{
                 display: none;
