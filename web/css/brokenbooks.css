@@ -18,7 +18,7 @@ and open the template in the editor.
                 background-color: black;
                 border: 1px solid white;
                 cursor: pointer;
-                font-family: serif;
+                font-family: sans-serif;
                 color: white;
                 font-variant: small-caps;
             }
@@ -176,7 +176,8 @@ and open the template in the editor.
                 width: 300px;
             }
             .formLabel{
-                font-family: helvetica;
+                /*font-family: helvetica;*/
+                font-family: sans-serif;
                 letter-spacing:0.1em;
                 text-align:center;
                 line-height: 145%;
@@ -417,6 +418,7 @@ and open the template in the editor.
 
             .content{
                 border: 2px solid black;
+                font-family: serif;
             }
             select{
                 border: 2px solid black;
@@ -625,7 +627,8 @@ and open the template in the editor.
                 padding: 8px 8px 8px 8px;
                 margin-bottom: 8px;
                 border: 2px solid black;
-                font-size: 13px;
+                font-size: 15px;
+                font-family: serif;
                 /* user cannot select text */
                 -webkit-touch-callout: none;
                 -webkit-user-select: none;
@@ -978,5 +981,11 @@ and open the template in the editor.
                 right: -3px !important;
                 top: -7px !important;
                 position: absolute;
+            }
+            textarea, input[type="text"]{
+                font-family: serif;
+            }
+            .ui-tabs-nav{
+                font-family: sans-serif;
             }
             

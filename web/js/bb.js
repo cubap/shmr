@@ -2582,13 +2582,8 @@ function dragEnd(event){
 function dragHelp(event){
     //http://www.kryogenix.org/code/browser/custom-drag-image.html
     event.dataTransfer.setData("text", event.target.id);
-    //event.target.style.left = "15px";
-    console.log("drag help, here is the event");
-    console.log(event);
-    event.dragend = function(){
-        console.log("detected drag end");
-        event.target.style.left = "0px";
-    }
+    console.log("drag help, here is the id: "+event.target.id);
+   
 }
 
 function dropHelp(event){
@@ -2625,7 +2620,6 @@ function dropHelp(event){
     var targetClass = target.className;
     var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
     var child = document.getElementById(data);
-    child.style.left = "0px";
     if(child === null || child === undefined) return false;
     if(target.getAttribute("leaf") === "true"){
         alert("You cannot drop into a leaf");
