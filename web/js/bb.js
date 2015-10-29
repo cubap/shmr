@@ -2360,9 +2360,9 @@ function toggleChildren(parentRange, admin, event){
   var existingInCopy = [];
   var leafCount = 0;
   $.each(children, function(){
-    var rangeID = $(this).attr("rangeID");    
-    if($.inArray(rangeID, existingInCopy) == -1){
-        existingInCopy.push(rangeID);
+    var rangeID2 = $(this).attr("rangeID");    
+    if($.inArray(rangeID2, existingInCopy) == -1){
+        existingInCopy.push(rangeID2);
         var child = $(this).clone();
         if (admin == "admin"){
             var childID = child.attr('id');
@@ -3256,9 +3256,9 @@ function organizeRanges(){
                               canvasImg = "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png";
                           }                         
                           $.each(currentCanvasAnnotationsLists, function(){
-                              var annoListID = String(this["@id"]);
+                              var annoListID2 = String(this["@id"]);
                               $.each(annotationLists, function(){
-                                  if(annoListID == this["@id"]){
+                                  if(annoListID2 == this["@id"]){
                                     currentCanvasAnnotations.push(this.resources);
                                   }
                               });
@@ -3845,8 +3845,6 @@ function populateAnnoForms(){
                 }
             }
             else if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
-                var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
 
                 annotationObject.resource["cnt:chars"] = entryValue;
                     annotationObject.label = addedInfoLabel;
@@ -3900,7 +3898,6 @@ function populateAnnoForms(){
                 if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
                     //console.log('HELLO')
                     var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
                     //console.log("Anno Object @ID is being set to :" + newAnnoURI)
                     annotationObject["@id"] = newAnnoURI;
                     annotationObject.resource["cnt:chars"] = entryValue;
@@ -4086,8 +4083,6 @@ function populateAnnoForms(){
                     }
                 }
                 else if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
-                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
-                    var newRangeURI = "http://www.example.org/iiif/LlangBrev/range/" +rangeID;
                     annotationObject.resource["cnt:chars"] = entryValue;
                     annotationObject.label = addedInfoLabel;
                     annotationObject.resource["cnt:chars"] = entryValue;
@@ -4260,19 +4255,19 @@ function populateAnnoForms(){
                                 });//local. adds the annotation list uri to the other content field.  
                             }
                             else{
-                                    var annoListID = -1;
+                                    var annoListID2 = -1;
                                     $.each(testManifest.sequences[0].canvases, function(){
                                             if (this["@id"] === objectID){ //this is our canvas object
                                                     if(alpha){
-                                                            annoListID = annoListCollection[0]["@id"];
+                                                            annoListID2 = annoListCollection[0]["@id"];
                                                     }
                                                     else{
-                                                            annoListID = annoListCollection[1]["@id"];
+                                                            annoListID2 = annoListCollection[1]["@id"];
                                                     }
-                                                    var otherContent2 = {"@id":annoListID, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
+                                                    var otherContent2 = {"@id":annoListID2, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
                                                     var listIncluded = false;
                                                     $.each(this.otherContent,function(){
-                                                            if(this["@id"] === annoListID){
+                                                            if(this["@id"] === annoListID2){
                                                                     listIncluded = true;
                                                                     return false;
                                                             }
@@ -4329,10 +4324,12 @@ function populateAnnoForms(){
         }
         if(section !== "bucket"){
           updateRange(section, currentLeafServerID, 'arrange', []);
-          var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
-          var paramObj = {"@id":currentLeafServerID, "within":section};
-          var params = {"content":JSON.stringify(paramObj)};
-          $.post(updateURL, params);
+          if(windowURL.indexOf("demo=1") === -1){
+            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var paramObj = {"@id":currentLeafServerID, "within":section};
+            var params = {"content":JSON.stringify(paramObj)};
+            $.post(updateURL, params);
+          }
         }
     }
 
@@ -4340,8 +4337,8 @@ function populateAnnoForms(){
       $(".selectedSection").removeClass("selectedSection");
       if($(".parentSection").length > 0){
         $.each($(".parentSection"), function(){
-          var rangeID = $(this).attr("rangeID");
-          $(".arrangeSection[rangeID='"+rangeID+"']").addClass("selectedSection");
+          var rangeID2 = $(this).attr("rangeID");
+          $(".arrangeSection[rangeID='"+rangeID2+"']").addClass("selectedSection");
         });
       }
       else{
@@ -4571,6 +4568,9 @@ function populateAnnoForms(){
                     }
                     var forProject = detectWho();
                     annoListID = parseInt(annoListID) + 1;
+                    console.log(typeof annoListID);
+                    console.log("what is annoListID: "+annoListID);
+                    console.log("111111");
                     var newRangeAnnoList = {
                         "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
                         "@type":"sc:AnnotationList",
@@ -4607,7 +4607,7 @@ function populateAnnoForms(){
                         }
                     var forProject = detectWho();	
                     var newRangeAnnoList = {
-                        //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                        "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
                         "@type":"sc:AnnotationList",
                         "resources" : [],
                         "on" :newRangeObject["@id"],
@@ -4987,7 +4987,6 @@ function populateAnnoForms(){
             }
             
             var forProject = detectWho();    
-            var windowURL = document.location.href;
             $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
             if(test === "testEdit"){
                 return false;
@@ -5001,6 +5000,9 @@ function populateAnnoForms(){
             var newCanvas2ServerID = -1;
             annoListCollection = new Array(3);
             //create a new leaf range and get ID.  The leaf range will create 2 canvases whose ID's I will also need.
+            console.log(typeof canvasTag);
+            console.log("Local canvas tag: "+canvasTag);
+            console.log("1111111");
             canvasTag = parseInt(canvasTag)+1;
             var newCanvasHolderImg = {
                 "@type":"oa:Annotation",
@@ -5023,11 +5025,13 @@ function populateAnnoForms(){
                     },
                     "on":""
                 };
-            
+            console.log(typeof canvasTag);
+            console.log("Local canvas tag: "+canvasTag);
+            console.log("222222");
             var newCanvas1 = {
-                "@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag, //local
+                "@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag+"", //local
                 "@type" : "sc:Canvas",
-                "label" : "Llang_Leaf",
+                "label" : "Llang_Canvas",
                 "height" : 1000,
                 "width" : 667,
                 "images" : [],
@@ -5036,9 +5040,15 @@ function populateAnnoForms(){
                 "within" : ""
             };
             
-         annoListID++;
+         annoListID = parseInt(annoListID) + 1;
+            console.log(typeof annoListID);
+            console.log("what is annoListID: "+annoListID);
+            console.log("22222");
+         console.log(typeof canvasTag);
+            console.log("Local canvas tag: "+canvasTag);
+            console.log("3333333");
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+"', 'recto');"); //local
-      	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag); //local
+      	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+""); //local
       	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
       	 var url = "http://165.134.241.141/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
@@ -5069,12 +5079,19 @@ function populateAnnoForms(){
                 zeta = false;
 
       	 	newCanvas1ServerID = newCanvas1["@id"];
+                
   	        canvasTag = parseInt(canvasTag) + 1;
-                annoListID++;
+                annoListID = parseInt(annoListID) + 1;
+                    console.log(typeof annoListID);
+                    console.log("what is annoListID: "+annoListID);
+                    console.log("33333");
+                console.log(typeof canvasTag);
+                console.log("Local canvas tag: "+canvasTag);
+                console.log("444444");
                 var urlCanvas = {
-                            "@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag,
+                            "@id" : "http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag+"",
                             "@type" : "sc:Canvas",
-                            "label" : "Llang_Leaf",
+                            "label" : "Llang_Canvas",
                             "height" : 1000,
                             "width" : 667,
                             "images" : [],
@@ -5099,7 +5116,13 @@ function populateAnnoForms(){
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
                         rangeID = parseInt(rangeID) + 1;
-                        annoListID += 1;
+                        annoListID = parseInt(annoListID) + 1;
+                    console.log(typeof annoListID);
+                    console.log("what is annoListID: "+annoListID);
+                    console.log("44444");
+                    console.log(typeof rangeID);
+                    console.log("what is rangeID: "+rangeID);
+                    console.log("11111");
 	            var leafRangeObject = {
 	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                         "@type":"sc:Range",
@@ -5124,17 +5147,18 @@ function populateAnnoForms(){
                         createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
                    
          }
-         
-         
-         
          else{
             $.post(url, params1, function(data){ //save first new canvas
       	 	data = JSON.parse(data);
       	 	newCanvas1["@id"] = data["@id"];
                 var newCanvas1HolderImg = newCanvasHolderImg;
                 newCanvas1HolderImg.on = data["@id"];
+                annoListID = parseInt(annoListID) + 1;
+                    console.log(typeof annoListID);
+                    console.log("what is annoListID: "+annoListID);
+                    console.log("44444");
                 var newCanvas1AnnoList = {
-				//"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+				"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 				"@type":"sc:AnnotationList",
 				"resources" : [],
                                 "forProject": forProject,
@@ -5176,10 +5200,14 @@ function populateAnnoForms(){
                 
       	 	newCanvas1ServerID = newCanvas1["@id"];
   	        canvasTag = parseInt(canvasTag) + 1;
-                annoListID++;
+                annoListID = parseInt(annoListID) + 1;
+                    console.log(typeof annoListID);
+                    console.log("what is annoListID: "+annoListID);
+                    console.log("5555");
                 var urlCanvas = {
+                            "@id":"http://www.example.org/iiif/LlangBrev/canvas/"+canvasTag+"",
                             "@type" : "sc:Canvas",
-                            "label" : "Llang_Leaf",
+                            "label" : "Llang_Canvas",
                             "height" : 1000,
                             "width" : 667,
                             "images" : [],
@@ -5200,7 +5228,7 @@ function populateAnnoForms(){
       	 		$("#folioSide2").attr("canvas",  newCanvas2["@id"]);
       	 		testManifest.sequences[0].canvases.push(newCanvas2); //live
                         var newCanvas2AnnoList = {
-	                //"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
                         "forProject": forProject,
@@ -5227,7 +5255,13 @@ function populateAnnoForms(){
                                 
 	        	});
 	  	 	 	rangeID = parseInt(rangeID) + 1;
-	  	 	 	annoListID += 1;
+	  	 	 	annoListID = parseInt(annoListID) + 1;
+                                console.log(typeof annoListID);
+                                console.log("what is annoListID: "+annoListID);
+                                console.log("55555");
+                                console.log(typeof rangeID);
+                    console.log("what is rangeID: "+rangeID);
+                    console.log("22222");
 	            var leafRangeObject = {
 	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                         "@type":"sc:Range",
@@ -5566,9 +5600,9 @@ function populateAnnoForms(){
       $("#saveGroupForm").attr("onclick", "saveNewGroupForm("+columnDepth+");");
       if($("#allLeaves").children().length == 0){
           for(var i = 0; i<allLeaves.length; i++){
-              var rangeID = allLeaves[i]["@id"];
+              var rangeID2 = allLeaves[i]["@id"];
               var leafLabel = allLeaves[i].label;
-              var htmlLeaf = $("<div class='areaLeaf'><input label='"+leafLabel+"' rangeID='"+rangeID+"' class='areaLeafBox' type='checkbox'/>"+leafLabel+"</div>");
+              var htmlLeaf = $("<div class='areaLeaf'><input label='"+leafLabel+"' rangeID='"+rangeID2+"' class='areaLeafBox' type='checkbox'/>"+leafLabel+"</div>");
               $("#allLeaves").append(htmlLeaf);
           }
       }
