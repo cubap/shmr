@@ -347,9 +347,12 @@ and open the template in the editor.
                 white-space: nowrap;
             }
             .helperIcon{
-                cursor: help;
-                width: 30px;
-                height: 26px;
+                    cursor: help;
+                    width: 30px;
+                    height: 26px;
+                    display: inline-table;
+                    top: 5px;
+                    position: relative;
                 /*display: inherit;*/
             }
             .helperContent{
@@ -455,6 +458,12 @@ and open the template in the editor.
                 font-variant: small-caps !important;
                 font-size: 10pt !important;
                 color: black !important;
+                padding: .5em 1em;
+                text-decoration: none;
+                display: inline-table;
+                position: relative;
+                top: -4px;
+                float: none !important;
             }
             .ui-tabs, .ui-tabs-nav{
                 padding: 0px !important;

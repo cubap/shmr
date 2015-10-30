@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var rangeID, canvasTag, annoID, imageID = 1;
+var annoID, imageID = 1;
+var rangeID = 100;
+var canvasTag = 100;
 var annoListID = 5;
 var currentLeaf = "";
 var alpha, beta, zeta = false;
@@ -2874,9 +2876,11 @@ function populateRangesToDOM(which){
     var outer = "";
     var placedInUnassigned = false;
     if(which == 1){
+        console.log("populate popover trail");
         outer = $(".popoverTrail");
     }
     else if (which == 2){
+        console.log("populate admin trail");
         outer = $(".adminTrail");
     }
         for(var i = 0; i<rangeCollection.length; i++){
@@ -2968,14 +2972,12 @@ function populateRangesToDOM(which){
                     outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
                 }
                 else{
-                  console.log("put in not bucket");
                   outer.find(".rangeArrangementArea").find('.notBucket').append(currentRange);
                 }
               //}
             }
             else{
               //dragAttribute = "id='drag_"+uniqueID+"165.134.241.141' draggable='true' ondragstart='dragHelp(event);'";
-              console.log("in array 1");
               currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
             }
             //Create an html range object that can be added
@@ -3044,14 +3046,12 @@ function populateRangesToDOM(which){
                             }
                             if($.inArray(this["@id"], existingRanges) == -1){
                                 if(isLeaf2 && rangeCollection[i].parent !== undefined){ //we need to put this leaf into the unassigned area
-                                    console.log("Leaf in paggr, put in bucket");
                                     var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
                                     oldFolioCount = oldFolioCount+1;
                                     outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html(oldFolioCount);
                                     outer.find(".rangeArrangementArea").find('.unassigned').append(embedRange);
                                 }
                                 else{
-                                    console.log("leaf in current range range.");
                                     currentRange.append(embedRange);
                                 }
                                 //$(".rangeArrangementArea").find('.notBucket').append(currentRange);
@@ -3061,7 +3061,6 @@ function populateRangesToDOM(which){
                                 }
                             }
                             else{
-                                console.log("in array 2");                          
                                 var rangeToMove = outer.find(".arrangeSection[rangeID='"+this["@id"]+"']");
                                 if(isLeaf2 && currentRange.attr("class").indexOf("pAggr") > -1 ){
                                     console.log("Leaf in paggr, remains in bucket");
@@ -4316,6 +4315,7 @@ function populateAnnoForms(){
     function savePlacement(){
         var section = "";
         var windowURL = document.location.href;
+        var sectionObj = $(".selectedSection:last");
         if($(".selectedSection:last").attr('relation') === 'bucket'){
           section = "root";
         }
@@ -4324,11 +4324,17 @@ function populateAnnoForms(){
         }
         if(section !== "bucket"){
           updateRange(section, currentLeafServerID, 'arrange', []);
+          
           if(windowURL.indexOf("demo=1") === -1){
             var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj = {"@id":currentLeafServerID, "within":section};
             var params = {"content":JSON.stringify(paramObj)};
-            $.post(updateURL, params);
+            $.post(updateURL, params, function(){
+                dropFlash(sectionObj);
+            });
+          }
+          else{
+              dropFlash(sectionObj);
           }
         }
     }
@@ -4692,7 +4698,11 @@ function populateAnnoForms(){
           else{
                 areaForNewGroup = theArea;
           }
-            var mockID = "http://www.example.org/iiif/LlangBrev/range/"+$(".arrangeSection").length;
+            rangeID = parseInt(rangeID) + 1;
+            console.log(typeof rangeID);
+                    console.log("what is rangeID: "+rangeID);
+                    console.log("77777");
+            var mockID = "http://www.example.org/iiif/LlangBrev/range/"+rangeID;
             var dragAttribute = "id='drag_"+uniqueID+"' draggable='true' ondragstart='dragHelp(event);' ondragend='dragEnd(event);'";
             var dropAttribute = " ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
             var rightClick = "oncontextmenu='breakUpConfirm(event); return false;'";
@@ -5003,6 +5013,7 @@ function populateAnnoForms(){
             console.log(typeof canvasTag);
             console.log("Local canvas tag: "+canvasTag);
             console.log("1111111");
+            canvasTag = 100;
             canvasTag = parseInt(canvasTag)+1;
             var newCanvasHolderImg = {
                 "@type":"oa:Annotation",
@@ -5449,8 +5460,8 @@ function populateAnnoForms(){
       }
   }
   
-  function removeLeaf(rangeID, canvases){
-      console.log("removing leaf: "+rangeID);
+  function removeLeaf(rangeID2, canvases){
+      console.log("removing leaf: "+rangeID2);
       console.log("removing canvases: "+canvases);
       var windowurl = document.location.href;
       if(windowurl.indexOf("demo=1")>-1){
@@ -5458,7 +5469,7 @@ function populateAnnoForms(){
       }
       else{
         var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
-        var paramObj = {"@id" : rangeID};
+        var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
         $.post(removeURL, params, function(){
             $(targetToBreak).remove();
@@ -5477,14 +5488,14 @@ function populateAnnoForms(){
       }
   }
   
-  function removeRange(rangeID){
+  function removeRange(rangeID2){
       var windowurl = document.location.href;
       if(windowurl.indexOf("demo=1")>-1){
           $(targetToBreak).remove();
       }
       else{
         var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
-        var paramObj = {"@id" : rangeID};
+        var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
         $.post(removeURL, params, function(){
             $(targetToBreak).remove();
@@ -5632,7 +5643,11 @@ function populateAnnoForms(){
           var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.jpg'/></span>");
           var bucket = $("div[depth='1']").find(".unassigned");
           var bucketCount = parseInt(bucket.find(".folioCount").find(".countInt").html());
-          var mockID= "http://www.example.org/iiif/LlangBrev/range/"+uniqueID;
+          rangeID = parseInt(rangeID) + 1;
+           console.log(typeof rangeID);
+            console.log("what is rangeID: "+rangeID);
+            console.log("8888");
+          var mockID= "http://www.example.org/iiif/LlangBrev/range/"+rangeID;
           var newGroup = $("<div rangeID='"+mockID+"' leaf='false' class='arrangeSection child sortOrder' "+dragAttribute+" "+dropAttribute+" "+rightClick+" "+toggle1+" ><span>"+title+"</span><input class='putInGroup' type='checkbox' /></div>");
           if(depth ===1){
             newGroup.removeClass("child").addClass("parent");
@@ -6486,9 +6501,13 @@ function lock(leafURI, direction, event){
                 }
                 else{
                     console.log("we need to make a new one");
-                    var uniqueID = ($(".arrangeSection").length * 10) + 1;
+                    //var uniqueID = ($(".arrangeSection").length * 10) + 1;
+                    rangeID = parseInt(rangeID) + 1;
+                     console.log(typeof rangeID);
+                    console.log("what is rangeID: "+rangeID);
+                    console.log("999999");
                     var orderedRangeObject = {
-	            	"@id" : "http://www.example.org/iiif/LlangBrev/range"+uniqueID,
+	            	"@id" : "http://www.example.org/iiif/LlangBrev/range"+rangeID,
                         "@type":"sc:Range",
                         "label":"Locked Leaves" ,
                         "canvases" : [
@@ -7009,9 +7028,13 @@ function lock(leafURI, direction, event){
                 }
                 else{
                     console.log("we need to make a new one");
-                    var uniqueID = ($(".arrangeSection").length * 10) + 1;
+                    //var uniqueID = ($(".arrangeSection").length * 10) + 1;
+                    rangeID = parseInt(rangeID) + 1;
+                     console.log(typeof rangeID);
+            console.log("what is rangeID: "+rangeID);
+            console.log("10101010");
                     var orderedRangeObject = {
-	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+uniqueID,
+	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                         "@type":"sc:Range",
                         "label":"Locked Leaves" ,
                         "canvases" : [
@@ -7233,10 +7256,14 @@ function unlock(leafURI, direction, event){
                         this.ranges = rangeList;
                         if(windowURL.indexOf("demo=1") > -1){
                             console.log("updated");
-                            var uniqueID = $(".arrangeSection").length*10 + 1;
+                            //var uniqueID = $(".arrangeSection").length*10 + 1;
+                            rangeID = parseInt(rangeID) + 1;
+                             console.log(typeof rangeID);
+                            console.log("what is rangeID: "+rangeID);
+                            console.log("awertyu");
                             if(rangesRemoved.length > 1){
                                 var orderedRangeObject = {
-                                    "@id" : "http://www.example.org/iiif/LlangBrev/range/"+uniqueID,
+                                    "@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                                     "@type":"sc:Range",
                                     "label":"Locked Leaves" ,
                                     "canvases" : [
@@ -7320,10 +7347,14 @@ function unlock(leafURI, direction, event){
                         else{
                             $.post(updateURL, params2, function(){
                                 console.log("updated");
-                                var uniqueID = $(".arrangeSection").length*10 + 1;
+                                //var uniqueID = $(".arrangeSection").length*10 + 1;
+                                rangeID = parseInt(rangeID) + 1;
+                                console.log(typeof rangeID);
+                            console.log("what is rangeID: "+rangeID);
+                            console.log("zxcvbn");
                                 if(rangesRemoved.length > 1){
                                     var orderedRangeObject = {
-                                        "@id" : "http://www.example.org/iiif/LlangBrev/range/"+uniqueID,
+                                        "@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                                         "@type":"sc:Range",
                                         "label":"Locked Leaves" ,
                                         "canvases" : [
@@ -7839,9 +7870,13 @@ function unlock(leafURI, direction, event){
                             this.ranges = rangeList;
                             if(windowURL.indexOf("demo=1") > -1){
                                 if(rangesRemoved.length > 1){
-                                    var uniqueID = $(".arrangeSection").length * 10 + 1;
+                                    //var uniqueID = $(".arrangeSection").length * 10 + 1;
+                                    rangeID = parseInt(rangeID) + 1;
+                                    console.log(typeof rangeID);
+                            console.log("what is rangeID: "+rangeID);
+                            console.log("[][][][]");
                                     var orderedRangeObject = {
-                                        "@id" : "http://www.example.org/iiif/LlangBrev/range/"+uniqueID,
+                                        "@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                                         "@type":"sc:Range",
                                         "label":"Locked Leaves" ,
                                         "canvases" : [
@@ -8448,7 +8483,7 @@ function closeLeafPopover(){
     annoListCollection = new Array(3);
     $(".selectedFolio").removeClass("selectedFolio");
     alpha=beta=zeta=false;
-    
+    $(".popoverTrail").find("div[depth='1']").find('.notBucket').empty();
 }
 
 function detectWho(){

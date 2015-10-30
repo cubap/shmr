@@ -64,6 +64,9 @@ and open the template in the editor.
             
             .unassigned{
                 display: none;
+            }
+            
+            .unassigned{
                 font-family: sans-serif;
             }
             
@@ -198,7 +201,7 @@ and open the template in the editor.
                    <div class="rAreaLabel">Table of Contents</div>
                    
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent bucket unassigned sortOrder"><span>BUCKET</span></div>
+                   <div style="display:block;" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent bucket unassigned sortOrder"><span>BUCKET</span></div>
                    <input class="makeGroup" value="Merge" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>
                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
