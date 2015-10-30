@@ -2452,7 +2452,6 @@ function toggleChildren(parentRange, admin, event){
 
           }
           else if(deepest.children(".unassigned").length == 0){ //these are a collection of unassigned from the next depth
-            //THIS CAUSES ERRORS.  
             if(deepest.find(".selectedSection").length > 0){
               deepest.find(".selectedSection").click();
             }
@@ -2484,12 +2483,14 @@ function toggleChildren(parentRange, admin, event){
             parentRange.removeClass("selectedSection");
             if(unassigned){
                 if(admin !== "admin"){
-                  parentRange.parent().find(".unassigned").addClass("selectedSection");
+                    //makes the bucket the selected section.  we will want this back, for now we are hiding the unassigned areas.
+                  //parentRange.parent().find(".unassigned").addClass("selectedSection");
                 }
             }
             else{
                 if(admin !== "admin"){
-                   parentRange.parent().parent().find(".unassigned").addClass("selectedSection");
+                    //makes the bucket the selected section.  we will want this back, for now we are hiding the unassigned areas.
+                   //parentRange.parent().parent().find(".unassigned").addClass("selectedSection");
                 }
             }
         }
@@ -2563,7 +2564,8 @@ function toggleChildren(parentRange, admin, event){
     }
     else{
       if(newArea.children('.selectedSection').length == 0){
-        newArea.children('.unassigned').addClass("selectedSection");
+          //makes the bucket the selected section.  we will want this back, for now we are hiding the unassigned areas.
+        //newArea.children('.unassigned').addClass("selectedSection");
       }
     }    
   } 
