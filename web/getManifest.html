@@ -93,46 +93,35 @@ and open the template in the editor.
 </html>
 <script>
    $(function(){
-       var manifestURI = "http://165.134.241.141/brokenBooks/getManifest";
+       var manifestURI = "http://localhost:8080/brokenBooks/getManifest";
        var thisURL = document.location.href;
        if(thisURL.indexOf("demo=1") > -1 ){
-           manifestURI = "http://165.134.241.141/brokenBooks/getDemoManifest";
+           manifestURI = "http://localhost:8080/brokenBooks/getDemoManifest";
        }
        if (thisURL.indexOf("?LFD") > -1 ){
-           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=lisa";
+           manifestURI = "http://localhost:8080/brokenBooks/getManifest?username=lisa";
        }
        else if(thisURL.indexOf("?DTC") > -1 ){
-           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           manifestURI = "http://localhost:8080/brokenBooks/getManifest?username=debra";
        }
        else{
-           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           manifestURI = "http://localhost:8080/brokenBooks/getManifest?username=debra";
        }
-        window.history.pushState("Object", "Title", "http://165.134.241.141/brokenBooks/getManifest.html");
+        window.history.pushState("Object", "Title", "http://localhost:8080/brokenBooks/getManifest.html");
         var windowHeight = window.innerHeight - 25;
         $("#focusedRange").css("height", windowHeight+"px");
         Mirador({
             "id": "focusedRange", // The CSS ID selector for the containing element.
             "layout": "1x1", // The number and arrangement of windows ("row"x"column")?
-            "data": [{"manifestUri": manifestURI, "location": "Saint Louis University Test"}],
+            "data": [{"manifestUri": manifestURI, "location": "Saint Louis University"}],
             "workspaceType": "singleObject",
-            //"mainMenuSettings" : {"buttons" : {"bookmark" : false, "layout" : false}},
+            "mainMenuSettings" : {"buttons" : {"bookmark" : false, "layout" : true}},
             "windowObjects" : [
                 {
                     "loadedManifest": manifestURI,
-                    "viewType" : "ImageView"
-                     //"canvasID": "http://dms-data.stanford.edu/data/manifests/Walters/qm670kv1873/canvas/canvas-12"
-                      //"bottomPanel" : true,
-                      //"sidePanel" : false,
-                      //"availableViews" : ['ThumbnailsView', 'ImageView', 'BookView'],
-                //"displayLayout" : false,
-                      //"overlay" : false
-//                    "layoutOptions": {
-//                      "newObject" : false,
-//                      "close" : false,
-//                      "slotRight" : false,
-//                      "slotLeft" : false,
-//                      "slotAbove" : false,
-//                      "slotBelow" : false
+                    "viewType" : "ImageView",
+                    "availableViews" : ['ThumbnailsView', 'ImageView', 'ScrollView'],
+
 //                    }
                 }
             ]
