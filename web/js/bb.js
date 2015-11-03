@@ -4998,8 +4998,11 @@ function populateAnnoForms(){
                 $("#saveCover").show();
             }
             
-            var forProject = detectWho();    
-            $(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+            var forProject = detectWho();
+            
+            //$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
+            $(".intro").hide();
+            $(".imgAdditionArea").show("explode", "500ms");
             if(test === "testEdit"){
                 return false;
             }

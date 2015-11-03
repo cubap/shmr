@@ -50,6 +50,7 @@ and open the template in the editor.
             .intro{
                 display: block;
                 font-family: sans-serif;
+                position: relative;
             }
             .start{
                 display: none;
@@ -166,9 +167,14 @@ and open the template in the editor.
                 position: relative;
                 height: auto;
             }
+            #notesForm p{
+                width: 475px;
+                margin: 0 auto;
+            }
             #notes{
                 width: 475px;
                 height: 325px;
+                margin-top: 19px;
             }
             .infoPart{
                 margin: 10px 0px;
@@ -184,6 +190,7 @@ and open the template in the editor.
                 font-size: 12pt;
                 padding: 0px 10px;
                 color: #6D6E7B;
+                text-align:right;
             }
             /*.mainBlock{
                 position: relative;
@@ -284,7 +291,7 @@ and open the template in the editor.
             #folioSide1{
                 position: relative;
                 display: block;
-                height: 170px;
+                height: 173px;
                 width: 100%;
                 margin-right:25px;
                 background-color: black;
@@ -302,7 +309,7 @@ and open the template in the editor.
             #folioSide2{
                 position: relative;
                 display: block;
-                height: 170px;
+                height: 173px;
                 width: 100%;
                 background-color: black;
                 color: white;
@@ -345,14 +352,15 @@ and open the template in the editor.
                 border-top: 1px solid black;
                 padding-top: 5px;
                 white-space: nowrap;
+                padding-left: 4px;
             }
             .helperIcon{
-                    cursor: help;
-                    width: 30px;
-                    height: 26px;
-                    display: inline-table;
-                    top: 5px;
-                    position: relative;
+                cursor: help;
+                width: 30px;
+                height: 26px;
+                display: inline-table;
+                top: 5px;
+                position: relative;
                 /*display: inherit;*/
             }
             .helperContent{
@@ -361,14 +369,10 @@ and open the template in the editor.
                 left: 19%;
                 top: 0px;
                 z-index: 4;
-                background-color: black;
-                border: 1px solid #F00;
                 font-size: 9pt;
                 width: 247px;
                 white-space: normal;
-                padding: 5px;
-                color: wheat;
-                font-family: sans-serif;
+                box-shadow: 0px 0px 13px 1px black;
             }
             #fullImgContainer{
                 position: absolute;
@@ -640,6 +644,8 @@ and open the template in the editor.
                 border: 2px solid black;
                 font-size: 15px;
                 font-family: serif;
+                padding: 13px 65px 13px 21px;
+            
                 /* user cannot select text */
                 -webkit-touch-callout: none;
                 -webkit-user-select: none;
@@ -647,10 +653,6 @@ and open the template in the editor.
                 -moz-user-select: none;
                 -ms-user-select: none;
                  user-select: none;
-            }
-
-            .arrangeSection.sortOrder{
-                padding: 13px 52px 13px 21px;
             }
 
             .arrangeSection.parent{
@@ -668,6 +670,21 @@ and open the template in the editor.
                 margin-bottom: 0px;
             }
             
+            .arrangeSection span{
+                display: inline-block;
+                margin: 0 auto;
+                position: relative;
+            }
+            
+            .popoverTrail .arrangeSection{
+                padding: 12px 35px !important;
+            }
+            
+            .popoverTrail .rAreaLabel{
+                background-color:#808080 !important;
+                color: white !important;
+            }
+            
             div[relation="bucket"]{
                 display: block;
                 border: 2px solid green;
@@ -677,12 +694,7 @@ and open the template in the editor.
                 background-color: black;
                 color: white;
             }
-            
-            .arrangeSection.pAggr{ /* Parent sections aggregator */
-                border: transparent;
-                padding: 0px;
-                margin-bottom: 0px;
-            }
+
             
             div[relation="bucket"]{
                 display: block;
@@ -698,11 +710,13 @@ and open the template in the editor.
                 display: inline-block;
                 position: relative;
                 border-right: 2px solid black;
-                padding-right: 15px;
+                padding-right: 21px;
                 margin-right: 10px;
                 height: auto;
                 overflow-y: auto;
                 height: 512px;
+                /*text-align: center;*/
+                
             }
             .areaCover{
                 position: absolute;
@@ -796,6 +810,7 @@ and open the template in the editor.
                 padding: 5px;
                 margin-bottom: 9px;
                 color: gray;
+                font-size: 17px;
             }
             .leafPopClose{
                 padding: 5px;
@@ -998,5 +1013,15 @@ and open the template in the editor.
             }
             .ui-tabs-nav{
                 font-family: sans-serif;
+            }
+            
+            #folio1Label, #folio2Label, #oneAndtwoLabel{
+                border: 1px solid black;
+                position: relative;
+                top: 1px;
+            }
+            
+            .resetCount{
+                margin-top: 5px;
             }
             
