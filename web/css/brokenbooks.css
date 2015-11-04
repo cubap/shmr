@@ -274,12 +274,13 @@ and open the template in the editor.
                 height:auto;
             }
             .selectedI{
-                height: 33px;
+                height: 25px;
                 width: 33px;
                 position: relative;
                 cursor: pointer;
                 display: none;
-                top: 8px;
+                top: 1px;
+                left: 6px;
             }
             .unselectedI{
                 height: 25px;
@@ -287,6 +288,8 @@ and open the template in the editor.
                 display: inline-block;
                 position: relative;
                 cursor: pointer;
+                top: 1px;
+                left: 6px;
             }
             #folioSide1{
                 position: relative;
@@ -352,15 +355,16 @@ and open the template in the editor.
                 border-top: 1px solid black;
                 padding-top: 5px;
                 white-space: nowrap;
-                padding-left: 4px;
+                margin-left: 4px;
             }
             .helperIcon{
                 cursor: help;
-                width: 30px;
+                width: 26px;
                 height: 26px;
                 display: inline-table;
                 top: 5px;
                 position: relative;
+                margin: 0px 3px;
                 /*display: inherit;*/
             }
             .helperContent{
@@ -436,7 +440,7 @@ and open the template in the editor.
                 display: inline-block;
                 bottom: 0px;
                 left:254px;
-                margin-top: 11px;
+                margin-top: 15px;
                 width: 80px;
             }
             #cancelMetadata{
@@ -542,23 +546,19 @@ and open the template in the editor.
             }
             .rectoImg{
                 position: relative;
-                background-image: url('../images/addImg.jpg');                   
-                max-height: 140px;
-                max-width:120px;
+                background-image: url('../images/addImg.png');                   
+                height: 140px;
+                width:120px;
                 background-size: 120px 140px;
-                min-height: 140px;
-                min-width:120px;
                 display: inline-block;
 /*                    display: none;*/
             }
             .versoImg{
                 position: relative;
-                background-image: url('../images/addImg.jpg');
+                background-image: url('../images/addImg.png');
                 background-size: 120px 140px;
-                min-height: 140px;
-                min-width:120px;
-                max-height: 140px;
-                max-width:120px;
+                height: 140px;
+                width:120px;
                 display: inline-block;
 /*                    display: none;*/
             }
@@ -628,10 +628,11 @@ and open the template in the editor.
             }
             
             .folioCount img{
-                    height: 27px;
-                    width: 31px;
-                    position: absolute;
-                    right: -4px;
+                height: 27px;
+                width: 25px;
+                position: absolute;
+                right: -1px;
+                top: -2px;
             }
 
             .arrangeSection{
@@ -813,7 +814,6 @@ and open the template in the editor.
                 font-size: 17px;
             }
             .leafPopClose{
-                padding: 5px;
                 right:0;
                 top:0;
                 color: white;
@@ -821,6 +821,10 @@ and open the template in the editor.
                 font-weight: bold;
                 position: absolute;
                 cursor: pointer;
+                background-image: url('../images/closebutton.png');
+                background-size: 25px 25px;
+                height: 25px;
+                width: 25px;
             }
             .arrangeAreaCover{
                 width: 100%;
@@ -1002,10 +1006,10 @@ and open the template in the editor.
                 top: 4px;
             }
             .pageIcon{
-                height: 35px !important;
+                height: 38px !important;
                 width: 28px !important;
                 right: -3px !important;
-                top: -7px !important;
+                top: -10px !important;
                 position: absolute;
             }
             textarea, input[type="text"]{
@@ -1023,5 +1027,20 @@ and open the template in the editor.
             
             .resetCount{
                 margin-top: 5px;
+            }
+            
+            .nomore{
+                color: #F00;
+                font-size: 15px;
+                border: 1px solid red;
+                padding: 4px;
+            }
+            
+            .prepareleaf{
+                width: 300px;
+                position: relative;
+                margin: 0 auto;
+                margin-top: 13px;
+                display: block;
             }
             

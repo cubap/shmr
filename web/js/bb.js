@@ -2385,7 +2385,7 @@ function toggleChildren(parentRange, admin, event){
 //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
   });
-//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.jpg'/></span>");
+//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
 //  if(admin == "admin"){
 //     newArea.children(".unassigned").append(leafCountHTML);
 //  }
@@ -2533,7 +2533,7 @@ function toggleChildren(parentRange, admin, event){
     if(newArea.children('.notBucket').children('.child').length == 0){
       //newAreaBucket.attr("onclick", "");
       if(newArea.children('.unassigned').children('.child').length === 0){
-        newArea.children(".notBucket").append('<div style="color: red;">No Subsections Available</div>');
+        newArea.children(".notBucket").append('<div class="nomore">No Subsections Available</div>');
         newAreaBucket.hide();
         if(parentRange.attr("leaf") !== "true" && !unassigned ){
           newArea.children(".addGroup").attr("style", "display: inline-block;");
@@ -2558,7 +2558,7 @@ function toggleChildren(parentRange, admin, event){
     newArea.children('.notBucket').children('div').not('div[leaf="true"]').show(); //only show sections
     //do not show items in the unassigned area
     if(newArea.children('.notBucket').children('div').not('div[leaf="true"]').length == 0){
-      newArea.children(".notBucket").append('<div style="color: red;">No Subsections Available</div>');
+      newArea.children(".notBucket").append('<div class="nomore">No Subsections Available</div>');
       newAreaBucket.remove();
       //newAreaBucket.attr("onclick", "");
     }
@@ -2724,7 +2724,7 @@ function dropHelp(event){
       $.each($(".arrangeSection"), function(){
            $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
-            var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.jpg'/></span>");
+            var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
             var leafURL = child.getAttribute("rangeID");
             var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
             if($(this).attr("leaf") === "true"){
@@ -3098,7 +3098,7 @@ function populateRangesToDOM(which){
               $.each(outer.find(".arrangeSection"), function(){
                  $(this).children(".folioCount").remove();
                     var folioCount = $(this).find("div[leaf='true']").length;
-                    var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.jpg'/></span>");
+                    var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
                     var leafURL = $(this).attr("rangeID");
                     if($(this).attr("leaf") === "true"){
                         var leafIsInURL = $(this).parent().attr("rangeID");
@@ -4717,7 +4717,7 @@ function populateAnnoForms(){
               }
               newGroup.append(newChild);
             });
-            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.jpg'/></span>");
+            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
             newGroup.append(leafCountHTML);
             var depth = theArea.attr("depth");
             areaForNewGroup.children(".notBucket").append(newGroup);
@@ -5347,6 +5347,7 @@ function populateAnnoForms(){
               updateCanvasDimensions(canvas,width, height);
               // code here to use the dimensions
             }
+            image = image.trim();
             img.src = image;
             var anno = {
                             "format":"image/jpg",
@@ -5384,6 +5385,7 @@ function populateAnnoForms(){
               updateCanvasDimensions(canvas,width, height);
               // code here to use the dimensions
             }
+            image = image.trim();
             img.src = image;
               var anno = {
                             "format":"image/jpg",
@@ -5647,7 +5649,7 @@ function populateAnnoForms(){
       else{
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var leafCount = checkedLeaves.length;
-          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.jpg'/></span>");
+          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
           var bucket = $("div[depth='1']").find(".unassigned");
           var bucketCount = parseInt(bucket.find(".folioCount").find(".countInt").html());
           rangeID = parseInt(rangeID) + 1;
@@ -5811,8 +5813,8 @@ function existing(leaf, leafIsIn){
         var betaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/2";
         var alphaCanvasObj = {};
         var betaCanvasObj = {};
-        var alphaImage  = "http://localhost:8080/brokenBooks/images/addImg.jpg";
-        var betaImage = "http://localhost:8080/brokenBooks/images/addImg.jpg";
+        var alphaImage  = "http://localhost:8080/brokenBooks/images/addImg.png";
+        var betaImage = "http://localhost:8080/brokenBooks/images/addImg.png";
         var alphaLabel = "Folio Side A Label";
         var betaLabel = "Folio Side B Label";
         var leafLabel = "Leaf Label";
@@ -6042,7 +6044,7 @@ function existing(leaf, leafIsIn){
     }
 
     $(".leafPopover").show();
-    var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'>X</div>");
+    var buttonToClose = $("<div onclick='closeLeafPopover();' class='leafPopClose'></div>");
     var arrangeAreaCover = $("<div class='arrangeAreaCover'></div>");
     $(".imgAdditionArea").show();
     if($(".imgAdditionArea").children(".leafPopClose").length == 0){
@@ -8484,8 +8486,8 @@ function closeLeafPopover(){
     $("#folio1Label").val("");
     $("#folio2Label").val("");
     $("#oneAndtwoLabel").val("");
-    $(".rectoImg").attr("src","http://localhost:8080/brokenBooks/images/addImg.jpg");
-    $(".versoImg").attr("src","http://localhost:8080/brokenBooks/images/addImg.jpg");
+    $(".rectoImg").attr("src","http://localhost:8080/brokenBooks/images/addImg.png");
+    $(".versoImg").attr("src","http://localhost:8080/brokenBooks/images/addImg.png");
     //$(".popoverTrail").find(".selectedSection:first").click();
     annoListCollection = new Array(3);
     $(".selectedFolio").removeClass("selectedFolio");
