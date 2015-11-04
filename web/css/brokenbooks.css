@@ -1042,5 +1042,6 @@ and open the template in the editor.
                 margin: 0 auto;
                 margin-top: 13px;
                 display: block;
+                cursor: pointer;
             }
             
