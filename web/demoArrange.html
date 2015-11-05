@@ -82,7 +82,7 @@ and open the template in the editor.
             }
             .notBucket{
                 padding: 4px 4px 45px 4px;
-                border: 1px solid rgb(53,15,191);
+                border: 1px solid #093985;
                 margin-bottom: 5px; 
             }
             .ordered .child{
@@ -245,10 +245,10 @@ and open the template in the editor.
                    <div class="rAreaLabel">Table of Contents</div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
                    <div style="display:block;" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>BUCKET</span></div>
-                   <input class="makeGroup" value="Merge" type="button" onclick="askForNewTitle($(this).parent());"/>
-                   <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>
-                   <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
-                   <input class="resetCount" value="Reset Folio Count" type="button" onclick="resetFolioCount();"/>
+                   <input class="makeGroup" value="merge" type="button" onclick="askForNewTitle($(this).parent());"/>
+                   <input class="addGroup" value="add" type="button" onclick="newGroupForm($(this).parent());"/>
+                   <input class="makeSortable" value="sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
+                   <input class="resetCount" value="refresh folio count" type="button" onclick="resetFolioCount();"/>
                 </div>
             </div>
         </div>

@@ -2337,10 +2337,10 @@ function toggleChildren(parentRange, admin, event){
   var labelHTML = '<div class="rAreaLabel">'+newAreaLabel+'</div>';
   var actualDepth = parseInt(outer.find(".rangeArrangementArea").length);
   var sortOrder = "";
-  var extraButtons = '<input class="makeGroup" value="Merge" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
-                    <input class="addGroup" value="Add" type="button" onclick="newGroupForm($(this).parent());"/>\n\
-                    <input class="makeSortable" value="Sort" type="button" onclick="makeSortable($(this).parent());"/>\n\
-                    <input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/>';
+  var extraButtons = '<input class="makeGroup" value="merge" type="button" onclick="askForNewTitle($(this).parent());"/>\n\
+                    <input class="addGroup" value="add" type="button" onclick="newGroupForm($(this).parent());"/>\n\
+                    <input class="makeSortable" value="sort" type="button" onclick="makeSortable($(this).parent());"/>\n\
+                    <input class="doneSortable" value="done" type="button" onclick="stopSorting($(this).parent());"/>';
   if(admin === "admin"){
       dropAttribute = "ondragover='dragOverHelp(event);' ondrop='dropHelp(event);'";
       sortOrder = " sortOrder";
