@@ -8212,7 +8212,7 @@ window.Mirador = window.Mirador || function(config) {
       this.parent.element.find(".brightnessSlider").slider({
           orientation: "horizontal",
           range: "min",
-          min: 17,
+          min: 0,
           max: 200,
           value:100,
           slide: function( event, ui ) {
@@ -8362,7 +8362,7 @@ window.Mirador = window.Mirador || function(config) {
       this.parent.element.find(".contrastSlider").slider({
          orientation: "horizontal",
           range: "min",
-          min: 17,
+          min: 0,
           max: 200,
           value:100,
           slide: function( event, ui ) {
@@ -8682,12 +8682,12 @@ window.Mirador = window.Mirador || function(config) {
                                  '<img class="viewImgManip closed" src="../brokenBooks/images/imageadjust.png">',
                                  '</div>',
                                  '<div class="mirador-img-manipulation hud-control">',
-                                 '<div title="Change Image Brightness" class="mirador-osd-brightness">',
+                                 '<div title="Change Image Brightness" class="mirador-osd-brightness hud-control">',
                                  '<span>Brightness</span>',
                                  '<span class="brightnessSlider"></span>',
                                  '<img class="imgManipIcon" src="../brokenBooks/images/brightness.png">',
                                  '</div>',
-                                 '<div title="Change Image Contrast" class="mirador-osd-contrast">',
+                                 '<div title="Change Image Contrast" class="mirador-osd-contrast hud-control">',
                                  '<span>Contrast</span>',
                                  '<span class="contrastSlider"></span>',
                                  '<img class="imgManipIcon" src="../brokenBooks/images/contrast.png">',
@@ -10759,14 +10759,19 @@ jQuery.fn.scrollStop = function(callback) {
   // Configurable Promises
   $.createImagePromise = function(imageUrl) {
     var img = new Image(),
-    defaultImage = "http://165.134.241.141/brokenBooks/images/imgNotFound.png",
     dfd = jQuery.Deferred();
 
     img.onload = function() {
+      console.log("image load successful.");
       dfd.resolve(img.src);
     };
 
     img.onerror = function() {
+      console.log("image had an error");
+      var defaultImage = "http://165.134.241.141/brokenBooks/images/imgNotResolved.png";
+      if(imageUrl === undefined || imageUrl === ""){
+        defaultImage = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+      }
       dfd.resolve(defaultImage);
       imageUrl = defaultImage;
       //dfd.reject(img.src);
@@ -10774,8 +10779,12 @@ jQuery.fn.scrollStop = function(callback) {
 
     dfd.fail(function() {
       console.log('image failed to load: ' + img.src);
-      dfd.resolve(defaultImage);
-      imageUrl = defaultImage;
+      var defaultImage2 = "http://165.134.241.141/brokenBooks/images/imgNotResolved.png";
+      if(imageUrl === undefined || imageUrl === ""){
+        defaultImage2 = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+      }
+      dfd.resolve(defaultImage2);
+      imageUrl = defaultImage2;
     });
 
     img.src = imageUrl;

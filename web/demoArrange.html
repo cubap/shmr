@@ -38,7 +38,7 @@ and open the template in the editor.
             }
             div[leaf="true"]{
                 display: block;
-                border: 2px solid black;
+                border: 2px solid #8F8F8F !important;
                 font-size: 12px !important;
             }
             .child .child{
@@ -53,9 +53,7 @@ and open the template in the editor.
             .unassigned .parent{ /* This will hide leaves sitting in the unassigned areas. */
                 display: none !important;
             }
-            
-            
-            
+                                  
             .popoverTrail{
                 height: 425px !important;
             }
@@ -125,6 +123,7 @@ and open the template in the editor.
                 font-family: sans-serif;
                 font-size: 14px;
             }
+            
             #mainBlockHelp a {
                 padding: 0px !important;
                 text-align: left !important;
@@ -148,11 +147,7 @@ and open the template in the editor.
             .leafPopover{
                 z-index: 6;
             }
-            /*.rectoImg, .versoImg{
-                background-image : url("http://localhost:8080/brokenBooks/images/imgNotFound.png") !important;
-            } */    
-            
-            
+
             .demoContent{
                 background-color: white;
                 border: 2px solid #6D6E7B;
@@ -206,6 +201,8 @@ and open the template in the editor.
                 right: 0px;
                 position: absolute;
                 cursor: pointer;
+                top: 9px;
+                z-index: 5;
             }
             
             .ui-sortable-helper{
@@ -252,15 +249,15 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-        <div id="mainBlockHelp" class="demoPopover"> 
+       <div id="mainBlockHelp" class="demoPopover"> 
                 <div class="leafPopClose" onclick="$('#mainBlockHelp').hide(); $(this).parent().parent().find('.mainBlockCover').hide();"></div>
                 <div class="popHdr">Help</div>
                 <div id='thetop' class='demoContent'>
-                    <a href='#sections'>About Sections</a><br>
-                    <a href='#editing'>Editing Sections</a><br>
-                    <a href='#arranging'>Arranging Content</a><br>
-                    <a href='#metdata'>Editing Metadata</a><br>
-                    <a href='#viewing'>Viewing The Leaves</a>
+                    <a style='margin-left: 10px;' href='#sections'>About Sections</a><br>
+                    <a style='margin-left: 10px;' href='#editing'>Editing Sections</a><br>
+                    <a style='margin-left: 10px;' href='#arranging'>Arranging Content</a><br>
+                    <a style='margin-left: 10px;' href='#metdata'>Editing Metadata</a><br>
+                    <a style='margin-left: 10px;' href='#viewing'>Viewing The Leaves</a><br><br>
                     
                     <h4 id='sections'>Section</h4>
                     <p>
@@ -269,14 +266,14 @@ and open the template in the editor.
                         The column on the extreme left can only contain sections and not single leaves. any leaf put into this column will automatically be put into the bucket 
                         at the bottom. We refer to the sections in this first column as Sections. The sections in all other other columns are referred to as Subsections. 
                         They behave identically but this distinction is made for semantic clarity.<br>
-                        <a href='#thetop'>go to Top</a>
+                        <!--<a href='#thetop'>go to Top</a>-->
                     </p>
                     
                     <h4>Basic Navigation</h4>     
                     <p>
                         When any Section is selected its contents are displayed in the next column to the immediate right. If a Subsection is selected in this new column another 
                         column is presented to the immediate right showing the content of this subsection. This nesting of Subsections can be repeated as much as the user needs to.<br>
-                        <a href='#thetop'>go to Top</a>
+                        <!--<a href='#thetop'>go to Top</a>-->
                     </p>
                     
                     <h4 id='editing'>Editing Sections/Subsection</h4>
@@ -314,7 +311,7 @@ and open the template in the editor.
                         To remove a section<br>
                         1. Right click on the section<br>
                         2. The Break popup will give the user the option to break up the section and its content.<br>
-                        3. Click Yes to break up the section.<br><br>
+                        3. Click Yes to break up the section.<br>
 
                         Note: The section will be deleted and the content will be moved into the enclosing the section the deleted section was a Subsection of.  If the section is empty
                         or if it is a leaf, it will be deleted.<br>
@@ -324,8 +321,8 @@ and open the template in the editor.
                     <h3 id='subrenaming'>Renaming sections</h3>
                     <p>
                         To rename a section hold Ctrl when clicking on a section or leaf to see a pop-up to change its title.<br>
-                        <a href='#thetop'>go to Top</a>                        
-                    </p>
+                        <!--<a href='#thetop'>go to Top</a>-->                        
+                    </p><br>
 
                     <h4 id='arranging'>Arranging Content</h4>
                     <p>
@@ -341,20 +338,20 @@ and open the template in the editor.
                         2. Click and drag the item to be reordered.<br>
                         3. Drop the item into the location indicated by the blue placeholder.<br>
                         4. Repeat until all the sections are in the intended order.<br>
-                        5. Where the Sort button was is now a button named Done.  Click Done and the new order will be saved.<br><br>
+                        5. Where the Sort button was is now a button named Done.  Click Done and the new order will be saved.<br>
                         
                         Note: If you do not click Done, the order will not be saved.
                     </p>
                     <h3 id='submoving'>Moving content into and out of other sections.</h3>
                     <p>
                         To move content into a section within the same section<br>
-                        1. Make sure no section in the column containiing the content that needs to be moved is selected. (not hightlighted in black)<br>
+                        1. Make sure no section in the column containing the content that needs to be moved is selected. (not highlighted in black)<br>
                         2. Drag and drop the section or leaf, over the section the user wants to put the chosen section or leaf into.<br>
                         3. Click the Reset Folio Count Button at the bottom of the column to update the folio count for the section receiving the new content.<br>
-                        4. To move the chosen content further into Subsections further dwon select the recieving section and repeat steps 1-3.<br><br>
+                        4. To move the chosen content further into Subsections further down select the receiving section and repeat steps 1-3.<br><br>
 
                         To move the content up a level (to a new column to the left)<br>
-                        1. Make sure no section in the column containiing the content that needs to be moved is selected. (not hightlighted in black)<br>
+                        1. Make sure no section in the column containing the content that needs to be moved is selected. (not highlighted in black)<br>
                         2. Drag and drop the section or leaf, over the section the user wants to put the chosen section or leaf into. 
                         This can only be done to the left of the column containing the selected content.
                     </p>
@@ -364,7 +361,7 @@ and open the template in the editor.
                         1. Click the lock icon inside the directional arrow indicating which direction to lock.  It will be gray if currently unlocked or black if currently locked.<br>
                         2. The lock/unlock will happen in the indicated direction and the color of the lock icons will change according to locked/unlocked status.<br>
                         <a href='#thetop'>go to Top</a>
-                    </p>
+                    </p><br>
                     
                     <h4 id='metadata'>Metadata</h4>
                     <h3>Editing the Metadata</h3>
@@ -372,7 +369,7 @@ and open the template in the editor.
                         To view metadata for any leaf click on the blue i icon on the leaf box.<br>
                         This will open the metadata window as a popup which allows the user to view and edit the metadata.<br>
                         Close the window popup to return to the arrange window.
-                    </p>
+                    </p><br>
                     <h4 id='viewing'>Viewing the Leaf Images</h4>
                     <p>
                         To view metadata for any leaf<br>
