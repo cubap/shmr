@@ -2249,8 +2249,12 @@ function getAllCanvases(){
 
 function changeLabel(range, paginate, event){
     var currentLabel = $("div[rangeid='"+range+"']").children("span:first").html().replace("<br>", "");
-    var labelConfirm = $("<div class='labelConfirm' lblrange='"+range+"'><span>Change Label</span><br><input class='newLabel' type='text' placeholder='"+currentLabel+"'/> <br>\n\
-                      <input value='Save' type='button' onclick=\"updateLabel('"+range+"', '"+currentLabel+"');\" /><input value='Cancel' type='button' onclick='$(this).parent().remove()'/></div>");
+    var labelConfirm = $("<div style='padding: 11px 13px; height:100px; display:block; width:auto;' class='labelConfirm helPop' lblrange='"+range+"'>\n\
+       <div style='position: relative; top:0px; left:0px; ' class='popHdr'>Change Label</div>\n\
+       <div class='demoContent'>\n\
+       <input style='margin-bottom: 5px; width: 156px; margin-left: 3px;'  class='newLabel' type='text' placeholder='"+currentLabel+"'/> <br>\n\
+       <input value='Save' type='button' onclick=\"updateLabel('"+range+"', '"+currentLabel+"');\" />\n\
+       <input value='Cancel' type='button' onclick='$(this).parent().parent().remove()'/></div></div>");
     var x = event.pageX;
     var y = event.pageY;
     //if($(".labelConfirm").length == 0){
@@ -4658,9 +4662,12 @@ function populateAnnoForms(){
 
   function askForNewTitle(inThisArea){
     var newTitleRequest = 
-    $("<div id='newGroupTitleArea'><h1>Merge Checked Selection</h1><br>\n\
-    <div class='newGroupCenter'>New Group Title<input id='newGroupTitle' type='text'/><div class='noTitleWarning'>You must supply a title to make a group.</div></div>\n\
-        <input onclick=\"makeAgroup($('#newGroupTitle').val());\" type='button' value='Submit'/><input onclick=\"$('#newGroupTitleArea').remove();  $('.mainBlockCover').hide();\" type='button' value='Cancel'/>\n\
+    $("<div style='display:block;' id='newGroupTitleArea' class='helPop'><div style='left: 32px;' class='popHdr'>Merge Checked Selection</div>\n\
+    <div style='height:100%;' class='helperContent demoContent demoHdrTxt'>\n\
+        <span class='newgroupLabel'>New Group Title</span><input id='newGroupTitle' type='text'/><div class='noTitleWarning'>You must supply a title to make a group.</div>\n\
+    </div>\n\
+        <input style='position: absolute; right:87px;' onclick=\"makeAgroup($('#newGroupTitle').val());\" type='button' value='Submit'/>\n\
+        <input style='position: absolute; right:33px;' onclick=\"$('#newGroupTitleArea').remove();  $('.mainBlockCover').hide();\" type='button' value='Cancel'/>\n\
     </div>");
     $('.adminTrail').append(newTitleRequest);
     $(".mainBlockCover").show();
@@ -5451,12 +5458,16 @@ function populateAnnoForms(){
       console.log(targetToBreak.parentNode.getAttribute("isOrdered"));
       if(targetToBreak.className.indexOf("ordered") > -1 || targetToBreak.parentNode.getAttribute("isOrdered") === "true"){
           console.log("Locked, dont break");
-           confirm = $("<div class='breakConfirm'><span>Locked!</span><br><input value='OK' type='button' onclick='$(this).parent().remove()'/></div>");
+           confirm = $("<div class='breakConfirm'><div class='popHdr' style='position: relative; font-size: 14px; top:0px;  left:0px;'>Locked!</div>\n\
+           <div class='demoContent'><input value='OK' type='button' onclick='$(this).parent().parent().remove()'/></div></div>");
       }
       else{
           console.log("breakable");
-            confirm= $("<div class='breakConfirm'><span>Break?</span><br>\n\
-            <input value='Yes' type='button' onclick=\"breakUp();\" /><input value='No' type='button' onclick='$(this).parent().remove()'/></div>");
+            confirm= $("<div class='breakConfirm'><div class='popHdr' style='position: relative; font-size: 14px; top:0px;  left:0px;'>Break?</div>\n\
+            <div class='demoContent'>\n\
+            <input value='Yes' type='button' onclick=\"breakUp();\" /><input value='No' type='button' onclick='$(this).parent().parent().remove()'/>\n\
+            </div>\n\
+            </div>");
       }
       var x = event.pageX;
       var y = event.pageY;

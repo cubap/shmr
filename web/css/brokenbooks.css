@@ -390,15 +390,15 @@ and open the template in the editor.
                 /*display: inherit;*/
             }
             .helperContent{
-                display: none;
-                position: absolute;
-                left: 19%;
-                top: 0px;
+                display: block;
+                position: relative;
+                margin: 0px auto;
                 z-index: 4;
-                font-size: 9pt;
+                font-size: 12px !important;
                 width: 247px;
                 white-space: normal;
                 box-shadow: 0px 0px 13px 1px black;
+                text-align: left;
             }
             #fullImgContainer{
                 position: absolute;
@@ -408,7 +408,7 @@ and open the template in the editor.
                 min-width: 400px;
                 max-width: 600px;
 /*                background-color: black;
-*/                display: none;
+*/              display: none;
                 z-index: 3;
                 left: 0;
                 right: 0;
@@ -770,11 +770,10 @@ and open the template in the editor.
                 top: 9px;
             }
             #newGroupTitleArea{
-                position: absolute;
-                background-color: white;
-                z-index: 5;
-                left: 38%;
-                top: 13%;
+                display: block;
+                left: 0px !important;
+                right: 0px !important;
+                margin: 0 auto !important;
             }
             .mainBlockCover{
                 width: 100%;
@@ -793,31 +792,26 @@ and open the template in the editor.
                 position: relative;
             }
             #newGroupForm{
-              position: fixed;
-              background-color: #FFF;
-              z-index: 5;
-              top: 13%;
               display: none;
-              margin: 0 auto;
-              left: 0;
-              right: 0;
-              width: 80%;
             }
             #allLeaves{
                 position: relative;
                 border: 2px solid black;
                 padding: 4px;
-                width:700px;
+                width: 700px;
                 height: 350px;
+                left: 28px;
                 overflow-y: auto;
+                margin: 10px 0px;
             }
             .breakConfirm{
-                position: absolute;
                 z-index: 6;
-                background-color: gray;
                 text-align: center;
                 border: 2px solid black;
                 height: 53px;
+                position: absolute;
+                background-color: #000;
+                padding: 3px 6px;
             }
             .labelConfirm{
                 position: absolute;
@@ -1070,4 +1064,40 @@ and open the template in the editor.
                 display: block;
                 cursor: pointer;
             }
-            
+            .helPop{
+                position: absolute;
+                left: 16%;
+                background-color: #000;
+                display: none;
+                padding: 38px 13px;
+                width: 291px;
+                height: 151px;
+                z-index: 4;
+                top: 5px;
+            }
+            .helPop .popHdr{
+                color: white;
+                position: absolute;
+                top: 19px;
+                font-weight: bold;
+                font-size: 14px;
+                font-family: sans-serif;
+                text-transform: uppercase;
+                left: 18px;
+                
+            }
+            .newgroupLabel{
+                font-size: 12px;
+                font-weight: bold;
+                display: block;
+                top: 30%;
+                position: relative;
+            }
+            #newGroupTitle{
+                width: 100%;
+                border: 1px solid black;
+            }
+            #groupTitle{
+                position: relative;  display: inline-block; top: 6px;
+                width: 24px;
+            }

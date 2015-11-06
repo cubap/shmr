@@ -387,15 +387,25 @@ and open the template in the editor.
                     <input type="button" onclick="$('#mainBlockHelp').hide(); $('.mainBlockCover').hide();" value="Close" />
                 </div>
             </div>
-        <div id="newGroupForm">
-            <p>Enter a label for the new group, then select the leaves that belong.  They will initially be unordered, you will need to order them.</p>
-            Label: <input type="text" id="groupTitle" />
-            <div id="allLeaves">
+        <div id="newGroupForm" class="helPop" style="
+             width: 771px; 
+             height: 404px; 
+             padding: 38px 21px; 
+            position: absolute;
+            left: 0px;
+            right: 0px;
+            margin: 0 auto;
+            top: 71px;">
+            <div style="left:22px;" class="popHdr">Create New Group</div>
+            <div class="demoContent demoHdrTxt">
+                <span style="position: relative;  display: inline-block; top: 6px;">Enter Label:</span> <input type="text" id="groupTitle" /><br>
+                <div id="allLeaves">
 
+                </div>
+                <div class="noTitleWarning">You must supply a label to create a new group!</div>
+                <input style="position: absolute; right: 79px; margin-top: 5px;" id="saveGroupForm" type="button" onclick="saveNewGroupForm();" value="Save"/>
+                <input style="    position: absolute; right: 21px; margin-top:5px;" type="button" onclick="cancelNewGroupForm();" value="Cancel"/>
             </div>
-            <div class="noTitleWarning">You must supply a label to create a new group!</div>
-            <input id="saveGroupForm" type="button" onclick="saveNewGroupForm();" value="Save"/>
-            <input type="button" onclick="cancelNewGroupForm();" value="Cancel"/>
         </div>
         <div class="leafPopover"></div>
 <!--        <div id="dragHelpHide">
