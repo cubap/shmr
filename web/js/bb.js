@@ -5458,12 +5458,17 @@ function populateAnnoForms(){
       console.log(targetToBreak.parentNode.getAttribute("isOrdered"));
       if(targetToBreak.className.indexOf("ordered") > -1 || targetToBreak.parentNode.getAttribute("isOrdered") === "true"){
           console.log("Locked, dont break");
-           confirm = $("<div class='breakConfirm'><div class='popHdr' style='position: relative; font-size: 14px; top:0px;  left:0px;'>Locked!</div>\n\
+           confirm = $("<div class='breakConfirm'><div class='popHdr' style='position: relative; font-size: 14px; top:0px;  left:0px;'>locked!</div>\n\
            <div class='demoContent'><input value='OK' type='button' onclick='$(this).parent().parent().remove()'/></div></div>");
       }
       else{
           console.log("breakable");
-            confirm= $("<div class='breakConfirm'><div class='popHdr' style='position: relative; font-size: 14px; top:0px;  left:0px;'>Break?</div>\n\
+          var question = "break?";
+          //If it is a leaf or empty section, we are deleting not breaking.
+          if(targetToBreak.getAttribute("leaf") === "true" || $(targetToBreak).children(".arrangeSection").length === 0){
+              question = 'delete?';
+          }
+            confirm= $("<div class='breakConfirm'><div class='popHdr' style='position: relative; font-size: 14px; top:0px;  left:0px;'>"+question+"</div>\n\
             <div class='demoContent'>\n\
             <input value='Yes' type='button' onclick=\"breakUp();\" /><input value='No' type='button' onclick='$(this).parent().parent().remove()'/>\n\
             </div>\n\

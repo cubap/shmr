@@ -1072,7 +1072,7 @@ and open the template in the editor.
                 padding: 38px 13px;
                 width: 291px;
                 height: 151px;
-                z-index: 4;
+                z-index: 6;
                 top: 5px;
             }
             .helPop .popHdr{
