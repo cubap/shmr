@@ -232,7 +232,7 @@ and open the template in the editor.
     </head>
     <body>
         <img style='left: 7px;' onclick="$('#mainBlockHelp').show(); $('.mainBlockCover').show();"
-        class="helperIcon" src="http://localhost:8080/brokenBooks/images/redInfo1.png" />
+        class="helperIcon" src="http://165.134.241.141/brokenBooks/images/redInfo1.png" />
         <input id="gotoMirador" class="helperIcon" onclick="" value="View In Mirador" />
         <span class='sortTitle'>The Llangattock Breviary Structure</span>
         <div class="mainBlock">
@@ -439,7 +439,7 @@ and open the template in the editor.
             console.log("update "+column.attr("rangeID") +"with ordered array");
             console.log(childrenArray);
         //need to update this column range id with the new order of ranges
-            var updateURL ="http://localhost:8080/brokenBooks/updateRange"; //update list with the range removed
+            var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
             var paramObj1 = {"@id" : column.attr("rangeID"), "ranges" : childrenArray};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(updateURL, params1, function(){
@@ -462,7 +462,7 @@ and open the template in the editor.
                 var folioCount = $(this).find("div[leaf='true']").length;
                 var folioCountHTML = $("<span class='folioCount'>"+folioCount+"</span>");
                 if($(this).attr("leaf") === "true"){
-                    folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                    folioCountHTML = $("<span class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
                 }      
                 $(this).append(folioCountHTML);
             });
@@ -473,17 +473,17 @@ and open the template in the editor.
         $(function(){
             
             if(windowURL.indexOf("LFD") > -1){
-                $("#gotoMirador").attr("onclick", "document.location.href='http://localhost:8080/brokenBooks/getManifest.html?LFD';");
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?LFD';");
                 $(".sortTitle").html("Beauvais Missal Structure");
             }
             else if(windowURL.indexOf("DTC")){
-                $("#gotoMirador").attr("onclick", "document.location.href='http://localhost:8080/brokenBooks/getManifest.html?DTC';");
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?DTC';");
             }
             else if(windowURL.indexOf("demo=1")>-1){
-                $("#gotoMirador").attr("onclick", "document.location.href='http://localhost:8080/brokenBooks/demoManifest.html';");
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/demoManifest.html';");
             }
             else{
-                $("#gotoMirador").attr("onclick", "document.location.href='http://localhost:8080/brokenBooks/getManifest.html';");
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html';");
             }
             gatherRangesForArrange(2); //populate the admin interface
         });

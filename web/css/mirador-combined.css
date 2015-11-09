@@ -2782,8 +2782,8 @@ li.highlight {
   height:100%;
   float: left;
   /*background-color: #efefef;*/
-  background-color: lightgray;
-  border-right: 1px solid lightgray;
+  background-color: #B6B9BA;
+  border-right: 1px solid #B6B9BA;
   /*display: none;*/
   box-sizing: border-box;
   overflow: hidden;
@@ -3187,16 +3187,18 @@ li.highlight {
   font-size:130%;
   position:relative;
   margin-right:10px;
-
+  top: 20px;
 }
 .mirador-osd-negative-rotate {
   font-size:130%;
   position:relative;
+  top: 20px;
 }
 .mirador-osd-flip {
   font-size:130%;
   position:relative;
   margin-right: 10px;
+  top: 20px;
 }
 .mirador-osd-toggle-grayscale {
   font-size:100%;
@@ -3219,14 +3221,11 @@ li.highlight {
   margin-bottom: 10px;
 }
 .mirador-osd-filters-off {
-  font-size:100%;
-  position:relative;
-  /*right:170px;
-  top:75px;*/
-  display:block;
+  font-size: 100%;
+  position: absolute;
+  display: block;
+  right: 25px;
   cursor: pointer;
-  text-align: left;
-  margin-top: 13px;
 }
 .mirador-osd-filters-off span{
   border: 1px solid white;
@@ -3234,24 +3233,24 @@ li.highlight {
 }
 
 .mirador-pan-zoom-toggle {
-    width: 70px;
-    height: 80px;
+    width: 60px;
+    height: 70px;
     position: absolute;
-    bottom: 214px;
+    bottom: 70px;
+    right: 0px;
     color: #008000;
     opacity: 1;
     padding: 25px 0px;
-    right: 0px;
 }
 
 .viewImgManip{
-  height: 80px;
-  width: 70px;
+  height: 70px;
+  width: 60px;
 }
 
 .mirador-img-manipulation{
   right:-350px;
-  height: 302px;
+  height: 289px;
   width: auto;
   position: absolute;
   background-color: black;
@@ -3259,6 +3258,7 @@ li.highlight {
   opacity:1 !important;
   text-align: left;
   bottom: 0px;
+  font-size: 88%;
 }
 .mirador-osd-up {
   position:absolute;
@@ -4017,7 +4017,7 @@ div.manifest-info a.mirador-btn.mirador-icon-toc {
   top: 0;
   box-sizing: border-box;
   background-color: rgba(255,255,255,0.9);
-  z-index: 3;
+  z-index: 4;
   width: 45%;
   overflow-y: scroll;
   max-height: 90%;

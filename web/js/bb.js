@@ -26,7 +26,7 @@ var testLists = [
         "permission" : 0,
         "forkFromID" : "",
         "@id" :"http://www.example.org/iiif/LlangBrev/annoList/3",
-        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"}]"
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"General Metadata\",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Language:  \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://www.example.org/iiif/LlangBrev/range/25\"}]"
     },
     {
         "@type" : "sc:AnnotationList",
@@ -37,7 +37,7 @@ var testLists = [
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
-        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/1\"}]"
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6f3e4b0f1c678d2a550\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/1\"}]"
     },
     {
         "@type" : "sc:AnnotationList",
@@ -48,7 +48,7 @@ var testLists = [
         "permission" : 0,
         "forkFromID" : "",
         "@id" : "http://www.example.org/iiif/LlangBrev/annoList/2",
-        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
+        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
     }       
 ];
 annoListCollection[0] = testLists[0];
@@ -89,7 +89,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          },
          {
       //This will be the anchor canvas in the anchor range
@@ -155,7 +155,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/3"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -199,7 +199,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/5"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
    },
     {
@@ -221,7 +221,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/6"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -243,7 +243,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/7"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -265,7 +265,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -287,7 +287,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -309,7 +309,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -331,7 +331,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -353,7 +353,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/12"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/`", "@type":"sc:AnnotationList"}]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -374,7 +374,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
           }],
-          "otherContent":[]      
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]      
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -395,7 +395,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -417,7 +417,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
           }],
-          "otherContent":[]   
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -438,7 +438,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -460,7 +460,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
           }],
-          "otherContent":[]   
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -481,7 +481,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -503,7 +503,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -525,7 +525,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -547,7 +547,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -569,7 +569,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -591,7 +591,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -613,7 +613,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/24"
           }],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
    },
    {
@@ -624,7 +624,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -635,7 +635,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -646,7 +646,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -657,7 +657,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -668,7 +668,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -679,7 +679,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -690,7 +690,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -701,7 +701,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -712,7 +712,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -723,7 +723,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -734,7 +734,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -745,7 +745,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -756,7 +756,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -767,7 +767,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -778,7 +778,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -789,7 +789,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -800,7 +800,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -811,7 +811,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -822,7 +822,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -833,7 +833,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -844,7 +844,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -855,7 +855,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -866,7 +866,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -877,7 +877,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -888,7 +888,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -899,7 +899,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -910,7 +910,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -921,7 +921,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -932,7 +932,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -943,7 +943,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[]
+          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
          
     },
     {
@@ -957,7 +957,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -979,7 +979,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -1629,6 +1629,14 @@ var testManifest = {
 
 var rangeCollection = testManifest.structures;
 var pageCanvases = testManifest.sequences[0].canvases;
+var emptyAnnoList = {
+            "@id" : "http://www.example.org/iiif/LlangBrev/annoList/empty",
+            "@type" : "sc:AnnotationList",
+            "context" : "http://www.shared-canvas.org/ns/context.json",
+            "label" : "EMPTY",
+            "resources" : [],
+            "on" :  "demo"
+        };
 var annotationLists = [
     {
       "@id" : "http://www.example.org/iiif/LlangBrev/annoList/1",
@@ -2195,7 +2203,7 @@ var annotationLists = [
         }]; // end lists;
 
 function getManifest(){
-    var url="http://localhost:8080/brokenBooks/getManifest";
+    var url="http://165.134.241.141/brokenBooks/getManifest";
     $.post(url, function(data){
         console.log(data);
         data=JSON.parse(data);
@@ -2209,7 +2217,7 @@ function getAllRanges(){
   var forProject = detectWho();
   var properties={"@type" : "sc:Range", "forProject":forProject};
   //this will be superfluous when the annotation store has ranges from other projects
-  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+  var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
   console.log("GET RANGES LIVE");
   $.post(url, params, function(data){
@@ -2224,7 +2232,7 @@ function getAllAnnotations(){
   var forProject = detectWho();
   var properties={"@type" : "sc:AnnotationList", "forProject" : forProject};
   //this will be superfluous when the annotation store has lists from other projects
-  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+  var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
   var properties={"@type" : "sc:AnnotationList"};
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
@@ -2238,7 +2246,7 @@ function getAllCanvases(){
   //THERE WILL AT LEAST BE 2 CANVASES
   var forProject = detectWho();
   var properties={"@type" : "sc:Canvas", "forProject":forProject};
-  var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet"
+  var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet"
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
      pageCanvases = JSON.parse(data);
@@ -2267,31 +2275,32 @@ function changeLabel(range, paginate, event){
 }
 
 function updateLabel(range, currentLabel){
+    //werid delay, fix the UI.
     var windowurl = document.location.href;
     var newLabel = $("div[lblrange='"+range+"']").find(".newLabel").val();
     if(newLabel!==undefined && newLabel !== currentLabel){
         if(newLabel === ""){
             newLabel = "unlabeled";
         }
-        var updateURL ="http://localhost:8080/brokenBooks/updateRange"; //update list with the range removed
+        var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
         var paramObj1 = {"@id" : range, "label" : newLabel};
         var params1 = {"content" : JSON.stringify(paramObj1)};
         if(windowurl.indexOf("demo=1") > -1){
-            $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
-            console.log("update "+range+" with label "+newLabel);
+            //$("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
+            //console.log("update "+range+" with label "+newLabel);
             $.each($(".arrangeSection[rangeid='"+range+"']"), function(){
                 $(this).children("span:first").html(newLabel);
             });
-           setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1000);
+           $("div[lblrange='"+range+"']").remove();
         }
         else{
            $.post(updateURL, params1, function(){
-               $("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
+               //$("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
                console.log("update "+range+" with label "+newLabel);
                $.each($(".arrangeSection[rangeid='"+range+"']"), function(){
                    $(this).children("span:first").html(newLabel);
                });
-               setTimeout(function(){$("div[lblrange='"+range+"']").remove();},1000);
+               $("div[lblrange='"+range+"']").remove();
            });
         }
         
@@ -2389,7 +2398,7 @@ function toggleChildren(parentRange, admin, event){
 //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
   });
-//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
+//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
 //  if(admin == "admin"){
 //     newArea.children(".unassigned").append(leafCountHTML);
 //  }
@@ -2719,7 +2728,7 @@ function dropHelp(event){
           moveAndUpdate(child.getAttribute("rangeid"), areaTakenFrom, toTarget);
       }
       else{
-          $("#"+data).remove();
+          //$("#"+data).remove();
       }
       
       child.className = child.className.replace(/\bparent\b/,'');
@@ -2728,11 +2737,11 @@ function dropHelp(event){
       $.each($(".arrangeSection"), function(){
            $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
-            var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
+            var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
             var leafURL = child.getAttribute("rangeID");
             var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
             if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
             }      
          $(this).append(folioCountHTML);
        });
@@ -2767,7 +2776,7 @@ function dropFlash($elem){
 function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
     //Remove rangeMoved from rangeMovedFrom's range list
     console.log("move and update with "+rangeMoved, rangeMovedFrom, rangeMovedTo)
-    var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var paramObj = {"@id" : rangeMovedFrom};
     var params = {"content" : JSON.stringify(paramObj)};
     console.log("First get range moved from data to remove range being moved from its ranges list.");
@@ -2782,7 +2791,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo){
             console.log("range in range list, splicing out.");
             rangeList.splice( index, 1 );
         }
-         var updateURL ="http://localhost:8080/brokenBooks/updateRange"; //update list with the range removed
+         var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
          var paramObj1 = {"@id" : rangeMovedFrom, "ranges" : rangeList};
          var params1 = {"content" : JSON.stringify(paramObj1)};
          console.log("you have spliced the range out, now update with list");
@@ -2829,7 +2838,7 @@ function dragOverHelp(event){
 //function getParentAggregator(which){
 //    //ensure parent aggr is first in the array if it exists.
 //    var properties={"parent" : "paggr"};
-//    var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+//    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
 //    var params = {"content" : JSON.stringify(properties)};
 //    parentAggr = "";
 //    $.post(url, params)
@@ -2855,7 +2864,7 @@ function gatherRangesForArrange(which){
     var forProject = detectWho();
     var properties={"@type" : "sc:Range", "forProject":forProject};
 //this will be superfluous when the annotation store has ranges from other projects
-    var url="http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
     if(windowurl.indexOf("demo=1") > -1){
         rangeCollection = testManifest.structures;
@@ -2983,7 +2992,7 @@ function populateRangesToDOM(which){
               //}
             }
             else{
-              //dragAttribute = "id='drag_"+uniqueID+"localhost:8080' draggable='true' ondragstart='dragHelp(event);'";
+              //dragAttribute = "id='drag_"+uniqueID+"165.134.241.141' draggable='true' ondragstart='dragHelp(event);'";
               currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
             }
             //Create an html range object that can be added
@@ -3102,11 +3111,11 @@ function populateRangesToDOM(which){
               $.each(outer.find(".arrangeSection"), function(){
                  $(this).children(".folioCount").remove();
                     var folioCount = $(this).find("div[leaf='true']").length;
-                    var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
+                    var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
                     var leafURL = $(this).attr("rangeID");
                     if($(this).attr("leaf") === "true"){
                         var leafIsInURL = $(this).parent().attr("rangeID");
-                        folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                        folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
                     }
                     else if($(this).attr("isOrdered") === "true"){
                         folioCountHTML="";
@@ -3675,11 +3684,19 @@ function populateAnnoForms(){
             if(canvas == 'recto'){
                 console.log("recto selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
+                if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImgInv.png") > -1){
+                    //Need to show the negative
+                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                }
                 if(previouslySelectedURI === "leaf"){
                     console.log("previous was leaf1");
                     previouslySelectedURI = currentLeafServerID;
                 }
                 $("#folioSide1").addClass("selectedFolio");
+                if($("#folioSide1").find(".rectoImg").attr("src").indexOf("addImg.jpg") > -1){
+                    //Need to show the negative
+                    $("#folioSide1").find(".rectoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                }
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
 
@@ -3690,11 +3707,19 @@ function populateAnnoForms(){
             else if (canvas == 'verso'){
                 console.log("verso selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
+                if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImgInv.png") > -1){
+                    //Need to show the negative
+                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                }
                 if(previouslySelectedURI === "leaf"){
                     previouslySelectedURI = currentLeafServerID;
                     console.log("previous was leaf2");
                 }
-                $("#folioSide2").addClass("selectedFolio");;
+                $("#folioSide2").addClass("selectedFolio");
+                if($("#folioSide2").find(".versoImg").attr("src").indexOf("addImg.jpg") > -1){
+                    //Need to show the negative
+                    $("#folioSide2").find(".versoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                }
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
 
@@ -3706,6 +3731,10 @@ function populateAnnoForms(){
                 console.log("leaf selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 canvas = "leaf";
+                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImgInv.png") > -1){
+                    //Need to show the negative
+                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                }
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#folioSide2").removeClass("selectedFolio");
@@ -4137,8 +4166,8 @@ function populateAnnoForms(){
         var label2 = $("#folio2Label").val();
         var leafLabel = $("#oneAndtwoLabel").val();
         
-        var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
-        var updateRangeURL = "http://localhost:8080/brokenBooks/updateRange";
+        var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+        var updateRangeURL = "http://165.134.241.141/brokenBooks/updateRange";
         
         if(label1 !== undefined && windowURL.indexOf("demo=1")===-1){
             if(label1 === ""){
@@ -4197,10 +4226,41 @@ function populateAnnoForms(){
         var windowURL = document.location.href;
         var objectID = uri;
         var forProject = detectWho();
+        if(windowURL.indexOf("demo=1")>-1){
+                if(flag){
+                    $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
+                    var canvasID = "";
+                    if(canvas == 'recto'){
+                        canvasID = $("#folioSide1").attr("canvas");
+                        $("#catalogueInfoFor").val(canvasID); //alpha
+                        alpha = true;
+                        beta= false;
+                        zeta = false;
+                    }
+                    else if (canvas == 'verso'){
+                        canvasID = $("#folioSide2").attr(canvas);
+                        $("#catalogueInfoFor").val(canvasID); //beta
+                        beta = true;
+                        alpha = false;
+                        zeta = false;
+                    }
+                    else{                                 
+                        $("#catalogueInfoFor").val(currentLeafServerID); //zeta
+                        alpha = beta = zeta = true;
+                    }
+                    var previewImgSrc = $("."+canvas+"Img").attr("src");
+                    $(".imgPreview").attr("src",previewImgSrc);
+                    $("tr[set='set']").attr("set", "");
+                    $("#notes").attr("set", "");
+                    console.log("we are populate anno forms");
+                    populateAnnoForms();
+                    $("#saveCover").hide();
+                }
+        }
             $.each(annoListCollection, function(){
                 console.log("Does "+this.on+" === "+objectID);
                 if(this.on === objectID){ //this is our annotation list to add the annotation to 
-                    var updateAnnoListURL = "http://localhost:8080/brokenBooks/updateRange";
+                    var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
                     var newResources = [];
                     newResources = this.resources;
                     var updateContent = newResources;
@@ -4208,37 +4268,7 @@ function populateAnnoForms(){
                     var paramsObj = {"@id": this["@id"], "resources":updateContent};
                     var params = {"content":JSON.stringify(paramsObj)};
                     if(windowURL.indexOf("demo=1")>-1){
-                        $("#saveCover").hide();
-                        console.log("Flag must be true to populate anno forms: "+flag);
-                        if(flag){
-                            $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
-                            var canvasID = "";
-                            if(canvas == 'recto'){
-                                canvasID = $("#folioSide1").attr("canvas");
-                                $("#catalogueInfoFor").val(canvasID); //alpha
-                                alpha = true;
-                                beta= false;
-                                zeta = false;
-                            }
-                            else if (canvas == 'verso'){
-                                canvasID = $("#folioSide2").attr(canvas);
-                                $("#catalogueInfoFor").val(canvasID); //beta
-                                beta = true;
-                                alpha = false;
-                                zeta = false;
-                            }
-                            else{                                 
-                                $("#catalogueInfoFor").val(currentLeafServerID); //zeta
-                                alpha = beta = zeta = true;
-                            }
-                            var previewImgSrc = $("."+canvas+"Img").attr("src");
-                            $(".imgPreview").attr("src",previewImgSrc);
-                            $("tr[set='set']").attr("set", "");
-                            $("#notes").attr("set", "");
-                            console.log("we are populate anno forms");
-                            populateAnnoForms();
-                        }
-                        else{
+                        if(!flag){
                             closeLeafPopover();
                         }
                     }
@@ -4315,6 +4345,7 @@ function populateAnnoForms(){
                     }
                     
                 }
+
         });
     }
 
@@ -4332,7 +4363,7 @@ function populateAnnoForms(){
           updateRange(section, currentLeafServerID, 'arrange', []);
           
           if(windowURL.indexOf("demo=1") === -1){
-            var updateURL = "http://localhost:8080/brokenBooks/updateRange";
+            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj = {"@id":currentLeafServerID, "within":section};
             var params = {"content":JSON.stringify(paramObj)};
             $.post(updateURL, params, function(){
@@ -4374,7 +4405,7 @@ function populateAnnoForms(){
 		$("#fullImageShade").hide()
 	}
 	function addImage(anno, canvasURI){
-              var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+              var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
               var paramObj = {"@id": canvasURI, "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               $.post(updateCanvasURL, params, function(data){
@@ -4423,7 +4454,7 @@ function populateAnnoForms(){
 
 	function updateAnnotation(annoURI, annoObj){
 		var resourceObj = annoObj.resource;
-		var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
+		var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
 		var paramObj = {"@id":annoURI, "resource": resourceObj};
 		var params = {"content":JSON.stringify(paramObj)};
                 //This action will happen outside the post because its timing effects saveFolio() and updateList()
@@ -4467,7 +4498,7 @@ function populateAnnoForms(){
 		var objectID = uri; //which object are we saving to
 		var annoServerID = -1;
 		annoObject.on = objectID; //set the on property to be what object we are saving to 
-		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
 		var params = {'content':JSON.stringify(annoObject)};
 		var labelToCheckFor = annoObject.label;
                 var windowURL = document.location.href;
@@ -4564,9 +4595,9 @@ function populateAnnoForms(){
 		rangeID ++;
 		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
 		//testManifest.structures.push(newRangeObject); //local
-		var newAnnoUrl = "http://localhost:8080/brokenBooks/saveNewRange";
+		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
 		var windowURL = document.location.href;
-                var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+                var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
                 if(windowURL.indexOf("demo=1") > -1){
                     rangeCollection.push(newRangeObject); //live
                     if(current === 'currentLeaf'){
@@ -4625,7 +4656,7 @@ function populateAnnoForms(){
                         "on" :newRangeObject["@id"],
                         "forProject": forProject
                     };
-                    var listURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                    var listURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                     var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
                     $.post(listURL, listParams, function(data2){
                         data2 = JSON.parse(data2);
@@ -4661,6 +4692,11 @@ function populateAnnoForms(){
 	}
 
   function askForNewTitle(inThisArea){
+//    $.each(inThisArea.find("input:checked"), function(){
+//      if($(this).parent().attr("class").indexOf("selectedSection")){
+//          alert("cannot merge an opened section");
+//      }
+//    });
     var newTitleRequest = 
     $("<div style='display:block;' id='newGroupTitleArea' class='helPop'><div style='left: 32px;' class='popHdr'>Merge Checked Selection</div>\n\
     <div style='height:100%;' class='helperContent demoContent demoHdrTxt'>\n\
@@ -4677,6 +4713,7 @@ function populateAnnoForms(){
   function makeAgroup(title){
       title = $("#newGroupTitle").val();
       var windowurl = document.location.href;
+      var closeLastSection = false;
        var leafCount = 0;
        var children = [];
         if(title===""){
@@ -4689,6 +4726,9 @@ function populateAnnoForms(){
           $.each(theArea.find("input:checked"), function(){
               childrenForGroup.push($(this).parent());
               children.push($(this).parent().attr("rangeID"));
+              if($(this).parent().attr("class").indexOf("selectedSection") > -1){
+                  closeLastSection = true;
+              }
               if($(this).parent().attr("leaf") === "true"){
                   addLeaves = 1;
               }
@@ -4698,7 +4738,7 @@ function populateAnnoForms(){
               leafCount += addLeaves;
           });
           
-          var uniqueID = ($(".arrangeSection").length * 10) + 1;;
+          var uniqueID = ($(".arrangeSection").length * 10) + 1;
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
           var areaForNewGroup = "";
           if($(".adminTrail").find("div[depth='"+depthToCheck+"']").children(".unassigned").hasClass("selectedSection")){
@@ -4724,7 +4764,7 @@ function populateAnnoForms(){
               }
               newGroup.append(newChild);
             });
-            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
+            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
             newGroup.append(leafCountHTML);
             var depth = theArea.attr("depth");
             areaForNewGroup.children(".notBucket").append(newGroup);
@@ -4739,13 +4779,11 @@ function populateAnnoForms(){
             if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
               $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
             }
+            
             if(windowurl.indexOf("demo=1") === -1){
-                var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
-                var paramObj = {"@id" : areaForNewGroup.attr("rangeID")};
-                var params = {"content" : JSON.stringify(paramObj)};
-                $.post(getURL, params, function(data){ //get list of ranges currently in parent receiving grouping
-                    var data  = JSON.parse(data); //array of one range
-                    var rangeObj = data[0];
+                $.each(rangeCollection, function(){
+                    if(this["@id"] === areaForNewGroup.attr("rangeID")){
+                    var rangeObj = this;
                     var rangeList = new Array();
                     if(rangeObj.ranges.length > 0){
                         rangeList = rangeObj.ranges;
@@ -4766,7 +4804,7 @@ function populateAnnoForms(){
                         "forProject" : forProject,
                         "within" : areaForNewGroup.attr("rangeid")
                       };
-                    var saveURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                    var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                     var params2 = {"content" : JSON.stringify(newRangeObject)};
                     var useBackup = false;
                     if(rangeList instanceof Array){
@@ -4778,8 +4816,12 @@ function populateAnnoForms(){
                         data = JSON.parse(data);
                         var backupArray = new Array();
                         var newGroupID = data["@id"];
+                        var rangeObj2 = JSON.parse(params2.content);
+                        rangeObj2["@id"] = newGroupID;
+                        rangeCollection.push(rangeObj2);
                         newGroup.attr("rangeid", newGroupID);
                         newGroup.attr("relation", areaForNewGroup.attr("rangeid"));
+                        newGroup.click(); //use this to reset the opened section.
                         if(useBackup){
                             backupArray.push(newGroupID);
                             rangeList = backupArray;
@@ -4788,11 +4830,16 @@ function populateAnnoForms(){
                             rangeList.push(newGroupID);
                         }
                          //add new group ID to the range's range collection receiving the new group
-                        var updateURL ="http://localhost:8080/brokenBooks/updateRange";
+                        var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                         var paramObj2 = {"@id" : areaForNewGroup.attr("rangeID"), "ranges" : rangeList};
                         var params3 = {"content" : JSON.stringify(paramObj2)};
                         $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
                             //update the ranges within that are being grouped in the new group.
+                            $.each(rangeCollection, function(){
+                                if(this["@id"] === areaForNewGroup.attr("rangeID")){
+                                    this.ranges = rangeList;
+                                }
+                            });
                             $.each(children, function(){
                                 var range = this;
                                 var within = newGroupID;
@@ -4802,8 +4849,65 @@ function populateAnnoForms(){
                             });
                             cancelNewGroupForm();
                         });
+                    })
+                    }
+                });
+            }
+            else{
+                $.each(rangeCollection, function(){
+                    if(this["@id"] === areaForNewGroup.attr("rangeID")){
+                    var rangeObj = this;
+                    var rangeList = new Array();
+                    if(rangeObj.ranges.length > 0){
+                        rangeList = rangeObj.ranges;
+                    }
+                    $.each(childrenForGroup, function(){ //remove the children being grouped from the parent
+                        if($.inArray($(this).attr("rangeID"), rangeList) > -1){
+                            rangeList.splice( $.inArray($(this).attr("rangeID"), rangeList), 0);
+                        }
                     });
-                }); 
+                    var forProject = detectWho();
+                    rangeID +=1;
+                    var newRangeObject = {
+                        "@id" : mockID,                        
+                        "@type":"sc:Range",
+                        "label": title,
+                        "ranges" : children,
+                        "canvases" :[],
+                        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                        "otherContent" : [],
+                        "forProject" : forProject,
+                        "within" : areaForNewGroup.attr("rangeid")
+                      };
+                    
+                    var useBackup = false;
+                    if(rangeList instanceof Array){
+                    }
+                    else{
+                        useBackup = true;
+                    }
+                        var backupArray = new Array();
+                        rangeCollection.push(newRangeObject);
+                        newGroup.attr("rangeid", mockID);
+                        newGroup.attr("relation", areaForNewGroup.attr("rangeid"));
+                        newGroup.click(); //use this to reset the opened section.
+                        if(useBackup){
+                            backupArray.push(mockID);
+                            rangeList = backupArray;
+                        }
+                        else{
+                            rangeList.push(mockID);
+                        }
+                         //add new group ID to the range's range collection receiving the new group
+                            //update the ranges within that are being grouped in the new group.
+                            $.each(rangeCollection, function(){
+                                if(this["@id"] === areaForNewGroup.attr("rangeID")){
+                                    this.ranges = rangeList;
+                                }
+                            });
+                            cancelNewGroupForm();
+                    }
+                });
             }
            
         }
@@ -4824,7 +4928,7 @@ function populateAnnoForms(){
       $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
     }
     //^^ local
-    var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var paramObj1 = {"@id" : rangeID};
     var params1 = {"content" : JSON.stringify(paramObj1)};
     $.post(getURL, params1, function(data){
@@ -4839,7 +4943,7 @@ function populateAnnoForms(){
         var index = rangeList.indexOf(leaf);
         if(index >= 0){
             rangeList.splice(index, 1);
-            var newAnnoUrl = "http://localhost:8080/brokenBooks/updateRange";
+            var newAnnoUrl = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj = {"@id":rangeID, "ranges" : rangeList};
             var params = {"content" : JSON.stringify(paramObj)};
             $.post(newAnnoUrl, params, function(data){
@@ -4898,7 +5002,7 @@ function populateAnnoForms(){
             if(pageURL.indexOf("demo=1") > -1){
                 return false;
             }
-            var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+            var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
             var paramObj2 = {"@id" : rangeID};
             var params2 = {"content" : JSON.stringify(paramObj2)};
             $.post(getURL, params2, function(data){
@@ -4909,7 +5013,7 @@ function populateAnnoForms(){
                     rangeToUpdate = data;
                 }
                 
-                var updateURL = "http://localhost:8080/brokenBooks/updateRange";
+                var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
                 if($.inArray(leaf, rangeToUpdate.ranges) === -1){
                     rangeToUpdate[0].ranges.push(leaf);
                 }
@@ -5037,12 +5141,12 @@ function populateAnnoForms(){
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
                             
-                            "@id" : "http://localhost:8080/brokenBooks/images/imgNotFound.png",
+                            "@id" : "http://165.134.241.141/brokenBooks/images/imgNotFound.png",
                             "service":
                                 {                                       
                                     "@context": "http://iiif.io/api/image/2/context.json",
                                     "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                    "@id" : "http://localhost:8080/brokenBooks/images/imgNotFound.png"
+                                    "@id" : "http://165.134.241.141/brokenBooks/images/imgNotFound.png"
                                 },
                             "width": 667,
                             "height":1000
@@ -5074,7 +5178,7 @@ function populateAnnoForms(){
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+"', 'recto');"); //local
       	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+""); //local
       	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
-      	 var url = "http://localhost:8080/brokenBooks/saveNewCanvas";
+      	 var url = "http://165.134.241.141/brokenBooks/saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
          if(windowURL.indexOf("demo=1")>-1){
                 
@@ -5199,14 +5303,14 @@ function populateAnnoForms(){
         	//save anno list for new canvas
         	
                 //annoListCollection[0] = newCanvas1AnnoList;
-        	var listURL1 = "http://localhost:8080/brokenBooks/saveNewRange";
+        	var listURL1 = "http://165.134.241.141/brokenBooks/saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
                     //add holder img annotation in to images field.
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data["@id"];
                         var listID = data["@id"];
-        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+        		var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
                         var imgAnno = {"@id":newCanvas1["@id"], "images":[newCanvas1HolderImg]};
         		var imgParams = {"content":JSON.stringify(imgAnno)};
         		$.post(updateCanvasURL, imgParams, function(data){
@@ -5260,14 +5364,14 @@ function populateAnnoForms(){
 	                "on" :  newCanvas2["@id"]
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
-				var listURL2 = "http://localhost:8080/brokenBooks/saveNewRange";
+				var listURL2 = "http://165.134.241.141/brokenBooks/saveNewRange";
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
 	        	var canvasID = newCanvas2["@id"];
 	        	$.post(listURL2, listParams2, function(data){
 	        		data = JSON.parse(data);
                                 annoListCollection[1]["@id"] = data["@id"];
                                 var listID = data["@id"];
-	        		var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+	        		var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
                                 var imgAnno2 = {"@id":canvasID, "images":[newCanvas2HolderImg]};
                                 var imgParams2 = {"content":JSON.stringify(imgAnno2)};
                                 $.post(updateCanvasURL, imgParams2, function(data){
@@ -5318,7 +5422,7 @@ function populateAnnoForms(){
 
 	function removeInfo(listItem){
 		var serverID = listItem.attr("annoserverid");
-		var url = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+		var url = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
 		var paramObj = {"@id" : serverID};
 		var params = {"content" : JSON.stringify(paramObj)};
 		$.post(url, params, function(data){
@@ -5342,8 +5446,9 @@ function populateAnnoForms(){
         
     function updateImageAnno(which){
         console.log("IMAGE!");
+        var windowurl = document.location.href;
         if(which === "alpha"){
-            var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+            var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
             var image = $('textarea[rv="recto"]').val();
             var canvas = $("#folioSide1").attr("canvas");
             var img = new Image();
@@ -5351,7 +5456,9 @@ function populateAnnoForms(){
               var height = img.height;
               var width = img.width;
               console.log("image loaded, pass w and h"+width,height);
-              updateCanvasDimensions(canvas,width, height);
+              if(windowurl.indexOf("demo=1") === -1){
+                 updateCanvasDimensions(canvas,width, height);
+              }
               // code here to use the dimensions
             }
             image = image.trim();
@@ -5376,12 +5483,17 @@ function populateAnnoForms(){
               
               var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
-              $.post(updateCanvasURL, params, function(data){
-                  $(".rectoImg").attr("src", image);
-              });
+              if(windowurl.indexOf("demo=1") > -1){
+                $(".rectoImg").attr("src", image);
+              }
+              else{
+                $.post(updateCanvasURL, params, function(data){
+                    $(".rectoImg").attr("src", image);
+                });
+              }
       }
       else{
-            var updateCanvasURL = "http://localhost:8080/brokenBooks/updateCanvas";
+            var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
             var image = $('textarea[rv="verso"]').val();
             var canvas = $("#folioSide2").attr("canvas");
             var img = new Image();
@@ -5389,7 +5501,9 @@ function populateAnnoForms(){
               var height = img.height;
               var width = img.width;
               console.log("image loaded, pass w and h"+width,height);
-              updateCanvasDimensions(canvas,width, height);
+              if(windowurl.indexOf("demo=1") === -1){
+                updateCanvasDimensions(canvas,width, height);
+              }
               // code here to use the dimensions
             }
             image = image.trim();
@@ -5413,9 +5527,15 @@ function populateAnnoForms(){
                         };
               var paramObj = {"@id": $("#folioSide2").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
-              $.post(updateCanvasURL, params, function(data){
+              if(windowurl.indexOf("demo=1") > -1){
                   $(".versoImg").attr("src", image);
-              });
+              }
+              else{
+                $.post(updateCanvasURL, params, function(data){
+                   $(".versoImg").attr("src", image);
+                });
+              }
+              
       }
       $(".uploadness").hide();
   }
@@ -5423,7 +5543,7 @@ function populateAnnoForms(){
     function updateCanvasDimensions(canvas, width, height){
         
         console.log("updating canvas "+canvas+" with dimensions "+width+" x "+height);
-        var updateURL = "http://localhost:8080/brokenBooks/updateCanvas";
+        var updateURL = "http://165.134.241.141/brokenBooks/updateCanvas";
         var paramObj = {"@id": canvas, "height":height, "width":width};
         var params = {"content":JSON.stringify(paramObj)};
         $.post(updateURL, params, function(data){
@@ -5493,7 +5613,7 @@ function populateAnnoForms(){
           $(targetToBreak).remove();
       }
       else{
-        var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
         var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
         $.post(removeURL, params, function(){
@@ -5519,7 +5639,7 @@ function populateAnnoForms(){
           $(targetToBreak).remove();
       }
       else{
-        var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
         var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
         $.post(removeURL, params, function(){
@@ -5532,7 +5652,7 @@ function populateAnnoForms(){
   function removeAndUpdate(remove, update, bringup, leaf){
       var fireUpdate = true;
       var windowurl = document.location.href;
-      var updateURL ="http://localhost:8080/brokenBooks/updateRange";
+      var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
       if(windowurl.indexOf("demo=1")>-1){
           removeRange(remove);
       }
@@ -5665,7 +5785,7 @@ function populateAnnoForms(){
       else{
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var leafCount = checkedLeaves.length;
-          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://localhost:8080/brokenBooks/images/b_page.png'/></span>");
+          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
           var bucket = $("div[depth='1']").find(".unassigned");
           var bucketCount = parseInt(bucket.find(".folioCount").find(".countInt").html());
           rangeID = parseInt(rangeID) + 1;
@@ -5683,7 +5803,7 @@ function populateAnnoForms(){
               var leafLabel = $(this).attr("label");
               var lockUp = "lock('"+leafID+"','up',event);";
               var lockDown = "lock('"+leafID+"','down',event);";
-              var existing = "<span onclick=\"existing('"+leafID+"','"+rangeForNewGroup+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>";
+              var existing = "<span onclick=\"existing('"+leafID+"','"+rangeForNewGroup+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>";
               $.each(allLeaves, function(){
                   if(this["@id"] == leafID){
                       childLeaves.push(this["@id"]);
@@ -5724,7 +5844,7 @@ function populateAnnoForms(){
     //save the range
     
     //check if children are a part of the parent aggr ranges and if so, splice them
-    var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var windowURL = document.location.href;
 //    var paggr = {};
 //    if(windowURL.indexOf("DTC") > -1){
@@ -5750,7 +5870,7 @@ function populateAnnoForms(){
 //                paggrRanges.splice( $.inArray(this, paggrRanges), 1 );
 //            }
 //        });
-//        var updateURL ="http://localhost:8080/brokenBooks/updateRange";
+//        var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
 //        var paramobj = {"@id" : paggrOBJ["@id"], "ranges" : paggrRanges};
 //        var param = {"content" : JSON.stringify(paramobj)};
 //        console.log("update paggr ranges");
@@ -5779,7 +5899,7 @@ function populateAnnoForms(){
             "lockeddown": "",
             "isOrdered" : ""
         };
-        var saveURL = "http://localhost:8080/brokenBooks/saveNewRange";
+        var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
         var params2 = {"content" : JSON.stringify(newRangeObject)};
         $.post(saveURL, params2, function(data){ //save the new group
             data = JSON.parse(data);
@@ -5787,7 +5907,7 @@ function populateAnnoForms(){
             rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
             var relation = $(".adminTrail").find("div[depth='"+depth+"']").attr("rangeid")
             $newGroup.attr("rangeid", newGroupID).attr("relation", relation);
-            var updateURL ="http://localhost:8080/brokenBooks/updateRange";
+            var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
             var paramObj2 = {"@id" : range, "ranges" : rangeList};
             var params3 = {"content" : JSON.stringify(paramObj2)};
             $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
@@ -5802,7 +5922,7 @@ function populateAnnoForms(){
                     $("div[depth='1']").find(".unassigned").click();
                 }
                 $.each(children, function(){
-                    var updateURL ="http://localhost:8080/brokenBooks/updateRange";
+                    var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                     var paramObj3 = {"@id" : this, "within" : newGroupID};
                     var params4 = {"content" : JSON.stringify(paramObj3)};
                     $("div[depth='1']").find(".unassigned").children("div[rangeID='"+this+"']").remove();
@@ -5829,15 +5949,15 @@ function existing(leaf, leafIsIn){
         var betaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/2";
         var alphaCanvasObj = {};
         var betaCanvasObj = {};
-        var alphaImage  = "http://localhost:8080/brokenBooks/images/addImg.png";
-        var betaImage = "http://localhost:8080/brokenBooks/images/addImg.png";
+        var alphaImage  = "http://165.134.241.141/brokenBooks/images/addImg.jpg";
+        var betaImage = "http://165.134.241.141/brokenBooks/images/addImg.jpg";
         var alphaLabel = "Folio Side A Label";
         var betaLabel = "Folio Side B Label";
         var leafLabel = "Leaf Label";
         $("#createMini").hide();
         $("#createMini").parent().children(".mainBlockCover").hide();
         $("#ordering").children(".mainBlock").children(".mainBlockCover").hide();
-        //var leaf = "http://localhost:8080/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
+        //var leaf = "http://165.134.241.141/annotationstore/annotation/554ce6d0e4b0f1c678d2a549";
     if(leaf !== undefined){
         var leafObject = undefined;
         currentLeafServerID = leaf;
@@ -5866,6 +5986,12 @@ function existing(leaf, leafIsIn){
                         }
                     });//live
                 }
+                else{
+                    leafAnnoList = "";
+                    //leafAnnoList = "http://www.example.org/iiif/LlangBrev/annoList/empty";
+                    annoListCollection[2] = {"@id":"empty","resources":[]};
+                    
+                }
                 
                 $("#oneAndtwo").attr("canvas", leaf);
                 $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); ;
@@ -5880,7 +6006,12 @@ function existing(leaf, leafIsIn){
                         if(this.otherContent && this.otherContent[0]){
                              alphaAnnoList = this.otherContent[0]["@id"];
                         }
-                        alphaAnnoList = this.otherContent[0];
+                        else{
+                            alphaAnnoList = "";
+                            annoListCollection[0] = {"resources":[]};
+                            //alphaAnnoList = "http://www.example.org/iiif/LlangBrev/annoList/empty";
+                            //annoListCollection[0] = [];
+                        }
                         if(this.label !== ""){
                           alphaLabel = this.label;
                         }
@@ -5895,6 +6026,9 @@ function existing(leaf, leafIsIn){
                                 alphaImage = this.images[0].resource["@id"];
                             }
                         }
+                            $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
+                            $("#folioSide1").attr("canvas", alphaCanvasURI);
+                            $("#folioSide1").click();
                         
                       }
                     });
@@ -5944,8 +6078,14 @@ function existing(leaf, leafIsIn){
                                 populateAnnoForms();
                             }
                         }); //live
-                        
-                        $(".rectoImg").attr("src", alphaImage);
+                        if(alphaImage.indexOf("addImg") > -1 || alphaImage.indexOf("imgNotFound") > -1){
+                            $("#oneAndtwo").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                            $("#leafTmp").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                            $("#folioSide1").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                        }
+                        else{
+                            $(".rectoImg").attr("src", alphaImage);
+                        }
                         //$("#folioSide1").addClass("selectedFolio");
                         $("#folio1Label").val(alphaLabel);
                         
@@ -5958,6 +6098,11 @@ function existing(leaf, leafIsIn){
                       if(this["@id"] == betaCanvasURI){
                         if(this.otherContent && this.otherContent[0]){
                             betaAnnoList = this.otherContent[0];
+                        }
+                        else{
+                            betaAnnoList = "";
+                            //betaAnnoList = "http://www.example.org/iiif/LlangBrev/annoList/empty";
+                            annoListCollection[1] = {"resources":[]};
                         }
                         if(this.label!== ""){
                           betaLabel = this.label;
@@ -5973,6 +6118,8 @@ function existing(leaf, leafIsIn){
                                 betaImage = this.images[0].resource["@id"];
                             }
                         }
+                         $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
+                         $("#folioSide2").attr("canvas", betaCanvasURI); 
                       }
                     });
                 }
@@ -6019,8 +6166,15 @@ function existing(leaf, leafIsIn){
                             }
                         });//live
                         $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
-                        $("#folioSide2").attr("canvas", betaCanvasURI);   
-                        $(".versoImg").attr("src", betaImage);
+                        $("#folioSide2").attr("canvas", betaCanvasURI); 
+                        if(betaImage.indexOf("addImg") > -1 || betaImage.indexOf("imgNotFound") > -1){
+                            $("#oneAndtwo").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                            $("#leafTmp").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                            $("#folioSide1").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                        }
+                        else{
+                            $(".rectoImg").attr("src", betaImage);
+                        }
                         $("#folio2Label").val(betaLabel);
                         $("#saveCover").hide();
                         $("#saveText").html("Saving...");
@@ -6035,20 +6189,20 @@ function existing(leaf, leafIsIn){
                 console.log(betaAnnoList);
                 
                 if(windowURL.indexOf("demo=1") > -1){
+                    //error from demo when clicking blue i
                     $.each(annotationLists, function(){
-                      if(this["@id"] == alphaAnnoList["@id"]){
+                      if(this["@id"]!==undefined && this["@id"] === alphaAnnoList){
                         annoListCollection[0] = this;
-                        
                       }
                     });
                     $.each(annotationLists, function(){
-                      if(this["@id"] == betaAnnoList["@id"]){
+                      if(this["@id"]!==undefined&&this["@id"] === betaAnnoList){
                         annoListCollection[1] = this;
                       }
                     });
 
                      $.each(annotationLists, function(){
-                      if(this["@id"] == leafAnnoList["@id"]){
+                      if(this["@id"]!==undefined&&this["@id"] === leafAnnoList){
                         annoListCollection[2] = this;
                       }
                     });
@@ -6137,8 +6291,8 @@ function selectInTree(child){
 function lock(leafURI, direction, event){
     var forProject = detectWho();
     var windowURL = document.location.href;
-   // var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
-    var updateAnnoURL = "http://localhost:8080/brokenBooks/updateRange";
+   // var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
     if($("div[depth='1']").find(".unassigned").attr("class").indexOf("selectedSection") > -1){
         //cannot lock leaves in the bucket
         alert("cannot lock leaves in the bucket.  Assign to a section first.");
@@ -6265,7 +6419,7 @@ function lock(leafURI, direction, event){
                                                 this.ranges = rangeList2;
                                                 $.post(updateAnnoURL, params5, function(){
                                                     console.log(idList1+" no longer in any lists, delete it");
-                                                    var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+                                                    var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
                                                     var paramObj3 = {"@id":idList1};
                                                     var params3 = {"content":JSON.stringify(paramObj3)};
                                                     var index = 0;
@@ -6320,7 +6474,7 @@ function lock(leafURI, direction, event){
 //                                    var params5 = {"content":JSON.stringify(paramObj5)};
 //                                    $.post(updateAnnoURL, params5, function(){
 //                                        console.log(idList1+" no longer in any lists, delete it");
-//                                        var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+//                                        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
 //                                        var paramObj3 = {"@id":idList1};
 //                                        var params3 = {"content":JSON.stringify(paramObj3)};
 //                                        $.post(removeURL, params3, function(){
@@ -6582,7 +6736,7 @@ function lock(leafURI, direction, event){
                         });
                     }
                     else{
-                        var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                        var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                         var params = {"content":JSON.stringify(orderedRangeObject)};
                         console.log("save it....");
                         $.post(newURL, params, function(data){
@@ -6782,7 +6936,7 @@ function lock(leafURI, direction, event){
                                                 this.ranges = rangeList2;
                                                 $.post(updateAnnoURL, params5, function(){
                                                     console.log(idList1+" no longer in any lists, delete it");
-                                                    var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+                                                    var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
                                                     var paramObj3 = {"@id":idList1};
                                                     var params3 = {"content":JSON.stringify(paramObj3)};
                                                     console.log(idList1+" no longer in any lists, delete it");
@@ -6842,7 +6996,7 @@ function lock(leafURI, direction, event){
 //                                    var params5 = {"content":JSON.stringify(paramObj5)};
 //                                    $.post(updateAnnoURL, params5, function(){
 //                                        console.log(idList1+" no longer in any lists, delete it");
-//                                        var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
+//                                        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
 //                                        var paramObj3 = {"@id":idList1};
 //                                        var params3 = {"content":JSON.stringify(paramObj3)};
 //                                        $.post(removeURL, params3, function(){
@@ -7075,7 +7229,7 @@ function lock(leafURI, direction, event){
                         "isOrdered" : "true"
         		};
                         
-                    var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                    var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                     var params = {"content":JSON.stringify(orderedRangeObject)};
                     console.log("save it....");
                     if(windowURL.indexOf("demo=1") > -1){
@@ -7188,9 +7342,9 @@ function lock(leafURI, direction, event){
 function unlock(leafURI, direction, event){
     var leafURIcpy = leafURI;
     var windowURL = document.location.href;
-    var removeURL = "http://localhost:8080/brokenBooks/deleteAnnotationByAtIDServlet";
-    var updateURL = "http://localhost:8080/brokenBooks/updateRange";
-    var getURL = "http://localhost:8080/brokenBooks/getAnnotationByPropertiesServlet";
+    var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+    var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
     var forProject = detectWho();
 //    if(windowURL.indexOf("demo=1") > -1){
 //        return false; 
@@ -7395,7 +7549,7 @@ function unlock(leafURI, direction, event){
                                         "isOrdered" : "true"
                                     };
 
-                                    var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                                    var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                                     var params = {"content":JSON.stringify(orderedRangeObject)};
                                     $.post(newURL, params, function(data){
                                         console.log("saved range, update URI");
@@ -7520,7 +7674,7 @@ function unlock(leafURI, direction, event){
 //                                "isOrdered" : "true"
 //                            };
 //                            
-//                            var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+//                            var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
 //                            var params = {"content":JSON.stringify(orderedRangeObject)};
 //                            $.post(newURL, params, function(data){
 //                                console.log("saved range, update URI");
@@ -7986,7 +8140,7 @@ function unlock(leafURI, direction, event){
                                             "lockeddown": "",
                                             "isOrdered" : "true"
                                         };
-                                        var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                                        var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                                         var params31 = {"content":JSON.stringify(orderedRangeObject)};
                                         $.post(newURL, params31, function(data){
                                             console.log("saved range, update URI");
@@ -8086,7 +8240,7 @@ function unlock(leafURI, direction, event){
 //                                        "lockeddown": "",
 //                                        "isOrdered" : "true"
 //                                    };
-//                                    var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+//                                    var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
 //                                    var params31 = {"content":JSON.stringify(orderedRangeObject)};
 //                                    $.post(newURL, params31, function(data){
 //                                        console.log("saved range, update URI");
@@ -8207,7 +8361,7 @@ function unlock(leafURI, direction, event){
                                     "lockeddown": "",
                                     "isOrdered" : "true"
                                 };
-                                var newURL = "http://localhost:8080/brokenBooks/saveNewRange";
+                                var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
                                 var params31 = {"content":JSON.stringify(orderedRangeObject)};
                                 $.post(newURL, params31, function(data){
                                     console.log("saved range, update URI");
@@ -8502,8 +8656,12 @@ function closeLeafPopover(){
     $("#folio1Label").val("");
     $("#folio2Label").val("");
     $("#oneAndtwoLabel").val("");
-    $(".rectoImg").attr("src","http://localhost:8080/brokenBooks/images/addImg.png");
-    $(".versoImg").attr("src","http://localhost:8080/brokenBooks/images/addImg.png");
+    $("#oneAndtwo").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+    $("#oneAndtwo").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+    $("#leafTmp").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+    $("#leafTmp").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+    $("#folioSide1").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+    $("#folioSide2").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
     //$(".popoverTrail").find(".selectedSection:first").click();
     annoListCollection = new Array(3);
     $(".selectedFolio").removeClass("selectedFolio");
@@ -8531,7 +8689,7 @@ function detectWho(){
 //    "label" : "Table of Contents",
 //    "ranges" : [ ],
 //    "canvases" : [],
-//    "isPartOf" : "http://localhost:8080/iiif/LlangBrev/sequence/normal",
+//    "isPartOf" : "http://165.134.241.141/iiif/LlangBrev/sequence/normal",
 //    "otherContent" : [ ],
 //    "forProject" : "broken_books_lisa",
 //    "parent" : "paggr_lisa",
@@ -8551,7 +8709,7 @@ function detectWho(){
 //        "parent" : "paggr_debra",
 //        "within" : "root",
 //        "ranges" : [
-//                "http://localhost:8080/annotationstore/annotation/560d9148e4b03a8af422a082"
+//                "http://165.134.241.141/annotationstore/annotation/560d9148e4b03a8af422a082"
 //        ]
 //}
 //
@@ -8563,7 +8721,7 @@ function detectWho(){
 
 //var goodDemoData=
 //{
-//        "@id" : "http://localhost:8080/annotationstore/annotation/demoCanvas_1",
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_1",
 //
 //        "@type" : "sc:Canvas",
 //        "_id" : ObjectId("55d639a4a2a95a836b3520c5"),
@@ -8574,7 +8732,7 @@ function detectWho(){
 //                        "@type" : "oa:Annotation",
 //                        "motivation" : "sc:painting",
 //                        "resource" : {
-//                                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+//                                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
 //                                "@type" : "dctypes:Image",
 //                                "format" : "image/jpeg",
 //                                "height" : 2365,
@@ -8582,16 +8740,16 @@ function detectWho(){
 //                                "service" : {
 //                                        "@context" : "http://iiif.io/api/image/2/context.json",
 //                                        "profile" : "http://iiif.io/api/image/2/profiles/level2.json",
-//                                        "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg"
+//                                        "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg"
 //                                }
 //                        },
-//                        "on" : "http://localhost:8080/annotationstore/annotation/demoCanvas_1"
+//                        "on" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_1"
 //                }
 //        ],
 //        "label" : "SLU_VFL_MS_002_fol_b_r",
 //        "otherContent" : [
 //                {
-//                        "@id" : "http://localhost:8080/annotationstore/annotation/demoList_1",
+//                        "@id" : "http://165.134.241.141/annotationstore/annotation/demoList_1",
 //                        "@type" : "sc:AnnotationList"
 //                }
 //        ],
@@ -8600,31 +8758,31 @@ function detectWho(){
 
 //{
 //        "_id" : ObjectId("55d64092a2a95a836b3520c9"),
-//        "@id" : "http://localhost:8080/annotationstore/annotation/demoRange",
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/demoRange",
 //        "@type" : "sc:Range",
 //        "label" : "Llangattock Leaf_1",
 //        "ranges" : [ ],
 //        "canvases" : [
-//                "http://localhost:8080/annotationstore/annotation/demoCanvas_1",
+//                "http://165.134.241.141/annotationstore/annotation/demoCanvas_1",
 //
-//                "http://localhost:8080/annotationstore/annotation/demoCanvas_2"
+//                "http://165.134.241.141/annotationstore/annotation/demoCanvas_2"
 //        ],
-//        "isPartOf" : "http://localhost:8080/iiif/LlangBrev/sequence/normal",
+//        "isPartOf" : "http://165.134.241.141/iiif/LlangBrev/sequence/normal",
 //        "otherContent" : [ ],
 //        "demo" : "bb_demo"
 //}
 
 
 //{
-//        "@id" : "http://localhost:8080/annotationstore/annotation/55dcd61111735b26766d59ac",
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd61111735b26766d59ac",
 //        "@type" : "sc:Range",
 //        "label" : "Llangattock Leaf_Test",
 //        "ranges" : [ ],
 //        "canvases" : [
-//                "http://localhost:8080/annotationstore/annotation/55dcd35f3ac6df4463633909",
-//                "http://localhost:8080/annotationstore/annotation/55dccdba59827e448a554b94"
+//                "http://165.134.241.141/annotationstore/annotation/55dcd35f3ac6df4463633909",
+//                "http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94"
 //        ],
-//        "isPartOf" : "http://localhost:8080/iiif/LlangBrev/sequence/normal",
+//        "isPartOf" : "http://165.134.241.141/iiif/LlangBrev/sequence/normal",
 //        "otherContent" : [ ],
 //        "demo" : "bb_demo",
 //        "forProject" : "broken_books"
@@ -8633,21 +8791,21 @@ function detectWho(){
 //        "_id" : ObjectId("55dc877ac43b62c460903db5"),
 //        "@type" : "sc:AnnotationList",
 //        "context" : "http://www.shared-canvas.org/ns/context.json",
-//        "on" : "http://localhost:8080/annotationstore/annotation/demoCanvas_1",
+//        "on" : "http://165.134.241.141/annotationstore/annotation/demoCanvas_1",
 //        "originalAnnoID" : "",
 //        "version" : 1,
 //        "permission" : 0,
 //        "forkFromID" : "",
-//        "@id" : "http://localhost:8080/annotationstore/annotation/demoList_1",
-//        "resources" : "[{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"General Metadata\",\n\
-//        \"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://localhost:8080/annotationstore/annotation/demoCanvas_1\"},{\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://localhost:8080/annotationstore/annotation/demoCanvas_1\"},\n\
-//        {\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://localhost:8080/annotationstore/annotation/demoCanvas_1\"},\n\
-//        {\"@id\":\"http://localhost:8080/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Language:  \",\"resource\":\n\\n\
-//        {\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://localhost:8080/annotationstore/annotation/demoCanvas_1\"}]"
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/demoList_1",
+//        "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54c\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"General Metadata\",\n\
+//        \"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qwertyuuiio\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/demoCanvas_1\"},{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54b\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Institution or Repository: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"qqqq\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/demoCanvas_1\"},\n\
+//        {\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54d\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Date: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"wwww\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/demoCanvas_1\"},\n\
+//        {\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce6dee4b0f1c678d2a54e\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Language:  \",\"resource\":\n\\n\
+//        {\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"eeee\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/demoCanvas_1\"}]"
 //}
 
 //{
-//        "@id" : "http://localhost:8080/annotationstore/annotation/55dcd35f3ac6df4463633909",
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd35f3ac6df4463633909",
 //        "forProject" : "broken_books",
 //        "@type" : "sc:Canvas",
 //        "demo" : "bb_demo",
@@ -8657,7 +8815,7 @@ function detectWho(){
 //                        "@type" : "oa:Annotation",
 //                        "motivation" : "sc:painting",
 //                        "resource" : {
-//                                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+//                                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
 //                                "@type" : "dctypes:Image",
 //                                "format" : "image/jpeg",
 //                                "height" : 2365,
@@ -8665,16 +8823,16 @@ function detectWho(){
 //                                "service" : {
 //                                        "@context" : "http://iiif.io/api/image/2/context.json",
 //                                        "profile" : "http://iiif.io/api/image/2/profiles/level2.json",
-//                                        "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg"
+//                                        "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg"
 //                                }
 //                        },
-//                        "on" : "http://localhost:8080/annotationstore/annotation/55dcd35f3ac6df4463633909"
+//                        "on" : "http://165.134.241.141/annotationstore/annotation/55dcd35f3ac6df4463633909"
 //                }
 //        ],
 //        "label" : "SLU_VFL_MS_002_fol_b_v",
 //        "otherContent" : [
 //                {
-//                        "@id" : "http://localhost:8080/annotationstore/annotation/55dcd1d43ac6df4463633908",
+//                        "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd1d43ac6df4463633908",
 //                        "@type" : "sc:AnnotationList"
 //                }
 //        ],
@@ -8683,27 +8841,27 @@ function detectWho(){
 //{
 //        "@type" : "sc:AnnotationList",
 //        "context" : "http://www.shared-canvas.org/ns/context.json",
-//        "on" : http://localhost:8080/annotationstore/annotation/55dccdba59827e448a554b94,
+//        "on" : http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94,
 //        "originalAnnoID" : "",
 //        "version" : 1,
 //        "permission" : 0,
 //        "forkFromID" : "",
 //        "forProject" : "broken_books",
-//        "@id" : "http://localhost:8080/annotationstore/annotation/55dcd1d43ac6df4463633908",
-//        "resources" : "[{\"@id\":\"http://test/annotationstore/annotation/1\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://localhost:8080/annotationstore/annotation/55dccdba59827e448a554b94\", \"demo\":\"bb_demo\"}]"
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/55dcd1d43ac6df4463633908",
+//        "resources" : "[{\"@id\":\"http://test/annotationstore/annotation/1\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Place Of Origin: \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"ssss\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94\", \"demo\":\"bb_demo\"}]"
 //}
-//{"@id":"http://localhost:8080/annotationstore/annotation/123","@type":"oa:Annotation","motivation":"oa:commenting","label":"Place Of Origin: ","resource":{"@type":"cnt:ContentAsText","cnt:chars":"ssss"},"on":"http://localhost:8080/annotationstore/annotation/55dccdba59827e448a554b94", "demo":"bb_demo"}
+//{"@id":"http://165.134.241.141/annotationstore/annotation/123","@type":"oa:Annotation","motivation":"oa:commenting","label":"Place Of Origin: ","resource":{"@type":"cnt:ContentAsText","cnt:chars":"ssss"},"on":"http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94", "demo":"bb_demo"}
 //{
 //        "@type" : "sc:AnnotationList",
 //        "context" : "http://www.shared-canvas.org/ns/context.json",
-//        "on" : "http://localhost:8080/annotationstore/annotation/55dccdba59827e448a554b94",
+//        "on" : "http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94",
 //        "originalAnnoID" : "",
 //        "version" : 1,
 //        "permission" : 0,
 //        "forkFromID" : "",
-//        "@id" : "http://localhost:8080/annotationstore/annotation/55dccff2b826ff620c6462b0",
+//        "@id" : "http://165.134.241.141/annotationstore/annotation/55dccff2b826ff620c6462b0",
 //        "forProject" : "broken_books",
-//        "resources" : "[{\"@id\":\"http://test/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://localhost:8080/annotationstore/annotation/55dccdba59827e448a554b94\"}]"
+//        "resources" : "[{\"@id\":\"http://test/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:commenting\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://165.134.241.141/annotationstore/annotation/55dccdba59827e448a554b94\"}]"
 //}
 //
 //{

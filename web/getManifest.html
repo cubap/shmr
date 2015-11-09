@@ -104,21 +104,21 @@ and open the template in the editor.
 </html>
 <script>
    $(function(){
-       var manifestURI = "http://localhost:8080/brokenBooks/getManifest";
+       var manifestURI = "http://165.134.241.141/brokenBooks/getManifest";
        var thisURL = document.location.href;
        if(thisURL.indexOf("demo=1") > -1 ){
-           manifestURI = "http://localhost:8080/brokenBooks/getDemoManifest";
+           manifestURI = "http://165.134.241.141/brokenBooks/getDemoManifest";
        }
        if (thisURL.indexOf("?LFD") > -1 ){
-           manifestURI = "http://localhost:8080/brokenBooks/getManifest?username=lisa";
+           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=lisa";
        }
        else if(thisURL.indexOf("?DTC") > -1 ){
-           manifestURI = "http://localhost:8080/brokenBooks/getManifest?username=debra";
+           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
        }
        else{
-           manifestURI = "http://localhost:8080/brokenBooks/getManifest?username=debra";
+           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
        }
-        window.history.pushState("Object", "Title", "http://localhost:8080/brokenBooks/getManifest.html");
+        window.history.pushState("Object", "Title", "http://165.134.241.141/brokenBooks/getManifest.html");
         var windowHeight = window.innerHeight - 25;
         $("#focusedRange").css("height", windowHeight+"px");
         Mirador({

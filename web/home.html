@@ -273,7 +273,7 @@ and open the template in the editor.s
             }
             
             #gotoMirador{
-                display:none;
+                display:none !important;
             }
             
         </style>
@@ -412,7 +412,7 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://localhost:8080/brokenBooks/getManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/getManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangattock Breviary</div>
                 </div>                
             </div>        
@@ -425,7 +425,7 @@ and open the template in the editor.s
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href = "http://localhost:8080/brokenBooks/home.html?demo=1";
+        document.location.href = "http://165.134.241.141/brokenBooks/home.html?demo=1";
     }
  function contribute(){
      $(".leafPopover").show();
