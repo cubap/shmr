@@ -89,7 +89,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          },
          {
       //This will be the anchor canvas in the anchor range
@@ -155,7 +155,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/3"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -177,7 +177,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/4"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -199,7 +199,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/5"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
     {
@@ -221,7 +221,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/6"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -243,7 +243,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/7"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -265,7 +265,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -287,7 +287,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -309,7 +309,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -331,7 +331,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -353,7 +353,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/12"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/`", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -374,7 +374,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]      
+          "otherContent":[]      
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -395,7 +395,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -417,7 +417,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]   
+          "otherContent":[]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -438,7 +438,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -460,7 +460,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]   
+          "otherContent":[]   
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -481,7 +481,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -503,7 +503,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -525,7 +525,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -547,7 +547,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -569,7 +569,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -591,7 +591,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -613,7 +613,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/24"
           }],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
    },
    {
@@ -624,7 +624,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -635,7 +635,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -646,7 +646,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -657,7 +657,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -668,7 +668,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -679,7 +679,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -690,7 +690,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -701,7 +701,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -712,7 +712,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -723,7 +723,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -734,7 +734,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -745,7 +745,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -756,7 +756,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -767,7 +767,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -778,7 +778,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -789,7 +789,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -800,7 +800,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -811,7 +811,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -822,7 +822,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -833,7 +833,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -844,7 +844,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -855,7 +855,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -866,7 +866,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -877,7 +877,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -888,7 +888,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -899,7 +899,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -910,7 +910,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -921,7 +921,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -932,7 +932,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/2", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -943,7 +943,7 @@ var testManifest = {
           "height" : 300,
           "width" : 200,
           "images" : [],
-          "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/3", "@type":"sc:AnnotationList"}]
+          "otherContent":[]
          
     },
     {
@@ -957,7 +957,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -979,7 +979,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -1611,18 +1611,18 @@ var testManifest = {
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/53","http://www.example.org/iiif/LlangBrev/canvas/54"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
   "otherContent" : []
-},
-{
-  "@id":"http://www.example.org/iiif/LlangBrev/range/53",
-  "@type":"sc:Range",
-  "label":"Demo Test Leaf",
-  "ranges" : [
-
-  ],
-  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/55","http://www.example.org/iiif/LlangBrev/canvas/56"],
-  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-  "otherContent" : []
 }
+//{
+//  "@id":"http://www.example.org/iiif/LlangBrev/range/53",
+//  "@type":"sc:Range",
+//  "label":"Demo Test Leaf",
+//  "ranges" : [
+//
+//  ],
+//  "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/55","http://www.example.org/iiif/LlangBrev/canvas/56"],
+//  "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+//  "otherContent" : []
+//}
 
 ]
 };
@@ -3096,9 +3096,14 @@ function populateRangesToDOM(which){
             }
         }
         var pAggrChildren = outer.find('.pAggr').children('div');
-            outer.find('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
+        pAggrChildren.removeClass("child").addClass("parent");
+        outer.find('.rangeArrangementArea').find('.notBucket').append(pAggrChildren);
             /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
-            pAggrChildren.removeClass("child").addClass("parent");
+            console.log("make paggr children parents");
+            console.log(pAggrChildren);
+            //wont work for putInBucket.html?demo=1
+            
+            
             $.each(pAggrChildren,function(){
                 if($(this).attr("id") !== undefined){
                     var newID = $(this).attr("id").replace("_tmp", "");
@@ -6008,13 +6013,15 @@ function existing(leaf, leafIsIn){
                         }
                         else{
                             alphaAnnoList = "";
-                            annoListCollection[0] = {"resources":[]};
+                            annoListCollection[0] = {"@id":"empty","resources":[]};
                             //alphaAnnoList = "http://www.example.org/iiif/LlangBrev/annoList/empty";
                             //annoListCollection[0] = [];
                         }
                         if(this.label !== ""){
                           alphaLabel = this.label;
                         }
+                        console.log("checking for alpha image");
+                        
                         if(this.images && this.images.length > 0){
                             if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
                                 
@@ -6023,7 +6030,16 @@ function existing(leaf, leafIsIn){
                                 
                             }
                             else{
+                                console.log("FOUND ALPHA");
                                 alphaImage = this.images[0].resource["@id"];
+                            }
+                            if(alphaImage.indexOf("addImg") > -1 || alphaImage.indexOf("imgNotFound") > -1){
+                                $("#oneAndtwo").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                                $("#leafTmp").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                                $("#folioSide1").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                            }
+                            else{
+                                $(".rectoImg").attr("src", alphaImage);
                             }
                         }
                             $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
@@ -6102,11 +6118,12 @@ function existing(leaf, leafIsIn){
                         else{
                             betaAnnoList = "";
                             //betaAnnoList = "http://www.example.org/iiif/LlangBrev/annoList/empty";
-                            annoListCollection[1] = {"resources":[]};
+                            annoListCollection[1] = {"@id":"empty","resources":[]};
                         }
                         if(this.label!== ""){
                           betaLabel = this.label;
                         }
+                        console.log("lloking for beta image");
                         if(this.images && this.images.length > 0){
                             if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
                                 
@@ -6115,7 +6132,16 @@ function existing(leaf, leafIsIn){
                                 
                             }
                             else{
+                                console.log("BETA IMAGE FOUND");
                                 betaImage = this.images[0].resource["@id"];
+                                if(betaImage.indexOf("addImg") > -1 || betaImage.indexOf("imgNotFound") > -1){
+                                    $("#oneAndtwo").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                                    $("#leafTmp").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
+                                    $("#folioSide1").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                                }
+                                else{
+                                    $(".versoImg").attr("src", betaImage);
+                                }
                             }
                         }
                          $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
@@ -6173,7 +6199,7 @@ function existing(leaf, leafIsIn){
                             $("#folioSide1").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
                         }
                         else{
-                            $(".rectoImg").attr("src", betaImage);
+                            $(".versoImg").attr("src", betaImage);
                         }
                         $("#folio2Label").val(betaLabel);
                         $("#saveCover").hide();
@@ -6184,7 +6210,6 @@ function existing(leaf, leafIsIn){
                 
                 console.log("here are the anno lists");
                 console.log(annotationLists);
-                
                 console.log(alphaAnnoList);
                 console.log(betaAnnoList);
                 
