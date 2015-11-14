@@ -143,7 +143,7 @@ and open the template in the editor.s
                 right: 0px
             }
             .copyWrapper{
-                max-height: 587px;
+                max-height: 526px;
                 overflow-y: auto;
                 padding-right: 25px;
             }
@@ -166,9 +166,10 @@ and open the template in the editor.s
             .bbImageLeft{
                 float: left;
                 max-width: 45%;
+                margin-top: 21px;
             }
             #homeImg1{
-                max-width: 100%;
+                max-width: 96%;
             }
             a{
                 text-decoration: none;
@@ -274,6 +275,10 @@ and open the template in the editor.s
                 font-size: 12px;
             }
             
+            #gotoMirador{
+                display:none !important;
+            }
+            
         </style>
     </head>
     <body>
@@ -297,7 +302,7 @@ and open the template in the editor.s
                 Welcome to Broken Books
             </h3>
             <div class="bbImageLeft">
-                <img id="homeImg1" src="../brokenBooks/images/upperimage.png"/>
+                <img id="homeImg1" src="../brokenBooks/images/upperimage.jpg"/>
             </div>
             <div class="copyWrapper">
                 <p>
@@ -410,7 +415,7 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://localhost:8080/brokenBooks/getManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/getManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangattock Breviary</div>
                 </div>                
             </div>        
@@ -423,7 +428,7 @@ and open the template in the editor.s
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href = "http://localhost:8080/brokenBooks/home.html?demo=1";
+        document.location.href = "http://165.134.241.141/brokenBooks/home.html?demo=1";
     }
  function contribute(){
      $(".leafPopover").show();
