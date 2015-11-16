@@ -671,8 +671,7 @@ and open the template in the editor.
                 border: 2px solid black;
                 font-size: 15px;
                 font-family: serif;
-                padding: 13px 65px 13px 21px;
-            
+                padding: 13px 72px 13px 21px;           
                 /* user cannot select text */
                 -webkit-touch-callout: none;
                 -webkit-user-select: none;

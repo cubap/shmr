@@ -3689,18 +3689,18 @@ function populateAnnoForms(){
             if(canvas == 'recto'){
                 console.log("recto selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
-                if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImgInv.png") > -1){
+                if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
-                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
                 }
                 if(previouslySelectedURI === "leaf"){
                     console.log("previous was leaf1");
                     previouslySelectedURI = currentLeafServerID;
                 }
                 $("#folioSide1").addClass("selectedFolio");
-                if($("#folioSide1").find(".rectoImg").attr("src").indexOf("addImg.jpg") > -1){
+                if($("#folioSide1").find(".rectoImg").attr("src").indexOf("addImgInv.png") > -1){
                     //Need to show the negative
-                    $("#folioSide1").find(".rectoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                    $("#folioSide1").find(".rectoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
                 }
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -3712,18 +3712,18 @@ function populateAnnoForms(){
             else if (canvas == 'verso'){
                 console.log("verso selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
-                if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImgInv.png") > -1){
+                if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
-                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
                 }
                 if(previouslySelectedURI === "leaf"){
                     previouslySelectedURI = currentLeafServerID;
                     console.log("previous was leaf2");
                 }
                 $("#folioSide2").addClass("selectedFolio");
-                if($("#folioSide2").find(".versoImg").attr("src").indexOf("addImg.jpg") > -1){
+                if($("#folioSide2").find(".versoImg").attr("src").indexOf("addImgInv.png") > -1){
                     //Need to show the negative
-                    $("#folioSide2").find(".versoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                    $("#folioSide2").find(".versoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
                 }
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -3736,9 +3736,9 @@ function populateAnnoForms(){
                 console.log("leaf selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 canvas = "leaf";
-                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImgInv.png") > -1){
+                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
-                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
                 }
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
