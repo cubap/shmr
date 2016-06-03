@@ -70,9 +70,25 @@ public class GetManifestServlet extends HttpServlet {
             a_metadata.add(metadata2);
             a_metadata.add(metadata3);
         }
+        //JSONArray ja_ranges_unordered = JSONArray.fromObject(ranges);
+        
+        /*
+        We have come across a massive issue.  Mirador tends to order the ranges based off the order they are returned here,
+        not by the ranges[] property of a range that is used to build order.  They look at structures as @list as if the
+        order is correct. 
+        FIXME:  One range cannot be listed in multiple ranges' ranges[] field.
+        
+        Since this is a "grab all and store" situation, we will have to traverse the ranges and get them in order here like we do
+        with the sort_order algorithm.  
+        
+        We should probably do the sequence while we are at it since the leaf ranges will list the canvases, save that for round 2.
+        
+        */
+        
+        //JSONArray ja_ranges = JSONArray.fromObject(ranges);
         JSONArray ja_ranges = JSONArray.fromObject(ranges);
-        //get cavanses
-        //get cavanses
+                //orderStructures(ja_ranges_unordered);
+        
         JSONArray ja_canvases;
         JSONArray ja_sequences = new JSONArray();
         JSONObject jo_sequence = new JSONObject();
@@ -112,6 +128,74 @@ public class GetManifestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doPost(req, resp);
     }
+    
+//    private JSONArray orderStructures(JSONArray ja_unordered){ //O(n2) + O(n)
+//        //System.out.println("I wanna order them...");
+//        JSONArray ja_ordered = new JSONArray();
+//        JSONObject parentest = getParentestInOrder(ja_unordered); //parentest JSON object containing the top-level ordering
+//        ja_ordered.add(parentest); //it is first in the ordered array.
+//        JSONArray parentest_uris = parentest.getJSONArray("ranges"); //look at the first level children
+//        JSONArray ja_toReturn = new JSONArray();
+//        for(int i=0; i<parentest_uris.size(); i++){ // go over each URI
+//            //System.out.println("parent: "+parentest_uris.getString(i));
+//            if(i == parentest_uris.size() - 1){ //if we are on the last parent, we will want to return
+//                ja_toReturn = getAllChildren(ja_ordered, parentest_uris.getString(i), ja_unordered);
+//            }
+//            else{
+//                getAllChildren(ja_ordered, parentest_uris.getString(i), ja_unordered); //send it off to be resolved recursively through all its children's relations  
+//            }
+//            
+//        }
+//        //System.out.println("RETURNED ORDER STRUCTURES");
+//        return ja_toReturn; //this will be all parents child_tree arrays flattened in order. 
+//    } 
+//    
+//    private JSONObject getParentestInOrder(JSONArray ja_unordered){ //O(n)
+//        JSONObject outer = new JSONObject();
+//        //System.out.println("looking for parentest");
+//        for(int i=0; i<ja_unordered.size(); i++){
+//            if(ja_unordered.getJSONObject(i).has("parent") && ja_unordered.getJSONObject(i).getString("parent").contains("paggr")){ //for IIIF, maybe within:"root" instead of parent:'paggr_blahblahblah'.  
+//                outer = ja_unordered.getJSONObject(i);
+//                //System.out.println("found it");
+//                break; //no need to keep looking, there is only 1.
+//            }
+//        }
+//        return outer;
+//    }
+//   
+//    private JSONArray getAllChildren(JSONArray rangesSoFar, String range_uri, JSONArray unordered){ //O(n)
+//        //System.out.println("get children...");
+//        JSONArray next_level_children = new JSONArray();
+//        JSONObject rangeForOrder = pullFromStructures(range_uri, unordered); //get the range from the unordered structures array we already have.
+//        try{ //imagine a 404 scenario.  ranges[] contained a URI that no longer exists in the store.
+//            next_level_children = rangeForOrder.getJSONArray("ranges");
+//            rangesSoFar.add(rangeForOrder);
+//        }
+//        catch (Exception e){ //if it is a bad range, we want to ignore it.
+//            //System.out.println("We got a bad range..." +range_uri);
+//            //System.out.println(rangeForOrder);
+//        }
+//        //System.out.println("get next level children of size "+next_level_children.size());
+//        if(next_level_children.size() > 0){ //if it has children
+//            for(int j=0; j<next_level_children.size(); j++){ //look at its child
+//                getAllChildren(rangesSoFar, next_level_children.getString(j), unordered); // and get its children, recursively
+//            }
+//        }
+//        //System.out.println("no more children.  return ranges so far of size "+rangesSoFar.size());
+//        return rangesSoFar; 
+//       // this will only be returned once we have gotten through the child tree for the URI given. it could be empty, thats a legit situation.
+//    }
+//    
+//    private JSONObject pullFromStructures(String uri, JSONArray structures){
+//        JSONObject pull_this_out = new JSONObject();
+//        for(int i=0; i<structures.size(); i++){
+//            if(structures.getJSONObject(i).getString("@id").equals(uri)){
+//                pull_this_out = structures.getJSONObject(i);
+//                break;
+//            }
+//        }
+//        return pull_this_out;
+//    }
     
     private String getAnnoByProperties(String properties){
         StringBuilder sb = new StringBuilder();
