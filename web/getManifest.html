@@ -107,33 +107,37 @@ and open the template in the editor.
 </html>
 <script>
    $(function(){
-       var manifestURI = "http://165.134.241.141/brokenBooks/getManifest";
+       var manifestURI = "http://165.134.241.141/brokenBooks/getManifest.html";
+       var miradorURI = "";
        var thisURL = document.location.href;
-       if(thisURL.indexOf("demo=1") > -1 ){
-           manifestURI = "http://165.134.241.141/brokenBooks/getDemoManifest";
-       }
        if (thisURL.indexOf("?LFD") > -1 ){
-           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=lisa";
+           miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=lisa";
+           manifestURI+="?LFD";
+           //http://165.134.241.141/annotationstore/annotation/57571eb2e4b07d5115bddd64
        }
        else if(thisURL.indexOf("?DTC") > -1 ){
-           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           manifestURI+="DTC";
+           //http://165.134.241.141/annotationstore/annotation/57571b9be4b028e25c81a3ca
        }
        else{
-           manifestURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           //http://165.134.241.141/annotationstore/annotation/57571b9be4b028e25c81a3ca
+           manifestURI+="?DTC";
        }
-        window.history.pushState("Object", "Title", "http://165.134.241.141/brokenBooks/getManifest.html");
+        window.history.pushState("Object", "Title", manifestURI);
         var windowHeight = window.innerHeight - 25;
         $("#focusedRange").css("height", windowHeight+"px");
         //https://github.com/IIIF/mirador/wiki/Complete-Configuration-API
         Mirador({
             "id": "focusedRange", // The CSS ID selector for the containing element.
             "layout": "1x1", // The number and arrangement of windows ("row"x"column")?
-            "data": [{"manifestUri": manifestURI, "location": "Saint Louis University"}],
+            "data": [{"manifestUri": miradorURI, "location": "Saint Louis University"}],
             "workspaceType": "singleObject",
             "mainMenuSettings" : {"buttons" : {"bookmark" : false, "layout" : true, "fullScreenViewer": true, "options":false}},
             "windowObjects" : [
                 {
-                    "loadedManifest": manifestURI,
+                    "loadedManifest": miradorURI,
                     "viewType" : "ImageView",
                     "availableViews" : ['ThumbnailsView', 'ImageView', 'ScrollView'],
                     "fullScreen" : false
@@ -145,5 +149,5 @@ and open the template in the editor.
         });
         
    });
-   
+ 
 </script>

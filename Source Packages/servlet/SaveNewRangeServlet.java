@@ -57,7 +57,7 @@ public class SaveNewRangeServlet extends HttpServlet {
             StringBuilder sb = new StringBuilder();
             while ((line = reader.readLine()) != null){
                 //line = new String(line.getBytes(), "utf-8");  
-                System.out.println(line);
+                //System.out.println(line);
                 sb.append(line);
             }
             reader.close();
