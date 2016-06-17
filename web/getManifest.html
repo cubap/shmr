@@ -3,10 +3,12 @@
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
+
+Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
 -->
 <html>
     <head>
-        <title>The Breviary So Far</title>
+        <title>View in Mirador</title>
         <meta charset="UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="../brokenBooks/js/bb.js"></script>  
@@ -117,7 +119,7 @@ and open the template in the editor.
        }
        else if(thisURL.indexOf("?DTC") > -1 ){
            miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
-           manifestURI+="DTC";
+           manifestURI+="?DTC";
            //http://165.134.241.141/annotationstore/annotation/57571b9be4b028e25c81a3ca
        }
        else{
@@ -141,13 +143,8 @@ and open the template in the editor.
                     "viewType" : "ImageView",
                     "availableViews" : ['ThumbnailsView', 'ImageView', 'ScrollView'],
                     "fullScreen" : false
-
-//                    }
                 }
             ]
-
         });
-        
    });
- 
 </script>

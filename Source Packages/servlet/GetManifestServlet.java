@@ -70,7 +70,7 @@ public class GetManifestServlet extends HttpServlet {
             a_metadata.add(metadata2);
             a_metadata.add(metadata3);
         }
-        //JSONArray ja_ranges_unordered = JSONArray.fromObject(ranges);
+       // JSONArray ja_ranges_unordered = JSONArray.fromObject(ranges);
         
         /*
         We have come across a massive issue.  Mirador tends to order the ranges based off the order they are returned here,
@@ -85,9 +85,8 @@ public class GetManifestServlet extends HttpServlet {
         
         */
         
-        //JSONArray ja_ranges = JSONArray.fromObject(ranges);
         JSONArray ja_ranges = JSONArray.fromObject(ranges);
-                //orderStructures(ja_ranges_unordered);
+        //orderStructures(ja_ranges_unordered);
         
         JSONArray ja_canvases;
         JSONArray ja_sequences = new JSONArray();

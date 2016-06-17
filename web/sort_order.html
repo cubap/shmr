@@ -12,7 +12,7 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
         <script src="../brokenBooks/js/bb.js"></script>  
-        <title>Sort Breviary Order</title>
+        <title>Arrange</title>
         <style>
             .leafPopover{
                 position: absolute;
@@ -247,7 +247,7 @@ and open the template in the editor.
                    <div class="rAreaLabel">Table of Contents</div>
                    
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div style="display:block;" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent bucket unassigned sortOrder"><span>BUCKET</span></div>
+                   <div style="display:block;" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent bucket unassigned sortOrder"><span>UNASSIGNED</span></div>
                    <input class="makeGroup" value="merge" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="add" type="button" onclick="newGroupForm($(this).parent());"/>
                    <input class="makeSortable" value="sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>
@@ -414,6 +414,10 @@ and open the template in the editor.
     </body>
     <script>
     var windowURL = document.location.href;
+    var rootRangeID = "";
+    
+    
+    
     function makeSortable(column){
         var columnDepth = column.attr("depth");
         $.each($(".adminTrail").find(".rangeArrangementArea").not(".rangeArrangementArea[depth='"+columnDepth+"']"), function(){
