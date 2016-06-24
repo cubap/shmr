@@ -4596,7 +4596,13 @@ function populateAnnoForms(){
                 }
 	}
         
-        function updateRootRanges(who, newRangeID){
+        /* 
+         * The range that acts as the root range object needs to contain this newly added range in its list or it wont appear in order
+         * in the structures.
+         * 
+         * This newly created range also needs to be added to manifest.structures.  TODO
+         * */
+        function updateRootRanges(who, newRangeID, removeFlag){
             var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
             var paramObj1 = {"parent" : who};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -4616,11 +4622,8 @@ function populateAnnoForms(){
 		Add the range object to the structures array in the manifest object. 
 	*/
 	function createNewRange(newRangeObject, current, newLabel, value, list){
-            //TODO: we could make selected highlighted pices work in the demo, it would have to be done here.
 		rangeID ++;
                 var who = "";
-		//create a new range, given that some new information organizes canvases into a new range.  We will need to make sure the range does not already exist. 
-		//testManifest.structures.push(newRangeObject); //local
 		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
 		var windowURL = document.location.href;
                 var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
@@ -4714,8 +4717,6 @@ function populateAnnoForms(){
                     });
                     //need to update the root range to include the new range added.  
                     updateRootRanges(who, newRangeObject["@id"]);
-                  
-                   
                 });
                 }
                 
@@ -5626,6 +5627,7 @@ function populateAnnoForms(){
         var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
         $.post(removeURL, params, function(){
+            //updateRootRange(who, rangeID2, true); //TODO
             $(targetToBreak).remove();
             var paramObj2 = {"@id":canvases[0]};
             var params2 = {"content" : JSON.stringify(paramObj2)}; 
@@ -5652,6 +5654,7 @@ function populateAnnoForms(){
         var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
         $.post(removeURL, params, function(){
+            //updateRootRange(who, rangeID2, true); //TODO
             $(targetToBreak).remove();
         });
       }
