@@ -61,6 +61,7 @@ var serverAnnoID = -1;
 var currentLeafServerID = -1;
 
 var manifestCanvases = [];
+var rangeCollection = [];
 var allLeaves = [];
 var testManifest = {
     "@context" : "http://iiif.io/api/presentation/2/context.json",
@@ -1629,8 +1630,6 @@ var testManifest = {
 ]
 };
 
-var rangeCollection = testManifest.structures;
-var manifestCanvases = testManifest.sequences[0].canvases;
 var emptyAnnoList = {
             "@id" : "http://www.example.org/iiif/LlangBrev/annoList/empty",
             "@type" : "sc:AnnotationList",
@@ -2899,19 +2898,15 @@ function gatherRangesForArrange(which){
         populateRangesToDOM(which);
     }
     else{
-        if(typeof rangeCollection == "undefined" || rangeCollection.length === 0){
-            $.post(url, params, function(data){
-                var manifest_data = JSON.parse(data);
-                manifest = manifest_data[0];
-                manifestID = manifest["@id"];
-                rangeCollection = manifest.structures;
-                manifestCanvases = manifest.sequences[0].canvases;
-                populateRangesToDOM(which);
-            });
-        }
-        else{
+        $.post(url, params, function(data){
+            var manifest_data = JSON.parse(data);
+            manifest = manifest_data[0];
+            manifestID = manifest["@id"];
+            manifestCanvases = manifest.sequences[0].canvases;
+            rangeCollection = manifest.structures;
             populateRangesToDOM(which);
-        }
+        });
+
 //        $.post(url, params) //we can use this to query for all these in the store without using the manifest if we want.
 //        .done(function(data){
 //            if(typeof data === "object"){
@@ -4587,6 +4582,7 @@ function populateAnnoForms(){
          * This newly created range also needs to be added to manifest.structures.
          * */
         function updateRootRanges(who, newRangeID, removeFlag, index){
+            console.log("update root ranges");
             var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
             var paramObj1 = {"parent" : who};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -4610,38 +4606,40 @@ function populateAnnoForms(){
                
         /* An object has been updated.  Its representation in the manifest must also be updated.  where tells me either structures or sequence, the params are in order of
          * @id followed by some fields to update.  I then call to the server to update the sequences or structures field of the manifest object. 
+         * 
+         * Patrick made a good point:  It seems like this is something that should be handled on the back end.  Look into subdocuments in Mongo!
          *  
          *  */
         function updateInManifest(where, params){
+            console.log("need to update in the manifest...");
             var idToFind = params["@id"];
             delete params["@id"];
             if(where === "structures"){
                 for(var i=0; i< rangeCollection.length; i++){
-                    var thisRange = rangeCollection[i];
-                    if(thisRange["@id"] === idToFind){
+                    if(rangeCollection[i]["@id"] === idToFind){
                         $.each(params, function(paramKey, paramVal){
-                            thisRange[paramKey] = paramVal;
+                           rangeCollection[i][paramKey] = paramVal;
                         });
+                        updateManifestStructures();
                         break;
                     }
                 }
-                updateManifestStructures();
             }
             else if(where === "sequences"){
                 for(var i=0; i< manifestCanvases.length; i++){
-                    var thisCanvas = manifestCanvases[i];
-                    if(thisCanvas["@id"] === idToFind){
+                    if(manifestCanvases[i]["@id"] === idToFind){
                         $.each(params, function(paramKey, paramVal){
-                            thisCanvas[paramKey] = paramVal;
+                            manifestCanvases[i][paramKey] = paramVal;
                         });
+                        updateManifestSequence();    
                         break;
                     }
                 }
-                updateManifestSequence();    
             }
         }
         
         function updateManifestStructures(){
+            console.log("updating manifest structures...");
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "structures":rangeCollection};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -4651,6 +4649,7 @@ function populateAnnoForms(){
         }
         
         function updateManifestSequence(){
+            console.log("updating manifest sequence...");
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "sequences":manifestCanvases};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -4663,6 +4662,7 @@ function populateAnnoForms(){
 		Add the range object to the structures array in the manifest object. 
 	*/
 	function createNewRange(newRangeObject, current, newLabel, value, list){
+            console.log("create new range");
 		rangeID ++;
                 var who = "";
 		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
@@ -4713,7 +4713,6 @@ function populateAnnoForms(){
                     $.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
                         data=JSON.parse(data);
                         newRangeObject["@id"] = data["@id"]; //live
-                        rangeCollection.push(newRangeObject); //live
                         if(current === 'currentLeaf'){
                             //console.log("set current leaf server id");
                             currentLeafServerID = data["@id"];
@@ -4758,18 +4757,18 @@ function populateAnnoForms(){
 
                         var paramObj = {"@id":currentLeafServerID, "otherContent":[{"@id":newLeafList["@id"], "@type":"sc:AnnotationList"}]};
                         var params = {"content":JSON.stringify(paramObj)};
-                        updateInManifest("sequences",paramObj);
+                        //updateInManifest("sequences",paramObj);
+                        newRangeObject.otherContent = [{"@id":newLeafList["@id"], "@type":"sc:AnnotationList"}];
+                        rangeCollection.push(newRangeObject);
+                        //this will be updated in updateRootRanges
+                        updateRootRanges(who, newRangeObject["@id"]);
                         $.post(updateCanvasURL, params, function(data){
 
                         });
                     });
-                    rangeCollection.push(newRangeObject);
-                    updateRootRanges(who, newRangeObject["@id"]);
+                    
                 });
                 }
-                
-		
-		
 	}
 
   function askForNewTitle(inThisArea){
@@ -5241,7 +5240,8 @@ function populateAnnoForms(){
                 "images" : [],
                 "forProject" : forProject,
                 "otherContent": [],
-                "within" : ""
+                "within" : "",
+                "sandbox" : "yes"
             };
             
          annoListID = parseInt(annoListID) + 1;
@@ -5259,7 +5259,8 @@ function populateAnnoForms(){
 				"@type":"sc:AnnotationList",
 				"resources" : [],
                                 "forProject": forProject,
-				"on" : newCanvas1["@id"]
+				"on" : newCanvas1["@id"],
+                                "sandbox" : "yes"
        	 	}; //local
                 
                 annoListCollection[0] = newCanvas1AnnoList;
@@ -5289,52 +5290,55 @@ function populateAnnoForms(){
                             "images" : [],
                             "forProject" : forProject,
                             "otherContent" : [],
-                            "within" : ""
+                            "within" : "",
+                            "sandbox" : "yes"
                 };
                                        
-                        var newCanvas2 = urlCanvas;
-                        var newCanvas2HolderImg = newCanvasHolderImg;
-                        newCanvas2HolderImg.on = newCanvas2["@id"];
-                        newCanvas2ServerID = newCanvas2["@id"];
-      	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+ newCanvas2["@id"]+"','verso');");
-      	 		$("#folioSide2").attr("canvas",  newCanvas2["@id"]);
-      	 		manifestCanvases.push(newCanvas2); //live
-                        var newCanvas2AnnoList = {
-	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-	                "@type":"sc:AnnotationList",
-	                "resources" : [],
-                        "forProject": forProject,
-	                "on" :  newCanvas2["@id"]
-	        	};
-                        annoListCollection[1] = newCanvas2AnnoList;
-                        rangeID = parseInt(rangeID) + 1;
-                        annoListID = parseInt(annoListID) + 1;
-	            var leafRangeObject = {
-	            	"@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
-                        "@type":"sc:Range",
-                        "label":"Llangattock Breviary Page" ,
-                        "canvases" : [
-                          //newCanvas1["@id"], //local
-                          //newCanvas2["@id"] //local
-                          newCanvas1ServerID, //live on dev server
-                          newCanvas2ServerID //live on dev server
-                        ],
-                        "resources" : [],
-                        "ranges" : [],
-                        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
-                        "forProject": forProject,
-                        "within" : "root",
-                        "otherContent" : [],
-                        "lockedup" : "",
-                        "lockeddown": "",
-                        "isOrdered" : ""
-        		};
-                        currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
-                        createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
+                var newCanvas2 = urlCanvas;
+                var newCanvas2HolderImg = newCanvasHolderImg;
+                newCanvas2HolderImg.on = newCanvas2["@id"];
+                newCanvas2ServerID = newCanvas2["@id"];
+                $("#folioSide2").attr("onclick","enterCatalogueInfo('"+ newCanvas2["@id"]+"','verso');");
+                $("#folioSide2").attr("canvas",  newCanvas2["@id"]);
+                manifestCanvases.push(newCanvas2); //live
+                var newCanvas2AnnoList = {
+                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                "@type":"sc:AnnotationList",
+                "resources" : [],
+                "forProject": forProject,
+                "on" :  newCanvas2["@id"]
+                };
+                annoListCollection[1] = newCanvas2AnnoList;
+                rangeID = parseInt(rangeID) + 1;
+                annoListID = parseInt(annoListID) + 1;
+                var leafRangeObject = {
+                    "@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
+                    "@type":"sc:Range",
+                    "label":"Llangattock Breviary Page" ,
+                    "canvases" : [
+                      //newCanvas1["@id"], //local
+                      //newCanvas2["@id"] //local
+                      newCanvas1ServerID, //live on dev server
+                      newCanvas2ServerID //live on dev server
+                    ],
+                    "resources" : [],
+                    "ranges" : [],
+                    "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                    "forProject": forProject,
+                    "within" : "root",
+                    "otherContent" : [],
+                    "lockedup" : "",
+                    "lockeddown": "",
+                    "isOrdered" : "",
+                    "sandbox" : "yes"
+                    };
+                    currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
+                    createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
                    
          }
          else{
             $.post(url, params1, function(data){ //save first new canvas
+                console.log("saved first canvas...");
       	 	data = JSON.parse(data);
       	 	newCanvas1["@id"] = data["@id"];
                 var newCanvas1HolderImg = newCanvasHolderImg;
@@ -5345,7 +5349,8 @@ function populateAnnoForms(){
                     "@type":"sc:AnnotationList",
                     "resources" : [],
                     "forProject": forProject,
-                    "on" : newCanvas1["@id"]
+                    "on" : newCanvas1["@id"],
+                    "sandbox" : "yes"
        	 	}; //local
                 
                 annoListCollection[0] = newCanvas1AnnoList;
@@ -5359,6 +5364,7 @@ function populateAnnoForms(){
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
                     //add holder img annotation in to images field.
+                        console.log("saved first canvas anno list");
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data["@id"];
                         var listID = data["@id"];
@@ -5368,9 +5374,11 @@ function populateAnnoForms(){
                         newCanvas1.otherContent =[{"@id":listID,"@type":"sc:AnnotationList"}];
                         manifestCanvases.push(newCanvas1); //live
         		$.post(updateCanvasURL, imgParams, function(data){
+                            console.log("update canvas image with new image anno, we had to wait to sait on property.");
                             var paramObj = {"@id":newCanvas1["@id"], "otherContent":[{"@id":listID,"@type":"sc:AnnotationList"}]};
                             var params = {"content":JSON.stringify(paramObj)};
                             $.post(updateCanvasURL, params, function(data){
+                                console.log("update canvas other content");
                                 $("#folioSide1").click();
                                 $("#catalogueInfoFor").val(newCanvas1["@id"]);
                                 alpha = true;
@@ -5380,7 +5388,6 @@ function populateAnnoForms(){
         		});
       
         	});
-                
       	 	newCanvas1ServerID = newCanvas1["@id"];
   	        canvasTag = parseInt(canvasTag) + 1;
                 annoListID = parseInt(annoListID) + 1;
@@ -5393,11 +5400,13 @@ function populateAnnoForms(){
                             "images" : [],
                             "forProject" : forProject,
                             "otherContent" : [],
-                            "within" : ""
+                            "within" : "",
+                            "sandbox" : "yes"
                 };
                                        
 	      	var params2 = {'content': JSON.stringify(urlCanvas)};
 	      	$.post(url, params2, function(data){
+                        console.log("saved second canvas");
                         var newCanvas2 = urlCanvas;
 	      		data=JSON.parse(data);
                         newCanvas2["@id"] = data["@id"];
@@ -5413,13 +5422,15 @@ function populateAnnoForms(){
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
                         "forProject": forProject,
-	                "on" :  newCanvas2["@id"]
+	                "on" :  newCanvas2["@id"],
+                        "sandbox" : "yes"
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
-				var listURL2 = "http://165.134.241.141/brokenBooks/saveNewRange";
+                        var listURL2 = "http://165.134.241.141/brokenBooks/saveNewRange";
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
 	        	var canvasID = newCanvas2["@id"];
 	        	$.post(listURL2, listParams2, function(data){
+                            console.log("saved second canvas list");
 	        		data = JSON.parse(data);
                                 annoListCollection[1]["@id"] = data["@id"];
                                 var listID = data["@id"];
@@ -5429,14 +5440,14 @@ function populateAnnoForms(){
                                 newCanvas2.otherContent = [{"@id":listID, "@type":"sc:AnnotationList"}];
                                 manifestCanvases.push(newCanvas2); //live
                                 $.post(updateCanvasURL, imgParams2, function(data){
+                                    console.log("update second canvas image");
                                     var paramObj = {"@id":canvasID, "otherContent":[{"@id":listID, "@type":"sc:AnnotationList"}]};
                                     var params = {"content":JSON.stringify(paramObj)};
                                     $.post(updateCanvasURL, params, function(data){
+                                        console.log("update second canvas other content and manifest sequence");
                                         updateManifestSequence();
                                     });
                                 });
-	        		
-                                
 	        	});
                         rangeID = parseInt(rangeID) + 1;
                         annoListID = parseInt(annoListID) + 1;
@@ -5458,10 +5469,11 @@ function populateAnnoForms(){
                             "otherContent" : [],
                             "lockedup" : "",
                             "lockeddown": "",
-                            "isOrdered" : ""
+                            "isOrdered" : "",
+                            "sandbox" : "yes"
                             };
-                                currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
-                                createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
+                            currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
+                            createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
 
                         });
                     });
