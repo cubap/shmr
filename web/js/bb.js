@@ -4556,11 +4556,14 @@ function populateAnnoForms(){
                             //list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
                     }
                     var forProject = detectWho();
-                    if(forProject === "broken_books_debra"){
-                        who = "paggr_debra";
+                    if(forProject === "broken_books_ray"){
+                        who = "paggr_ray";
+                    }
+                    else if (forProject === "broken_books_lisa"){
+                        who="paggr_lisa";
                     }
                     else{
-                        who="paggr_lisa";
+                        who = "paggr_debra";
                     }
                     annoListID = parseInt(annoListID) + 1;
                     var newRangeAnnoList = {
@@ -4598,11 +4601,14 @@ function populateAnnoForms(){
                                 //list.append("<li><span class='formLabel'>"+newLabel+" </span> "+value+"<span annoServerID='"+data["@id"]+"' class='removeInfo'> X </span></li>");
                         }
                     var forProject = detectWho();
-                    if(forProject === "broken_books_debra"){
-                        who = "paggr_debra";
+                    if(forProject === "broken_books_ray"){
+                        who = "paggr_ray";
+                    }
+                    else if (forProject === "broken_books_lisa"){
+                        who="paggr_lisa";
                     }
                     else{
-                        who="paggr_lisa";
+                        who = "paggr_debra";
                     }
                     var newRangeAnnoList = {
                         "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
@@ -8386,8 +8392,8 @@ function detectWho(){
     if(windowURL.indexOf("LFD") > -1){
         who = "broken_books_lisa";
     }
-    else if(windowURL.indexOf("DTC") > -1){
-        who = "broken_books_debra";
+    else if(windowURL.indexOf("RC") > -1){
+        who = "broken_books_ray";
     }
     else{
         who = "broken_books_debra";

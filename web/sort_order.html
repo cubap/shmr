@@ -500,6 +500,11 @@ and open the template in the editor.
             }
             else if(windowURL.indexOf("DTC") > -1){
                 $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?DTC';");
+                $(".sortTitle").html("The Llangattock Breviary Structure");
+            }
+            else if(windowURL.indexOf("RC") > -1){
+                $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?RC';");
+                $(".sortTitle").html("Ray's Project Structure");
             }
             else if(windowURL.indexOf("demo=1")>-1){
                 $("#gotoMirador").hide();

@@ -122,6 +122,10 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
            manifestURI+="?DTC";
            //http://165.134.241.141/annotationstore/annotation/57571b9be4b028e25c81a3ca
        }
+       else if(thisURL.indexOf("?RC") > -1 ){
+           miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=ray";
+           manifestURI+="?RC";
+       }
        else{
            miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
            //http://165.134.241.141/annotationstore/annotation/57571b9be4b028e25c81a3ca

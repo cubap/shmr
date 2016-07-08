@@ -70,6 +70,17 @@ public class GetManifestServlet extends HttpServlet {
             a_metadata.add(metadata2);
             a_metadata.add(metadata3);
         }
+        else if(username.equals("ray")){
+            ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_ray\"}");
+            JSONObject metadata1 = new JSONObject();
+            JSONObject metadata2 = new JSONObject();
+            metadata1.element("label", "Title");
+            metadata1.element("value", "Ray's Reconstruction Project");
+            metadata2.element("label", "Created By");
+            metadata2.element("value", "Ray Clemens");
+            a_metadata.add(metadata1);
+            a_metadata.add(metadata2);
+        }
        // JSONArray ja_ranges_unordered = JSONArray.fromObject(ranges);
         
         /*
