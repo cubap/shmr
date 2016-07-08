@@ -94,6 +94,7 @@ if(windowurl.indexOf("home.html") === -1){
     document.write('<script src="../brokenBooks/js/bb.js"><\/script>');
 }
 	$(function(){
+                getManifestID();
 		$(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
                     $(".leaf").load("../brokenBooks/leafInformation.html", function(){
                         console.log("SET TABS");
@@ -164,5 +165,5 @@ if(windowurl.indexOf("home.html") === -1){
                     });
                 });
 	});
-		
+	
 </script>
