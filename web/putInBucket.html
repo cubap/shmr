@@ -181,8 +181,26 @@ if(windowurl.indexOf("home.html") === -1){
         }
         
         function emptyRayStructures(){
+            var rootRange = {
+                    "@type" : "sc:Range",
+                    "parent" : "paggr_ray",
+                    "within" : "root",
+                    "otherContent" : [ ],
+                    "canvases" : [ ],
+                    "label" : "Table of Contents",
+                    "forProject" : "broken_books_ray",
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : "",
+                    "serverName" : "local",
+                    "serverIP" : "127.0.0.1",
+                    "@id" : "http://165.134.241.141/annotationstore/annotation/577e96e9e4b09874ecdc304b",
+                    "ranges" : [ ]
+            };
+
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
-            var paramObj1 = {"@id" : "http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5", "structures":[]};
+            var paramObj1 = {"@id" : "http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5", "structures":[rootRange]};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){
                 

@@ -2898,14 +2898,16 @@ function gatherRangesForArrange(which){
         populateRangesToDOM(which);
     }
     else{
-        $.post(url, params, function(data){
-            var manifest_data = JSON.parse(data);
-            manifest = manifest_data[0];
-            manifestID = manifest["@id"];
-            manifestCanvases = manifest.sequences[0].canvases;
-            rangeCollection = manifest.structures;
-            populateRangesToDOM(which);
-        });
+        if(which !== 1){
+            $.post(url, params, function(data){
+                var manifest_data = JSON.parse(data);
+                manifest = manifest_data[0];
+                manifestID = manifest["@id"];
+                manifestCanvases = manifest.sequences[0].canvases;
+                rangeCollection = manifest.structures;
+                populateRangesToDOM(which);
+            });
+        }
 
 //        $.post(url, params) //we can use this to query for all these in the store without using the manifest if we want.
 //        .done(function(data){
@@ -4640,21 +4642,27 @@ function populateAnnoForms(){
         
         function updateManifestStructures(){
             console.log("updating manifest structures...");
+            console.log(manifestID);
+            console.log(rangeCollection);
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "structures":rangeCollection};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){
-                
+                manifest.structures = rangeCollection;
+                console.log("done updating manifest structures");
             });
         }
         
         function updateManifestSequence(){
             console.log("updating manifest sequence...");
+            console.log(manifestID);
+            console.log(manifestCanvases);
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "sequences":manifestCanvases};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){
-                
+                manifest.sequences[0].canvases = manifestCanvases;
+                console.log("done updating manifest sequence");
             });
         }
 
@@ -5682,9 +5690,15 @@ function populateAnnoForms(){
       else{
         var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
         var paramObj = {"@id" : rangeID2};
-        var params = {"content" : JSON.stringify(paramObj)}; 
+        var params = {"content" : JSON.stringify(paramObj)};
+        $.each(rangeCollection,function(index){
+            if(this["@id"] === rangeID2){
+                rangeCollection.splice(index,1);
+                updateManifestStructures();
+                return false;
+            };
+        });
         $.post(removeURL, params, function(){
-            var who = detectWho();
             $(targetToBreak).remove();
             var paramObj2 = {"@id":canvases[0]};
             var params2 = {"content" : JSON.stringify(paramObj2)}; 
@@ -5718,6 +5732,13 @@ function populateAnnoForms(){
           $(targetToBreak).remove();
       }
       else{
+        $.each(rangeCollection,function(index){
+            if(this["@id"] === rangeID2){
+                rangeCollection.splice(index,1);
+                updateManifestStructures();
+                return false;
+            };
+        });
         var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
         var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)}; 
@@ -5729,6 +5750,7 @@ function populateAnnoForms(){
   }
   
   function removeAndUpdate(remove, update, bringup, leaf){
+      console.log("Break up led to remove and update");
       var fireUpdate = true;
       var windowurl = document.location.href;
       var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
@@ -5753,6 +5775,7 @@ function populateAnnoForms(){
                        fireUpdate = false;
                     }
                     else{
+                        console.log("Remove child range out of parent range ranges list");
                         rangeList.splice(index , 1 ); //remove range that is being deleted;
                     }
                 }
@@ -5764,16 +5787,16 @@ function populateAnnoForms(){
                      $.each(bringup, function(){
                         var paramObj2 = {"@id" : this, "within" : update};
                         var params2 = {"content" : JSON.stringify(paramObj2)};
-                        updateInManifest("structures", paramObj2);
+                        //updateInManifest("structures", paramObj2);
                         $.post(updateURL, params2);
                     });
                   }
+                  console.log("set manifest range.ranges list with the spliced out range.");
                    this.ranges = rangeList; //make sure the rangeCollection object has the changes for the update to the manifest object!
                    var paramObj1 = {"@id" : update, "ranges" : rangeList};
                    var params1 = {"content" : JSON.stringify(paramObj1)};
                    if(windowurl.indexOf("demo=1")===-1){
                         //we need to update the structures.  The leaf has been removed from the particular range it was placed in.  
-                        updateManifestStructures();
                         $.post(updateURL, params1, function(){
                             
                         });
@@ -5977,7 +6000,7 @@ function populateAnnoForms(){
                     var paramObj3 = {"@id" : this, "within" : newGroupID};
                     var params4 = {"content" : JSON.stringify(paramObj3)};
                     $("div[depth='1']").find(".unassigned").children("div[rangeID='"+this+"']").remove();
-                    updateInManifest("structures", paramObj3);
+                    //updateInManifest("structures", paramObj3);
                     $.post(updateURL, params4, function(){
                         
                     });
@@ -7502,7 +7525,7 @@ function unlock(leafURI, direction, event){
                                                 console.log("update withins of children in new group");
                                                 var paramObj5 = {"@id":$(this).attr("rangeid"),"within":rangeToInclude};
                                                 var params5 = {"content":JSON.stringify(paramObj5)};
-                                                updateInManifest("structures", paramObj5);
+                                                //updateInManifest("structures", paramObj5);
                                                 $.post(updateURL, params5);
                                             });
                                         },300);
@@ -7530,7 +7553,7 @@ function unlock(leafURI, direction, event){
                                             //console.log("update within of range popped");
                                             var paramObj2 = {"@id":ltlwID, "within":newWithin};
                                             var params2 = {"content":JSON.stringify(paramObj2)};
-                                            updateInManifest("structures", paramObj2);
+                                            //updateInManifest("structures", paramObj2);
                                             $.post(updateURL, params2, function(){
                                                 //console.log("WITHIN 3 UPDATED");
                                             });
@@ -8102,7 +8125,7 @@ function unlock(leafURI, direction, event){
                                                    // console.log("update withins of children in new group");
                                                     var paramObj5 = {"@id":$(this).attr("rangeid"),"within":rangeToInclude};
                                                     var params5 = {"content":JSON.stringify(paramObj5)};
-                                                    updateInManifest("structures", paramObj5);
+                                                    //updateInManifest("structures", paramObj5);
                                                     $.post(updateURL, params5);
                                                 });
                                             },300);
@@ -8131,7 +8154,7 @@ function unlock(leafURI, direction, event){
                                                 //console.log("update within of range popped");
                                                 var paramObj2 = {"@id":ltlwID, "within":newWithin};
                                                 var params2 = {"content":JSON.stringify(paramObj2)};
-                                                updateInManifest("structures", paramObj2);
+                                                //updateInManifest("structures", paramObj2);
                                                 $.post(updateURL, params2, function(){
                                                     //console.log("WITHIN 3 UPDATED");
                                                 });
@@ -8326,7 +8349,7 @@ function unlock(leafURI, direction, event){
                                             //console.log("update withins of children in new group");
                                             var paramObj5 = {"@id":$(this).attr("rangeid"),"within":rangeToInclude};
                                             var params5 = {"content":JSON.stringify(paramObj5)};
-                                            updateInManifest("structures", paramObj5);
+                                            //updateInManifest("structures", paramObj5);
                                             $.post(updateURL, params5);
                                         });
                                     },300);
@@ -8355,7 +8378,7 @@ function unlock(leafURI, direction, event){
                                     //console.log("update within of range popped");
                                     var paramObj2 = {"@id":ltlwID, "within":newWithin};
                                     var params2 = {"content":JSON.stringify(paramObj2)};
-                                    updateInManifest("structures", paramObj2);
+                                    //updateInManifest("structures", paramObj2);
                                     $.post(updateURL, params2, function(){
                                         //console.log("WITHIN 3 UPDATED");
                                     });
