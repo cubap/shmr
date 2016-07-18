@@ -603,6 +603,12 @@ and open the template in the editor.
          * Do this until there are no more ranges to look at.  Once this is done, we will have all the canvases
          * in order.  We can then update the manifest.sequence[0] property to be this ordered array. 
          * Done. 
+         * 
+         * pageCanvases: This is the global variable holding manifest.structures[0].  It should be unaltered based 
+         * on actions of this page.
+         * 
+         * rangeCanvases: This is the global variable holding manifest.structures.  It has been altered based on
+         * actions of this page, but has been kept up to date so updating off of it should be safe.
          */
         function orderSeqFromStruct(){
             var tree, parent, canvases;
@@ -678,9 +684,6 @@ and open the template in the editor.
                   // and all non-top-level children are now
                   // bound to these base nodes set on the tree
                   // object.
-                  children.forEach(function(child) {
-                    child.level = 0;
-                  });
                   tree = children;
                 } else {
                   // If the parent does not have a top-level id,
@@ -691,9 +694,6 @@ and open the template in the editor.
                   // Because "child" is passed as
                   // the second parameter in the next call,
                   // in the next iteration "parent" will be the
-                  children.forEach(function(child) {
-                    child.level = parent.level+1;
-                  });
                   parent.children = children;
                 }
                 // The function cannot continue to the return
@@ -701,9 +701,9 @@ and open the template in the editor.
                 // which only happens when "children" is empty.
                 jQuery.each(children, function( index, child ){unflatten(flatRanges, child);});
               }
-              return tree;
+              return canvases; //will this be fully populated
             }
-            unflatten(rangeCollection);
+            return unflatten(rangeCollection); //should return the canvases array in order.
         }
               
     </script>
