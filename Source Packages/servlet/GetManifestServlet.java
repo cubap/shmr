@@ -74,12 +74,16 @@ public class GetManifestServlet extends HttpServlet {
             ranges = getAnnoByProperties("{\"@type\":\"sc:Range\",\"forProject\":\"broken_books_ray\"}");
             JSONObject metadata1 = new JSONObject();
             JSONObject metadata2 = new JSONObject();
+            JSONObject metadata3 = new JSONObject();
             metadata1.element("label", "Title");
             metadata1.element("value", "Ray's Reconstruction Project");
             metadata2.element("label", "Created By");
             metadata2.element("value", "Ray Clemens");
+            metadata2.element("label", "Anchor Object");
+            metadata2.element("value", "http://ds.lib.berkeley.edu/BeineckeMS401_47");
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
+            a_metadata.add(metadata3);
         }
        // JSONArray ja_ranges_unordered = JSONArray.fromObject(ranges);
         
