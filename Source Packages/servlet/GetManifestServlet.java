@@ -79,11 +79,11 @@ public class GetManifestServlet extends HttpServlet {
             metadata1.element("value", "Ray's Recontruction Project");
             metadata2.element("label", "Created By");
             metadata2.element("value", "Ray Clemens");
-            //metadata3.element("label", "Anchor Object");
-            //metadata3.element("value", "http://ds.lib.berkeley.edu/Ege15_40");
+            metadata3.element("label", "Anchor Object");
+            metadata3.element("value", "http://ds.lib.berkeley.edu/BeineckeMS401_47");
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
-            //a_metadata.add(metadata3);
+            a_metadata.add(metadata3);
         }
        // JSONArray ja_ranges_unordered = JSONArray.fromObject(ranges);
         
