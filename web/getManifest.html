@@ -128,7 +128,6 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
        }
        else{
            miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
-           //http://165.134.241.141/annotationstore/annotation/57571b9be4b028e25c81a3ca
            manifestURI+="?DTC";
        }
         window.history.pushState("Object", "Title", manifestURI);
@@ -138,7 +137,7 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
         Mirador({
             "id": "focusedRange", // The CSS ID selector for the containing element.
             "layout": "1x1", // The number and arrangement of windows ("row"x"column")?
-            "data": [{"manifestUri": miradorURI, "location": "Saint Louis University"}],
+            "data": [{"manifestUri": miradorURI, "location": "Saint Louis University"}], //always says this in manifest list section...do we want this?
             "workspaceType": "singleObject",
             "mainMenuSettings" : {"buttons" : {"bookmark" : false, "layout" : true, "fullScreenViewer": true, "options":false}},
             "windowObjects" : [
