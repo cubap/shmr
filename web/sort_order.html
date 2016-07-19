@@ -611,7 +611,8 @@ and open the template in the editor.
          * actions of this page, but has been kept up to date so updating off of it should be safe.
          */
         function orderSeqFromStruct(){
-            var tree, parent, canvases;
+            console.log("Ordering "+ (manifest.sequences[0].length) + " canvases.");
+            var parent, canvases;
             
             function pushToOrderedSequence(canvas_uri){
                 $.each(pageCanvases,function(){
@@ -641,7 +642,7 @@ and open the template in the editor.
             function pullFromStructures(uri, rangeList){
                 var pull_this_out = {};
                 for(var i=0; i<rangeList.length; i++){
-                    if(rangeList[i]["@id"] == uri){
+                    if(rangeList[i]["@id"] === uri){
                         pull_this_out = rangeList[i];
                         break;
                     }
@@ -649,22 +650,17 @@ and open the template in the editor.
                 return pull_this_out;
             }
 
-            // Recursively build tree/table of contents data structure
-            // Begins with the list of topmost categories
-            function unflatten(flatRanges, parent, tree) {
-              // To aid recursion, define the tree if it does not exist,
-              // but use the tree that is being recursively built
-              // by the call below.
+            function unflatten(flatRanges, parent) {
               var children_uris = [];
               var children = [];
               var canvas_uris = [];
-              tree = typeof tree !== 'undefined' ? tree : [];
+              //tree = typeof tree !== 'undefined' ? tree : [];
               parent = typeof parent !== 'undefined' ? parent : getParentest(flatRanges);
               if(typeof parent.ranges !== 'undefined'){ 
                 children_uris = parent.ranges;
               }
-              if(typeof parent.canvses !== 'undefined' && parent.canvases.length!==0){
-                  //it is a leaf, we found it in its order, push its canvases
+              if(typeof parent.canvases !== 'undefined' && parent.canvases.length!==0){
+                  //it is a leaf, we found it in its order, push its canvases, there will be 2.
                   canvas_uris = parent.canvases;
                   pushToOrderedSequence(canvas_uris[0]);
                   pushToOrderedSequence(canvas_uris[1]);
@@ -676,34 +672,40 @@ and open the template in the editor.
                 }
               }
               if ( children.length ) {
-                if ( parent.within === 'root' || parent["@id"] === 'root') { 
-                  // If there are children and their parent's
-                  // id is a root or within is root, bind them to the tree object.
-                  //
-                  // This begins the construction of the object,
-                  // and all non-top-level children are now
-                  // bound to these base nodes set on the tree
-                  // object.
-                  tree = children;
-                } else {
-                  // If the parent does not have a top-level id,
-                  // bind the children to the parent node in this
-                  // recursion level before handing it over for
-                  // another spin.
-                  //
-                  // Because "child" is passed as
-                  // the second parameter in the next call,
-                  // in the next iteration "parent" will be the
-                  parent.children = children;
-                }
-                // The function cannot continue to the return
-                // statement until this line stops being called,
-                // which only happens when "children" is empty.
                 jQuery.each(children, function( index, child ){unflatten(flatRanges, child);});
               }
-              return canvases; //will this be fully populated
+              console.log("Made it past that if where we want to return");
+               //will this be fully populated
             }
-            return unflatten(rangeCollection); //should return the canvases array in order.
+            unflatten(rangeCollection);
+            console.log("want to return canvases of length "+ (canvases.length));
+            return canvases;
+        }
+        
+        /* 
+         * Set all the manifest level information to the manifest level object for the user
+         */
+        function publish(){
+            console.log("publish pending");
+            var manID= "";
+            manID = manifest["@id"];
+            var sequenceObj = {
+                "@id" : "/manifest/sequence/normal",
+                "@type": "sc:Sequence",
+                "label" : "Manifest Sequence",
+                "canvases" : pageCanvases
+            };
+            var label = manifest.label;
+            var properties = {"@id":manID, "structures":rangeCollection, "sequences":[sequenceObj], "label":label};
+            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var params = {"content" : JSON.stringify(properties)};
+            $.post(updateURL, params)
+            .done(function(){
+                console.log("publish succcess");
+            })
+            .fail(function(){
+                console.log("publish fail");
+            });
         }
               
     </script>
