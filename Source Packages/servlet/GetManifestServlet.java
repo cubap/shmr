@@ -120,6 +120,11 @@ public class GetManifestServlet extends HttpServlet {
             jo_sequence.element("label", "Beauvais Missal Canvases");
             rv.element("label", "Beauvais Missal");
         }
+        else if (username.equals("ray")){
+            canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_ray\"}");
+            jo_sequence.element("label", "Ray's Recontruction Canvases");
+            rv.element("label", "Ray's Recontruction");
+        }
         if(null != canvases && "" != canvases){
             ja_canvases  = JSONArray.fromObject(canvases);
             jo_sequence.element("canvases", ja_canvases);

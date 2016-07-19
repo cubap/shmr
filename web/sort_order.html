@@ -707,6 +707,56 @@ and open the template in the editor.
                 console.log("publish fail");
             });
         }
+        
+        function updateLisas(){
+            var manID = "http://165.134.241.141/brokenBooks/annotationstore/annotation/577d2c14e394b4a8e8a4";
+            var ranges = [];
+            var canvases = [];
+            var sequenceObj = {
+                "@id" : "/manifest/sequence/normal",
+                "@type": "sc:Sequence",
+                "label" : "Beauvais Missal Canvases",
+                "canvases" : canvases
+            };
+            var properties = {"@id":manID, "structures":ranges, "sequences":[sequenceObj]};
+            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var params = {"content" : JSON.stringify(properties)};
+            $.post(updateURL, params);
+        }
+        
+        function updateDebras(){
+            var manID = "http://165.134.241.141/annotationstore/annotation/577d2cace4c075dfb3779f08";
+            var ranges = [];
+            var canvases = [];
+            var sequenceObj = {
+                "@id" : "/manifest/sequence/normal",
+                "@type": "sc:Sequence",
+                "label" : "Llangattock Canvases",
+                "canvases" : canvases
+            };
+            var properties = {"@id":manID, "structures":ranges, "sequences":[sequenceObj]};
+            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var params = {"content" : JSON.stringify(properties)};
+            $.post(updateURL, params);
+        }
+        
+        function updateRays(){
+            var manID = "http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5";
+            var ranges = [];
+            var canvases = [];
+            var sequenceObj = {
+                "@id" : "/manifest/sequence/normal",
+                "@type": "sc:Sequence",
+                "label" : "Ray's Reconstruction Canvases",
+                "canvases" : canvases
+            };
+            var properties = {"@id":manID, "structures":ranges, "sequences":[sequenceObj]};
+            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var params = {"content" : JSON.stringify(properties)};
+            $.post(updateURL, params);
+        }
+        
+
               
     </script>
 </html>

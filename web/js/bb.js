@@ -2334,7 +2334,7 @@ function updateLabel(range, currentLabel){
            $("div[lblrange='"+range+"']").remove();
         }
         else{
-           updateInManifest("structures",paramObj1);
+           //updateInManifest("structures",paramObj1);
            $.post(updateURL, params1, function(){
                //$("div[lblrange='"+range+"']").html("<span class='updated'>UPDATED!</span>");
                //console.log("update "+range+" with label "+newLabel);
@@ -2840,7 +2840,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
          var params1 = {"content" : JSON.stringify(paramObj1)};
          //console.log("you have spliced the range out, now update with list");
          //console.log(rangeList);
-         updateInManifest("structures",paramObj1);
+         //updateInManifest("structures",paramObj1);
          $.post(updateURL, params1, function(){
              //update list where range being moved was droped
              //console.log("now we need the range list of the range Moved To");
@@ -2861,7 +2861,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
                 var paramObj3 = {"@id" : rangeMovedTo, "ranges" : rangeList2};
                 var params3 = {"content" : JSON.stringify(paramObj3)};
                 //update list where range being moved was droped
-                updateInManifest("structures",paramObj3);
+                //updateInManifest("structures",paramObj3);
                 $.post(updateURL, params3, function(){
                     //update within of ranged dropped to the rangeID it was dropped into
                     //console.log("update within of range moved to be within the range it was moved to");
@@ -2869,7 +2869,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
                     if(bucketBoolean)rangeMovedTo="bucket";
                     var paramObj4 = {"@id":rangeMoved, "within":rangeMovedTo};
                     var params4 = {"content":JSON.stringify(paramObj4)};
-                    updateInManifest("structures",paramObj4);
+                    //updateInManifest("structures",paramObj4);
                     $.post(updateURL, params4, function(){
 
                     });
@@ -4164,7 +4164,7 @@ function populateAnnoForms(){
                 
             }
             else{
-                updateInManifest("sequences",paramObj1);
+                //updateInManifest("sequences",paramObj1);
                 $.post(updateCanvasURL, params1, function(data1){
                     
                 });
@@ -4177,7 +4177,7 @@ function populateAnnoForms(){
             }
             var paramObj2 = {"@id": canvas2, "label":label2};
             var params2 = {"content":JSON.stringify(paramObj2)};
-                updateInManifest("sequences",paramObj2);
+                //updateInManifest("sequences",paramObj2);
                 $.post(updateCanvasURL, params2, function(data2){
 
                 });
@@ -4193,7 +4193,7 @@ function populateAnnoForms(){
                     $("#leafLabel").val(leafLabel);
             }
             else{
-            updateInManifest("structures",paramObj3);
+            //updateInManifest("structures",paramObj3);
               $.post(updateRangeURL, params3, function(data3){
                     //must paginate because these are in the leaf popover and admin interface.
                     //console.log("update arrange section " + leaf +" with label "+leafLabel);
@@ -4354,7 +4354,7 @@ function populateAnnoForms(){
             var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj = {"@id":currentLeafServerID, "within":section};
             var params = {"content":JSON.stringify(paramObj)};
-            updateInManifest("structures",paramObj);
+            //updateInManifest("structures",paramObj);
             $.post(updateURL, params, function(){
                 dropFlash(sectionObj);
             });
@@ -4397,7 +4397,7 @@ function populateAnnoForms(){
               var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
               var paramObj = {"@id": canvasURI, "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
-              updateInManifest("sequences",paramObj);
+              //updateInManifest("sequences",paramObj);
               $.post(updateCanvasURL, params, function(data){
                   $.each(manifestCanvases, function(){
 			if(this["@id"] === canvasURI){
@@ -4601,7 +4601,7 @@ function populateAnnoForms(){
                 var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                 var paramObj2 = {"@id" : rootRange["@id"], "ranges" : rangesToUpdate};
                 var params = {"content":JSON.stringify(paramObj2)};
-                updateInManifest("structures",paramObj2);
+                //updateInManifest("structures",paramObj2);
                 $.post(updateURL, params);
             });
         }
@@ -4609,7 +4609,8 @@ function populateAnnoForms(){
         /* An object has been updated.  Its representation in the manifest must also be updated.  where tells me either structures or sequence, the params are in order of
          * @id followed by some fields to update.  I then call to the server to update the sequences or structures field of the manifest object. 
          * 
-         * Patrick made a good point:  It seems like this is something that should be handled on the back end.  Look into subdocuments in Mongo!
+         * This can be used to update the manifest in real time.  We are doing it on a publish request, so this is
+         * no longer used.
          *  
          *  */
         function updateInManifest(where, params){
@@ -4918,7 +4919,7 @@ function populateAnnoForms(){
                         var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                         var paramObj2 = {"@id" : areaForNewGroup.attr("rangeID"), "ranges" : rangeList};
                         var params3 = {"content" : JSON.stringify(paramObj2)};
-                        updateInManifest("structures",paramObj2);
+                        //updateInManifest("structures",paramObj2);
                         $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
                             //update the ranges within that are being grouped in the new group.
                             $.each(rangeCollection, function(){
@@ -4931,7 +4932,7 @@ function populateAnnoForms(){
                                 var within = newGroupID;
                                 var paramObj10={"@id" : range, "within" : within};
                                 var params10 = {"content":JSON.stringify(paramObj10)};
-                                updateInManifest("structures",paramObj10);
+                                //updateInManifest("structures",paramObj10);
                                 $.post(updateURL, params10);
                             });
                             cancelNewGroupForm();
@@ -5033,7 +5034,7 @@ function populateAnnoForms(){
             var newAnnoUrl = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj = {"@id":rangeID, "ranges" : rangeList};
             var params = {"content" : JSON.stringify(paramObj)};
-            updateInManifest("structures",paramObj);
+            //updateInManifest("structures",paramObj);
             $.post(newAnnoUrl, params, function(data){
                 $(".parentSection").remove();
                 $(".selectedSection[rangeID='"+rangeID+"']").click();
@@ -5111,7 +5112,7 @@ function populateAnnoForms(){
                 var paramObj = {"@id":rangeID, "ranges" : rangeToUpdate[0].ranges};
                 var params = {"content" : JSON.stringify(paramObj)};
                 //update the the range recieving the child's ranges array by pushing in the range being added in.
-                updateInManifest("structures",paramObj);
+                //updateInManifest("structures",paramObj);
                 $.post(updateURL, params, function(data){
                     var addedToSection = "";
                     if(arrange == "arrange"){
@@ -5556,7 +5557,7 @@ function populateAnnoForms(){
                 $(".rectoImg").attr("src", image);
               }
               else{
-                updateInManifest("sequences",paramObj);
+                //updateInManifest("sequences",paramObj);
                 $.post(updateCanvasURL, params, function(data){
                     $(".rectoImg").attr("src", image);
                 });
@@ -5601,7 +5602,7 @@ function populateAnnoForms(){
                   $(".versoImg").attr("src", image);
               }
               else{
-                updateInManifest("sequences",paramObj);
+                //updateInManifest("sequences",paramObj);
                 $.post(updateCanvasURL, params, function(data){
                    $(".versoImg").attr("src", image);
                 });
@@ -5616,7 +5617,7 @@ function populateAnnoForms(){
         var updateURL = "http://165.134.241.141/brokenBooks/updateCanvas";
         var paramObj = {"@id": canvas, "height":height, "width":width};
         var params = {"content":JSON.stringify(paramObj)};
-        updateInManifest("sequences",paramObj);
+        //updateInManifest("sequences",paramObj);
         $.post(updateURL, params, function(data){
         });
     }
@@ -5975,14 +5976,14 @@ function populateAnnoForms(){
             newRangeObject["@id"] = newGroupID;
             //manifest.structures.push(newRangeObject);
             rangeCollection.push(newRangeObject);
-            updateManifestStructures(); 
+            //updateManifestStructures(); 
             rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
             var relation = $(".adminTrail").find("div[depth='"+depth+"']").attr("rangeid");
             $newGroup.attr("rangeid", newGroupID).attr("relation", relation);
             var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
             var paramObj2 = {"@id" : range, "ranges" : rangeList};
             var params3 = {"content" : JSON.stringify(paramObj2)};
-            updateInManifest("structures", paramObj2);
+            //updateInManifest("structures", paramObj2);
             $.post(updateURL, params3, function(){ //update the range who recieved the new group's range list in the db
                 $(".adminTrail").find("div[depth='"+depth+"']").find(".notBucket").append($newGroup); //append the new group object to the DOM
                 $newGroup.show();
@@ -6433,7 +6434,7 @@ function lock(leafURI, direction, event){
                 }
             });
             if(windowURL.indexOf("demo=1") === -1){
-                updateInManifest("structures", lockparamobj);
+                //updateInManifest("structures", lockparamobj);
                 $.post(updateAnnoURL, lockparams, function(){
 
                 });
@@ -6447,7 +6448,7 @@ function lock(leafURI, direction, event){
                 }
             });
             if(windowURL.indexOf("demo=1") === -1){
-                updateInManifest("structures", lockparamobj3);
+                //updateInManifest("structures", lockparamobj3);
                 $.post(updateAnnoURL, lockparams3, function(){
 
                 });
@@ -6504,7 +6505,7 @@ function lock(leafURI, direction, event){
                                         });
                                 }
                                 else{
-                                    updateInManifest("structures", paramObj2);
+                                    //updateInManifest("structures", paramObj2);
                                     $.post(updateAnnoURL, params2, function(){
                                         //console.log("lists are merged");
                                         domList2.append(childrenToMove);
@@ -6522,7 +6523,7 @@ function lock(leafURI, direction, event){
                                                 var paramObj5 = {"@id":area.attr("rangeid"),"ranges":rangeList2};
                                                 var params5 = {"content":JSON.stringify(paramObj5)};
                                                 this.ranges = rangeList2;
-                                                updateInManifest("structures", paramObj5);
+                                                //updateInManifest("structures", paramObj5);
                                                 $.post(updateAnnoURL, params5, function(){
                                                     //console.log(idList1+" no longer in any lists, delete it");
                                                     var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
@@ -6585,7 +6586,7 @@ function lock(leafURI, direction, event){
                                     });
                                 }
                                 else{
-                                    updateInManifest("structures", paramObj2);
+                                    //updateInManifest("structures", paramObj2);
                                     $.post(updateAnnoURL, params2, function(){
                                         $.each(rangeCollection, function(){
                                             if(this["@id"] === rangeListToSpliceInto){
@@ -6599,7 +6600,7 @@ function lock(leafURI, direction, event){
                                                 var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                                 var params4 = {"content":JSON.stringify(paramObj4)};
                                                 this.ranges = rangeList2;
-                                                updateInManifest("structures", paramObj4);
+                                                //updateInManifest("structures", paramObj4);
                                                 $.post(updateAnnoURL, params4, function(){
 
                                                 });
@@ -6648,7 +6649,7 @@ function lock(leafURI, direction, event){
                                 });
                             }
                             else{
-                                updateInManifest("structures", paramObj2);
+                                //updateInManifest("structures", paramObj2);
                                 $.post(updateAnnoURL, params2, function(){
                                     $.each(rangeCollection, function(){
                                         if(this["@id"] === rangeListToSpliceInto){
@@ -6662,7 +6663,7 @@ function lock(leafURI, direction, event){
                                             var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                             var params4 = {"content":JSON.stringify(paramObj4)};
                                             this.ranges = rangeList2;
-                                            updateInManifest("structures", paramObj4);
+                                            //updateInManifest("structures", paramObj4);
                                             $.post(updateAnnoURL, params4, function(){
 
                                             });
@@ -6761,7 +6762,7 @@ function lock(leafURI, direction, event){
                                 var rangeparamsobj = {"@id":getID,"ranges":currentRanges2};
                                 var rangeparams = {"content":JSON.stringify(rangeparamsobj)};
                                 this.ranges = currentRanges2;
-                                updateInManifest("structures", rangeparamsobj);
+                                //updateInManifest("structures", rangeparamsobj);
                                 $.post(updateAnnoURL, rangeparams, function(){
                                     leafToLock.remove();
                                     leafToLockWith.remove();
@@ -6889,7 +6890,7 @@ function lock(leafURI, direction, event){
                                     });
                                 }
                                 else{
-                                    updateInManifest("structures", paramObj2);
+                                    //updateInManifest("structures", paramObj2);
                                     $.post(updateAnnoURL, params2, function(){
                                         //console.log("lists are merged");
                                         domList2.append(childrenToMove);
@@ -6907,7 +6908,7 @@ function lock(leafURI, direction, event){
                                                 var paramObj5 = {"@id":area.attr("rangeid"),"ranges":rangeList2};
                                                 var params5 = {"content":JSON.stringify(paramObj5)};
                                                 this.ranges = rangeList2;
-                                                updateInManifest("structures", paramObj5);
+                                                //updateInManifest("structures", paramObj5);
                                                 $.post(updateAnnoURL, params5, function(){
                                                     //console.log(idList1+" no longer in any lists, delete it");
                                                     var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
@@ -6969,7 +6970,7 @@ function lock(leafURI, direction, event){
                                         });
                                 }
                                 else{
-                                    updateInManifest("structures", paramObj2);
+                                    //updateInManifest("structures", paramObj2);
                                     $.post(updateAnnoURL, params2, function(){
                                         $.each(rangeCollection, function(){
                                             if(this["@id"] === rangeListToSpliceInto){
@@ -6983,7 +6984,7 @@ function lock(leafURI, direction, event){
                                                 var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                                 var params4 = {"content":JSON.stringify(paramObj4)};
                                                 this.ranges = rangeList2;
-                                                updateInManifest("structures", paramObj4);
+                                                //updateInManifest("structures", paramObj4);
                                                 $.post(updateAnnoURL, params4, function(){
 
                                                 });
@@ -7071,7 +7072,7 @@ function lock(leafURI, direction, event){
                                 });
                             }
                             else{
-                                updateInManifest("structures", paramObj2);
+                                //updateInManifest("structures", paramObj2);
                                 $.post(updateAnnoURL, params2, function(){
                                     $.each(rangeCollection, function(){
                                         if(this["@id"] === rangeListToSpliceInto){
@@ -7086,7 +7087,7 @@ function lock(leafURI, direction, event){
                                             var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
                                             var params4 = {"content":JSON.stringify(paramObj4)};
                                             this.ranges = rangeList2;
-                                            updateInManifest("structures", paramObj4);
+                                            //updateInManifest("structures", paramObj4);
                                             $.post(updateAnnoURL, params4, function(){
 
                                             });
@@ -7223,7 +7224,7 @@ function lock(leafURI, direction, event){
                                     var rangeparamsobj2 = {"@id":getID, "ranges":currentRanges2};
                                     var rangeparams2 = {"content":JSON.stringify(rangeparamsobj2)};
                                     this.ranges = currentRanges2;
-                                    updateInManifest("structures",rangeparamsobj2);
+                                    //updateInManifest("structures",rangeparamsobj2);
                                     $.post(updateAnnoURL, rangeparams2, function(){
                                         leafToLock.remove();
                                         leafToLockWith.remove();
@@ -7305,7 +7306,7 @@ function unlock(leafURI, direction, event){
                         this.lockedup = "false";
                     }
                 });
-                updateInManifest("structures", lockparamobj);
+                //updateInManifest("structures", lockparamobj);
                 $.post(updateURL, lockparams, function(){
 
                 });
@@ -7325,7 +7326,7 @@ function unlock(leafURI, direction, event){
                         this.lockeddown = "false";
                     }
                 });
-                updateInManifest("structures", lockparamobj3);
+                //updateInManifest("structures", lockparamobj3);
                 $.post(updateURL, lockparams3, function(){
 
                 });
@@ -7456,7 +7457,7 @@ function unlock(leafURI, direction, event){
                             }
                         }
                         else{
-                            updateInManifest("structures", paramObj2);
+                            //updateInManifest("structures", paramObj2);
                             $.post(updateURL, params2, function(){
                                 //console.log("updated");
                                 //var uniqueID = $(".arrangeSection").length*10 + 1;
@@ -7510,7 +7511,7 @@ function unlock(leafURI, direction, event){
                                                 rangeList.unshift(rangeToInclude);
                                                 var paramObj32 = {"@id":newWithin, "ranges":rangeList};
                                                 var params32 = {"content":JSON.stringify(paramObj32)};
-                                                updateInManifest("structures", paramObj32);
+                                                //updateInManifest("structures", paramObj32);
                                                 $.post(updateURL, params32, function(){
 
                                                 });
@@ -7546,7 +7547,7 @@ function unlock(leafURI, direction, event){
                                             var paramObj6 = {"@id":newWithin, "ranges":rangeList2};
                                             var params6 = {"content":JSON.stringify(paramObj6)};
                                             this.ranges = rangeList2;
-                                            updateInManifest("structures", paramObj6);
+                                            //updateInManifest("structures", paramObj6);
                                             $.post(updateURL, params6, function(){
 
                                             });
@@ -7810,7 +7811,7 @@ function unlock(leafURI, direction, event){
                                 var paramObj3 = {"@id":updateID, "ranges":rangeList};
                                 var params3 = {"content":JSON.stringify(paramObj3)};
                                 this.ranges = rangeList;
-                                updateInManifest("structures", paramObj3);
+                                //updateInManifest("structures", paramObj3);
                                 $.post(updateURL, params3, function(){
                                     //console.log("range list updated");
                                 });
@@ -7819,13 +7820,13 @@ function unlock(leafURI, direction, event){
                                 
                         var paramObj1 = {"@id":leafToLock.attr("rangeid"), "within":updateID};
                         var params1 = {"content":JSON.stringify(paramObj1)};
-                        updateInManifest("structures", paramObj1);
+                        //updateInManifest("structures", paramObj1);
                         $.post(updateURL, params1, function(){
                             //console.log("WITHIN 1 UPDATED");
                         });
                         var paramObj2 = {"@id":leafToLockWith.attr("rangeid"), "within":updateID};
                         var params2 = {"content":JSON.stringify(paramObj2)};
-                        updateInManifest("structures", paramObj2);
+                        //updateInManifest("structures", paramObj2);
                         $.post(updateURL, params2, function(){
                             //console.log("WITHIN 2 UPDATED");
                         });
@@ -7925,7 +7926,7 @@ function unlock(leafURI, direction, event){
                         this.lockedup = "false";
                     }
                 });
-                updateInManifest("structures", lockparamobj);
+                //updateInManifest("structures", lockparamobj);
                 $.post(updateURL, lockparams, function(){
 
                 });
@@ -7947,7 +7948,7 @@ function unlock(leafURI, direction, event){
                         this.lockeddown = "false";
                     }
                 });
-                updateInManifest("structures", lockparamobj3);
+                //updateInManifest("structures", lockparamobj3);
                 $.post(updateURL, lockparams3, function(){
 
                 });
@@ -8061,7 +8062,7 @@ function unlock(leafURI, direction, event){
                                 }
                             }
                             else{
-                                updateInManifest("structures", paramObj2);
+                                //updateInManifest("structures", paramObj2);
                                 $.post(updateURL, params2, function(){
                                     if(rangesRemoved.length > 1){
                                         var orderedRangeObject = {
@@ -8147,7 +8148,7 @@ function unlock(leafURI, direction, event){
                                                 this.ranges = rangeList5;
                                                 var paramObj6 = {"@id":newWithin, "ranges":rangeList5};
                                                 var params6 = {"content":JSON.stringify(paramObj6)};
-                                                updateInManifest("structures", paramObj6);
+                                                //updateInManifest("structures", paramObj6);
                                                 $.post(updateURL, params6, function(){
 
                                                 });
@@ -8286,7 +8287,7 @@ function unlock(leafURI, direction, event){
 //                        console.log(rangeIDs);
                         var paramObj2 = {"@id":leafURI, "ranges": rangeList};
                         var params2 = {"content":JSON.stringify(paramObj2)};
-                        updateInManifest("structures", paramObj2);
+                        //updateInManifest("structures", paramObj2);
                         $.post(updateURL, params2, function(){
                             if(rangesRemoved.length > 1){
                                 var orderedRangeObject = {
@@ -8334,12 +8335,11 @@ function unlock(leafURI, direction, event){
                                         ranges.push(rangeToInclude);
                                         var paramObj32 = {"@id":newWithin, "ranges":ranges};
                                         var params32 = {"content":JSON.stringify(paramObj32)};
-                                        updateInManifest("structures", paramObj32);
+                                        //updateInManifest("structures", paramObj32);
                                         $.post(updateURL, params32, function(){
 
                                         });
                                     });
-                                    
                                     
                                     //wait for while loop
                                     setTimeout(function(){
@@ -8371,7 +8371,7 @@ function unlock(leafURI, direction, event){
                                     //console.log("update range recieving popped out child");
                                     var paramObj6 = {"@id":newWithin, "ranges":ranges};
                                     var params6 = {"content":JSON.stringify(paramObj6)};
-                                    updateInManifest("structures", paramObj6);
+                                    //updateInManifest("structures", paramObj6);
                                     $.post(updateURL, params6, function(){
 
                                     });
@@ -8506,7 +8506,7 @@ function unlock(leafURI, direction, event){
                                     this.ranges = rangeList;
                                     var paramObj3 = {"@id":updateID, "ranges":rangeList};
                                     var params3 = {"content":JSON.stringify(paramObj3)};
-                                    updateInManifest("structures", paramObj3);
+                                    //updateInManifest("structures", paramObj3);
                                     $.post(updateURL, params3, function(){
                                         //console.log("range list updated");
                                     });
@@ -8515,13 +8515,13 @@ function unlock(leafURI, direction, event){
 
                             var paramObj1 = {"@id":leafToLock.attr("rangeid"), "within":newWithin};
                             var params1 = {"content":JSON.stringify(paramObj1)};
-                            updateInManifest("structures", paramObj1);
+                            //updateInManifest("structures", paramObj1);
                             $.post(updateURL, params1, function(){
                                 //console.log("WITHIN 1 UPDATED");
                             });
                             var paramObj2 = {"@id":leafToLockWith.attr("rangeid"), "within":newWithin};
                             var params2 = {"content":JSON.stringify(paramObj2)};
-                            updateInManifest("structures", paramObj2);
+                            //updateInManifest("structures", paramObj2);
                             $.post(updateURL, params2, function(){
                                 //console.log("WITHIN 2 UPDATED");
                             });
