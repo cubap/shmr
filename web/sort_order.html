@@ -249,6 +249,25 @@ and open the template in the editor.
                 padding: 10px;
                 border: 3px solid #791C2D;
             }
+            
+            #syncNotice{
+                left: 0px; 
+                right: 0px; 
+                margin: 0 auto; 
+                top: 131px;
+            }
+            
+            .syncText{
+                padding: 6px;
+            }
+            
+            #syncNotice img{
+                position: relative;
+                display: block;
+                margin: 0 auto;
+                top: 16px;
+                height: 120px;
+            }
         </style>
     </head>
     <body>
@@ -432,10 +451,10 @@ and open the template in the editor.
                 <input style="    position: absolute; right: 21px; margin-top:5px;" type="button" onclick="cancelNewGroupForm();" value="Cancel"/>
             </div>
         </div>
-        <div id="syncNotice" class="helPop" style="left: 0px; right: 0px; margin: 0 auto; top: 71px;">
+        <div id="syncNotice" class="helPop" style="">
             <div style="left:22px;" class="popHdr">Data Sync</div>
             <div class="syncText" style="background-color:white;">Please wait while we sync your manifest data...</div>
-            <img/>
+            <img style="margin: 0 auto;" src="../brokenBooks/images/sync.gif"/>
         </div>
         <div class="leafPopover"></div>
     </body>
