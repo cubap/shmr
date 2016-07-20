@@ -194,7 +194,7 @@ and open the template in the editor.
                             <div class="rangeArrangementArea" depth = "1">
                                 <div class="rAreaLabel">Table of Contents</div>
                                <div class="notBucket"></div>
-                               <div style="display:block;" class="arrangeSection parent unassigned selectedSection sortOrder">BUCKET</div>
+                               <div style="display:block;" class="arrangeSection parent unassigned selectedSection sortOrder">UNASSIGNED</div>
                             </div>
                         </div>
                     </div>
@@ -206,7 +206,6 @@ and open the template in the editor.
 
     $(function(){
         $('.helperIcon').click(function(event){
-            console.log("TAB HELPER HOVER");
             var helper = event.target.getAttribute("helper");
             $('div[helper="'+helper+'"]').fadeIn(400);
         });

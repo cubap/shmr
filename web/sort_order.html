@@ -244,6 +244,11 @@ and open the template in the editor.
                 text-align: center;
                 z-index: 5;
             }
+            
+            #publishBtn{
+                padding: 10px;
+                border: 3px solid #791C2D;
+            }
         </style>
     </head>
     <body>
@@ -251,7 +256,7 @@ and open the template in the editor.
         class="helperIcon" src="http://165.134.241.141/brokenBooks/images/redInfo1.png" />
         <input id="gotoMirador" class="helperIcon" onclick="" value="View In Mirador" />
         <span class='sortTitle'>The Llangattock Breviary Structure</span>
-        <div class="publishTitle"> <input type="button" value="Publish Manifest" onclick="publish();"/> </div>
+        <div class="publishTitle"> <input id="publishBtn" type="button" value="Save Manifest" onclick="publish();"/> </div>
         <div class="mainBlock">
             <div class="mainBlockCover"></div>
             <div class="arrangeTrail adminTrail">
@@ -427,10 +432,12 @@ and open the template in the editor.
                 <input style="    position: absolute; right: 21px; margin-top:5px;" type="button" onclick="cancelNewGroupForm();" value="Cancel"/>
             </div>
         </div>
+        <div id="syncNotice" class="helPop" style="left: 0px; right: 0px; margin: 0 auto; top: 71px;">
+            <div style="left:22px;" class="popHdr">Data Sync</div>
+            <div class="syncText" style="background-color:white;">Please wait while we sync your manifest data...</div>
+            <img/>
+        </div>
         <div class="leafPopover"></div>
-<!--        <div id="dragHelpHide">
-            
-        </div>-->
     </body>
     <script>
     var windowURL = document.location.href;
@@ -500,17 +507,21 @@ and open the template in the editor.
     
         $(function(){
             //NOTE: THIS SHOULD ONLY WORK FOR ADMINS
+            var usr = "";
             if(windowURL.indexOf("LFD") > -1){
                 $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?LFD';");
                 $(".sortTitle").html("Beauvais Missal Structure");
+                usr="lisa";
             }
             else if(windowURL.indexOf("DTC") > -1){
                 $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?DTC';");
                 $(".sortTitle").html("The Llangattock Breviary Structure");
+                usr="debra";
             }
             else if(windowURL.indexOf("RC") > -1){
                 $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html?RC';");
                 $(".sortTitle").html("Ray's Project Structure");
+                usr="ray";
             }
             else if(windowURL.indexOf("demo=1")>-1){
                 $("#gotoMirador").hide();
@@ -518,6 +529,7 @@ and open the template in the editor.
             }
             else{
                 $("#gotoMirador").attr("onclick", "document.location.href='http://165.134.241.141/brokenBooks/getManifest.html';");
+                usr="debra";
             }
             if(windowURL.indexOf("home.html") < 0){
                 $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
@@ -595,107 +607,10 @@ and open the template in the editor.
                         });
                 });
             }
-            gatherRangesForArrange(2); //populate the admin interface
+            gatherRangesForArrange(2,usr); //populate the admin interface
         });
         
-        /* 
-         * The goal here is to have a 'Publish' function, from which the sequence of the structure will produce
-         * a hard-ordered sequence of the manifest.sequence[0].  
-
-         * manifestCanvases: This is the global variable holding manifest.structures[0].  It should be unaltered based 
-         * on actions of this page.
-         * 
-         * rangeCollection: This is the global variable holding manifest.structures.  It has been altered based on
-         * actions of this page, but has been kept up to date so updating off of it should be safe.
-         */
-        function orderSeqFromStruct(){
-            var parent;
-            var canvases = [];
-            
-            function pushToOrderedSequence(canvas_uri, ordered_canvases){
-                $.each(manifestCanvases,function(){
-                    if(this["@id"] === canvas_uri){
-                        canvases.push(this);
-                        return false;
-                    }
-                });
-            }
-            
-            function getParentest(rangeList){
-                var parentest = {'@id': "root", label: "Table of Contents", within:"root" };
-                for(var i=0; i<rangeList.length; i++){
-                    if(rangeList[i].within && rangeList[i].within === "root"){ 
-                        parentest = rangeList[i];
-                        break; //There can only be one range considered the ultimate aggregator.
-                    }
-                }
-                return parentest;
-            }
-
-            function pullFromStructures(uri, rangeList){
-                var pull_this_out = {};
-                for(var i=0; i<rangeList.length; i++){
-                    if(rangeList[i]["@id"] === uri){
-                        pull_this_out = rangeList[i];
-                        break;
-                    }
-                }
-                return pull_this_out;
-            }
-
-            function unflatten(flatRanges, parent) {
-              var children_uris = [];
-              var children = [];
-              var canvas_uris = [];
-              parent = typeof parent !== 'undefined' ? parent : getParentest(flatRanges);
-              if(typeof parent.ranges !== 'undefined'){ 
-                children_uris = parent.ranges;
-              }
-              if(typeof parent.canvases !== 'undefined' && parent.canvases.length!==0){
-                  //it is a leaf, we found it in its order, push its canvases, there will be 2.
-                  canvas_uris = parent.canvases;
-                  pushToOrderedSequence(canvas_uris[0]);
-                  pushToOrderedSequence(canvas_uris[1]);
-              }
-              for(var i=0; i<children_uris.length; i++){ //get the children in order by their @id property from the structures array
-                var new_child = pullFromStructures(children_uris[i], flatRanges);//Remember from earlier, if this was an empty child, we wanted to skip it.  
-                if(!jQuery.isEmptyObject(new_child)){ //check if empty
-                  children.push(new_child); //push to our array if not empty
-                }
-              }
-              if ( children.length ) {
-                jQuery.each(children, function( index, child ){unflatten(flatRanges, child);});
-              }
-            }
-            unflatten(rangeCollection);
-            manifestCanvases = canvases;
-            return canvases;
-        }
         
-        /* 
-         * Set all the manifest level information to the manifest level object for the user
-         */
-        function publish(){
-            console.log("publish pending...");
-            var orderedCanvases = orderSeqFromStruct();
-            var sequenceObj = {
-                "@id" : "http://165.134.241.141/brokenBooks/sequence/normal",
-                "@type": "sc:Sequence",
-                "label" : "Manifest Sequence",
-                "canvases" : orderedCanvases
-            };
-            //var label = manifest.label;
-            var properties = {"@id":manifestID, "structures":rangeCollection, "sequences":[sequenceObj]}; //, "label":label
-            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
-            var params = {"content" : JSON.stringify(properties)};
-            $.post(updateURL, params)
-            .done(function(){
-                console.log("publish succcess");
-            })
-            .fail(function(){
-                console.log("publish fail");
-            });
-        }
         
         function updateLisas(){
             var manID = "http://165.134.241.141/brokenBooks/annotationstore/annotation/577d2c14e394b4a8e8a4";
@@ -706,6 +621,7 @@ and open the template in the editor.
                 "@type": "sc:Sequence",
                 "label" : "Beauvais Missal Canvases",
                 "canvases" : canvases
+                
             };
             var properties = {"@id":manID, "structures":ranges, "sequences":[sequenceObj]};
             var updateURL = "http://165.134.241.141/brokenBooks/updateRange";

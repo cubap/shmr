@@ -241,7 +241,7 @@ and open the template in the editor.
                 <div class="rangeArrangementArea" depth = "1" rangeID="bucket">
                    <div class="rAreaLabel">Table of Contents</div>
                    <div ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' class="notBucket"></div>
-                   <div style="display:block;" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>BUCKET</span></div>
+                   <div style="display:block;" ondragover='dragOverHelp(event);' ondrop='dropHelp(event);' rangeID="bucket" onclick='toggleChildren($(this), "admin", event);'  class="arrangeSection parent unassigned sortOrder"><span>UNASSIGNED</span></div>
                    <input class="makeGroup" value="merge" type="button" onclick="askForNewTitle($(this).parent());"/>
                    <input class="addGroup" value="add" type="button" onclick="newGroupForm($(this).parent());"/>
                    <input class="makeSortable" value="sort" type="button" onclick="makeSortable($(this).parent());"/><input class="doneSortable" value="Done" type="button" onclick="stopSorting($(this).parent());"/><br>

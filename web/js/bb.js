@@ -2348,6 +2348,7 @@ function updateLabel(range, currentLabel){
     }
     
 }
+
 function toggleChildren(parentRange, admin, event){
     if(event.ctrlKey){
         if(admin === "admin"){
@@ -2884,7 +2885,7 @@ function dragOverHelp(event){
 }
 
 /* This can be used to gather ranges on server outside the manifest object.  For now, range collection is set off the manifest object strucutres array. */
-function gatherRangesForArrange(which){
+function gatherRangesForArrange(which, username){
     //console.log("gather ranges "+which);
     var windowurl = document.location.href;
     var forProject = detectWho();
@@ -2899,28 +2900,137 @@ function gatherRangesForArrange(which){
     }
     else{
         if(which !== 1){
-            $.post(url, params, function(data){
-                var manifest_data = JSON.parse(data);
-                manifest = manifest_data[0];
-                manifestID = manifest["@id"];
-                manifestCanvases = manifest.sequences[0].canvases;
-                rangeCollection = manifest.structures;
-                populateRangesToDOM(which);
-            });
+            console.log("Please wait while we sync the server data to the manifest...");
+            $(".mainBlockCover").show();
+            $("#syncNotice").show();
+            syncData(username, url, params, which);
         }
+    }
+}
 
-//        $.post(url, params) //we can use this to query for all these in the store without using the manifest if we want.
-//        .done(function(data){
-//            if(typeof data === "object"){
-//               // rangeCollection = data;
-//            }
-//            else{
-//              //  rangeCollection = JSON.parse(data);
-//            }
-//           populateRangesToDOM(which);
-//        });
+function syncData(username, url ,params, which){
+    var url2 = "http://165.134.241.141/brokenBooks/getManifest";
+    var params2 = {"username":username};
+    $.post(url2, params2)
+    .done(function(data){
+        var server_data = JSON.parse(data);
+        var serverSequence = server_data.sequences[0];
+        var serverStructures = server_data.structures;
+        manifestCanvases = serverSequence.canvases; //from server, not manifest
+        rangeCollection = serverStructures; //from server, not manifest
+        populateRangesToDOM(which);
+        $.post(url, params)
+        .done(function(data){
+            var manifest_data = JSON.parse(data);
+            manifest = manifest_data[0]; //specifically manifest
+            manifestID = manifest["@id"];
+            publish(); //sync everything at the beginning
+        });
+    });
+    
+}
+
+/* 
+ * The goal here is to have a 'Publish' function, from which the sequence of the structure will produce
+ * a hard-ordered sequence of the manifest.sequence[0].  
+
+ * manifestCanvases: This is the global variable holding manifest.structures[0].  It should be unaltered based 
+ * on actions of this page.
+ * 
+ * rangeCollection: This is the global variable holding manifest.structures.  It has been altered based on
+ * actions of this page, but has been kept up to date so updating off of it should be safe.
+ */
+function orderSeqFromStruct(){
+    var parent;
+    var canvases = [];
+
+    function pushToOrderedSequence(canvas_uri, ordered_canvases){
+        $.each(manifestCanvases,function(){
+            if(this["@id"] === canvas_uri){
+                canvases.push(this);
+                return false;
+            }
+        });
     }
 
+    function getParentest(rangeList){
+        var parentest = {'@id': "root", label: "Table of Contents", within:"root" };
+        for(var i=0; i<rangeList.length; i++){
+            if(rangeList[i].within && rangeList[i].within === "root"){ 
+                parentest = rangeList[i];
+                break; //There can only be one range considered the ultimate aggregator.
+            }
+        }
+        return parentest;
+    }
+
+    function pullFromStructures(uri, rangeList){
+        var pull_this_out = {};
+        for(var i=0; i<rangeList.length; i++){
+            if(rangeList[i]["@id"] === uri){
+                pull_this_out = rangeList[i];
+                break;
+            }
+        }
+        return pull_this_out;
+    }
+
+    function unflatten(flatRanges, parent) {
+      var children_uris = [];
+      var children = [];
+      var canvas_uris = [];
+      parent = typeof parent !== 'undefined' ? parent : getParentest(flatRanges);
+      if(typeof parent.ranges !== 'undefined'){ 
+        children_uris = parent.ranges;
+      }
+      if(typeof parent.canvases !== 'undefined' && parent.canvases.length!==0){
+          //it is a leaf, we found it in its order, push its canvases, there will be 2.
+          canvas_uris = parent.canvases;
+          pushToOrderedSequence(canvas_uris[0]);
+          pushToOrderedSequence(canvas_uris[1]);
+      }
+      for(var i=0; i<children_uris.length; i++){ //get the children in order by their @id property from the structures array
+        var new_child = pullFromStructures(children_uris[i], flatRanges);//Remember from earlier, if this was an empty child, we wanted to skip it.  
+        if(!jQuery.isEmptyObject(new_child)){ //check if empty
+          children.push(new_child); //push to our array if not empty
+        }
+      }
+      if ( children.length ) {
+        jQuery.each(children, function( index, child ){unflatten(flatRanges, child);});
+      }
+    }
+    unflatten(rangeCollection);
+    manifestCanvases = canvases;
+    return canvases;
+}
+
+/* 
+ * Set all the manifest level information to the manifest level object for the user
+ */
+function publish(){
+    console.log("publish pending...");
+    $(".mainBlockCover").show();
+    $("#syncNotice").show();
+    var orderedCanvases = orderSeqFromStruct();
+    var sequenceObj = {
+        "@id" : "http://165.134.241.141/brokenBooks/sequence/normal",
+        "@type": "sc:Sequence",
+        "label" : "Manifest Sequence",
+        "canvases" : orderedCanvases
+    };
+    //var label = manifest.label;
+    var properties = {"@id":manifestID, "structures":rangeCollection, "sequences":[sequenceObj]}; //, "label":label
+    var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+    var params = {"content" : JSON.stringify(properties)};
+    $.post(updateURL, params)
+    .done(function(){
+        console.log("publish succcess, data synced.");
+        $("#syncNotice").hide();
+        $(".mainBlockCover").hide();
+    })
+    .fail(function(){
+        console.log("publish fail, data not synced.");
+    });
 }
 
 function populateRangesToDOM(which){
