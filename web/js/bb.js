@@ -2219,9 +2219,6 @@ var annotationLists = [
  * for the structure and sequence arrays.  It also sets the global manifest and manifestID variables.  
  */
 function getManifestID(){
-    //lsai - http://165.134.241.141/annotationstore/annotation/577d2c14e4b0d394b4a8e8a4
-    //deb -  http://165.134.241.141/annotationstore/annotation/577d2cace4b075dfb3779f08
-    //ray- ?
     var forProject = detectWho();
     var properties={"@type" : "sc:Manifest", "forProject":forProject};
     var localID = "unknown";
@@ -2778,7 +2775,8 @@ function dropHelp(event){
       
       child.className = child.className.replace(/\bparent\b/,'');
       if(child.className.indexOf("child")==-1)child.className = child.className+" child";
-    //There has been a change, reset the folio counts.  This resets all, perhaps we could have a smart one that only updates the ones changed. 
+      
+    //There has been a change, reset the folio counts.  FIXME: Does not decrement with the area where the leaf was taken from, need to make this smarter.
       $.each($(".arrangeSection"), function(){
            $(this).children(".folioCount").remove();
             var folioCount = $(this).find("div[leaf='true']").length;
@@ -4995,7 +4993,7 @@ function populateAnnoForms(){
                         "label": title,
                         "ranges" : children,
                         "canvases" :[],
-                        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                        "isReferencedBy":manifestID,
                         "otherContent" : [],
                         "forProject" : forProject,
                         "within" : areaForNewGroup.attr("rangeid")
@@ -5072,7 +5070,7 @@ function populateAnnoForms(){
                         "label": title,
                         "ranges" : children,
                         "canvases" :[],
-                        "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                        "isReferencedBy":manifestID,
                         "otherContent" : [],
                         "forProject" : forProject,
                         "within" : areaForNewGroup.attr("rangeid")
@@ -5442,7 +5440,7 @@ function populateAnnoForms(){
                     ],
                     "resources" : [],
                     "ranges" : [],
-                    "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                    "isReferencedBy":manifestID,
                     "forProject": forProject,
                     "within" : "root",
                     "otherContent" : [],
@@ -5582,7 +5580,7 @@ function populateAnnoForms(){
                             ],
                             "resources" : [],
                             "ranges" : [],
-                            "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
+                            "isReferencedBy":manifestID,
                             "forProject": forProject,
                             "within" : "bucket", //dont want these to appear until placed
                             "otherContent" : [],
@@ -5811,6 +5809,18 @@ function populateAnnoForms(){
         });
         $.post(removeURL, params, function(){
             $(targetToBreak).remove();
+            //update the folio count since deleting the leaf removed the page.  Calling the function closes everything down to do it, maybe need to make a smarter one.
+            $.each($(".arrangeSection"), function(){
+                $(this).children(".folioCount").remove();
+                 var folioCount = $(this).find("div[leaf='true']").length;
+                 var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
+                 var leafURL = child.getAttribute("rangeID");
+                 var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
+                 if($(this).attr("leaf") === "true"){
+                     folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                 }      
+              $(this).append(folioCountHTML);
+            });
             var paramObj2 = {"@id":canvases[0]};
             var params2 = {"content" : JSON.stringify(paramObj2)}; 
             //Below is the unique case of needing to remove the canvases and update the manifest sequences with them removed, it is not broken out into a separate function.
@@ -5825,6 +5835,7 @@ function populateAnnoForms(){
                             manifestCanvases.canvases.splice(index,1);
                             if(matches === 2 || index === length){
                                 updateManifestSequence();
+                                
                                 return false;
                             }
                         }
@@ -6070,6 +6081,7 @@ function populateAnnoForms(){
             "otherContent" : [],
             "within": range,
             "forProject" : forProject,
+            "isReferencedBy":manifestID,
             "lockedup" : "",
             "lockeddown": "",
             "isOrdered" : ""
@@ -6801,6 +6813,7 @@ function lock(leafURI, direction, event){
                         "otherContent" : [],
                         "lockedup" : "",
                         "lockeddown": "",
+                        "isReferencedBy":manifestID,
                         "isOrdered" : "true"
         		};
                     if(windowURL.indexOf("demo=1") > -1){
@@ -7266,6 +7279,7 @@ function lock(leafURI, direction, event){
                         "otherContent" : [],
                         "lockedup" : "",
                         "lockeddown": "",
+                        "isReferencedBy":manifestID,
                         "isOrdered" : "true"
         		};
                         
@@ -7498,6 +7512,7 @@ function unlock(leafURI, direction, event){
                                     "otherContent" : [],
                                     "lockedup" : "",
                                     "lockeddown": "",
+                                    "isReferencedBy":manifestID,
                                     "isOrdered" : "true"
                                 };
 
@@ -7590,6 +7605,7 @@ function unlock(leafURI, direction, event){
                                         "otherContent" : [],
                                         "lockedup" : "",
                                         "lockeddown": "",
+                                        "isReferencedBy":manifestID,
                                         "isOrdered" : "true"
                                     };
 
@@ -8118,6 +8134,7 @@ function unlock(leafURI, direction, event){
                                         "otherContent" : [],
                                         "lockedup" : "",
                                         "lockeddown": "",
+                                        "isReferencedBy":manifestID,
                                         "isOrdered" : "true"
                                     };
                                         rangeCollection.push(orderedRangeObject);
@@ -8183,12 +8200,12 @@ function unlock(leafURI, direction, event){
                                             ],
                                             "resources" : [],
                                             "ranges" : rangeIDs,
-                                            "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
                                             "forProject": forProject,
                                             "within" : area.attr("rangeid"),
                                             "otherContent" : [],
                                             "lockedup" : "",
                                             "lockeddown": "",
+                                            "isReferencedBy":manifestID,
                                             "isOrdered" : "true"
                                         };
                                         var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
@@ -8408,12 +8425,12 @@ function unlock(leafURI, direction, event){
                                     ],
                                     "resources" : [],
                                     "ranges" : rangeIDs,
-                                    "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
                                     "forProject": forProject,
                                     "within" : area.attr("rangeid"),
                                     "otherContent" : [],
                                     "lockedup" : "",
                                     "lockeddown": "",
+                                    "isReferencedBy":manifestID,
                                     "isOrdered" : "true"
                                 };
                                 var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
@@ -8748,3 +8765,4 @@ function detectWho(){
     }
     return who;
 }
+
