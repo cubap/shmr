@@ -5431,7 +5431,7 @@ function populateAnnoForms(){
                 var leafRangeObject = {
                     "@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                     "@type":"sc:Range",
-                    "label":"Llangattock Breviary Page" ,
+                    "label":"New Page" ,
                     "canvases" : [
                       //newCanvas1["@id"], //local
                       //newCanvas2["@id"] //local
@@ -5571,7 +5571,7 @@ function populateAnnoForms(){
                         var leafRangeObject = {
                             "@id" : "http://www.example.org/iiif/LlangBrev/range/"+rangeID,
                             "@type":"sc:Range",
-                            "label":"Llangattock Breviary Page" ,
+                            "label":"New Page" ,
                             "canvases" : [
                               //newCanvas1["@id"], //local
                               //newCanvas2["@id"] //local
