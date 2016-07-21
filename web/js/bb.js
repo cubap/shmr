@@ -2239,6 +2239,7 @@ function getManifestID(){
            manifestCanvases = manifest.sequences[0].canvases;
            manifestID = manifest["@id"];
            localID = manifestID;
+           $(".prepareleaf").show();
            return localID;
         });
     }
@@ -2922,6 +2923,7 @@ function syncData(username, url ,params, which){
             var manifest_data = JSON.parse(data);
             manifest = manifest_data[0]; //specifically manifest
             manifestID = manifest["@id"];
+            $("#manURL").html(manifestID);
             publish(); //sync everything at the beginning
         });
     });
@@ -4709,7 +4711,7 @@ function populateAnnoForms(){
                 var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
                 var paramObj2 = {"@id" : rootRange["@id"], "ranges" : rangesToUpdate};
                 var params = {"content":JSON.stringify(paramObj2)};
-                //updateInManifest("structures",paramObj2);
+                updateManifestStructures();
                 $.post(updateURL, params);
             });
         }
@@ -4731,7 +4733,7 @@ function populateAnnoForms(){
                         $.each(params, function(paramKey, paramVal){
                            rangeCollection[i][paramKey] = paramVal;
                         });
-                        updateManifestStructures();
+                        //updateManifestStructures();
                         break;
                     }
                 }
@@ -4742,7 +4744,7 @@ function populateAnnoForms(){
                         $.each(params, function(paramKey, paramVal){
                             manifestCanvases[i][paramKey] = paramVal;
                         });
-                        updateManifestSequence();    
+                        //updateManifestSequence();    
                         break;
                     }
                 }
@@ -4751,8 +4753,6 @@ function populateAnnoForms(){
         
         function updateManifestStructures(){
             console.log("updating manifest structures...");
-            console.log(manifestID);
-            console.log(rangeCollection);
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "structures":rangeCollection};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -4764,8 +4764,6 @@ function populateAnnoForms(){
         
         function updateManifestSequence(){
             console.log("updating manifest sequence...");
-            console.log(manifestID);
-            console.log(manifestCanvases);
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "sequences":manifestCanvases};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -5561,7 +5559,6 @@ function populateAnnoForms(){
                                     var paramObj = {"@id":canvasID, "otherContent":[{"@id":listID, "@type":"sc:AnnotationList"}]};
                                     var params = {"content":JSON.stringify(paramObj)};
                                     $.post(updateCanvasURL, params, function(data){
-                                        console.log("update second canvas other content and manifest sequence");
                                         updateManifestSequence();
                                     });
                                 });
@@ -5811,14 +5808,17 @@ function populateAnnoForms(){
             $(targetToBreak).remove();
             //update the folio count since deleting the leaf removed the page.  Calling the function closes everything down to do it, maybe need to make a smarter one.
             $.each($(".arrangeSection"), function(){
-                $(this).children(".folioCount").remove();
+                 $(this).children(".folioCount").remove();
                  var folioCount = $(this).find("div[leaf='true']").length;
                  var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
-                 var leafURL = child.getAttribute("rangeID");
-                 var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
+                 var leafURL = $(this).getAttribute("rangeID");
                  if($(this).attr("leaf") === "true"){
-                     folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
-                 }      
+                    var leafIsInURL = $(this).parent().attr("rangeID");
+                    folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                }
+                else if($(this).attr("isOrdered") === "true"){
+                    folioCountHTML="";
+                }     
               $(this).append(folioCountHTML);
             });
             var paramObj2 = {"@id":canvases[0]};
@@ -5835,7 +5835,6 @@ function populateAnnoForms(){
                             manifestCanvases.canvases.splice(index,1);
                             if(matches === 2 || index === length){
                                 updateManifestSequence();
-                                
                                 return false;
                             }
                         }
@@ -6514,6 +6513,7 @@ function selectInTree(child){
 
 //Leaf locking happens in two directions.  If you lock a leaf to the leaf below, you have to update both leaves of the relationsip.  
 function lock(leafURI, direction, event){
+    
     var forProject = detectWho();
     var windowURL = document.location.href;
    // var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
@@ -6528,6 +6528,7 @@ function lock(leafURI, direction, event){
     var leafToLockWith = "";
     var newRange = "";
     if(direction === "up"){
+        console.log("lock case: UP ");
         if(leafToLock.parent().attr("isOrdered")==="true"){
             leafToLockWith = leafToLock.parent().prev();
         }
@@ -6566,7 +6567,7 @@ function lock(leafURI, direction, event){
             var lockparams3 = {"content":JSON.stringify(lockparamobj3)};
             $.each(rangeCollection, function(){
                 if(this["@id"] === leafToLockWith.attr("rangeid")){
-                    this.lockedup = "true";
+                    this.lockeddown = "true";
                 }
             });
             if(windowURL.indexOf("demo=1") === -1){
@@ -6577,7 +6578,7 @@ function lock(leafURI, direction, event){
             }
             
             if(leafToLockWith.parent().attr("isOrdered") === "true"){
-                    //console.log("is ordered. we need to either combine both ordered ranges into one and delete the other or put this leaf into already existing list.");
+                    console.log("is ordered. we need to either combine both ordered ranges into one and delete the other or put this leaf into already existing list.");
                     if(leafToLock.parent().attr("isOrdered") === "true"){
                         //console.log("we must combine lists and delete one");
                         var idList1 = leafToLock.parent().attr("rangeid");
@@ -6656,7 +6657,7 @@ function lock(leafURI, direction, event){
                                                         index+=1;
                                                         if(this["@id"] === idList1){
                                                             rangeCollection.splice(index,1);
-                                                            updateManifestStructures();
+                                                            //updateManifestStructures();
                                                             return false;
                                                         }
                                                     });
@@ -6675,7 +6676,7 @@ function lock(leafURI, direction, event){
                        
                     }
                     else{
-                        //console.log("We must add leaftolock to the end of leaftolockwith");
+                        console.log("We must add leaftolock to the end of leaftolockwith b/c leaf to lock is not in a group.");
                         var existingRangeDOM = leafToLockWith.parent();
                         existingRangeDOM.append(leafToLock);
                         var rangeListToRemoveFrom = area.attr("rangeid");
@@ -6736,7 +6737,7 @@ function lock(leafURI, direction, event){
                     }                  
             }
             else{
-                //console.log("It is not ordered, we either need to make a new ordered range or include into the existing one");
+                console.log("Leaf to lock with is not in a group.  Prolly need to make a new one.");
                 if(leafToLock.find(".lockedDown").length > 0){
                     //console.log("we need to include into the existing one");
                     var existingRangeDOM = leafToLock.parent();
@@ -6908,6 +6909,7 @@ function lock(leafURI, direction, event){
             alert("cannot lock this way. Error 1");
         }
     }
+    //direction is down from here on
     else{
         if(leafToLock.parent().attr("isOrdered")==="true"){
             leafToLockWith = leafToLock.parent().next();
@@ -7043,7 +7045,7 @@ function lock(leafURI, direction, event){
                                                         index2+=1;
                                                         if(this["@id"] === idList1){
                                                             rangeCollection.splice(index2, 1);
-                                                            updateManifestStructures();
+                                                            //updateManifestStructures();
                                                         }
                                                     });
                                                     $.post(removeURL, params3, function(){
@@ -7891,7 +7893,7 @@ function unlock(leafURI, direction, event){
                         index += 1;
                         if(this["@id"] === removeID){
                             rangeCollection.splice(index,1);
-                            updateManifestStructures();
+                            //updateManifestStructures();
                         }
                     });
                     $.post(removeURL, params, function(){
@@ -8589,7 +8591,7 @@ function unlock(leafURI, direction, event){
                             index+=1;
                             if(this["@id"] === removeID){
                                 rangeCollection.splice(index,1);
-                                updateManifestStructures();
+                                //updateManifestStructures();
                             }
                         });
                         $.post(removeURL, params, function(){
