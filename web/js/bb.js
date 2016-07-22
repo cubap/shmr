@@ -960,7 +960,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -982,7 +982,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://localhost:8080/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -2671,11 +2671,12 @@ function dropHelp(event){
     var data = "";
     data = event.dataTransfer.getData("text");
     var droppedClass = outer.find($("#"+data)).attr("class");
-    var areaTakenFrom = outer.find($("#"+data)).closest(".rangeArrangementArea").attr("rangeID");
-    var areaTakenFromDepth = parseInt(outer.find($("#"+data)).closest(".rangeArrangementArea").attr("depth"));
+    var areaTakenFrom = outer.find($("#"+data)).parents(".rangeArrangementArea").attr("rangeID");
+    var areaTakenFromDepth = parseInt(outer.find($("#"+data)).parents(".rangeArrangementArea").attr("depth"));
     var relation = target.getAttribute('rangeid');
     var targetClass = target.className;
-    var areaDroppedTo = $(target).closest(".rangeArrangementArea").attr("rangeID");
+    var areaDroppedTo = $(target).parents(".rangeArrangementArea").attr("rangeID");
+    var areaDroppedToDepth = parseInt($(target).parents(".rangeArrangementArea").attr("depth"));
     var child = document.getElementById(data);
     if(child === null || child === undefined) return false;
     if(target.getAttribute("leaf") === "true"){
@@ -2778,17 +2779,31 @@ function dropHelp(event){
       if(child.className.indexOf("child")==-1)child.className = child.className+" child";
       
     //There has been a change, reset the folio counts.  FIXME: Does not decrement with the area where the leaf was taken from, need to make this smarter.
-      $.each($(".arrangeSection"), function(){
-           $(this).children(".folioCount").remove();
+         $.each($(".arrangeSection"), function(){
             var folioCount = $(this).find("div[leaf='true']").length;
-            var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
-            var leafURL = child.getAttribute("rangeID");
-            var leafIsInURL = $(child).closest(".rangeArrangementArea").attr("rangeID");
-            if($(this).attr("leaf") === "true"){
-                folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
-            }      
-         $(this).append(folioCountHTML);
+            var folioCountHtml = $(this).find(".folioCount");
+            var leafURL = $(this).attr("rangeID");
+            if($(this).attr("leaf") !== "true" && $(this).attr("isOrdered") !== true){
+                folioCountHtml.find(".countInt").html(folioCount);
+            }
+            else if($(this).attr("leaf") === "true"){
+                var leafIsInURL = $(this).parents(".rangeArrangementArea").attr("rangeID");
+                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                folioCountHtml.replaceWith(new_folioCountHtml);
+            }
+
        });
+       
+        if(areaDroppedToDepth < areaTakenFromDepth){
+            $.each($(".selectedSection"), function(){
+                if(parseInt($(this).parents("div[depth]").attr("depth")) >= areaDroppedToDepth && $(this).attr("leaf")!=="true" && $(this).attr("isOrdered") !== "true"){
+                    var folioCount = $(this).children(".folioCount").children(".countInt").html();
+                    folioCount = parseInt(folioCount) - 1;
+                    var folioCountHTML = $(this).children(".folioCount");
+                    folioCountHTML.children(".countInt").html(folioCount);
+                }
+            });
+        }
        //console.log("area taken from depth: "+areaTakenFromDepth);
        if(outer.find($("div[depth='"+areaTakenFromDepth+"']")).children(".notBucket").children(".arrangeSection").length === 0){
         outer.find($("div[depth='"+areaTakenFromDepth+"']")).children(".makeSortable").hide();
@@ -5805,21 +5820,19 @@ function populateAnnoForms(){
             };
         });
         $.post(removeURL, params, function(){
+            var deleteDepth = parseInt($(targetToBreak).parents(".rangeArrangementArea").attr("depth"));
             $(targetToBreak).remove();
-            //update the folio count since deleting the leaf removed the page.  Calling the function closes everything down to do it, maybe need to make a smarter one.
-            $.each($(".arrangeSection"), function(){
-                 $(this).children(".folioCount").remove();
-                 var folioCount = $(this).find("div[leaf='true']").length;
-                 var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
-                 var leafURL = $(this).getAttribute("rangeID");
-                 if($(this).attr("leaf") === "true"){
-                    var leafIsInURL = $(this).parent().attr("rangeID");
-                    folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+            //update the folio count since deleting the leaf removed the page.  
+            //Need to go up the selectedSection latter and decrement the folio count that way.  The element inside the
+            //section is not removed until collapsed, so this wont work.
+            $.each($(".selectedSection"), function(){
+                var sectionDepth = parseInt($(this).parents(".rangeArrangementArea").attr("depth"));
+                if($(this).attr("leaf") !== "true" && $(this).attr("isOrdered") !== "true" && sectionDepth < deleteDepth){
+                    var folioCount = $(this).children(".folioCount").children(".countInt").html();
+                    folioCount = parseInt(folioCount) - 1;
+                    var folioCountHTML = $(this).children(".folioCount:first");
+                    folioCountHTML.children(".countInt").html(folioCount);
                 }
-                else if($(this).attr("isOrdered") === "true"){
-                    folioCountHTML="";
-                }     
-              $(this).append(folioCountHTML);
             });
             var paramObj2 = {"@id":canvases[0]};
             var params2 = {"content" : JSON.stringify(paramObj2)}; 
