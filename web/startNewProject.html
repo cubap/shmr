@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Start</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
+        <script src="../brokenBooks/js/bb.js"></script>  
+        <style>
+            .popover{
+                margin: 0px auto;
+                background-color: #000;
+                padding: 37px 45px;
+                display: none;
+                width: 497px;
+                z-index: 3;
+            }
+            .popHdr{
+                color:white;
+                position: absolute;
+                top: 10px;
+                font-weight: bold;
+                font-size: 22px;
+                font-family: sans-serif;
+                text-transform: uppercase;
+                left: 50px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="popover intro">
+            <div class="popHdr">start a new project</div>
+            <div class="demoContent demoHdrTxt">
+                Here you can start a new project in Broken Books.  Select from the options below to decide how to begin. <br>
+                <input onclick="beginProjectForm('image');" type="button" value="I have an image that belongs to a manuscript"/>
+                <input onclick="beginProjectForm('canvas');" type="button" value="I have one (or multiple) IIIF canvas JSON object(s)"/>
+                <input onclick="beginProjectForm('manifest');" type="button" value="I have a IIIF manifest.json"/>
+                <input onclick="beginProjectForm();" type="button" value="I just want to start from scratch"/>
+            </div>
+        </div>
+        <div class="projectPopover"></div>
+    </body>
+</html>
+<script>
+    function beginProjectForm(provided){
+        var uid = makeNewUID(); //TODO
+        var manifestObj = {
+            "@type":"sc:Manifest",
+            "label":"Ray's Manifest",
+            "@context":"http://iiif.io/api/presentation/2/context.json",
+            "metadata":[{"label":"Title","value":"Ray's Recontruction Project"},{"label":"Created By","value":"Ray Clemens"}],
+            "forProject":"broken_books_"+uid,
+            "addedTime":1467992709642,
+            "originalAnnoID":"",
+            "version":1,
+            "permission":0,
+            "forkFromID":"",
+            "serverName":"local",
+            "serverIP":"127.0.0.1",
+            "structures":[],
+            "sequences":[
+                {
+                    "@id":"http://localhost:8080/brokenBooks/sequence/normal",
+                    "@type":"sc:Sequence",
+                    "label":"Manifest Sequence",
+                    "canvases":[]
+                }
+            ],
+        };
+        var rootRange = {
+                    "@type" : "sc:Range",
+                    "within" : "root",
+                    "otherContent" : [ ],
+                    "canvases" : [ ],
+                    "label" : "Table of Contents",
+                    "forProject" : "broken_books_"+uid, //need UID function for this
+                    "originalAnnoID" : "",
+                    "version" : 1,
+                    "permission" : 0,
+                    "forkFromID" : "",
+                    "serverName" : "local",
+                    "isReferencedBy" : manifestID, //won't have this yet
+                    "serverIP" : "127.0.0.1",
+                    "@id" : "",
+                    "ranges" : [ ]
+        };
+        saveManifestObj();
+        saveRootRangeIntoManifest();
+        importProvidedData();
+    }
+</script>
