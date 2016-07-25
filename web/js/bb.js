@@ -2779,7 +2779,8 @@ function dropHelp(event){
       if(child.className.indexOf("child")==-1)child.className = child.className+" child";
       
     //There has been a change, reset the folio counts.  FIXME: Does not decrement with the area where the leaf was taken from, need to make this smarter.
-         $.each($(".arrangeSection"), function(){
+     //There has been a change, reset the folio counts.  FIXME: Does not decrement with the area where the leaf was taken from, need to make this smarter.
+         $.each($(".arrangeSection").not(".selectedSection"), function(){
             var folioCount = $(this).find("div[leaf='true']").length;
             var folioCountHtml = $(this).find(".folioCount");
             var leafURL = $(this).attr("rangeID");
@@ -2788,17 +2789,23 @@ function dropHelp(event){
             }
             else if($(this).attr("leaf") === "true"){
                 var leafIsInURL = $(this).parents(".rangeArrangementArea").attr("rangeID");
-                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
                 folioCountHtml.replaceWith(new_folioCountHtml);
             }
 
        });
        
         if(areaDroppedToDepth < areaTakenFromDepth){
+            var targetCount = 1;
+            if($(child).attr("leaf")!=="true"){
+                targetCount = parseInt($(child).find(".folioCount").children(".countInt").html());
+            }
             $.each($(".selectedSection"), function(){
-                if(parseInt($(this).parents("div[depth]").attr("depth")) >= areaDroppedToDepth && $(this).attr("leaf")!=="true" && $(this).attr("isOrdered") !== "true"){
+                if(parseInt($(this).parents("div[depth]").attr("depth")) >= areaDroppedToDepth 
+                && parseInt($(this).parents("div[depth]").attr("depth")) < areaTakenFromDepth
+                && $(this).attr("leaf")!=="true" && $(this).attr("isOrdered") !== "true"){
                     var folioCount = $(this).children(".folioCount").children(".countInt").html();
-                    folioCount = parseInt(folioCount) - 1;
+                    folioCount = parseInt(folioCount) - targetCount;
                     var folioCountHTML = $(this).children(".folioCount");
                     folioCountHTML.children(".countInt").html(folioCount);
                 }
