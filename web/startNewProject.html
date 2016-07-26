@@ -50,21 +50,35 @@ and open the template in the editor.
     </body>
 </html>
 <script>
+    
+    function makeNewUID(){
+        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var agent = {
+            "@type" : "foaf:Agent"
+            
+        }
+        var paramsObj = {content:agent};
+        var params = JSON.stringify(paramsObj);
+        if(userInURL){
+            //return that user
+        }
+        else{
+            $.post(saveNewURL, params, function(newURL){
+                return newURL;
+            });
+        }
+        
+    }
+    
     function beginProjectForm(provided){
         var uid = makeNewUID(); //TODO
+        var manifestMetadataArray = [];
         var manifestObj = {
             "@type":"sc:Manifest",
             "label":"Ray's Manifest",
             "@context":"http://iiif.io/api/presentation/2/context.json",
-            "metadata":[{"label":"Title","value":"Ray's Recontruction Project"},{"label":"Created By","value":"Ray Clemens"}],
+            "metadata":manifestMetadataArray,
             "forProject":"broken_books_"+uid,
-            "addedTime":1467992709642,
-            "originalAnnoID":"",
-            "version":1,
-            "permission":0,
-            "forkFromID":"",
-            "serverName":"local",
-            "serverIP":"127.0.0.1",
             "structures":[],
             "sequences":[
                 {
@@ -76,21 +90,14 @@ and open the template in the editor.
             ],
         };
         var rootRange = {
-                    "@type" : "sc:Range",
-                    "within" : "root",
-                    "otherContent" : [ ],
-                    "canvases" : [ ],
-                    "label" : "Table of Contents",
-                    "forProject" : "broken_books_"+uid, //need UID function for this
-                    "originalAnnoID" : "",
-                    "version" : 1,
-                    "permission" : 0,
-                    "forkFromID" : "",
-                    "serverName" : "local",
-                    "isReferencedBy" : manifestID, //won't have this yet
-                    "serverIP" : "127.0.0.1",
-                    "@id" : "",
-                    "ranges" : [ ]
+                "@type" : "sc:Range",
+                "within" : "root",
+                "otherContent" : [],
+                "canvases" : [],
+                "label" : "Table of Contents",
+                "forProject" : "broken_books_"+uid, //need UID function for this
+                "isReferencedBy" : manifestID, //won't have this yet
+                "ranges" : []
         };
         saveManifestObj();
         saveRootRangeIntoManifest();

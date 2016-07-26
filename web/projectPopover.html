@@ -21,18 +21,10 @@ and open the template in the editor.
     <div class="projectInfo">
         <label for="projectLabel">Project Label: </label><input id="projectLabel" type="text"/>
         <label for="projectCreator">Project Creator: </label><input id="projectCreator" type="text"/>
+        <label for="projectLocation">Project Location: </label><input id="projectLocation" type="text"/>
         <label for="projectAnchor">Anchor Object: </label><input id="projectAnchor" type="text"/>
     </div>
 </div>	
 <script>
-    function showUploadness(parent, rv){
-        var url = $("."+rv+"Img:first").attr("src");
-        if(url.indexOf("imgNotFound")===-1){
-            $("textarea[rv='"+rv+"']").val(url);
-        }
-        else{
-            $("textarea[rv='"+rv+"']").val("");
-        }
-        parent.find(".uploadness").show();
-    }
+
 </script>
