@@ -4720,7 +4720,7 @@ function populateAnnoForms(){
          * This newly created range also needs to be added to manifest.structures.
          * */
         function updateRootRanges(who, newRangeID, removeFlag, index){
-            console.log("update root ranges");
+            //console.log("update root ranges");
             var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
             var paramObj1 = {"parent" : who};
             var params1 = {"content" : JSON.stringify(paramObj1)};
@@ -4750,7 +4750,7 @@ function populateAnnoForms(){
          *  
          *  */
         function updateInManifest(where, params){
-            console.log("need to update in the manifest...");
+            //console.log("need to update in the manifest...");
             var idToFind = params["@id"];
             delete params["@id"];
             if(where === "structures"){
@@ -4778,18 +4778,18 @@ function populateAnnoForms(){
         }
         
         function updateManifestStructures(){
-            console.log("updating manifest structures...");
+            //console.log("updating manifest structures...");
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var paramObj1 = {"@id" : manifestID, "structures":rangeCollection};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){
                 manifest.structures = rangeCollection;
-                console.log("done updating manifest structures");
+                //console.log("done updating manifest structures");
             });
         }
         
         function updateManifestSequence(){
-            console.log("updating manifest sequence...");
+            //console.log("updating manifest sequence...");
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
             var sequenceObj = {
                 "@id" : "http://165.134.241.141/brokenBooks/sequence/normal",
@@ -4801,7 +4801,7 @@ function populateAnnoForms(){
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(data){
                 manifest.sequences[0].canvases = manifestCanvases;
-                console.log("done updating manifest sequence");
+                //console.log("done updating manifest sequence");
             });
         }
 
@@ -4809,7 +4809,7 @@ function populateAnnoForms(){
 		Add the range object to the structures array in the manifest object. 
 	*/
 	function createNewRange(newRangeObject, current, newLabel, value, list){
-            console.log("create new range");
+            //console.log("create new range");
 		rangeID ++;
                 var who = "";
 		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";

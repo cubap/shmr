@@ -32,6 +32,12 @@ and open the template in the editor.
                 text-transform: uppercase;
                 left: 50px;
             }
+            .projectPopover{
+                
+            }
+            .userInfo{
+                display: none;
+            }
             
         </style>
     </head>
@@ -50,35 +56,49 @@ and open the template in the editor.
     </body>
 </html>
 <script>
-    
-    function makeNewUID(){
-        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
-        var agent = {
-            "@type" : "foaf:Agent"
-            
-        }
-        var paramsObj = {content:agent};
-        var params = JSON.stringify(paramsObj);
-        if(userInURL){
-            //return that user
-        }
-        else{
-            $.post(saveNewURL, params, function(newURL){
-                return newURL;
-            });
-        }
-        
+    function beginProjectForm(provided){
+        $(".popover").remove();
+        $(".projectPopover").load("../brokenBooks/projectPopover.html");
+        makeNewUID(provided);
     }
     
-    function beginProjectForm(provided){
-        var uid = makeNewUID(); //TODO
+    function makeNewUID(providedInfo){
+        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var agent = {
+            "@type" : "foaf:Agent",
+            "name" : "Test Agent",
+            "email" :"unknown",
+            "sandbox" : "true"
+        };
+        var paramsObj = {content:agent};
+        var params = JSON.stringify(paramsObj);
+        var newUserID = "";
+        var url = window.location.href;
+            //use that user
+        var user = /user=([^&]+)/.exec(url)[1]; // Value is in [1] ('384' in our case)
+        var newUserID = user ? user : 'unknown';
+        if(newUserID === "unknown"){
+            $(".userInfo").show();
+            $.post(saveNewURL, params, function(userID){
+                newUserID = userID;
+                saveManifestObj(newUserID);
+                var windowURL = document.location.href + "?user="+userID;
+                window.history.pushState("Object", "Title", windowURL);
+            });
+        }
+        else{
+            saveManifestObj(newUserID);
+        }
+    }
+    
+    function saveManifesObj(userID){
         var manifestMetadataArray = [];
         var manifestObj = {
             "@type":"sc:Manifest",
             "label":"Ray's Manifest",
             "@context":"http://iiif.io/api/presentation/2/context.json",
             "metadata":manifestMetadataArray,
-            "forProject":"broken_books_"+uid,
+            "forProject":"broken_books_"+userID,
             "structures":[],
             "sequences":[
                 {
@@ -87,20 +107,40 @@ and open the template in the editor.
                     "label":"Manifest Sequence",
                     "canvases":[]
                 }
-            ],
+            ]
         };
+        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var paramsObj = {content:JSON.stringify(manifestObj)};
+        var params = JSON.stringify(paramsObj);
+        $.post(saveNewURL,params,function(manifestID){
+            saveRootRange(userID, manifestID);
+        });
+        
+    }
+    
+    function saveRootRange(userID, manifestID){
         var rootRange = {
                 "@type" : "sc:Range",
                 "within" : "root",
                 "otherContent" : [],
                 "canvases" : [],
                 "label" : "Table of Contents",
-                "forProject" : "broken_books_"+uid, //need UID function for this
+                "forProject" : "broken_books_"+userID, //need UID function for this
                 "isReferencedBy" : manifestID, //won't have this yet
                 "ranges" : []
         };
-        saveManifestObj();
-        saveRootRangeIntoManifest();
-        importProvidedData();
+        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var paramsObj = {content:JSON.stringify(rootRange)};
+        var params = JSON.stringify(paramsObj);
+        $.post(saveNewURL,params,function(rootRangeID){
+            rootRange["@id"] = rootRangeID;
+            var postURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var paramObj1 = {"@id" : manifestID, "structures":[rootRange]};
+            var params1 = {"content" : JSON.stringify(paramObj1)};
+            $.post(postURL, params1, function(data){
+                
+            });
+        });
     }
+    
 </script>
