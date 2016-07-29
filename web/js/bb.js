@@ -2789,7 +2789,7 @@ function dropHelp(event){
             }
             else if($(this).attr("leaf") === "true"){
                 var leafIsInURL = $(this).parents(".rangeArrangementArea").attr("rangeID");
-                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://localhost:8080/brokenBooks/images/leaf.png'/></span>");
+                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
                 folioCountHtml.replaceWith(new_folioCountHtml);
             }
 
@@ -4336,7 +4336,8 @@ function populateAnnoForms(){
             }
                 
         }
-        setTimeout(function(){updateList(flag, uri, canvas);}, 2400); //DO THE BULK
+        setTimeout(function(){updateList(flag, uri, canvas);}, 2400); //DO THE BULK.  
+     // This timeout lets the UI do all the madness.  It could be less, we may not need it, but its safe and a good length here.
     }
     
     function updateList(flag, uri, canvas){  
@@ -4381,95 +4382,100 @@ function populateAnnoForms(){
                 if(this.on === objectID){ //this is our annotation list to add the annotation to 
                     var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
                     var bulkUpdateAnnosURL =  "http://165.134.241.141/brokenBooks/bulkSubmitMetadata";
-                    var newResources = [];
-                    newResources = this.resources;
-                    var updateContent = newResources;
-                    var paramsObj = {"@id": this["@id"], "resources":updateContent};
-                    var params = {"content":JSON.stringify(paramsObj)};
-                    var params2 = {"content":JSON.stringify(newResources)};
+                    var updateID = this["@id"];
+                    var params2 = {"content":JSON.stringify(this.resources)};
                     if(windowURL.indexOf("demo=1")>-1){
                         if(!flag){
                             closeLeafPopover();
                         }
                     }
                     else{
-                       $.post(bulkUpdateAnnosURL, params2, function(data){
-                           console.log("Bulked the annos!");
-                       });
-                       $.post(updateAnnoListURL, params, function(data){
-                           console.log("updated the list!");
-                            if(zeta){
-                                $.each(rangeCollection, function(){
-                                    if (this["@id"] === objectID){ 
-                                        var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
+                       $.post(bulkUpdateAnnosURL, params2, function(updatedAnnos){
+                           updatedAnnos = JSON.parse(updatedAnnos);
+                           if(alpha){
+                               annoListCollection[0].resources = updatedAnnos.reviewed_resources;
+                           }
+                           else if(beta){
+                               annoListCollection[1].resources = updatedAnnos.reviewed_resources;
+                           }
+                           else if(zeta){
+                               annoListCollection[2].resources = updatedAnnos.reviewed_resources;
+                           }
+                           var paramsObj = {"@id": updateID, "resources":updatedAnnos.reviewed_resources};
+                           var params = {"content":JSON.stringify(paramsObj)};
+                           $.post(updateAnnoListURL, params, function(data){
+                             if(zeta){
+                                 $.each(rangeCollection, function(){
+                                     if (this["@id"] === objectID){ 
+                                         var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
+                                         var listIncluded = false;
+                                         $.each(this.otherContent,function(){
+                                                 if(this["@id"] === annoListCollection[2]["@id"]){
+                                                         listIncluded = true;
+                                                         return false;
+                                                 }
+                                         });
+                                         if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                     }
+                                 });//local. adds the annotation list uri to the other content field.  
+                             }
+                             else{
+                                var annoListID2 = -1;
+                                $.each(manifestCanvases, function(){
+                                    if (this["@id"] === objectID){ //this is our canvas object
+                                        if(alpha){
+                                            annoListID2 = annoListCollection[0]["@id"];
+                                        }
+                                        else{
+                                            annoListID2 = annoListCollection[1]["@id"];
+                                        }
+                                        var otherContent2 = {"@id":annoListID2, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
                                         var listIncluded = false;
                                         $.each(this.otherContent,function(){
-                                                if(this["@id"] === annoListCollection[2]["@id"]){
-                                                        listIncluded = true;
-                                                        return false;
-                                                }
+                                            if(this["@id"] === annoListID2){
+                                                    listIncluded = true;
+                                                    return false;
+                                            }
                                         });
-                                        if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                        if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
                                     }
-                                });//local. adds the annotation list uri to the other content field.  
-                            }
-                            else{
-                                    var annoListID2 = -1;
-                                    $.each(manifestCanvases, function(){
-                                        if (this["@id"] === objectID){ //this is our canvas object
-                                            if(alpha){
-                                                    annoListID2 = annoListCollection[0]["@id"];
-                                            }
-                                            else{
-                                                    annoListID2 = annoListCollection[1]["@id"];
-                                            }
-                                            var otherContent2 = {"@id":annoListID2, "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
-                                            var listIncluded = false;
-                                            $.each(this.otherContent,function(){
-                                                    if(this["@id"] === annoListID2){
-                                                            listIncluded = true;
-                                                            return false;
-                                                    }
-                                            });
-                                            if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
-                                        }
-                                    });
-                            }//local
-                            $("#saveCover").hide();
-                            //console.log("Flag must be true to populate anno forms: "+flag);
-                            if(flag){
-                                $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
-                                var canvasID = "";
-                                if(canvas == 'recto'){
-                                    canvasID = $("#folioSide1").attr("canvas");
-                                    $("#catalogueInfoFor").val(canvasID); //alpha
-                                    alpha = true;
-                                    beta= false;
-                                    zeta = false;
-                                }
-                                else if (canvas == 'verso'){
-                                    canvasID = $("#folioSide2").attr(canvas);
-                                    $("#catalogueInfoFor").val(canvasID); //beta
-                                    beta = true;
-                                    alpha = false;
-                                    zeta = false;
-                                }
-                                else{                                 
-                                    $("#catalogueInfoFor").val(currentLeafServerID); //zeta
-                                    alpha = beta = zeta = true;
-                                }
-                                var previewImgSrc = $("."+canvas+"Img").attr("src");
-                                $(".imgPreview").attr("src",previewImgSrc);
-                                $("tr[set='set']").attr("set", "");
-                                $("#notes").attr("set", "");
-                                //console.log("we are populate anno forms");
-                                populateAnnoForms();
-                            }
-                        }); 
+                                });
+                             }//local
+                             $("#saveCover").hide();
+                             //console.log("Flag must be true to populate anno forms: "+flag);
+                             if(flag){
+                                 $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
+                                 var canvasID = "";
+                                 if(canvas == 'recto'){
+                                     canvasID = $("#folioSide1").attr("canvas");
+                                     $("#catalogueInfoFor").val(canvasID); //alpha
+                                     alpha = true;
+                                     beta= false;
+                                     zeta = false;
+                                 }
+                                 else if (canvas == 'verso'){
+                                     canvasID = $("#folioSide2").attr(canvas);
+                                     $("#catalogueInfoFor").val(canvasID); //beta
+                                     beta = true;
+                                     alpha = false;
+                                     zeta = false;
+                                 }
+                                 else{                                 
+                                     $("#catalogueInfoFor").val(currentLeafServerID); //zeta
+                                     alpha = beta = zeta = true;
+                                 }
+                                 var previewImgSrc = $("."+canvas+"Img").attr("src");
+                                 $(".imgPreview").attr("src",previewImgSrc);
+                                 $("tr[set='set']").attr("set", "");
+                                 $("#notes").attr("set", "");
+                                 //console.log("we are populate anno forms");
+                                 populateAnnoForms();
+                             }
+                         });
+                       });
                     }
-                    
+                    return false;
                 }
-
         });
     }
 
@@ -4612,12 +4618,16 @@ function populateAnnoForms(){
 	function createNewAnno(annoObject, newLabel, value, list, uri){
             //TODO FIX: Does not allow annotations to be saved in order
 		// A.K.A update annotationList
+                console.log("create new anno time...");
+                console.log("It has label: "+newLabel+" and value: "+value+".  Does that match "+annoObject.resource["cnt:chars"]);
 		annoID ++;
 		var objectID = uri; //which object are we saving to
 		//var annoServerID = -1;
 		annoObject.on = objectID; //set the on property to be what object we are saving to 
+                annoObject.label = newLabel;
+                annoObject.resource["cnt:chars"] = value;
 		//var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
-		var params = {'content':JSON.stringify(annoObject)};
+		//var params = {'content':JSON.stringify(annoObject)};
 		var labelToCheckFor = annoObject.label;
                 //var windowURL = document.location.href;
 		var tmpAnnos = [];
@@ -4641,34 +4651,64 @@ function populateAnnoForms(){
                 else{
                     annoResources = tmpAnnos.resources;
                 }
-                for(var i=0; i<annoResources.length; i++){
-                    var labelForCheck = annoResources[i].label;                   
-                    if(labelForCheck === labelToCheckFor){
-                        // this annotation exists.  Update annotation and list.
-                        updateAnnotation(annoResources[i]["@id"], annoObject);
-                        break;
+                if(annoResources.length > 0){
+                    for(var i=0; i<annoResources.length; i++){
+                        var labelForCheck = annoResources[i].label;   
+                        //console.log("Does "+i+" == "+ (annoResources.length - 1) +" or 0?");
+                        if(labelForCheck === labelToCheckFor){
+                            // this annotation exists.  Update annotation and list.
+                            console.log("This anno already exists...");
+                            updateAnnotation(annoResources[i]["@id"], annoObject);
+                            break;
+                        }
+                        else if(i === annoResources.length - 1){ //we did not find this anno or the list was empty, save it as a new one in the list. 
+                            console.log("This is a new anno, push it to anno list collection...");
+                            console.log("Its value is "+annoObject.resource["cnt:chars"]);
+                            if(zeta){
+                                if(annoListCollection[2].resources === "[]"){
+                                    annoListCollection[2].resources = [];
+                                }
+                                annoListCollection[2].resources.push(annoObject); 
+                            }
+                            else if(alpha){
+                                if(annoListCollection[0].resources === "[]"){
+                                    annoListCollection[0].resources = [];
+                                }
+                                annoListCollection[0].resources.push(annoObject); 
+                            }
+                            else{
+                                if(annoListCollection[1].resources === "[]"){
+                                    annoListCollection[1].resources = [];
+                                }
+                                annoListCollection[1].resources.push(annoObject); 
+                            }
+                            break;
                     }
-                    else if(i === annoResources.length - 1){ //we did not find this anno, save it as a new one in the list. 
-                        if(zeta){
-                            if(annoListCollection[2].resources === "[]"){
-                                annoListCollection[2].resources = [];
-                            }
-                            annoListCollection[2].resources.push(annoObject); 
-                        }
-                        else if(alpha){
-                            if(annoListCollection[0].resources === "[]"){
-                                annoListCollection[0].resources = [];
-                            }
-                            annoListCollection[0].resources.push(annoObject); 
-                        }
-                        else{
-                            if(annoListCollection[1].resources === "[]"){
-                                annoListCollection[1].resources = [];
-                            }
-                            annoListCollection[1].resources.push(annoObject); 
-                        }
-                }
 
+                }
+                
+            }
+            else{
+                console.log("This is a new anno to an empty list");
+                console.log("Its value is "+annoObject.resource["cnt:chars"]);
+                if(zeta){
+                    if(annoListCollection[2].resources === "[]"){
+                        annoListCollection[2].resources = [];
+                    }
+                    annoListCollection[2].resources.push(annoObject); 
+                }
+                else if(alpha){
+                    if(annoListCollection[0].resources === "[]"){
+                        annoListCollection[0].resources = [];
+                    }
+                    annoListCollection[0].resources.push(annoObject); 
+                }
+                else{
+                    if(annoListCollection[1].resources === "[]"){
+                        annoListCollection[1].resources = [];
+                    }
+                    annoListCollection[1].resources.push(annoObject); 
+                }
             }
 
 	}
@@ -4751,9 +4791,15 @@ function populateAnnoForms(){
         function updateManifestSequence(){
             console.log("updating manifest sequence...");
             var postURL = "http://165.134.241.141/brokenBooks/updateRange";
-            var paramObj1 = {"@id" : manifestID, "sequences":manifestCanvases};
+            var sequenceObj = {
+                "@id" : "http://165.134.241.141/brokenBooks/sequence/normal",
+                "@type": "sc:Sequence",
+                "label" : "Manifest Sequence",
+                "canvases" : manifestCanvases
+            };
+            var paramObj1 = {"@id" : manifestID, "sequences":[sequenceObj]};
             var params1 = {"content" : JSON.stringify(paramObj1)};
-            $.post(postURL, params1, function(rootRangeList){
+            $.post(postURL, params1, function(data){
                 manifest.sequences[0].canvases = manifestCanvases;
                 console.log("done updating manifest sequence");
             });
@@ -5341,8 +5387,7 @@ function populateAnnoForms(){
                 "images" : [],
                 "forProject" : forProject,
                 "otherContent": [],
-                "within" : "",
-                "sandbox" : "yes"
+                "within" : ""
             };
             
          annoListID = parseInt(annoListID) + 1;
@@ -5356,12 +5401,11 @@ function populateAnnoForms(){
                 var newCanvas1HolderImg = newCanvasHolderImg;
                 newCanvas1HolderImg.on = data["@id"];
                 var newCanvas1AnnoList = {
-				"@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
-				"@type":"sc:AnnotationList",
-				"resources" : [],
-                                "forProject": forProject,
-				"on" : newCanvas1["@id"],
-                                "sandbox" : "yes"
+                    "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                    "@type":"sc:AnnotationList",
+                    "resources" : [],
+                    "forProject": forProject,
+                    "on" : newCanvas1["@id"],
        	 	}; //local
                 
                 annoListCollection[0] = newCanvas1AnnoList;
@@ -5376,9 +5420,7 @@ function populateAnnoForms(){
                 alpha = true;
                 beta= false;
                 zeta = false;
-
       	 	newCanvas1ServerID = newCanvas1["@id"];
-                
   	        canvasTag = parseInt(canvasTag) + 1;
                 annoListID = parseInt(annoListID) + 1;
 
@@ -5391,8 +5433,7 @@ function populateAnnoForms(){
                             "images" : [],
                             "forProject" : forProject,
                             "otherContent" : [],
-                            "within" : "",
-                            "sandbox" : "yes"
+                            "within" : ""
                 };
                                        
                 var newCanvas2 = urlCanvas;
@@ -5430,8 +5471,7 @@ function populateAnnoForms(){
                     "otherContent" : [],
                     "lockedup" : "",
                     "lockeddown": "",
-                    "isOrdered" : "",
-                    "sandbox" : "yes"
+                    "isOrdered" : ""
                     };
                     currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                     createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
@@ -5439,7 +5479,7 @@ function populateAnnoForms(){
          }
          else{
             $.post(url, params1, function(data){ //save first new canvas
-                console.log("saved first canvas...");
+                //console.log("saved first canvas...");
       	 	data = JSON.parse(data);
       	 	newCanvas1["@id"] = data["@id"];
                 var newCanvas1HolderImg = newCanvasHolderImg;
@@ -5450,8 +5490,7 @@ function populateAnnoForms(){
                     "@type":"sc:AnnotationList",
                     "resources" : [],
                     "forProject": forProject,
-                    "on" : newCanvas1["@id"],
-                    "sandbox" : "yes"
+                    "on" : newCanvas1["@id"]
        	 	}; //local
                 
                 annoListCollection[0] = newCanvas1AnnoList;
@@ -5465,7 +5504,7 @@ function populateAnnoForms(){
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
                     //add holder img annotation in to images field.
-                        console.log("saved first canvas anno list");
+                        //console.log("saved first canvas anno list");
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data["@id"];
                         var listID = data["@id"];
@@ -5475,11 +5514,11 @@ function populateAnnoForms(){
                         newCanvas1.otherContent =[{"@id":listID,"@type":"sc:AnnotationList"}];
                         manifestCanvases.push(newCanvas1); //live
         		$.post(updateCanvasURL, imgParams, function(data){
-                            console.log("update canvas image with new image anno, we had to wait to sait on property.");
+                            //console.log("update canvas image with new image anno, we had to wait to sait on property.");
                             var paramObj = {"@id":newCanvas1["@id"], "otherContent":[{"@id":listID,"@type":"sc:AnnotationList"}]};
                             var params = {"content":JSON.stringify(paramObj)};
                             $.post(updateCanvasURL, params, function(data){
-                                console.log("update canvas other content");
+                                //console.log("update canvas other content");
                                 $("#folioSide1").click();
                                 $("#catalogueInfoFor").val(newCanvas1["@id"]);
                                 alpha = true;
@@ -5501,13 +5540,12 @@ function populateAnnoForms(){
                             "images" : [],
                             "forProject" : forProject,
                             "otherContent" : [],
-                            "within" : "",
-                            "sandbox" : "yes"
+                            "within" : ""
                 };
                                        
 	      	var params2 = {'content': JSON.stringify(urlCanvas)};
 	      	$.post(url, params2, function(data){
-                        console.log("saved second canvas");
+                        //console.log("saved second canvas");
                         var newCanvas2 = urlCanvas;
 	      		data=JSON.parse(data);
                         newCanvas2["@id"] = data["@id"];
@@ -5523,15 +5561,14 @@ function populateAnnoForms(){
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
                         "forProject": forProject,
-	                "on" :  newCanvas2["@id"],
-                        "sandbox" : "yes"
+	                "on" :  newCanvas2["@id"]
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
                         var listURL2 = "http://165.134.241.141/brokenBooks/saveNewRange";
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
 	        	var canvasID = newCanvas2["@id"];
 	        	$.post(listURL2, listParams2, function(data){
-                            console.log("saved second canvas list");
+                            //console.log("saved second canvas list");
 	        		data = JSON.parse(data);
                                 annoListCollection[1]["@id"] = data["@id"];
                                 var listID = data["@id"];
@@ -5541,7 +5578,7 @@ function populateAnnoForms(){
                                 newCanvas2.otherContent = [{"@id":listID, "@type":"sc:AnnotationList"}];
                                 manifestCanvases.push(newCanvas2); //live
                                 $.post(updateCanvasURL, imgParams2, function(data){
-                                    console.log("update second canvas image");
+                                    //console.log("update second canvas image");
                                     var paramObj = {"@id":canvasID, "otherContent":[{"@id":listID, "@type":"sc:AnnotationList"}]};
                                     var params = {"content":JSON.stringify(paramObj)};
                                     $.post(updateCanvasURL, params, function(data){
@@ -5569,8 +5606,7 @@ function populateAnnoForms(){
                             "otherContent" : [],
                             "lockedup" : "",
                             "lockeddown": "",
-                            "isOrdered" : "",
-                            "sandbox" : "yes"
+                            "isOrdered" : ""
                             };
                             currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                             createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
