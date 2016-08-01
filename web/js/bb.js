@@ -5658,8 +5658,7 @@ function populateAnnoForms(){
               }
               // code here to use the dimensions
             }
-            image = image.trim();
-            img.src = image;
+            
             var anno = {
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
@@ -5687,6 +5686,8 @@ function populateAnnoForms(){
                 //updateInManifest("sequences",paramObj);
                 $.post(updateCanvasURL, params, function(data){
                     $(".rectoImg").attr("src", image);
+                    image = image.trim();
+                    img.src = image;
                 });
               }
       }
@@ -5704,8 +5705,6 @@ function populateAnnoForms(){
               }
               // code here to use the dimensions
             }
-            image = image.trim();
-            img.src = image;
               var anno = {
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
@@ -5727,11 +5726,14 @@ function populateAnnoForms(){
               var params = {"content":JSON.stringify(paramObj)};
               if(windowurl.indexOf("demo=1") > -1){
                   $(".versoImg").attr("src", image);
+                  
               }
               else{
                 //updateInManifest("sequences",paramObj);
                 $.post(updateCanvasURL, params, function(data){
                    $(".versoImg").attr("src", image);
+                   image = image.trim();
+                   img.src = image;
                 });
               }
               
