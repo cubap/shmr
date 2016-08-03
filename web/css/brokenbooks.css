@@ -407,16 +407,18 @@ and open the template in the editor.
                 max-height: 645px;
                 min-width: 400px;
                 max-width: 600px;
-/*                background-color: black;
-*/              display: none;
+                display: none;
                 z-index: 3;
                 left: 0;
                 right: 0;
                 margin: 0 auto;
-                background-color: #6D6E7B;
+                background: linear-gradient(black,#6D6E7B);
+                background: -webkit-linear-gradient(black,#6D6E7B);
+                background: -o-linear-gradient(black,#6D6E7B);
+                background: -moz-linear-gradient(black,#6D6E7B);
+                padding: 9px 0px;
             }
             #fullImgContainer img{
-                top: 20px;
                 position: relative;
                 max-width: 555px;
                 max-height: 600px;

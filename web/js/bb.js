@@ -3653,7 +3653,7 @@ function populateAnnoForms(){
                 }
             }
         }
-        else{
+        else if (beta){
            // console.log("For beta");
             annos = annoListCollection[1].resources;
             // console.log(typeof annos + "    3");
@@ -3799,8 +3799,7 @@ function populateAnnoForms(){
             demo = true;
         }
             var previouslySelectedURI = "";
-            if(canvas == 'recto'){
-                //console.log("recto selected");
+            if(canvas === 'recto'){
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
@@ -3822,8 +3821,7 @@ function populateAnnoForms(){
                 $("#folioSide2").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
-            else if (canvas == 'verso'){
-                //console.log("verso selected");
+            else if (canvas === 'verso'){
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
@@ -3846,7 +3844,6 @@ function populateAnnoForms(){
                 $("#oneAndtwo").find('i').removeClass('unselectedI').removeClass('selectedI').addClass('unselectedI');
             }
             else{
-                //console.log("leaf selected");
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 canvas = "leaf";
                  if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
@@ -3884,45 +3881,16 @@ function populateAnnoForms(){
     function saveFolio(flag, canvas, thisFolio, leafFlag){ 
         //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
         if(flag === false){
-            //console.log("flag was false");
             canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
-            if(canvas === "leaf"){
-                //console.log("SET THIS FOLIO TO THE LEAF2: " + currentLeafServerID);
-                thisFolio = currentLeafServerID;
-            }
-            else{
-                thisFolio = $(".selectedFolio").attr("canvas");
-            }
+            thisFolio = $(".selectedFolio").attr("canvas");
+            
         }
-        else{
-            //console.log("flag was true");
-            if(canvas === "leaf"){
-                //console.log("SET THIS FOLIO TO THE LEAF2: " + currentLeafServerID);
-                thisFolio = currentLeafServerID;
-            }
-        }
-        
-        //console.log("in save.  thisFolio = "+thisFolio);
         if(thisFolio !== undefined && thisFolio !== ''){
             //console.log("show save cover");
             $("#saveCover").show();
         }
-        var windowURL = document.location.href;
-        var currentLeafObject = {};
-        var otherInfo = {};
         var uriToSave = thisFolio; //alpha URI, beta URI, or leaf URI
         var canvasURI = uriToSave;
-        var otherInfoList = {};
-//        if(windowURL.indexOf("demo=1") > -1){
-//            closeLeafPopover();
-//            return false;
-//        }
-        $.each(rangeCollection, function(){
-            if (this["@id"] === uriToSave){
-                currentLeafObject = this; //Set the actual leaf object if the uriToSave is a leaf uri
-                return false;
-            }
-        });
         context(canvasURI, flag, canvas);
 
     }
@@ -3938,7 +3906,6 @@ function populateAnnoForms(){
             if(zeta){ addedInfoList1 = $("#zetaInformation").find(".contentList"); }
             else if(alpha){ addedInfoList1 = $("#alphaInformation").find(".contentList"); }
             else if(beta){ addedInfoList1 = $("#betaInformation").find(".contentList"); }
-            var entryID = $(_this).find(".content").attr("id");
             var entryValue = $(_this).find(".content").val();
             var range = $(_this).find(".content").attr("range");
             range = (range !== undefined && range !== "");
@@ -4024,7 +3991,6 @@ function populateAnnoForms(){
                 else if(alpha){ addedInfoList2 = $("#alphaInformation").find(".contextList"); }
                 else if(beta){ addedInfoList2 = $("#betaInformation").find(".contextList"); }
                 //console.log(addedInfoList2);
-                var entryID = $(_this).find(".content").attr("id");
                 var range = $(_this).find(".content").attr("range");
                 range = (range !== undefined && range !== "");
                 var addedInfoLabel = $(_this).find(".formLabel").html();
@@ -4075,7 +4041,6 @@ function populateAnnoForms(){
                 if(zeta){ addedInfoList3 = $("#zetaInformation").find(".carrierList"); }
                 else if(alpha){ addedInfoList3 = $("#alphaInformation").find(".carrierList"); }
                 else if(beta){ addedInfoList3 = $("#betaInformation").find(".carrierList"); }
-                var entryID = $(_this).find(".content").attr("id");
                 var range = $(_this).find(".content").attr("range");
                 range = (range !== undefined && range !== "");
                 var addedInfoLabel = $(_this).find(".formLabel").html();
@@ -4341,8 +4306,8 @@ function populateAnnoForms(){
     }
     
     function updateList(flag, uri, canvas){  
-        //console.log("made it to update list with");
-        //console.log(flag, uri, canvas);
+//        console.log("made it to update list with");
+//        console.log(flag, uri, canvas);
         var windowURL = document.location.href;
         var objectID = uri;
         var forProject = detectWho();
@@ -4350,15 +4315,15 @@ function populateAnnoForms(){
                 if(flag){
                     $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
                     var canvasID = "";
-                    if(canvas == 'recto'){
+                    if(canvas === 'recto'){
                         canvasID = $("#folioSide1").attr("canvas");
                         $("#catalogueInfoFor").val(canvasID); //alpha
                         alpha = true;
                         beta= false;
                         zeta = false;
                     }
-                    else if (canvas == 'verso'){
-                        canvasID = $("#folioSide2").attr(canvas);
+                    else if (canvas === 'verso'){
+                        canvasID = $("#folioSide2").attr("canvas");
                         $("#catalogueInfoFor").val(canvasID); //beta
                         beta = true;
                         alpha = false;
@@ -4392,14 +4357,14 @@ function populateAnnoForms(){
                     else{
                        $.post(bulkUpdateAnnosURL, params2, function(updatedAnnos){
                            updatedAnnos = JSON.parse(updatedAnnos);
-                           if(alpha){
+                           if(zeta){
+                               annoListCollection[2].resources = updatedAnnos.reviewed_resources;
+                           }
+                           else if(alpha){
                                annoListCollection[0].resources = updatedAnnos.reviewed_resources;
                            }
                            else if(beta){
                                annoListCollection[1].resources = updatedAnnos.reviewed_resources;
-                           }
-                           else if(zeta){
-                               annoListCollection[2].resources = updatedAnnos.reviewed_resources;
                            }
                            var paramsObj = {"@id": updateID, "resources":updatedAnnos.reviewed_resources};
                            var params = {"content":JSON.stringify(paramsObj)};
@@ -4410,10 +4375,10 @@ function populateAnnoForms(){
                                          var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
                                          var listIncluded = false;
                                          $.each(this.otherContent,function(){
-                                                 if(this["@id"] === annoListCollection[2]["@id"]){
-                                                         listIncluded = true;
-                                                         return false;
-                                                 }
+                                            if(this["@id"] === annoListCollection[2]["@id"]){
+                                                    listIncluded = true;
+                                                    return false;
+                                            }
                                          });
                                          if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
                                      }
@@ -4446,15 +4411,15 @@ function populateAnnoForms(){
                              if(flag){
                                  $(".content").val(""); //A save happened when switching between sides.  Annos were not populated, need to do it now.
                                  var canvasID = "";
-                                 if(canvas == 'recto'){
+                                 if(canvas === 'recto'){
                                      canvasID = $("#folioSide1").attr("canvas");
                                      $("#catalogueInfoFor").val(canvasID); //alpha
                                      alpha = true;
                                      beta= false;
                                      zeta = false;
                                  }
-                                 else if (canvas == 'verso'){
-                                     canvasID = $("#folioSide2").attr(canvas);
+                                 else if (canvas === 'verso'){
+                                     canvasID = $("#folioSide2").attr("canvas");
                                      $("#catalogueInfoFor").val(canvasID); //beta
                                      beta = true;
                                      alpha = false;
@@ -4529,11 +4494,11 @@ function populateAnnoForms(){
             var imgToShow = $("#"+imgContainer).find('img').attr("src");
             $("#fullImgContainer").find('img').attr('src', imgToShow);
             $("#fullImgContainer").show();
-            //$("#fullImageShade").show();
+            $("#fullImageShade").show();
 	}
 	function hideFullImage(){
             $("#fullImgContainer").hide();
-            $("#fullImageShade").hide()
+            $("#fullImageShade").hide();
 	}
 	function addImage(anno, canvasURI){
               var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
@@ -4565,7 +4530,7 @@ function populateAnnoForms(){
             else if(alpha){
                 tmpAnnos = annoListCollection[0];
             }
-            else{
+            else if (beta){
                 tmpAnnos = annoListCollection[1];
             }
             var annoResources = [];
@@ -4613,35 +4578,26 @@ function populateAnnoForms(){
 	}
 
 	/*
-		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range. 
+		This function takes the annotation object and saves it in the manifest object in the appropriate location.  it makes the decision whether the annotation is being saved to a canvas or a range.
 	*/
 	function createNewAnno(annoObject, newLabel, value, list, uri){
             //TODO FIX: Does not allow annotations to be saved in order
-		// A.K.A update annotationList
-                console.log("create new anno time...");
-                console.log("It has label: "+newLabel+" and value: "+value+".  Does that match "+annoObject.resource["cnt:chars"]);
+               // console.log("create new anno time...");
+               // console.log("It has label: "+newLabel+" and value: "+value+".  Does that match "+annoObject.resource["cnt:chars"]);
 		annoID ++;
 		var objectID = uri; //which object are we saving to
-		//var annoServerID = -1;
 		annoObject.on = objectID; //set the on property to be what object we are saving to 
                 annoObject.label = newLabel;
                 annoObject.resource["cnt:chars"] = value;
-		//var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
-		//var params = {'content':JSON.stringify(annoObject)};
 		var labelToCheckFor = annoObject.label;
-                //var windowURL = document.location.href;
 		var tmpAnnos = [];
-		//var theReturn = undefined;
-		//var theURI = "";
-
-		/* See if the annotation exists and if so, update its resource. Otherwise, push it to the array. */
 		if(zeta){
                     tmpAnnos = annoListCollection[2];
 		}
 		else if (alpha){
                     tmpAnnos = annoListCollection[0];
 		}
-		else{
+		else if (beta){
                     tmpAnnos = annoListCollection[1];
 		}
                 var annoResources = [];
@@ -4656,14 +4612,24 @@ function populateAnnoForms(){
                         var labelForCheck = annoResources[i].label;   
                         //console.log("Does "+i+" == "+ (annoResources.length - 1) +" or 0?");
                         if(labelForCheck === labelToCheckFor){
-                            // this annotation exists.  Update annotation and list.
-                            console.log("This anno already exists...");
-                            updateAnnotation(annoResources[i]["@id"], annoObject);
+                            // this annotation exists.  Update annotation.
+                            //console.log("This anno already exists...");
+                            if(zeta){
+                                annoListCollection[2].resources[i].resource = annoObject.resource;
+                            }
+                            else if (alpha){
+                                annoListCollection[0].resources[i].resource = annoObject.resource;
+                            }
+                            else if (beta){
+                                annoListCollection[1].resources[i].resource = annoObject.resource;
+                            }
+//                           OR ^^this way takes out the loop that updateAnnotation imposes.
+                           // updateAnnotation(annoResources[i]["@id"], annoObject);
                             break;
                         }
-                        else if(i === annoResources.length - 1){ //we did not find this anno or the list was empty, save it as a new one in the list. 
-                            console.log("This is a new anno, push it to anno list collection...");
-                            console.log("Its value is "+annoObject.resource["cnt:chars"]);
+                        else if(i === annoResources.length - 1){ //we did not find this anno, save it as a new one in the list. 
+                            //console.log("This is a new anno, push it to anno list collection...");
+                            //console.log("Its value is "+annoObject.resource["cnt:chars"]);
                             if(zeta){
                                 if(annoListCollection[2].resources === "[]"){
                                     annoListCollection[2].resources = [];
@@ -4676,7 +4642,7 @@ function populateAnnoForms(){
                                 }
                                 annoListCollection[0].resources.push(annoObject); 
                             }
-                            else{
+                            else if(beta){
                                 if(annoListCollection[1].resources === "[]"){
                                     annoListCollection[1].resources = [];
                                 }
@@ -4684,13 +4650,10 @@ function populateAnnoForms(){
                             }
                             break;
                     }
-
                 }
-                
             }
             else{
-                console.log("This is a new anno to an empty list");
-                console.log("Its value is "+annoObject.resource["cnt:chars"]);
+                //console.log("This is a new anno to an empty list");
                 if(zeta){
                     if(annoListCollection[2].resources === "[]"){
                         annoListCollection[2].resources = [];
@@ -4703,7 +4666,7 @@ function populateAnnoForms(){
                     }
                     annoListCollection[0].resources.push(annoObject); 
                 }
-                else{
+                else if (beta){
                     if(annoListCollection[1].resources === "[]"){
                         annoListCollection[1].resources = [];
                     }
