@@ -48,11 +48,11 @@ and open the template in the editor.
                             <div class="helperContent demoContent demoHdrTxt" >Attributes that the Contributor does not wish to assign to any category.  This section can also be for general notes or for interesting information you would like to store with the object you are describing (such as a Digital Scriptorium link to a record for this object)</div>
                         </div>
                     </li>
-                    <li ><a href="#placement">arrange</a>
+                    <li ><a href="#placement">place</a>
                         <img class="helperIcon" helper="arrange" src="http://165.134.241.141/brokenBooks/images/redInfo1.png" />
                         <div class="helPop" helper="arrange">
-                            <div class="popHdr">arrange</div>
-                            <div class="helperContent demoContent demoHdrTxt">This area shows the sections into which you can place the leaf.  By default, the leaf you are creating has already been placed into the "bucket", which is just a collection of all the leaves contributed thus far.  If you would like to put it into a specific section, click on that section to highlight it.  Click "Save Arrangement" to save your selection.</div>
+                            <div class="popHdr">place</div>
+                            <div class="helperContent demoContent demoHdrTxt">This area shows the sections into which you can place the leaf.  By default, the leaf you are creating has already been placed into the "bucket", which is just a collection of all the leaves contributed thus far.  If you would like to put it into a specific section, click on that section to highlight it.  Click "Save Placement" to save your selection.</div>
                         </div>
                     </li>
                 </ul>
@@ -77,7 +77,7 @@ and open the template in the editor.
                                     <tr class="contextFormEntry"><td class="formLabel">Binding: </td> <td> <input class="content" type="text"  id="binding"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Frame or Mat: </td> <td> <input class="content" type="text"  id="frame"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Bibliography: </td> <td> <input class="content" type="text"  id="bibliography"/></td></tr>
-                                    <tr class="contextFormEntry"><td class="formLabel">Link To Record: </td> <td> <input class="content" type="text"  id="linkToRecord"/></td></tr>
+                                    <tr class="contextFormEntry"><td class="formLabel">Link To Record: </td> <td> <input class="content long" type="text"  id="linkToRecord"/></td></tr>
                                     <tr class="contextFormEntry"><td class="formLabel">Related Manuscripts by Collection: </td> <td>  <input class="content" type="text"  id="contextRelated"/></td></tr> 
                                     <tr class="contextFormEntry"><td class="formLabel">Other Context Info: </td>  <td><textarea class="content" id="contextOther"></textarea></td></tr>
                                 </tbody>
@@ -91,7 +91,7 @@ and open the template in the editor.
                                             <tr class="carrierFormEntry"><td class="formLabel">Date: </td> <td> <input class="content" type="text" class="content" id="carrierDate"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Country Of Origin: </td> <td> <input class="content" type="text" class="content" id="carrierOrigin"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">City Of Origin: </td> <td> <input class="content" type="text" class="content" id="carrierOrigin2"/></td></tr>
-                                            <tr class="carrierFormEntry"><td class="formLabel">Format (single leaf, half bifolium, fragment): </td> <td> <input class="content" type="text" class="content" id="carrierFormat"/></td></tr>
+                                            <tr class="carrierFormEntry"><td class="formLabel">Format (detached leaf, etc.): </td> <td> <input class="content" type="text" class="content" id="carrierFormat"/></td></tr>
                                             <tr class="carrierFormEntry"><td class="formLabel">Material Support: </td> <td> <input class="content" type="text" class="content" id="support"/></td></tr>
                                             <tr class="carrierFormEntry" special="dimensions">
                                                     <td class="formLabel ">Dimensions: </td>
@@ -146,7 +146,7 @@ and open the template in the editor.
                                             <tr class="contentFormEntry"><td class="formLabel">Translator:  </td> <td>  <input class="content" type="text"  id="contentTranslator" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Title (refer to contents on leaf):  </td> <td>  <input class="content" type="text"  id="contentTitle" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Subject:  </td> <td>  <input class="content" type="text" class="content" /> </td></tr> 
-                                            <tr class="contentFormEntry"><td class="formLabel">Structure (section of text):  </td> <td>  <input class="content" type="text" id="contentSection" admin="admin" /> </td></tr> 
+                                            <tr class="contentFormEntry"><td class="formLabel">Placement (section of text):  </td> <td>  <input class="content" type="text" id="contentSection" admin="admin" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Abstract (description of text):  </td> <td>  <input class="content" type="text"  id="contentDescription" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Incipit:  </td> <td>  <input class="content" type="text"  id="incipit" /> </td></tr> 
                                             <tr class="contentFormEntry"><td class="formLabel">Explicit:  </td> <td>  <input class="content" type="text"  id="explicit" /> </td></tr> 
@@ -187,7 +187,7 @@ and open the template in the editor.
                     </div>
                     <div id="placement">
                         <p>Here you can select the section of the breviary where you think the leaf belongs.</p>
-                        <input type="button" onclick="savePlacement();" value="Save Arrangement"/>
+                        <input type="button" onclick="savePlacement();" value="Save Placement"/>
                         <input type="button" onclick="resetPlacement();" value="Reset"/>
                         <br>
                         <div class="arrangeTrail popoverTrail">
