@@ -76,11 +76,11 @@ public class GetManifestServlet extends HttpServlet {
             JSONObject metadata2 = new JSONObject();
             JSONObject metadata3 = new JSONObject();
             metadata1.element("label", "Title");
-            metadata1.element("value", "Ray's Reconstruction Project");
+            metadata1.element("value", "Ray's Recontruction Project");
             metadata2.element("label", "Created By");
             metadata2.element("value", "Ray Clemens");
-            metadata2.element("label", "Anchor Object");
-            metadata2.element("value", "http://ds.lib.berkeley.edu/BeineckeMS401_47");
+            metadata3.element("label", "Anchor Object");
+            metadata3.element("value", "http://ds.lib.berkeley.edu/BeineckeMS401_47");
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
             a_metadata.add(metadata3);
@@ -96,7 +96,8 @@ public class GetManifestServlet extends HttpServlet {
         Since this is a "grab all and store" situation, we will have to traverse the ranges and get them in order here like we do
         with the sort_order algorithm.  
         
-        We should probably do the sequence while we are at it since the leaf ranges will list the canvases, save that for round 2.
+        We should probab
+        ly do the sequence while we are at it since the leaf ranges will list the canvases, save that for round 2.
         
         */
         
@@ -119,6 +120,11 @@ public class GetManifestServlet extends HttpServlet {
             jo_sequence.element("label", "Beauvais Missal Canvases");
             rv.element("label", "Beauvais Missal");
         }
+        else if (username.equals("ray")){
+            canvases = getAnnoByProperties("{\"@type\":\"sc:Canvas\",\"forProject\":\"broken_books_ray\"}");
+            jo_sequence.element("label", "Ray's Recontruction Canvases");
+            rv.element("label", "Ray's Recontruction");
+        }
         if(null != canvases && "" != canvases){
             ja_canvases  = JSONArray.fromObject(canvases);
             jo_sequence.element("canvases", ja_canvases);
@@ -134,7 +140,6 @@ public class GetManifestServlet extends HttpServlet {
         rv.element("structures", ja_ranges);
         //the canvases need to go into the first object of this array
         rv.element("sequences", ja_sequences);
-        
         response.getWriter().print(rv.toString());
     }
 
