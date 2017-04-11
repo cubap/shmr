@@ -8,11 +8,11 @@ and open the template in the editor.
     <head>
         <title>Start</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
+        <link rel="stylesheet" href="css/brokenbooks.css">	
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
-        <script src="../brokenBooks/js/bb.js"></script>  
+        <script src="js/bb.js"></script>  
         <style>
             .popover{
                 margin: 0px auto;
@@ -58,12 +58,12 @@ and open the template in the editor.
 <script>
     function beginProjectForm(provided){
         $(".popover").remove();
-        $(".projectPopover").load("../brokenBooks/projectPopover.html");
+        $(".projectPopover").load("projectPopover.html");
         makeNewUID(provided);
     }
     
     function makeNewUID(providedInfo){
-        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var saveNewURL = "saveNewRage";
         var agent = {
             "@type" : "foaf:Agent",
             "firstName" : "Test",
@@ -110,7 +110,7 @@ and open the template in the editor.
                 }
             ]
         };
-        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var saveNewURL = "saveNewRage";
         var paramsObj = {content:JSON.stringify(manifestObj)};
         var params = JSON.stringify(paramsObj);
         $.post(saveNewURL,params,function(manifestID){
@@ -130,12 +130,12 @@ and open the template in the editor.
                 "isReferencedBy" : manifestID, //won't have this yet
                 "ranges" : []
         };
-        var saveNewURL = "http://165.134.241.141/brokenBooks/saveNewRage";
+        var saveNewURL = "saveNewRage";
         var paramsObj = {content:JSON.stringify(rootRange)};
         var params = JSON.stringify(paramsObj);
         $.post(saveNewURL,params,function(rootRangeID){
             rootRange["@id"] = rootRangeID;
-            var postURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var postURL = "updateRange";
             var paramObj1 = {"@id" : manifestID, "structures":[rootRange]};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(data){

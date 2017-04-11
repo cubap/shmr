@@ -49,7 +49,7 @@ public class GetManifestServlet extends HttpServlet {
             metadata1.element("value", "Llangattock Breviary Reconstruction");
             metadata2.element("label", "Created By");
             metadata2.element("value", "SLU Center for Digital Humanities");
-            metadata3.element("label", "Anchor Object"); //<img class='bbanchor' src='../brokenBooks/images/anchor.png'/>
+            metadata3.element("label", "Anchor Object"); //<img class='bbanchor' src='images/anchor.png'/>
             metadata3.element("value", "http://ds.lib.berkeley.edu/VFLMS002_44");
             a_metadata.add(metadata1);
             a_metadata.add(metadata2);
@@ -107,7 +107,7 @@ public class GetManifestServlet extends HttpServlet {
         JSONArray ja_canvases;
         JSONArray ja_sequences = new JSONArray();
         JSONObject jo_sequence = new JSONObject();
-        jo_sequence.element("@id", "http://165.134.241.141/brokenBooks/sequence/normal");
+        jo_sequence.element("@id", "sequence/normal");
         jo_sequence.element("@type", "sc:Sequence");
         JSONObject rv = new JSONObject();
         String canvases = "";

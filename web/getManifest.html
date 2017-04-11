@@ -11,12 +11,12 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
         <title>View in Mirador</title>
         <meta charset="UTF-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="../brokenBooks/js/bb.js"></script>  
+        <script src="js/bb.js"></script>  
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
-        <script src="../brokenBooks/js/mirador.js"></script>  
-        <link rel="stylesheet" href="../brokenBooks/css/mirador-combined.css">	
+        <link rel="stylesheet" href="css/brokenbooks.css">	
+        <script src="js/mirador.js"></script>  
+        <link rel="stylesheet" href="css/mirador-combined.css">	
         <style>
             .range{
                 border: 2px solid red;
@@ -87,7 +87,7 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
             }
             
             .star{
-                background-image: url("../brokenBooks/images/b_page.png") !important;
+                background-image: url("images/b_page.png") !important;
                 background-size: 18px 25px !important;
                 height: 25px;
                 width: 18px;
@@ -109,15 +109,15 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
 </html>
 <script>
     $(function(){
-        var manifestURI = "http://165.134.241.141/brokenBooks/getManifest.html";
+        var manifestURI = "getManifest.html";
         var miradorURI = "unknown";
         var thisURL = document.location.href;
         if (thisURL.indexOf("?LFD") > -1 ){
-            //miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=lisa";
+            //miradorURI = "getManifest?username=lisa";
             manifestURI+="?LFD";
         }
         else if(thisURL.indexOf("?RC") > -1 ){
-            //miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+            //miradorURI = "getManifest?username=debra";
             manifestURI+="?RC";
             //http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5
         }
@@ -126,7 +126,7 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
             //http://165.134.241.141/annotationstore/annotation/577d2cace4b075dfb3779f08
         }
         else{ //Some other default if I dont have a user? FIXME
-           // miradorURI = "http://165.134.241.141/brokenBooks/getManifest?username=debra";
+           // miradorURI = "getManifest?username=debra";
             manifestURI+="?DTC";
         }
         window.history.pushState("Object", "Title", manifestURI);
@@ -135,7 +135,7 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
         var forProject = detectWho();
         var properties={"@type" : "sc:Manifest", "forProject":forProject};
         //this will be superfluous when the annotation store has ranges from other projects
-        var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+        var url="getAnnotationByPropertiesServlet";
         var params = {"content" : JSON.stringify(properties)};
         //console.log("GET RANGES LIVE");
         $.post(url, params, function(data){

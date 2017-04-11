@@ -1,380 +1,99 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.s
+author: Patrick Cuba <cubap@slu.edu>
+based on Broken Books (git root) by <bhaberbe@slu.edu>
 -->
 <html>
     <head>
-        <title>Broken Books Home</title>
+        <title>Deep Codex</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
-        <script src="../brokenBooks/js/bb.js"></script>  
-        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">
-        <!-- homepage css -->
-        <style>
-            #gotoMirador{
-                display:none !important;
-            }
-            html{
-                background-color: gray;
-            }
-            body{
-                background-color: white;
-                background-image: none;
-                max-width:1120px;
-                margin: 0px auto;
-                padding: 0px 25px;
-            }
-            p{
-                color: black;
-            }
-            #homeHeader{
-                padding: 0px 0px 29px 0px;
-                overflow: hidden;
-            }
-            #hdrLogo{
-                height: 100px;
-                width: auto;
-                display: inline-block;
-                background-color: #FFF;
-                top: -13px;
-                position: relative;
-                left: 32px;
-            }
-            #BBlogo{
-                height: 100px;
-            }
-            #hdrLinks{
-                border-top: 1px solid #003961;
-                border-bottom: 1px solid #003961;
-                padding: 0px 2px;
-                color: #6D6E7B;
-                left: 27%;
-                top: 83px;
-                position: relative;
-                text-transform: uppercase;
-                font-weight: bold;
-                width: 73%;
-                text-align: right;
-                font-size: 15px;
-                white-space: nowrap;
-            }
-            .hdrLink{
-                display: inline-block;
-                margin: 4px 30px;
-            }
-            h3{
-                border-bottom: 1px solid rgb(0, 57, 97);
-                color: rgb(0, 57, 97);
-                padding-left: 5px;
-                margin-left: 17px;
-            }
-            #hdrLinks span{
-                display: inline-block;
-                margin: 0px 5px;
-            }
-            #homeInfo p{
-                /*border: 1px solid blue;*/
-                color: rgb(109, 110, 123);
-            }
-            #additionalInfo{
-                padding-bottom: 25px;
-            }
-            #additionalWrap{
-                height: auto;
-                border-bottom: 2px solid #003961;
-            }
-            .demoPopover{
-                position: fixed;
-                left: 0px;
-                right: 0px;
-                margin: 0px auto;
-                top: 5%;
-                background-color: #000;
-                padding: 37px 45px;
-                display: none;
-                width: 497px;
-                z-index: 3;
-            }
-            #additionalInfo p{
-                color: rgb(109, 110, 123);
-                /*border: 1px solid aqua;*/
-            }
-            #login{
-                text-transform: uppercase;
-                color: rgb(153, 153, 150);
-                position: relative;
-                top: 70px;
-                text-align: right;
-            }
-            td{
-                cursor: pointer;
-            }
-            #orderWrap{
-                display: none; 
-                position: absolute;
-                top: 25px;
-                left: 0;
-                right: 0;
-                margin: 0 auto;
-                max-width: 1120px;
-                box-shadow: 0px 0px 13px 3px;
-                z-index: 6;
-                background-color: black;
-                padding: 44px 20px;
-            }
-            #exploreWrap{
-                position: relative;
-                display: block;
-                top: 4px;
-            }
-            #exploreDemo{
-                font-size: 22px;
-                font-weight: bold;
-                text-transform: uppercase;
-                padding: 5px 10px;
-                background-color: #791C2D;
-                display: block;
-                position: absolute;
-                top: -14px;
-                right: 0px
-            }
-            .copyWrapper{
-                max-height: 526px;
-                overflow-y: auto;
-                padding-right: 25px;
-            }
-            .copyWrapper_2{
-                max-height: 280px;
-                max-width: 55%;
-                overflow-y: auto;
-                float: left;
-                top: -3%;
-                position: relative;
-            }
-            .copyWrapper_2 p{
-                padding-left: 15px;
-            }
-            #homeImg2{
-                max-width: 40%;
-                top: -21px;
-                position: relative;
-            }
-            .bbImageLeft{
-                float: left;
-                max-width: 45%;
-                margin-top: 21px;
-            }
-            #homeImg1{
-                max-width: 96%;
-            }
-            a{
-                text-decoration: none;
-                color: rgb(109, 110, 123);
-            }
-            a:visited {
-                text-decoration: none !important;
-                color: rgb(109, 110, 123) !important;
-            }
-            .demobtn{
-                font-size: 20px;
-                position:relative;
-                padding: 3px 8px;
-                margin: 10px 0px;
-                display: block;
-                text-align: center;
-            }
-            .demoHdrTxt{
-                border-bottom: 1px solid black;
-                border-bottom: 1px solid #000;
-                color: black;               
-                font-size: 14px;
-                color: #6D6E7B;
-                padding: 15px;
-            }
-            .demoContent{
-                background-color: white;
-                border: 2px solid #6D6E7B;
-                font-family: sans-serif;
-            }
-            .popHdr{
-                color:white;
-                position: absolute;
-                top: 10px;
-                font-weight: bold;
-                font-size: 22px;
-                font-family: sans-serif;
-                text-transform: uppercase;
-                left: 50px;
-            }
-            .demoPopover input[type="button"]{
-                padding: 2px 20px;
-                display: block;
-                background-color: #791C2D !important;
-                width: 275px;
-                font-size: 20px;
-                font-weight: bold;
-                font-family: sans-serif;
-                margin: 10px auto;
-            }
-            .demoBtnHelper{
-                position: relative;
-                top: -10px;
-                color: #6D6E7B;
-                font-family: sans-serif;
-                font-size: 14px;
-                margin: 0 auto;
-            }
-            .pageShade{
-                position: absolute;
-                top: 0;
-                left:0;
-                height: 100%;
-                width: 100%;
-                background-color: black;
-                opacity: .6;
-                display: none;
-                z-index: 1;
-            }
-            #homeInfo{
-                position: relative;
-                top: -29px;
-                font-family: sans-serif;
-            }
-            #orderMini, #createMini{
-                z-index: 5;
-                position: absolute;
-                top: 33%;
-            }
-            #mainBlockHelp{
-                display: none; 
-                z-index: 5;
-                height: 80%;
-                overflow-y: auto;
-                border-radius: 25px;
-            }
-
-            p a {
-                text-decoration: underline;
-            }
-            
-/*            .lockUp, .lockDown{
-                display: none;
-            }*/
-            
-            .demoNotice{
-                display: block;
-                right: 0px;
-                position: absolute;
-                top: 26px;
-                color: rgb(121, 28, 45);
-                font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
-                font-size: 12px;
-            }
-            
-            #gotoMirador{
-                display:none !important;
-            }
-            
-        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="js/bb.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css">
     </head>
     <body>
-        <div id="homeHeader">
-            <div id="login">login</div>
-            <div id="hdrLinks">
-                <div class="hdrLink"><a>About Us</a></div>
-                <div class="hdrLink"><a href="https://brokenbooks.omeka.net/exhibits/show/llangattock">View On Omeka</a></div>
-                <div class="hdrLink"><a href="../brokenBooks/home.html?demo=1">BB Home</a></div>
+        <header class="hero">
+            <div class="hero-body">
+                <div class="container">
+                    <a href="home.html">
+                        <img id="logo" src="images/logo.png" alt="logo"/>
+                </a>
+                </div>
             </div>
-            <div href="../brokenBooks/home.html" id="hdrLogo">
-                <img id="BBlogo" src="../brokenBooks/images/bblogo.png" />
+        </header>
+        <section class="section">
+            <h1 class="title">
+                    Welcome to Deep Codex
+                </h1>
+            <div class="columns">
+                <div class="column is-5">
+                    <img class="image" src="images/upperimage.jpg"/>
             </div>
-            <div id="exploreWrap">
-                <input type="button" id="exploreDemo" value="explore the demo" onclick="demoPopover();" /><br>
-                <span class="demoNotice">We highly suggest using the Firefox or Chrome web browser for best results.</span>
-            </div>
-        </div>
-        <div id="homeInfo">
-            <h3>
-                Welcome to Broken Books
-            </h3>
-            <div class="bbImageLeft">
-                <img id="homeImg1" src="../brokenBooks/images/upperimage.jpg"/>
-            </div>
-            <div class="copyWrapper">
+            <div class="column content">
                 <p>
-                    For many antiquarian books and manuscripts, the inevitable consequence of increased value over time results in an unfortunate fate: 
-                    they are taken apart, "broken" into pieces, sold for profit among various owners and institutional collections.  As scattered fragments, 
-                    however, detached leaves present to scholars frustrating glimpses of historically significant texts and decorative programs
-                    that cannot be fully studied without evidence of the original work and the context in which it was produced.  Our site
-                    allows for the virtual reconstruction of these broken books so that any book can be digitally recaptured, reordered, and reconstructed, 
-                    at least as much as pieces of it are found.
+                    A book, though it may feel like permanent and stable format, may be as difficult to ensnare
+                    as the ideas and art it contains. Through history, books are rebound in different orders and
+                    gatherings, destroyed in whole or in part, cut apart for sale as collectibles, or otherwise
+                    decomposed from the codex it was originally presented as. In other cases, documents existed
+                    for a long time before being gathered into a codex which comprises the canonical version. A
+                    need to reorder, assemble, and describe individual pieces of a book with precision arises.
                 </p>
                 <p>
-                    The first test case for the Broken Books project is a famously broken, pre-modern manuscript known as the Llangattock Breviary.
-                    Although originally made for Leonello d’Este (1407-1450), Marquis of Ferrara, the manuscript derives its nickname from a later owner, 
-                    John Allan Rolls (1837-1912), the 1st Baron Llangattock.  Although somewhat damaged through preceding ownership,the Llangattock Breviary 
-                    remained undisturbed in the Rolls family collection for several generations until it was sold at Christie's, London on Monday, December 8, 1958. 
-                    After the sale, this manuscript was broken apart and the separated leaves were sold on the American market by Goodspeeds, 
-                    an antiquarian book dealer from Boston. 
-                </p>  
-                <p>
-                   Working with collaborative partners, including many members of Digital Scriptorium, we have collected digital images of this book's 
-                   leaves from institutions and private collections all over the world, including Harvard, U.C. Berkeley, the American Academy in Rome, 
-                   University of South Carolina, Michigan State, Dartmouth, and the Hill Monastic Manuscript Library, Washington University in Seattle, 
-                   the Louvre Museum, and the Museo Schifanoia in Ferrara. Dr. Debra Cashion, Co-PI and lead scholar of the project, has textually 
-                   identified and cataloged all of the leaves discovered thus far, and created an online exhibit about them.
+                    This site expands the capabilities of the <a href="http://brokenbooks.org">Broken Books project</a>,
+                    which constructs the famously broken, pre-modern manuscript known as the <cite>Llangattock Breviary</cite>.
+                    The focused effort quickly hatched new projects and highlighted the need for a version of
+                    the tools used in Broken Books that risked breaking the careful schema and control needed for
+                    the seminal Llangatock project.
                 </p>
                 <p>
-                    The Broken Books OMEKA exhibit, however, does not represent the complete Broken Books project. 
-                    Developer Bryan Haberberger has built a digital resource to enable outside users to contribute leaves and metadata to help 
-                    rebuild the manuscript.  The power behind the digital reconstruction is 
-                    <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">shared canvas</a> technology 
+                    The power behind the digital reconstruction is
+                    <a target="_blank" href="http://iiif.io/model/shared-canvas/1.0/index.html">SharedCanvas</a> technology
                     and the <a target="_blank" href="http://iiif.io">International Image Interoperability Framework</a> (IIIF).
-                    Using these innovative tools we can create canvases that hold the digital images of the relevant leaves and annotations 
-                    to store metadata about them. These canvases will be grouped in pairs so that users can attach annotations, 
-                    including cataloging metadata, to individual images or to a whole leaf, with the goal of virtually reconstructing the original manuscript.
+                    Using these standards we can create surrogates that anchor the digital images and descriptive annotations
+                    of the relevant leaves. The original goal, of reconstructing a dismembered manuscript remains,
+                    but Deep Codex hopes to expand that possibilities to allow virtual manuscript creation and the
+                    generation of multiple sequences for the same manuscript. Even for intact codices, the possibility
+                    of complex structures for navigation, flexible annotation and metadata, and open community contributions
+                    represents a real advance for the IIIF standard.
                 </p>
             </div>
-        </div>
-        <div style="clear:both"></div>
-        <div id="additionalInfo">
-            <div id="additionalWrap">
-                <h3>
-                    About Broken Books
-                </h3>
-                <div class="copyWrapper_2">
+            </div>
+        </section>
+
+        <section class="section">
+            <h1 class="title">
+                About Broken Books
+            </h1>
+            <div class="columns">
+                <div class="content">
                     <p>
-                        One important component of Broken Books is the ability for anyone to contribute at any level they want. 
-                        The interface offers a multitude of fields for metadata, image upload ability and the ability to place the leaf within a structure 
-                        a scholar-administrator has prepared.  Users are required to submit at minimum ONE piece of 
-                        information about the leaf they want to add, which means they can fill out as much or as little information
+                        One important component of Deep Codex is the ability for anyone to contribute at any level they want.
+                        The interface offers infinite fields for metadata, image linking, and the ability to place the leaf
+                        within a structure for logical construction. Users can fill out as much or as little information
                         about the leaf as they wish.
                     </p>
 
                     <p>
-                        Scholars-Administrators in Broken Books are given the ability to construct and set up the organizational structure of the book or
-                        manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it.  Leaves
-                        that are contributed are reviewed by the scholar-administrator and once approved can be placed within the publicized
-                        structure, which continually redefines where leaves are still missing.  
+                        Project owners are given the ability to construct and set up the organizational structure of the book or
+                        manuscript they want to rebuild.  This structure then receives uploaded leaves that can be placed within it. Leaves
+                        that are contributed are reviewed and once approved can be placed within the publicized structure, which continually
+                        redefines where leaves are still missing.
                     </p>
 
                     <p>
                         The publicized structure with its recovered leaves can be viewed online by any user who would like to read or study it.
-                        Broken Books uses the Mirador viewer for these purposes.  You can view a leaf through the demo on this page.
+                        Deep Codex uses the <a href="https://projectmirador.org">Mirador viewer</a> for these purposes.
                     </p>
                 </div>
-                <img id="homeImg2" src="../brokenBooks/images/lowerimage.png"/>
+                <img class="image is-4" src="images/lowerimage.png"/>
             </div>
         </div>
         <div style="clear:both"></div>
-        
+
         <div id="orderWrap">
             <div class="leafPopClose" onclick="$('#orderWrap').hide();"></div>
-            <div class="popHdr"><span>Llangattock Arrangement</span> 
+            <div class="popHdr"><span>Llangattock Arrangement</span>
             </div>
             <div id="orderMini" class="demoPopover">
                 <div class="leafPopClose" onclick="$('#orderMini').hide(); $(this).parent().next().find('.mainBlockCover').hide();"></div>
@@ -386,15 +105,15 @@ and open the template in the editor.s
                     Breviary leaves.
                     <input type="button" onclick="$('#orderMini').hide(); $(this).parent().parent().next().find('.mainBlockCover').hide();" value="Arrange" />
                 </div>
-                
+
             </div>
             <div id="ordering">
-                
+
             </div>
         </div>
-        
+
         <div class="leafPopover"></div>
-        
+
         <div id="demoStarter" class="demoPopover">
             <div class="leafPopClose" onclick="demoPopoverClose();"></div>
             <div class="popHdr">Demo</div>
@@ -404,7 +123,7 @@ and open the template in the editor.s
                     and view a sample leaf in the Mirador viewer. In doing this you will act as a
                     contributor to the project. You will also be able to arrange a pre-created piece of
                     the breviary.  In doing this, you will act as a project creator and have the creator tools
-                    available to you.  
+                    available to you.
                 </div>
                 <div class="demobtn">
                     <input type="button" onclick="contribute();" value="Contribute" />
@@ -415,20 +134,20 @@ and open the template in the editor.s
                     <div class="demoBtnHelper">Create structure and arrange the leaves</div>
                 </div>
                 <div class="demobtn">
-                    <input type="button" target="_blank" value="View" onclick="window.open('http://165.134.241.141/brokenBooks/getManifest.html');" />
+                    <input type="button" target="_blank" value="View" onclick="window.open('getManifest.html');" />
                     <div class="demoBtnHelper">View the current state of the reassembled Llangattock Breviary</div>
-                </div>                
-            </div>        
-        </div>       
+                </div>
+            </div>
+        </div>
         <div class="pageShade">
-            
+
         </div>
     </body>
 </html>
 <script>
     var pageurl = document.location.href;
     if(pageurl.indexOf("demo=1") === -1){
-        document.location.href = "http://165.134.241.141/brokenBooks/home.html?demo=1";
+        document.location.href = "/home.html?demo=1";
     }
  function contribute(){
      $(".leafPopover").show();
@@ -438,10 +157,10 @@ and open the template in the editor.s
     $(".popoverTrail").find(".selectedSection:first").click();
     submitIntro();
  }
-    
+
  function demoPopover(){
 //     if(navigator.userAgent.toLowerCase().indexOf("firefox") > -1){
-//        
+//
 //    }
 //    else{
 //        alert("The demo is unavailable in your browser at this time.  Please use Mozilla Firefox.");
@@ -454,17 +173,17 @@ and open the template in the editor.s
         $("#mainBlockHelp").hide();
  }
  function demoPopoverClose(){
-     $('#demoStarter').hide(); 
+     $('#demoStarter').hide();
      $('.pageShade').hide();
  }
  $(function(){
      var windowHeight = $(window).height();
      $("body").css("min-height", windowHeight+"px");
-     $("#ordering").load("../brokenBooks/demoArrange.html", function(){
+     $("#ordering").load("demoArrange.html", function(){
 
      });
-     $(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
-                $(".leaf").load("../brokenBooks/leafInformation.html", function(){
+     $(".leafPopover").load("leafPopover.html", function(){
+                $(".leaf").load("leafInformation.html", function(){
                         console.log("SET TABS");
                         $("#formTabs").tabs({
                             activate: function(event ,ui){
@@ -481,7 +200,7 @@ and open the template in the editor.s
                         });
                         $('.canvasImageFile').on("change", function(event){
                             var target = event.target;
-                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.  
+                            var rv = $(this).attr("rv"); //This is so we know whether it was the recto or verso one.
                             var files = !!this.files ? this.files : [];
                             var canvasURI = $(this).parent().parent().attr("canvas"); //local
                             if (!files.length || !window.FileReader) return 0; // no file selected, or no FileReader support
@@ -508,7 +227,7 @@ and open the template in the editor.s
                                                 {
                                                     "@id": this.result,
                                                     "service":
-                                                        {                                       
+                                                        {
                                                             "@context": "http://iiif.io/api/image/2/context.json",
                                                             "profile":"http://iiif.io/api/image/2/profiles/level2.json",
                                                             "@id" : this.result
@@ -522,9 +241,9 @@ and open the template in the editor.s
                                             //(annotationObject, canvasURI); // local
                                             addImage(annotationObject, canvasURI); // live\
                                             target.parentNode.childNodes[1].onclick=""; //Take the onclick away that fires upload image.
-                                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image. 
+                                            target.parentNode.ondblclick=function(){ //Now it has to be double clicked to fire upload image.
                                                 target.click();
-                                            }; 
+                                            };
                                         }
                                     };
                             }
@@ -537,6 +256,6 @@ and open the template in the editor.s
 //                        $("#folioSie1").click();
                     });
             });
-     
+
  });
 </script>

@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -16,7 +16,7 @@ var bucketID = "";
 var manifest = {};
 var manifestID = "";
 if(thisURL.indexOf("demo=1") > -1 ){
-    putInBucketDemo = true; 
+    putInBucketDemo = true;
 }
 var testLists = [
     {
@@ -51,7 +51,7 @@ var testLists = [
         "forkFromID" : "",
         "@id" : "http://www.example.org/iiif/LlangBrev/annoList/2",
         "resources" : "[{\"@id\":\"http://165.134.241.141/annotationstore/annotation/554ce707e4b0f1c678d2a554\",\"@type\":\"oa:Annotation\",\"motivation\":\"oa:describing\",\"label\":\"Format (single leaf, half bifolium, fragment): \",\"resource\":{\"@type\":\"cnt:ContentAsText\",\"cnt:chars\":\"xxxxx\"},\"on\":\"http://www.example.org/iiif/LlangBrev/canvas/2\"}]"
-    }       
+    }
 ];
 annoListCollection[0] = testLists[0];
 annoListCollection[1] = testLists[1];
@@ -116,7 +116,7 @@ var testManifest = {
           }
           ],
           "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/1", "@type":"sc:AnnotationList"}]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -159,7 +159,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/3"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -181,7 +181,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/4"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -203,7 +203,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/5"
           }],
           "otherContent":[]
-         
+
    },
     {
       //This will be the anchor canvas in the anchor range
@@ -225,7 +225,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/6"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -247,7 +247,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/7"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -269,7 +269,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/8"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -291,7 +291,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/9"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -313,7 +313,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/10"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -335,7 +335,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/11"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -377,7 +377,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/13"
           }],
-          "otherContent":[]      
+          "otherContent":[]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -399,7 +399,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/14"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -420,7 +420,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/15"
           }],
-          "otherContent":[]   
+          "otherContent":[]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -442,7 +442,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/16"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -463,7 +463,7 @@ var testManifest = {
               },
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/17"
           }],
-          "otherContent":[]   
+          "otherContent":[]
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -485,7 +485,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/18"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -507,7 +507,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/19"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -529,7 +529,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/20"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -551,7 +551,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/21"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -573,7 +573,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/22"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -595,7 +595,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/23"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -617,7 +617,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/24"
           }],
           "otherContent":[]
-         
+
    },
    {
       //This will be the anchor canvas in the anchor range
@@ -628,7 +628,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -639,7 +639,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -650,7 +650,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -661,7 +661,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -672,7 +672,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -683,7 +683,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -694,7 +694,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -705,7 +705,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -716,7 +716,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -727,7 +727,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -738,7 +738,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -749,7 +749,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -760,7 +760,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -771,7 +771,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -782,7 +782,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -793,7 +793,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -804,7 +804,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -815,7 +815,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -826,7 +826,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -837,7 +837,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -848,7 +848,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -859,7 +859,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -870,7 +870,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -881,7 +881,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -892,7 +892,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -903,7 +903,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -914,7 +914,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -925,7 +925,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -936,7 +936,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -947,7 +947,7 @@ var testManifest = {
           "width" : 200,
           "images" : [],
           "otherContent":[]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -960,7 +960,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_r.jpg",
+                "@id" : "images/SLU_VFL_MS_002_fol_b_r.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -969,7 +969,7 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
           }],
           "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/4", "@type":"sc:AnnotationList"}]
-         
+
     },
     {
       //This will be the anchor canvas in the anchor range
@@ -982,7 +982,7 @@ var testManifest = {
               "@type" : "oa:Annotation",
               "motivation" : "sc:painting",
               "resource" : {
-                "@id" : "http://165.134.241.141/brokenBooks/images/SLU_VFL_MS_002_fol_b_v.jpg",
+                "@id" : "images/SLU_VFL_MS_002_fol_b_v.jpg",
                 "@type" : "dctypes:Image",
                 "format" : "image/jpeg",
                 "height" : 2365,
@@ -991,10 +991,10 @@ var testManifest = {
               "on" : "http://www.example.org/iiif/LlangBrev/canvas/1_anchor"
           }],
           "otherContent":[{"@id":"http://www.example.org/iiif/LlangBrev/annoList/5", "@type":"sc:AnnotationList"}]
-         
+
     },
     ]
-}], 
+}],
 "structures" : [
 
 {
@@ -1012,7 +1012,7 @@ var testManifest = {
   "canvases" :[],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
   "otherContent" : []
-},    
+},
 {
   "@id":"http://www.example.org/iiif/LlangBrev/range/1",
   "@type":"sc:Range",
@@ -1166,7 +1166,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Advent - Epiphany",
   "ranges" : [
-    "http://www.example.org/iiif/LlangBrev/range/31", 
+    "http://www.example.org/iiif/LlangBrev/range/31",
     "http://www.example.org/iiif/LlangBrev/range/32"
   ],
   "canvases" :[],
@@ -1179,7 +1179,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Pre-Lent through Ascension",
   "ranges" : [
-    "http://www.example.org/iiif/LlangBrev/range/33", 
+    "http://www.example.org/iiif/LlangBrev/range/33",
     "http://www.example.org/iiif/LlangBrev/range/34"
   ],
   "canvases" :[],
@@ -1192,7 +1192,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Pentecost to Advent",
   "ranges" : [
-    "http://www.example.org/iiif/LlangBrev/range/35", 
+    "http://www.example.org/iiif/LlangBrev/range/35",
     "http://www.example.org/iiif/LlangBrev/range/36"
   ],
   "canvases" :[],
@@ -1205,7 +1205,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 1-50",
   "ranges" : [
-    "http://www.example.org/iiif/LlangBrev/range/37", 
+    "http://www.example.org/iiif/LlangBrev/range/37",
     "http://www.example.org/iiif/LlangBrev/range/38"
   ],
   "canvases" :[],
@@ -1218,7 +1218,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 51-100",
   "ranges" : [
-      "http://www.example.org/iiif/LlangBrev/range/39", 
+      "http://www.example.org/iiif/LlangBrev/range/39",
       "http://www.example.org/iiif/LlangBrev/range/40"
   ],
   "canvases" :[],
@@ -1231,7 +1231,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 101-150",
   "ranges" : [
-      "http://www.example.org/iiif/LlangBrev/range/41", 
+      "http://www.example.org/iiif/LlangBrev/range/41",
       "http://www.example.org/iiif/LlangBrev/range/42"
   ],
   "canvases" :[],
@@ -1311,7 +1311,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"January Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/1","http://www.example.org/iiif/LlangBrev/canvas/2"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1322,7 +1322,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"February Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/3","http://www.example.org/iiif/LlangBrev/canvas/4"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1333,7 +1333,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"March Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/5","http://www.example.org/iiif/LlangBrev/canvas/6"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1344,7 +1344,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"April Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/7","http://www.example.org/iiif/LlangBrev/canvas/8"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1355,7 +1355,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"May Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/9","http://www.example.org/iiif/LlangBrev/canvas/10"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1366,7 +1366,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"June Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/11","http://www.example.org/iiif/LlangBrev/canvas/12"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1377,7 +1377,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Advent Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/13","http://www.example.org/iiif/LlangBrev/canvas/14"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1388,7 +1388,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Epiphany Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/15","http://www.example.org/iiif/LlangBrev/canvas/16"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1399,7 +1399,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Pre-Lent Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/17","http://www.example.org/iiif/LlangBrev/canvas/18"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1410,7 +1410,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Ascension Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/19","http://www.example.org/iiif/LlangBrev/canvas/20"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1421,7 +1421,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Pentecost Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/21","http://www.example.org/iiif/LlangBrev/canvas/22"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1432,7 +1432,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Advent After Pentecost Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/23","http://www.example.org/iiif/LlangBrev/canvas/24"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1443,7 +1443,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 1-11 Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/25","http://www.example.org/iiif/LlangBrev/canvas/26"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1454,7 +1454,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 41-50 Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/27","http://www.example.org/iiif/LlangBrev/canvas/28"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1465,7 +1465,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 51-61 Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/29","http://www.example.org/iiif/LlangBrev/canvas/30"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1476,7 +1476,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 91-100 Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/31","http://www.example.org/iiif/LlangBrev/canvas/32"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1487,7 +1487,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 101-111 Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/33","http://www.example.org/iiif/LlangBrev/canvas/34"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1498,7 +1498,7 @@ var testManifest = {
   "@type":"sc:Range",
   "label":"Psalms 141-150 Text",
   "ranges" : [
-      
+
   ],
   "canvases" :["http://www.example.org/iiif/LlangBrev/canvas/35","http://www.example.org/iiif/LlangBrev/canvas/36"],
   "isPartOf": "http://www.example.org/iiif/LlangBrev/sequence/normal",
@@ -1644,7 +1644,7 @@ var annotationLists = [
       "@type" : "sc:AnnotationList",
       "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
-      "resources" : [ 
+      "resources" : [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/1",
           "@type" : "oa:Annotation",
@@ -1687,7 +1687,7 @@ var annotationLists = [
       "@type" : "sc:AnnotationList",
       "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
-      "resources" : [ 
+      "resources" : [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/4",
           "@type" : "oa:Annotation",
@@ -1729,7 +1729,7 @@ var annotationLists = [
       "@type" : "sc:AnnotationList",
       "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
-      "resources" : [ 
+      "resources" : [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/7",
           "@type" : "oa:Annotation",
@@ -1771,7 +1771,7 @@ var annotationLists = [
       "@type" : "sc:AnnotationList",
       "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
-      "resources" : [ 
+      "resources" : [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/10",
           "@type" : "oa:Annotation",
@@ -1989,7 +1989,7 @@ var annotationLists = [
       "@type" : "sc:AnnotationList",
       "context" : "http://www.shared-canvas.org/ns/context.json",
       "label" : "Fragments",
-      "resources" : [ 
+      "resources" : [
         {
           "@id" : "http://www.example.org/iiif/LlangBrev/anno/29",
           "@type" : "oa:Annotation",
@@ -2204,7 +2204,7 @@ var annotationLists = [
         }]; // end lists;
 
 //    function getManifest(){
-//        var url="http://165.134.241.141/brokenBooks/getManifest";
+//        var url="getManifest";
 //        $.post(url, function(data){
 //            //console.log(data);
 //            data=JSON.parse(data);
@@ -2213,16 +2213,16 @@ var annotationLists = [
 //            getAllAnnotations();
 //        });
 //    }
-    
-/* 
+
+/*
  * For now, any of the BB pages should tell you what user you are.  This is a helper function to get the manifest ID for what user you are to use in the update functions
- * for the structure and sequence arrays.  It also sets the global manifest and manifestID variables.  
+ * for the structure and sequence arrays.  It also sets the global manifest and manifestID variables.
  */
 function getManifestID(){
     var forProject = detectWho();
     var properties={"@type" : "sc:Manifest", "forProject":forProject};
     var localID = "unknown";
-    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var url="getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
     var windowurl = document.location.href;
     if(windowurl.indexOf("demo=1") > -1){
@@ -2243,7 +2243,7 @@ function getManifestID(){
            return localID;
         });
     }
-    
+
 }
 
 /* This function can be used to circumvent the canvas and ask the server for all the canvases for a users manifest.  Right now, 1 user has 1 manifest, 1 set of ranges. */
@@ -2252,7 +2252,7 @@ function getAllRanges(){
   var forProject = detectWho();
   var properties={"@type" : "sc:Range", "forProject":forProject};
   //this will be superfluous when the annotation store has ranges from other projects
-  var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+  var url="getAnnotationByPropertiesServlet";
   var params = {"content" : JSON.stringify(properties)};
   //console.log("GET RANGES LIVE");
   $.post(url, params, function(data){
@@ -2268,7 +2268,7 @@ function getAllAnnotations(){
   var forProject = detectWho();
   var properties={"@type" : "sc:AnnotationList", "forProject" : forProject};
   //this will be superfluous when the annotation store has lists from other projects
-  var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+  var url="getAnnotationByPropertiesServlet";
   var properties={"@type" : "sc:AnnotationList"};
   var params = {"content" : JSON.stringify(properties)};
   $.post(url, params, function(data){
@@ -2284,7 +2284,7 @@ function getAllCanvases(){
     manifestCanvases = manifest.sequences[0].canvases;
     var forProject = detectWho();
     var properties={"@type" : "sc:Canvas", "forProject":forProject};
-    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet"
+    var url="getAnnotationByPropertiesServlet"
     var params = {"content" : JSON.stringify(properties)};
     $.post(url, params, function(data){
        manifestCanvases = JSON.parse(data);
@@ -2320,7 +2320,7 @@ function updateLabel(range, currentLabel){
         if(newLabel === ""){
             newLabel = "unlabeled";
         }
-        var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
+        var updateURL ="updateRange"; //update list with the range removed
         var paramObj1 = {"@id" : range, "label" : newLabel};
         var params1 = {"content" : JSON.stringify(paramObj1)};
         if(windowurl.indexOf("demo=1") > -1){
@@ -2342,9 +2342,9 @@ function updateLabel(range, currentLabel){
                $("div[lblrange='"+range+"']").remove();
            });
         }
-        
+
     }
-    
+
 }
 
 function toggleChildren(parentRange, admin, event){
@@ -2365,7 +2365,7 @@ function toggleChildren(parentRange, admin, event){
   if(event !== undefined && event.target.className.indexOf("putInGroup") > -1 || event.target.className.indexOf("leafIcon") > -1){ //detect if they clicked the checkbox or leaf icon.
     return false;
   }
-  
+
   if(event.target.className.indexOf("lockUp") > -1 || event.target.className.indexOf("lockDown") > -1
     || event.target.className.indexOf("lockedUp") > -1||event.target.className.indexOf("lockedDown") > -1){
       return false;
@@ -2377,7 +2377,7 @@ function toggleChildren(parentRange, admin, event){
   else{
       children = parentRange.children(".child");
   }
-  
+
   var dropAttribute = "";
   var relation = parentRange.attr("rangeID");
   var unassigned = parentRange.hasClass('unassigned');
@@ -2415,7 +2415,7 @@ function toggleChildren(parentRange, admin, event){
   var existingInCopy = [];
   var leafCount = 0;
   $.each(children, function(){
-    var rangeID2 = $(this).attr("rangeID");    
+    var rangeID2 = $(this).attr("rangeID");
     if($.inArray(rangeID2, existingInCopy) == -1){
         existingInCopy.push(rangeID2);
         var child = $(this).clone();
@@ -2424,25 +2424,25 @@ function toggleChildren(parentRange, admin, event){
             childID = childID.replace("_tmp", "");
             child.attr('id', childID);
         }
-      
-      
-       
-//       if(leaf == "true"){ //put leaves into the bucket.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered. 
+
+
+
+//       if(leaf == "true"){ //put leaves into the bucket.  We need to design a 'ordered' vs 'unordered' tag to check for here since I cannot tell just from the range array whether or not it is ordered.
 //            leafCount += 1;
 //            newArea.find('.unassigned').append(child);
 //       }
 //       else{
-//         
+//
 //       }
        newArea.find('.notBucket').append(child);
 //$('.rangeArrangementArea:first').find('.unassigned').removeClass("selectedSection");
     }
   });
-//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
+//  var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='images/b_page.png'/></span>");
 //  if(admin == "admin"){
 //     newArea.children(".unassigned").append(leafCountHTML);
 //  }
-  if(outer.find("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab. 
+  if(outer.find("div[depth='"+intendedDepth+"']").length == 0){ //If the area does not exist, then add it to the arrange tab.
     outer.append(newArea);
     if(unassigned){
         parentRange.parent().find(".selectedSection").removeClass("selectedSection");
@@ -2451,7 +2451,7 @@ function toggleChildren(parentRange, admin, event){
        parentRange.parent().parent().find(".selectedSection").removeClass("selectedSection");
     }
     parentRange.addClass("selectedSection");
-   
+
   }
   else{ //if the are already exists
     if(intendedDepth == actualDepth && outer.find("div[depth='"+intendedDepth+"']").attr("relation") !== relation){ //if the area is a child from the same depth...
@@ -2461,11 +2461,11 @@ function toggleChildren(parentRange, admin, event){
       });
       $.each(outer.find("div[depth='"+intendedDepth+"']").children('.unassigned').children('.child'),function(){
         objectArray1.push($(this));
-      });     
+      });
       var thisDepth = parseInt(intendedDepth) - 1;
-      
+
       var sectionToMoveTo = outer.find("div[depth='"+ thisDepth +"']").find('.selectedSection');
-      
+
       sectionToMoveTo.children('.child').remove();
       for(var y=0; y<objectArray1.length; y++){
         var thisChild1 = objectArray1[y];
@@ -2495,7 +2495,7 @@ function toggleChildren(parentRange, admin, event){
           if(deepest.find(".arrangeSection").length == 0){ //a leaf is highlighted in the previous section
             // do nothing
           }
-          else if (deepest.children(".notBucket").children(".arrangeSection").length ==0 && deepest.children(".unassigned").length == 1){ //The only thing here is unassigned. 
+          else if (deepest.children(".notBucket").children(".arrangeSection").length ==0 && deepest.children(".unassigned").length == 1){ //The only thing here is unassigned.
             if(deepest.children(".selectedSection").length > 0){//unassigned is highlighted.  Click it.
               deepest.find(".selectedSection").click();
             }
@@ -2509,7 +2509,7 @@ function toggleChildren(parentRange, admin, event){
               deepest.find(".selectedSection").click();
             }
           }
-          else{ //a normal open section.  
+          else{ //a normal open section.
             if(deepest.find(".selectedSection").length == 0){
               //do nothing
             }
@@ -2556,7 +2556,7 @@ function toggleChildren(parentRange, admin, event){
             }
             parentRange.addClass("selectedSection");
         }
-     
+
         $.each(outer.find("div[depth]"),function(){
           if(parseInt($(this).attr("depth")) >= intendedDepth){//remove the depth and the greater ones open.
               $(this).remove();
@@ -2620,8 +2620,8 @@ function toggleChildren(parentRange, admin, event){
           //makes the bucket the selected section.  we will want this back, for now we are hiding the unassigned areas.
         //newArea.children('.unassigned').addClass("selectedSection");
       }
-    }    
-  } 
+    }
+  }
 }
 
 function dragEnd(event){
@@ -2633,14 +2633,14 @@ function dragEnd(event){
 //    })
     $(".dragCover").remove();
     $(".dragHelper").remove();
-    
+
 }
 
 function dragHelp(event){
     //http://www.kryogenix.org/code/browser/custom-drag-image.html
     event.dataTransfer.setData("text", event.target.id);
     //console.log("drag help, here is the id: "+event.target.id);
-   
+
 }
 
 function dropHelp(event){
@@ -2663,7 +2663,7 @@ function dropHelp(event){
     else{
         target = event.target;
     }
-  
+
     var outer = $(target).closest(".arrangeTrail");
     //console.log("Drop target");
     //console.log(target);
@@ -2693,7 +2693,7 @@ function dropHelp(event){
         //cannot drop into a selected section, cannot drop a selected section
         alert("You cannot drag and drop or drop into opened sections.");
         return false;
-    } 
+    }
     if(targetClass.indexOf("ordered")>-1){
         //cannot drop into locked leaves parent range
         alert("You cannot drop into a set of locked leaves");
@@ -2701,14 +2701,14 @@ function dropHelp(event){
     }
     if(targetClass.indexOf('notBucket') > -1){
       if($(target).closest(".rangeArrangementArea").attr("depth") === "1" && $("#"+data).attr("leaf") === "true"){
-          //cannot drop leaves into the top level structure. 
+          //cannot drop leaves into the top level structure.
           alert("You cannot drop leaves into the top level");
           return false;
       }
-      child.style.display = "block";  
+      child.style.display = "block";
     }
     else{
-      child.id = child.id+"_tmp"; 
+      child.id = child.id+"_tmp";
       child.style.display = "none";
       if(targetClass.indexOf('unassigned') > -1){
           areaDroppedTo = "unassigned";
@@ -2719,7 +2719,7 @@ function dropHelp(event){
         child.id = child.id.replace("_tmp", "");
         child.style.display = "block";
         append = false;
-    }   
+    }
     else if(areaDroppedTo == areaTakenFrom){//dont append to self or same section
       if(target.className.indexOf("notBucket") > -1){
         append = false;
@@ -2731,8 +2731,8 @@ function dropHelp(event){
           append = false;
           child.id = child.id.replace("_tmp", "");
           child.style.display = "block";
-        }    
-      } 
+        }
+      }
     }
 //    console.log("Append?");
 //    console.log(append);
@@ -2749,7 +2749,7 @@ function dropHelp(event){
               targetID = target.getAttribute("rangeid");
           }
         updateRange(targetID, child.getAttribute("rangeid"), ""); //do not put the append flag, the following code handles that.
-      
+
       if(windowURL.indexOf("demo=1") === -1){
 //          console.log("move "+child.getAttribute("rangeid"));
 //          console.log("from "+areaTakenFrom);
@@ -2774,10 +2774,10 @@ function dropHelp(event){
       else{
           //$("#"+data).remove();
       }
-      
+
       child.className = child.className.replace(/\bparent\b/,'');
       if(child.className.indexOf("child")==-1)child.className = child.className+" child";
-      
+
     //There has been a change, reset the folio counts.  FIXME: Does not decrement with the area where the leaf was taken from, need to make this smarter.
      //There has been a change, reset the folio counts.  FIXME: Does not decrement with the area where the leaf was taken from, need to make this smarter.
          $.each($(".arrangeSection").not(".selectedSection"), function(){
@@ -2789,19 +2789,19 @@ function dropHelp(event){
             }
             else if($(this).attr("leaf") === "true"){
                 var leafIsInURL = $(this).parents(".rangeArrangementArea").attr("rangeID");
-                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                var new_folioCountHtml = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='images/leaf.png'/></span>");
                 folioCountHtml.replaceWith(new_folioCountHtml);
             }
 
        });
-       
+
         if(areaDroppedToDepth < areaTakenFromDepth){
             var targetCount = 1;
             if($(child).attr("leaf")!=="true"){
                 targetCount = parseInt($(child).find(".folioCount").children(".countInt").html());
             }
             $.each($(".selectedSection"), function(){
-                if(parseInt($(this).parents("div[depth]").attr("depth")) >= areaDroppedToDepth 
+                if(parseInt($(this).parents("div[depth]").attr("depth")) >= areaDroppedToDepth
                 && parseInt($(this).parents("div[depth]").attr("depth")) < areaTakenFromDepth
                 && $(this).attr("leaf")!=="true" && $(this).attr("isOrdered") !== "true"){
                     var folioCount = $(this).children(".folioCount").children(".countInt").html();
@@ -2826,7 +2826,7 @@ function dropHelp(event){
     else{
       event.preventDefault();
       return false;
-    }    
+    }
 }
 
 function dropFlash($elem){
@@ -2842,7 +2842,7 @@ function dropFlash($elem){
 function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
     //Remove rangeMoved from rangeMovedFrom's range list
     //console.log("move and update with "+rangeMoved, rangeMovedFrom, rangeMovedTo)
-    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var getURL = "getAnnotationByPropertiesServlet";
     var paramObj = {"@id" : rangeMovedFrom};
     var params = {"content" : JSON.stringify(paramObj)};
     //console.log("First get range moved from data to remove range being moved from its ranges list.");
@@ -2857,7 +2857,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
             //console.log("range in range list, splicing out.");
             rangeList.splice( index, 1 );
         }
-         var updateURL ="http://165.134.241.141/brokenBooks/updateRange"; //update list with the range removed
+         var updateURL ="updateRange"; //update list with the range removed
          var paramObj1 = {"@id" : rangeMovedFrom, "ranges" : rangeList};
          var params1 = {"content" : JSON.stringify(paramObj1)};
          //console.log("you have spliced the range out, now update with list");
@@ -2878,7 +2878,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
                     //console.log("Push to it");
                     rangeList2.push(rangeMoved);
                    // console.log(rangeList2);
-                }                               
+                }
                 //console.log("Update the range moved to ranges with the new list");
                 var paramObj3 = {"@id" : rangeMovedTo, "ranges" : rangeList2};
                 var params3 = {"content" : JSON.stringify(paramObj3)};
@@ -2895,7 +2895,7 @@ function moveAndUpdate(rangeMoved, rangeMovedFrom, rangeMovedTo, bucketBoolean){
                     $.post(updateURL, params4, function(){
 
                     });
-                    
+
                 });
             });
          });
@@ -2912,7 +2912,7 @@ function gatherRangesForArrange(which, username){
     var forProject = detectWho();
     var properties={"@type" : "sc:Manifest", "forProject":forProject};
     //this will be superfluous when the annotation store has ranges from other projects
-    var url="http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var url="getAnnotationByPropertiesServlet";
     var params = {"content" : JSON.stringify(properties)};
     if(windowurl.indexOf("demo=1") > -1){
         rangeCollection = testManifest.structures;
@@ -2930,7 +2930,7 @@ function gatherRangesForArrange(which, username){
 }
 
 function syncData(username, url ,params, which){
-    var url2 = "http://165.134.241.141/brokenBooks/getManifest";
+    var url2 = "getManifest";
     var params2 = {"username":username};
     $.post(url2, params2)
     .done(function(data){
@@ -2949,16 +2949,16 @@ function syncData(username, url ,params, which){
             publish(); //sync everything at the beginning
         });
     });
-    
+
 }
 
-/* 
+/*
  * The goal here is to have a 'Publish' function, from which the sequence of the structure will produce
- * a hard-ordered sequence of the manifest.sequence[0].  
+ * a hard-ordered sequence of the manifest.sequence[0].
 
- * manifestCanvases: This is the global variable holding manifest.structures[0].  It should be unaltered based 
+ * manifestCanvases: This is the global variable holding manifest.structures[0].  It should be unaltered based
  * on actions of this page.
- * 
+ *
  * rangeCollection: This is the global variable holding manifest.structures.  It has been altered based on
  * actions of this page, but has been kept up to date so updating off of it should be safe.
  */
@@ -2978,7 +2978,7 @@ function orderSeqFromStruct(){
     function getParentest(rangeList){
         var parentest = {'@id': "root", label: "Table of Contents", within:"root" };
         for(var i=0; i<rangeList.length; i++){
-            if(rangeList[i].within && rangeList[i].within === "root"){ 
+            if(rangeList[i].within && rangeList[i].within === "root"){
                 parentest = rangeList[i];
                 break; //There can only be one range considered the ultimate aggregator.
             }
@@ -3002,7 +3002,7 @@ function orderSeqFromStruct(){
       var children = [];
       var canvas_uris = [];
       parent = typeof parent !== 'undefined' ? parent : getParentest(flatRanges);
-      if(typeof parent.ranges !== 'undefined'){ 
+      if(typeof parent.ranges !== 'undefined'){
         children_uris = parent.ranges;
       }
       if(typeof parent.canvases !== 'undefined' && parent.canvases.length!==0){
@@ -3012,7 +3012,7 @@ function orderSeqFromStruct(){
           pushToOrderedSequence(canvas_uris[1]);
       }
       for(var i=0; i<children_uris.length; i++){ //get the children in order by their @id property from the structures array
-        var new_child = pullFromStructures(children_uris[i], flatRanges);//Remember from earlier, if this was an empty child, we wanted to skip it.  
+        var new_child = pullFromStructures(children_uris[i], flatRanges);//Remember from earlier, if this was an empty child, we wanted to skip it.
         if(!jQuery.isEmptyObject(new_child)){ //check if empty
           children.push(new_child); //push to our array if not empty
         }
@@ -3026,7 +3026,7 @@ function orderSeqFromStruct(){
     return canvases;
 }
 
-/* 
+/*
  * Set all the manifest level information to the manifest level object for the user
  */
 function publish(){
@@ -3035,14 +3035,14 @@ function publish(){
     $("#syncNotice").show();
     var orderedCanvases = orderSeqFromStruct();
     var sequenceObj = {
-        "@id" : "http://165.134.241.141/brokenBooks/sequence/normal",
+        "@id" : "sequence/normal",
         "@type": "sc:Sequence",
         "label" : "Manifest Sequence",
         "canvases" : orderedCanvases
     };
     //var label = manifest.label;
     var properties = {"@id":manifestID, "structures":rangeCollection, "sequences":[sequenceObj]}; //, "label":label
-    var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+    var updateURL = "updateRange";
     var params = {"content" : JSON.stringify(properties)};
     $.post(updateURL, params)
     .done(function(){
@@ -3072,7 +3072,7 @@ function populateRangesToDOM(which){
         uniqueID += 1;
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label+" <br>";
-        var existingRangeToUpdate = ""; 
+        var existingRangeToUpdate = "";
         var tag = "parent";
         var relation = "";
         var isLeaf = false;
@@ -3090,7 +3090,7 @@ function populateRangesToDOM(which){
         var lockitdown = "";
         var lockit = "";
 
-        if(rangeCollection[i].parent && rangeCollection[i].parent.indexOf("paggr")>-1 || rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){ 
+        if(rangeCollection[i].parent && rangeCollection[i].parent.indexOf("paggr")>-1 || rangeCollection[i]["@id"].indexOf("parent_aggr") > -1){
           tag = "parent pAggr";
           outerRangeLabel = "";
           bucketID = rangeCollection[i]["@id"];
@@ -3150,7 +3150,7 @@ function populateRangesToDOM(which){
           if(isLeaf){
             allLeaves.push(rangeCollection[i]);
             //if(rangeCollection[i].parent !== undefined){
-                //console.log("Put in unassigned."); 
+                //console.log("Put in unassigned.");
                 outer.find(".rangeArrangementArea").find('.unassigned').append(currentRange);
                 var oldFolioCount = parseInt(outer.find(".rangeArrangementArea").find('.unassigned').find(".folioCount").find(".countInt").html());
                 oldFolioCount = oldFolioCount+1;
@@ -3166,7 +3166,7 @@ function populateRangesToDOM(which){
           currentRange = outer.find(".arrangeSection[rangeID='"+rangeCollection[i]["@id"]+"']");
         }
         //Create an html range object that can be added
-        var innerRanges = rangeCollection[i].ranges;       
+        var innerRanges = rangeCollection[i].ranges;
         if(innerRanges.length > 0){ //If there are inner ranges
             var tag2 = "child";
             if(which === 2){
@@ -3223,7 +3223,7 @@ function populateRangesToDOM(which){
                           checkbox2 = "";
                         }
                         var embedRange = "";
-                        if(thisIsOrdered === "true"){                          
+                        if(thisIsOrdered === "true"){
                             embedRange = $("<div class='arrangeSection ordered child' isOrdered='"+thisIsOrdered+"' "+dragAttribute+" rangeID='"+this['@id']+"'></div>");
                         }
                         else{
@@ -3253,15 +3253,15 @@ function populateRangesToDOM(which){
                             else{
                                 currentRange.append(rangeToMove);
                             /* In case of the ranges being wildly out of order, we have to make this check to assure that these children are in fact classed as a child. */
-                                rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.  
+                                rangeToMove.removeClass("parent").addClass("child"); //If we have to embed it, then it is a child.
                             }
 
                         }
-                    } 
+                    }
                 });
             }
         }
-        else{ //There are no inner ranges. It could be a section with no children or a leaf.  
+        else{ //There are no inner ranges. It could be a section with no children or a leaf.
 
         }
     }
@@ -3271,24 +3271,24 @@ function populateRangesToDOM(which){
         /* In case of the ranges being wildly out of order, we have to make this check to assure the top level nodes are considered parents. */
         //console.log("make paggr children parents");
         //console.log(pAggrChildren);
-        //wont work for putInBucket.html?demo=1         
+        //wont work for putInBucket.html?demo=1
         $.each(pAggrChildren,function(){
             if($(this).attr("id") !== undefined){
                 var newID = $(this).attr("id").replace("_tmp", "");
                 $(this).attr("id", newID);
             }
         });
-        $('.pAggr').remove();    
+        $('.pAggr').remove();
         //set folio counts for all sections in the admin interface, ignore leaves.
         if(which == 2){
           $.each(outer.find(".arrangeSection"), function(){
              $(this).children(".folioCount").remove();
                 var folioCount = $(this).find("div[leaf='true']").length;
-                var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
+                var folioCountHTML = $("<span class='folioCount'><span class='countInt'>"+folioCount+"</span><img class='pageIcon' src='images/b_page.png'/></span>");
                 var leafURL = $(this).attr("rangeID");
                 if($(this).attr("leaf") === "true"){
                     var leafIsInURL = $(this).parent().attr("rangeID");
-                    folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>");
+                    folioCountHTML = $("<span onclick=\"existing('"+leafURL+"','"+leafIsInURL+"')\" class='folioCount'><img class='leafIcon' src='images/leaf.png'/></span>");
                 }
                 else if($(this).attr("isOrdered") === "true"){
                     folioCountHTML="";
@@ -3301,18 +3301,18 @@ function populateRangesToDOM(which){
 }
 
 /*
-* @params: rangeCollection: an array containing all the ranges of a project.  It is sorted so the array contains ranges from smallest to largest. 
-*For now, it is a global array.  It will most likely be handed in as a parameter to the function in the future. 
+* @params: rangeCollection: an array containing all the ranges of a project.  It is sorted so the array contains ranges from smallest to largest.
+*For now, it is a global array.  It will most likely be handed in as a parameter to the function in the future.
 *Builds the tree structure of ranges from an ordered list of ranges (by size of their ranges[] field).
 */
 
-//Think about sorted vs. unsorted ranges. 
+//Think about sorted vs. unsorted ranges.
 function organizeRanges(){
     var existingRanges = [];
     for(var i = rangeCollection.length - 1; i>=0; i--){
         var outerRange = rangeCollection[i]; //We have to look at each range, so at some point each range is the outer range...
         var outerRangeLabel = rangeCollection[i].label;
-        var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");        
+        var currentRange = $("<div class='range' rangeID='"+rangeCollection[i]["@id"]+"'><div>"+outerRangeLabel+"</div></div>");
         if($.inArray(rangeCollection[i]["@id"], existingRanges) == -1){
           existingRanges.push(rangeCollection[i]["@id"]);
           $("#focusedRange").append(currentRange);
@@ -3320,7 +3320,7 @@ function organizeRanges(){
         else{
           currentRange = $('div[rangeID="'+rangeCollection[i]["@id"]+'"]'); // get it.
         }
-        //Collect the inner ranges for this range.  It will be an array(0) if there are none. 
+        //Collect the inner ranges for this range.  It will be an array(0) if there are none.
         var innerRanges = rangeCollection[i].ranges;
         if(innerRanges.length > 0 &&  rangeCollection[i].canvases.length === 0){ //If there are inner ranges
          //console.log("Working inner ranges.")
@@ -3338,18 +3338,18 @@ function organizeRanges(){
                           var rangeToMove = $(".range[rangeID='"+this["@id"]+"']");
                           currentRange.append(rangeToMove);
                         }
-                    } //If you didn't find it among the collection, we can't do anything with it.  
+                    } //If you didn't find it among the collection, we can't do anything with it.
                 });
             }
         }
         /* This has becoming depricated for BB because we will not be connecting data like this.   */
         // else if(innerRanges.length ===1 &&  rangeCollection[i].canvases.length === 1){
-        // //special case.  These ranges are meant to replace canvases of this leaf with fragments of this canvas.  
-        // //We have made fragments atomic ranges so that pieces of the same canvas that exist in different ranges can be connected.  
-        // //They will exist as their own entity on each individual leaf so that they can have their own annotation, 
-        // //but they will be connected by location with the canvas no matter where it exists.  
-        // //This code will be reached before the code in the else every time because of the ordered array by range field size.  
-        // //Fortunately, there will only be up to two ranges in here.  Those ranges will be URI's of leaves. Therefore, we can directly grab that leaf from the array.  
+        // //special case.  These ranges are meant to replace canvases of this leaf with fragments of this canvas.
+        // //We have made fragments atomic ranges so that pieces of the same canvas that exist in different ranges can be connected.
+        // //They will exist as their own entity on each individual leaf so that they can have their own annotation,
+        // //but they will be connected by location with the canvas no matter where it exists.
+        // //This code will be reached before the code in the else every time because of the ordered array by range field size.
+        // //Fortunately, there will only be up to two ranges in here.  Those ranges will be URI's of leaves. Therefore, we can directly grab that leaf from the array.
         // //We can cheat a bit and start from the i we are at since we know it does not come before this one.
         //   var canvasToReplace = rangeCollection[i].canvases[0];
         //   var subStr = canvasToReplace.substring(0,canvasToReplace.indexOf("#xywh"));
@@ -3366,7 +3366,7 @@ function organizeRanges(){
         //           if(this == subStr){
         //             rangeCollection[x].canvases[l] = canvasToReplace;
         //           }
-        //           else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.  
+        //           else{ //this could be the wrong canvases OR this could be the right canvas as a fragment.  If it is the right canvas as a fragment, there can be multiple fragments of that canvas, so add it in.  Otherwise, we should do nothing.
         //             if(this.indexOf("#xywh") > -1){
         //               //it could be a fragment
         //               var tmp = this;
@@ -3375,23 +3375,23 @@ function organizeRanges(){
         //                 tmp += ""; //cast it to a string.
         //                 var tmpCompare = leafRangeCanvases[l].substring(0,leafRangeCanvases[l].indexOf("#xywh")); //Strip #xywh off the canvas we are checking equivalency to
         //                 tmpCompare += ""; // cast to a string
-        //                 if(tmpCompare == tmp && $.inArray(canvasToReplace, leafRangeCanvases) < 0){ //Then it was a new fragment for this canvas, so we can push the fragment to this leaf. 
+        //                 if(tmpCompare == tmp && $.inArray(canvasToReplace, leafRangeCanvases) < 0){ //Then it was a new fragment for this canvas, so we can push the fragment to this leaf.
         //                    rangeCollection[x].canvases.splice(l+1, 0, canvasToReplace);
-        //                    //place canavs in at appropriate location among canvases in case there are multiple fragments.  This will build them out in the order users think they go.  
+        //                    //place canavs in at appropriate location among canvases in case there are multiple fragments.  This will build them out in the order users think they go.
         //                 }
         //                 else{
         //                   //it was the wrong canvas.  Leave it alone.
-        //                 }  
+        //                 }
         //               }
         //             }
         //           }
         //         });
         //     }
-        //     //What we have done is skipped further down into the array and altered a single canvas in a leaf. 
+        //     //What we have done is skipped further down into the array and altered a single canvas in a leaf.
         // When we get to that canvas in this function, it will not have any ranges so it will skip to the code below and build out the leaf.
         //   }
         // }
-        else{ //There are no inner ranges, so we must be on a leaf or a empty sections. 
+        else{ //There are no inner ranges, so we must be on a leaf or a empty sections.
             var currentCanvases = outerRange.canvases;
             var firstCanvas = currentCanvases[0];
             if(firstCanvas.indexOf("#xywh") >=0){
@@ -3402,7 +3402,7 @@ function organizeRanges(){
             if(rangeForCanvases.length > 0){ //if the range exists in a section
               a=true;
             }
-            else{ //The leaf is a parent to itself, which means its a random page in the bucket. 
+            else{ //The leaf is a parent to itself, which means its a random page in the bucket.
                // console.log("This is a new leaf");
               rangeForCanvases = $("<div class='range bucketPage' rangeID='"+outerRange['@id']+"'><div>"+outerRange.label+"</div></div>");
             }
@@ -3433,7 +3433,7 @@ function organizeRanges(){
                   /* Must gather this canvases annotations */
                   $.each(manifestCanvases, function(){
                       if(this["@id"] == currentCanvas){
-                          currentCanvasAnnotationsLists = this.otherContent;   
+                          currentCanvasAnnotationsLists = this.otherContent;
                           var canvasLabel = this.label;
                           var canvasID = this["@id"];
                           if(this.images.length > 0){
@@ -3441,7 +3441,7 @@ function organizeRanges(){
                           }
                           else{
                               canvasImg = "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png";
-                          }                         
+                          }
                           $.each(currentCanvasAnnotationsLists, function(){
                               var annoListID2 = String(this["@id"]);
                               $.each(annotationLists, function(){
@@ -3455,7 +3455,7 @@ function organizeRanges(){
                             side2 = false;
                             if(!fragment){
                                 canvasHolder3.find('img').attr('src', canvasImg);
-                                
+
                             }
                             canvasHolder3.prepend("<div class='canvasLabel'>"+canvasLabel+"</div>");
                             canvasHolder3.attr("canvasID", canvasID);
@@ -3471,9 +3471,9 @@ function organizeRanges(){
                           }
                       }
                   });
-                  
+
                   var XYWHarray = [0,0,0,0];
-                  var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1)); 
+                  var XYWHsubstring = originalCanvas.substring(originalCanvas.lastIndexOf('#' + 1));
                   if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
                       var numberArray = XYWHsubstring.substring(originalCanvas.lastIndexOf('xywh=') + 5).split(',');
                       if(numberArray.length === 4){ // string must have all 4 to be valid
@@ -3484,7 +3484,7 @@ function organizeRanges(){
                           XYWHarray = [x,y,w,h];
                       }
                       else{
-                        //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
+                        //There is certainly something more useful we can do here. I just kill it if we do not have all the values.
                         XYWHarray = [0,0,0,0];
                       }
                   }
@@ -3497,12 +3497,12 @@ function organizeRanges(){
                               fragmentHTML.find('img').attr('src', this.images[0].resource["@id"]);
                             }
                             else{
-                               fragmentHTML.find('img').attr('src', "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png"); 
+                               fragmentHTML.find('img').attr('src', "http://img1.wikia.nocookie.net/__cb20130607215218/mummipedia/images/b/bb/480px-Placeholder.png");
                             }
                              if(XYWHarray[2] == 0 || XYWHarray[3] == 0){ //well surely the height and width are not 0 if it is an image chunk...this is what I do if it is.
                                 fragmentHTML.attr("style", "height:"+this.height+"px; width:"+this.width+"px");//set chunk height and width to canvas height and width.
                                 fragmentHTML.find("img").attr("style", "top:-"+XYWHarray[1]+"px; left:-"+XYWHarray[0]+"px; ");
-                                if(side1){ //put it in side1.  
+                                if(side1){ //put it in side1.
                                   canvasHolder3.find('img').remove();
                                   canvasHolder3.append(fragmentHTML);
                                 }
@@ -3530,7 +3530,7 @@ function organizeRanges(){
                                   var canvas = this.on;
                                   var XYWHarray2 = [0,0,0,0];
                                   if(canvas.indexOf("#xywh") >= 0){
-                                    var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1)); 
+                                    var XYWHsubstring = canvas.substring(canvas.lastIndexOf('#' + 1));
                                     if(XYWHsubstring.indexOf('=') > -1){ //string must contain this to be valid
                                         var numberArray = XYWHsubstring.substring(canvas.lastIndexOf('xywh=') + 5).split(',');
                                         if(numberArray.length === 4){ // string must have all 4 to be valid
@@ -3541,7 +3541,7 @@ function organizeRanges(){
                                             XYWHarray2 = [x,y,w,h];
                                         }
                                         else{
-                                          //There is certainly something more useful we can do here. I just kill it if we do not have all the values.  
+                                          //There is certainly something more useful we can do here. I just kill it if we do not have all the values.
                                           XYWHarray2 = [0,0,0,0];
                                         }
                                     }
@@ -3566,7 +3566,7 @@ function organizeRanges(){
                                 }); //must comment this out when running live
                             }
 
-                           //The canvas holders must be completely built before this part.  We may need to implement a timeout for now.  
+                           //The canvas holders must be completely built before this part.  We may need to implement a timeout for now.
                             if(a){ //if the range exists in a section
                                // console.log("Append canvases to range.");
                               rangeForCanvases.append(canvasHolder3, canvasHolder4); //put the canvas object in the range object (the leaf)
@@ -3586,7 +3586,7 @@ function organizeRanges(){
         }
     }
 /*
-* Helper function for mergeSort().  It mergest the left and right arrays created when splitting the source array in the middle. 
+* Helper function for mergeSort().  It mergest the left and right arrays created when splitting the source array in the middle.
 */
 function merge(left, right){
     var result  = [],
@@ -3604,7 +3604,7 @@ function merge(left, right){
     return result.concat(left.slice(il)).concat(right.slice(ir));
 }
 /*
-* The classic merge sort function that sorts an array of numbers from smallest to largest.  In our case, the array is an array of range objects, but what I test is the length of their ranges[] field, since those with the highest count in the ranges[] field will be top parent objects and the ordered array is easier to build the tree structure from.  Even for an array of 1000 ranges, this runs pretty quick.  
+* The classic merge sort function that sorts an array of numbers from smallest to largest.  In our case, the array is an array of range objects, but what I test is the length of their ranges[] field, since those with the highest count in the ranges[] field will be top parent objects and the ordered array is easier to build the tree structure from.  Even for an array of 1000 ranges, this runs pretty quick.
 */
 function mergeSort(items){
     if (items.length < 2) {
@@ -3615,7 +3615,7 @@ function mergeSort(items){
         left    = items.slice(0, middle),
         right   = items.slice(middle),
         params = merge(mergeSort(left), mergeSort(right));
-    
+
     // Add the arguments to replace everything between 0 and last item in the array
     params.unshift(0, items.length);
     items.splice.apply(items, params);
@@ -3631,7 +3631,7 @@ function populateAnnoForms(){
            // console.log(typeof annos + "    1");
             if(annos.length > 0){
                 if(typeof annos == "object"){
-                    
+
                 }
                 else{
                     annos.replace('\"', '"');
@@ -3641,11 +3641,11 @@ function populateAnnoForms(){
         }
         else if(alpha){
             //console.log("for alpha");
-            annos = annoListCollection[0].resources;           
+            annos = annoListCollection[0].resources;
              //console.log(typeof annos + "    2");
             if(annos.length > 0){
                 if(typeof annos == "object"){
-                    
+
                 }
                 else{
                     annos.replace('\"', '"');
@@ -3659,7 +3659,7 @@ function populateAnnoForms(){
             // console.log(typeof annos + "    3");
             if(annos.length > 0){
                 if(typeof annos == "object"){
-                    
+
                 }
                 else{
                     annos.replace('\"', '"');
@@ -3676,13 +3676,13 @@ function populateAnnoForms(){
             var row = $(this);
             if(annos && annos.length > 0){
                 $.each(annos, function(){
-                    var checkLabel1 = this.label.replace(":", "").trim();  
+                    var checkLabel1 = this.label.replace(":", "").trim();
                     checkLabel1 = checkLabel1.replace(/ *\([^)]*\) */g, "");
                     //need to get rid of trailing text between and including ()
                     if (checkLabel1 == label1){
                         currentEntry1.val(this.resource["cnt:chars"]);
                         row.attr("set", "set");
-                    }             
+                    }
                 });
             }
         });
@@ -3722,12 +3722,12 @@ function populateAnnoForms(){
                 });
             }
         });
-        
+
         if(annos && annos.length > 0){
             populateSpecialEntries(annos);
         }
     };
-    
+
     function populateSpecialEntries(annos){
         $.each(annos, function(){
                 var checkLabel3 = this.label.replace(":", "").trim();
@@ -3771,9 +3771,9 @@ function populateAnnoForms(){
             });
     }
     /*
-        Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.  
+        Fires when user clicks to enter additional information.  This mainly changes the UI to highlight which part of the leaf the user is working on and show them the information field in the left column.
     */
-   
+
     function enterCatalogueInfo(canvasID, canvas){
         //must have check for undefined because the first time it loads, it will not have a class yet which just means that the code needs to run.
         var windowURL = document.location.href;
@@ -3793,7 +3793,7 @@ function populateAnnoForms(){
             //Then it has just been loaded and folio 1 is being clicked, dont save but do the UI stuff.
             //console.log("done save it SO TRUE");
             dontsave = true;
-            
+
         }
         if(windowURL.indexOf("demo=1") > -1){
             demo = true;
@@ -3803,7 +3803,7 @@ function populateAnnoForms(){
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
-                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                    $(".selectedFolio").find("img:first").attr("src", "images/addImgInv.png");
                 }
                 if(previouslySelectedURI === "leaf"){
                     //console.log("previous was leaf1");
@@ -3812,7 +3812,7 @@ function populateAnnoForms(){
                 $("#folioSide1").addClass("selectedFolio");
                 if($("#folioSide1").find(".rectoImg").attr("src").indexOf("addImgInv.png") > -1){
                     //Need to show the negative
-                    $("#folioSide1").find(".rectoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                    $("#folioSide1").find(".rectoImg").attr("src", "images/addImg.jpg");
                 }
                 $("#folioSide2").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -3825,7 +3825,7 @@ function populateAnnoForms(){
                 previouslySelectedURI = $(".selectedFolio").attr("canvas");
                 if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
-                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                    $(".selectedFolio").find("img:first").attr("src", "images/addImgInv.png");
                 }
                 if(previouslySelectedURI === "leaf"){
                     previouslySelectedURI = currentLeafServerID;
@@ -3834,7 +3834,7 @@ function populateAnnoForms(){
                 $("#folioSide2").addClass("selectedFolio");
                 if($("#folioSide2").find(".versoImg").attr("src").indexOf("addImgInv.png") > -1){
                     //Need to show the negative
-                    $("#folioSide2").find(".versoImg").attr("src", "http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                    $("#folioSide2").find(".versoImg").attr("src", "images/addImg.jpg");
                 }
                 $("#folioSide1").removeClass("selectedFolio");
                 $("#oneAndtwo").removeClass("selectedFolio");
@@ -3848,7 +3848,7 @@ function populateAnnoForms(){
                 canvas = "leaf";
                  if($(".selectedFolio").length >0 && $(".selectedFolio").find("img:first").attr("src").indexOf("addImg.jpg") > -1){
                     //Need to show the negative
-                    $(".selectedFolio").find("img:first").attr("src", "http://165.134.241.141/brokenBooks/images/addImgInv.png");
+                    $(".selectedFolio").find("img:first").attr("src", "images/addImgInv.png");
                 }
                 $("#oneAndtwo").addClass("selectedFolio");
                 $("#folioSide1").removeClass("selectedFolio");
@@ -3865,25 +3865,25 @@ function populateAnnoForms(){
             }
             else{
                 //console.log("SAVE");
-                saveFolio(true, canvas, previouslySelectedURI);    
+                saveFolio(true, canvas, previouslySelectedURI);
             }
     }
-    
+
     /*
-    When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range. 
-    Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that. 
-    It also keeps content, context and carrier information separate from each other so we can track them as such.  
+    When the form information has been filled out, this function will save annotations to the appropriate canvas or leaf range.
+    Entries that create new ranges will do so, and if that range is already created and needs to be updated, it will do that.
+    It also keeps content, context and carrier information separate from each other so we can track them as such.
     The code will skip empty fields, unless it was a field that was previously saved or populated with annos, in which case it will have an attribute "set" which is "set" to let us know to update it.
-    Keeps server calls to the bare minimum when saving the form. Mirador will not populate annos whose cnt:chars is "" or undefined. 
+    Keeps server calls to the bare minimum when saving the form. Mirador will not populate annos whose cnt:chars is "" or undefined.
     Combines content(), context(), carrier(), notes(), updateLabels(), savePlacement() and updateList() to gather all the information from a leaf form and update the various anno objects.
-    TODO: Does not save annotations in order.  We want it to.  
+    TODO: Does not save annotations in order.  We want it to.
     */
-    function saveFolio(flag, canvas, thisFolio, leafFlag){ 
-        //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.  
+    function saveFolio(flag, canvas, thisFolio, leafFlag){
+        //savePlacement();  //This can be used to also ensure the leaf is placed within the correct range.
         if(flag === false){
             canvas = $(".selectedFolio").find(".canvasImageFile").attr("rv");
             thisFolio = $(".selectedFolio").attr("canvas");
-            
+
         }
         if(thisFolio !== undefined && thisFolio !== ''){
             //console.log("show save cover");
@@ -3894,7 +3894,7 @@ function populateAnnoForms(){
         context(canvasURI, flag, canvas);
 
     }
-    
+
     function content(canvasURI, flag, canvas){
         //console.log("content");
         var uriToSave = canvasURI;
@@ -3923,7 +3923,7 @@ function populateAnnoForms(){
                   "@type" : "cnt:ContentAsText",
                   "cnt:chars" :""
                 },
-                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
             };
             if (special === "annotations"){
                 //console.log("Special Annos");
@@ -3940,7 +3940,7 @@ function populateAnnoForms(){
                           "@type" : "cnt:ContentAsText",
                           "cnt:chars" :inter
                         },
-                        "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                        "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                     };
                     $("#interlinearAnnos").attr("set", "set");
                     createNewAnno(annotationObject2, "Interlinear Annotations", inter, addedInfoList1, uriToSave); //bulk
@@ -3956,10 +3956,10 @@ function populateAnnoForms(){
                           "@type" : "cnt:ContentAsText",
                           "cnt:chars" :marginal
                         },
-                        "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                        "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                     };
                     $("#marginalAnnos").attr("set", "set");
-                     createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1, uriToSave);//bulk                      
+                     createNewAnno(annotationObject3, "Marginal Annotations", marginal, addedInfoList1, uriToSave);//bulk
                 }
             }
             else if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
@@ -3977,7 +3977,7 @@ function populateAnnoForms(){
         }
     }
         //Go through each content piece, grab its value and if applicable make it an annotation or a range.
-        
+
         function context(canvasURI, flag, canvas){
             //console.log("context");
             var uriToSave = canvasURI;
@@ -4008,12 +4008,12 @@ function populateAnnoForms(){
                       "@type" : "cnt:ContentAsText",
                       "cnt:chars" :""
                 },
-                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                 };
 
                 if((entryValue !== undefined && entryValue !== "") || $(_this).attr("set") === "set"){
                     //console.log('HELLO')
-                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID; 
+                    var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID;
                     //console.log("Anno Object @ID is being set to :" + newAnnoURI)
                     annotationObject["@id"] = newAnnoURI;
                     annotationObject.resource["cnt:chars"] = entryValue;
@@ -4022,14 +4022,14 @@ function populateAnnoForms(){
                         annotationObject.resource["cnt:chars"] = entryValue;
                         $(_this).attr("set", "set");
                         createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList2, uriToSave);//bulk
-                }       
-                
+                }
+
                 if(j===$(".contextFormEntry").length-1){
                     carrier(canvasURI, flag, canvas);
                 }
             }
         }
-        
+
         function carrier(canvasURI, flag, canvas){
             //console.log("carrier");
             var uriToSave = canvasURI;
@@ -4057,7 +4057,7 @@ function populateAnnoForms(){
                       "@type" : "cnt:ContentAsText",
                       "cnt:chars" :""
                     },
-                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                 };
 
                 if(special !== undefined && special !== ""){
@@ -4091,7 +4091,7 @@ function populateAnnoForms(){
                                       "@type" : "cnt:ContentAsText",
                                       "cnt:chars" :leafHeight
                                     },
-                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                                 };
                                 $("#leafHeight").attr("set", "set");
 
@@ -4109,7 +4109,7 @@ function populateAnnoForms(){
                                       "@type" : "cnt:ContentAsText",
                                       "cnt:chars" :leafWidth
                                     },
-                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                                 };
                                 $("#leafWidth").attr("set", "set");
                                 createNewAnno(annotationObject2, "Leaf Width", leafWidth, addedInfoList3, uriToSave); //bulk
@@ -4129,7 +4129,7 @@ function populateAnnoForms(){
                                       "@type" : "cnt:ContentAsText",
                                       "cnt:chars" :textHeight
                                     },
-                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                                 };
                                 $("#tbHeight").attr("set", "set");
                                  createNewAnno(annotationObject3, "Text Height", textHeight, addedInfoList3, uriToSave);//bulk
@@ -4147,7 +4147,7 @@ function populateAnnoForms(){
                                       "@type" : "cnt:ContentAsText",
                                       "cnt:chars" :textWidth
                                     },
-                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                                 };
                             //this will increment annoID by 1
                             $("#tbWidth").attr("set", "set");
@@ -4169,7 +4169,7 @@ function populateAnnoForms(){
                                       "@type" : "cnt:ContentAsText",
                                       "cnt:chars" :lineHeight
                                     },
-                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                                 };
                                 $("#lHeight").attr("set", "set");
                                  createNewAnno(annotationObject5, "Line Height", lineHeight, addedInfoList3, uriToSave);//bulk
@@ -4187,7 +4187,7 @@ function populateAnnoForms(){
                                       "@type" : "cnt:ContentAsText",
                                       "cnt:chars" :lineWidth
                                     },
-                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges. 
+                                    "on" : canvasURI //this will be a rangeURI if uriToSave is set to the leaf uri instead of a canvasURI, which is what we want.  annotations can be saved to ranges.
                                 };
                             //this will increment annoID by 1
                             $("#lWidth").attr("set", "set");
@@ -4203,21 +4203,21 @@ function populateAnnoForms(){
                     annotationObject.resource["cnt:chars"] = entryValue;
                     $(_this).attr("set", "set");
                     createNewAnno(annotationObject, addedInfoLabel, entryValue, addedInfoList3, uriToSave);//bulk
-                }   
-              
+                }
+
               if(k===$(".carrierFormEntry").length-1){
                   content(canvasURI, flag, canvas);
               }
-          }  
+          }
     }
-    
+
     function notes(canvasURI, flag, canvas){
         //console.log("notes");
         var uriToSave = canvasURI;
         var canvasNotes = $("#notes").val();
         var forProject = detectWho();
         if(canvasNotes !== "" || $("#notes").attr("set") === "set"){
-            var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID;             
+            var newAnnoURI = "http://www.example.org/iiif/LlangBrev/annos/" +annoID;
             var annoObject = {
                 //"@id" : newAnnoURI,
                 "@type" : "oa:Annotation",
@@ -4236,7 +4236,7 @@ function populateAnnoForms(){
         }
         updateLabels(flag, canvasURI, canvas);
     }
-    
+
     function updateLabels(flag, uri, canvas){
       //console.log("Updating labels. ");
       var windowURL = document.location.href;
@@ -4246,10 +4246,10 @@ function populateAnnoForms(){
         var label1 = $("#folio1Label").val();
         var label2 = $("#folio2Label").val();
         var leafLabel = $("#oneAndtwoLabel").val();
-        
-        var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
-        var updateRangeURL = "http://165.134.241.141/brokenBooks/updateRange";
-        
+
+        var updateCanvasURL = "updateCanvas";
+        var updateRangeURL = "updateRange";
+
         if(label1 !== undefined && windowURL.indexOf("demo=1")===-1){
             if(label1 === ""){
                 label1 = "Side A";
@@ -4257,15 +4257,15 @@ function populateAnnoForms(){
             var paramObj1 = {"@id": canvas1, "label":label1};
             var params1 = {"content":JSON.stringify(paramObj1)};
             if(windowURL.indexOf("demo=1") > -1){
-                
+
             }
             else{
                 //updateInManifest("sequences",paramObj1);
                 $.post(updateCanvasURL, params1, function(data1){
-                    
+
                 });
             }
-            
+
         }
         if(label2 !== undefined&& windowURL.indexOf("demo=1")===-1){
             if(label2 === ""){
@@ -4297,15 +4297,15 @@ function populateAnnoForms(){
                     //console.log($(".arrangeSection[rangeID='"+leaf+"']").children("span:first"));
                     $(".arrangeSection[rangeID='"+leaf+"']").children("span:first").html(leafLabel);
                     $("#leafLabel").val(leafLabel);
-                });  
+                });
             }
-                
+
         }
-        setTimeout(function(){updateList(flag, uri, canvas);}, 2400); //DO THE BULK.  
+        setTimeout(function(){updateList(flag, uri, canvas);}, 2400); //DO THE BULK.
      // This timeout lets the UI do all the madness.  It could be less, we may not need it, but its safe and a good length here.
     }
-    
-    function updateList(flag, uri, canvas){  
+
+    function updateList(flag, uri, canvas){
 //        console.log("made it to update list with");
 //        console.log(flag, uri, canvas);
         var windowURL = document.location.href;
@@ -4329,7 +4329,7 @@ function populateAnnoForms(){
                         alpha = false;
                         zeta = false;
                     }
-                    else{                                 
+                    else{
                         $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                         alpha = beta = zeta = true;
                     }
@@ -4344,9 +4344,9 @@ function populateAnnoForms(){
         }
             $.each(annoListCollection, function(){
                 //console.log("Does "+this.on+" === "+objectID);
-                if(this.on === objectID){ //this is our annotation list to add the annotation to 
-                    var updateAnnoListURL = "http://165.134.241.141/brokenBooks/updateRange";
-                    var bulkUpdateAnnosURL =  "http://165.134.241.141/brokenBooks/bulkSubmitMetadata";
+                if(this.on === objectID){ //this is our annotation list to add the annotation to
+                    var updateAnnoListURL = "updateRange";
+                    var bulkUpdateAnnosURL =  "bulkSubmitMetadata";
                     var updateID = this["@id"];
                     var params2 = {"content":JSON.stringify(this.resources)};
                     if(windowURL.indexOf("demo=1")>-1){
@@ -4371,7 +4371,7 @@ function populateAnnoForms(){
                            $.post(updateAnnoListURL, params, function(data){
                              if(zeta){
                                  $.each(rangeCollection, function(){
-                                     if (this["@id"] === objectID){ 
+                                     if (this["@id"] === objectID){
                                          var otherContent1 = {"@id":annoListCollection[2]["@id"], "@type":"sc:AnnotationList", "context" : "http://www.shared-canvas.org/ns/context.json", "forProject": forProject};
                                          var listIncluded = false;
                                          $.each(this.otherContent,function(){
@@ -4380,9 +4380,9 @@ function populateAnnoForms(){
                                                     return false;
                                             }
                                          });
-                                         if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it. 
+                                         if(!listIncluded)this.otherContent.push(otherContent1); //If the annotation list is not already included in the otherContent field, add it.
                                      }
-                                 });//local. adds the annotation list uri to the other content field.  
+                                 });//local. adds the annotation list uri to the other content field.
                              }
                              else{
                                 var annoListID2 = -1;
@@ -4402,7 +4402,7 @@ function populateAnnoForms(){
                                                     return false;
                                             }
                                         });
-                                        if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it. 
+                                        if(!listIncluded)this.otherContent.push(otherContent2); //If the annotation list is not already included in the otherContent field, add it.
                                     }
                                 });
                              }//local
@@ -4425,7 +4425,7 @@ function populateAnnoForms(){
                                      alpha = false;
                                      zeta = false;
                                  }
-                                 else{                                 
+                                 else{
                                      $("#catalogueInfoFor").val(currentLeafServerID); //zeta
                                      alpha = beta = zeta = true;
                                  }
@@ -4456,9 +4456,9 @@ function populateAnnoForms(){
         }
         if(section !== "bucket"){
           updateRange(section, currentLeafServerID, 'arrange', []);
-          
+
           if(windowURL.indexOf("demo=1") === -1){
-            var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var updateURL = "updateRange";
             var paramObj = {"@id":currentLeafServerID, "within":section};
             var params = {"content":JSON.stringify(paramObj)};
             //updateInManifest("structures",paramObj);
@@ -4489,7 +4489,7 @@ function populateAnnoForms(){
         }
       });
     }
-    
+
 	function showFullImage(imgContainer){
             var imgToShow = $("#"+imgContainer).find('img').attr("src");
             $("#fullImgContainer").find('img').attr('src', imgToShow);
@@ -4501,7 +4501,7 @@ function populateAnnoForms(){
             $("#fullImageShade").hide();
 	}
 	function addImage(anno, canvasURI){
-              var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+              var updateCanvasURL = "updateCanvas";
               var paramObj = {"@id": canvasURI, "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               //updateInManifest("sequences",paramObj);
@@ -4586,7 +4586,7 @@ function populateAnnoForms(){
                // console.log("It has label: "+newLabel+" and value: "+value+".  Does that match "+annoObject.resource["cnt:chars"]);
 		annoID ++;
 		var objectID = uri; //which object are we saving to
-		annoObject.on = objectID; //set the on property to be what object we are saving to 
+		annoObject.on = objectID; //set the on property to be what object we are saving to
                 annoObject.label = newLabel;
                 annoObject.resource["cnt:chars"] = value;
 		var labelToCheckFor = annoObject.label;
@@ -4609,7 +4609,7 @@ function populateAnnoForms(){
                 }
                 if(annoResources.length > 0){
                     for(var i=0; i<annoResources.length; i++){
-                        var labelForCheck = annoResources[i].label;   
+                        var labelForCheck = annoResources[i].label;
                         //console.log("Does "+i+" == "+ (annoResources.length - 1) +" or 0?");
                         if(labelForCheck === labelToCheckFor){
                             // this annotation exists.  Update annotation.
@@ -4627,26 +4627,26 @@ function populateAnnoForms(){
                            // updateAnnotation(annoResources[i]["@id"], annoObject);
                             break;
                         }
-                        else if(i === annoResources.length - 1){ //we did not find this anno, save it as a new one in the list. 
+                        else if(i === annoResources.length - 1){ //we did not find this anno, save it as a new one in the list.
                             //console.log("This is a new anno, push it to anno list collection...");
                             //console.log("Its value is "+annoObject.resource["cnt:chars"]);
                             if(zeta){
                                 if(annoListCollection[2].resources === "[]"){
                                     annoListCollection[2].resources = [];
                                 }
-                                annoListCollection[2].resources.push(annoObject); 
+                                annoListCollection[2].resources.push(annoObject);
                             }
                             else if(alpha){
                                 if(annoListCollection[0].resources === "[]"){
                                     annoListCollection[0].resources = [];
                                 }
-                                annoListCollection[0].resources.push(annoObject); 
+                                annoListCollection[0].resources.push(annoObject);
                             }
                             else if(beta){
                                 if(annoListCollection[1].resources === "[]"){
                                     annoListCollection[1].resources = [];
                                 }
-                                annoListCollection[1].resources.push(annoObject); 
+                                annoListCollection[1].resources.push(annoObject);
                             }
                             break;
                     }
@@ -4658,33 +4658,33 @@ function populateAnnoForms(){
                     if(annoListCollection[2].resources === "[]"){
                         annoListCollection[2].resources = [];
                     }
-                    annoListCollection[2].resources.push(annoObject); 
+                    annoListCollection[2].resources.push(annoObject);
                 }
                 else if(alpha){
                     if(annoListCollection[0].resources === "[]"){
                         annoListCollection[0].resources = [];
                     }
-                    annoListCollection[0].resources.push(annoObject); 
+                    annoListCollection[0].resources.push(annoObject);
                 }
                 else if (beta){
                     if(annoListCollection[1].resources === "[]"){
                         annoListCollection[1].resources = [];
                     }
-                    annoListCollection[1].resources.push(annoObject); 
+                    annoListCollection[1].resources.push(annoObject);
                 }
             }
 
 	}
-        
-        /* 
+
+        /*
          * The range that acts as the root range object needs to contain this newly added range in its list or it wont appear in order
          * in the structures.
-         * 
+         *
          * This newly created range also needs to be added to manifest.structures.
          * */
         function updateRootRanges(who, newRangeID, removeFlag, index){
             //console.log("update root ranges");
-            var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+            var getURL = "getAnnotationByPropertiesServlet";
             var paramObj1 = {"parent" : who};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(getURL, params1, function(rootRangeList){
@@ -4697,20 +4697,20 @@ function populateAnnoForms(){
                 else{
                     rangesToUpdate.push(newRangeID);
                 }
-                var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+                var updateURL ="updateRange";
                 var paramObj2 = {"@id" : rootRange["@id"], "ranges" : rangesToUpdate};
                 var params = {"content":JSON.stringify(paramObj2)};
                 updateManifestStructures();
                 $.post(updateURL, params);
             });
         }
-               
+
         /* An object has been updated.  Its representation in the manifest must also be updated.  where tells me either structures or sequence, the params are in order of
-         * @id followed by some fields to update.  I then call to the server to update the sequences or structures field of the manifest object. 
-         * 
+         * @id followed by some fields to update.  I then call to the server to update the sequences or structures field of the manifest object.
+         *
          * This can be used to update the manifest in real time.  We are doing it on a publish request, so this is
          * no longer used.
-         *  
+         *
          *  */
         function updateInManifest(where, params){
             //console.log("need to update in the manifest...");
@@ -4733,16 +4733,16 @@ function populateAnnoForms(){
                         $.each(params, function(paramKey, paramVal){
                             manifestCanvases[i][paramKey] = paramVal;
                         });
-                        //updateManifestSequence();    
+                        //updateManifestSequence();
                         break;
                     }
                 }
             }
         }
-        
+
         function updateManifestStructures(){
             //console.log("updating manifest structures...");
-            var postURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var postURL = "updateRange";
             var paramObj1 = {"@id" : manifestID, "structures":rangeCollection};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){
@@ -4750,12 +4750,12 @@ function populateAnnoForms(){
                 //console.log("done updating manifest structures");
             });
         }
-        
+
         function updateManifestSequence(){
             //console.log("updating manifest sequence...");
-            var postURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var postURL = "updateRange";
             var sequenceObj = {
-                "@id" : "http://165.134.241.141/brokenBooks/sequence/normal",
+                "@id" : "sequence/normal",
                 "@type": "sc:Sequence",
                 "label" : "Manifest Sequence",
                 "canvases" : manifestCanvases
@@ -4769,17 +4769,17 @@ function populateAnnoForms(){
         }
 
 	/*
-		Add the range object to the structures array in the manifest object. 
+		Add the range object to the structures array in the manifest object.
 	*/
 	function createNewRange(newRangeObject, current, newLabel, value, list){
             //console.log("create new range");
 		rangeID ++;
                 var who = "";
-		var newAnnoUrl = "http://165.134.241.141/brokenBooks/saveNewRange";
+		var newAnnoUrl = "saveNewRange";
 		var windowURL = document.location.href;
-                var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+                var updateCanvasURL = "updateCanvas";
                 if(windowURL.indexOf("demo=1") > -1){
-                    rangeCollection.push(newRangeObject); 
+                    rangeCollection.push(newRangeObject);
                     if(current === 'currentLeaf'){
                         currentLeafServerID = newRangeObject["@id"];
                         currentLeaf = currentLeafServerID;
@@ -4800,7 +4800,7 @@ function populateAnnoForms(){
                     }
                     annoListID = parseInt(annoListID) + 1;
                     var newRangeAnnoList = {
-                        "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                        "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID,
                         "@type":"sc:AnnotationList",
                         "resources" : [],
                         "on" :newRangeObject["@id"],
@@ -4817,7 +4817,7 @@ function populateAnnoForms(){
                     if(current === "currentLeaf"){
                         annoListCollection[2] = newLeafList;
                     }
-    
+
                 }
                 else{
                     $.post(newAnnoUrl, {'content': JSON.stringify(newRangeObject)}, function(data){
@@ -4843,13 +4843,13 @@ function populateAnnoForms(){
                         who="paggr_debra";
                     }
                     var newRangeAnnoList = {
-                        "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                        "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID,
                         "@type":"sc:AnnotationList",
                         "resources" : [],
                         "on" :newRangeObject["@id"],
                         "forProject": forProject
                     };
-                    var listURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                    var listURL = "saveNewRange";
                     var listParams = {"content" : JSON.stringify(newRangeAnnoList)};
                     $.post(listURL, listParams, function(data2){
                         data2 = JSON.parse(data2);
@@ -4876,7 +4876,7 @@ function populateAnnoForms(){
 
                         });
                     });
-                    
+
                 });
                 }
 	}
@@ -4887,7 +4887,7 @@ function populateAnnoForms(){
 //          alert("cannot merge an opened section");
 //      }
 //    });
-    var newTitleRequest = 
+    var newTitleRequest =
     $("<div style='display:block;' id='newGroupTitleArea' class='helPop'><div style='left: 32px;' class='popHdr'>Merge Checked Selection</div>\n\
     <div style='height:100%;' class='helperContent demoContent demoHdrTxt'>\n\
         <span class='newgroupLabel'>New Group Title</span><input id='newGroupTitle' type='text'/><div class='noTitleWarning'>You must supply a title to make a group.</div>\n\
@@ -4927,7 +4927,7 @@ function populateAnnoForms(){
               }
               leafCount += addLeaves;
           });
-          
+
           var uniqueID = ($(".arrangeSection").length * 10) + 1;
           var depthToCheck = parseInt(theArea.attr("depth")) - 1;
           var areaForNewGroup = "";
@@ -4951,7 +4951,7 @@ function populateAnnoForms(){
               }
               newGroup.append(newChild);
             });
-            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
+            var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='images/b_page.png'/></span>");
             newGroup.append(leafCountHTML);
             var depth = theArea.attr("depth");
             areaForNewGroup.children(".notBucket").append(newGroup);
@@ -4966,7 +4966,7 @@ function populateAnnoForms(){
             if($(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").html() == "No Subsections Available"){
               $(".adminTrail").find("div[depth='"+depth+"']").children(".notBucket").children("div:first").remove();
             }
-            
+
             if(windowurl.indexOf("demo=1") === -1){
                 $.each(rangeCollection, function(){
                     if(this["@id"] === areaForNewGroup.attr("rangeID")){
@@ -4991,7 +4991,7 @@ function populateAnnoForms(){
                         "forProject" : forProject,
                         "within" : areaForNewGroup.attr("rangeid")
                       };
-                    var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                    var saveURL = "saveNewRange";
                     var params2 = {"content" : JSON.stringify(newRangeObject)};
                     var useBackup = false;
                     if(rangeList instanceof Array){
@@ -5017,7 +5017,7 @@ function populateAnnoForms(){
                             rangeList.push(newGroupID);
                         }
                          //add new group ID to the range's range collection receiving the new group
-                        var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+                        var updateURL ="updateRange";
                         var paramObj2 = {"@id" : areaForNewGroup.attr("rangeID"), "ranges" : rangeList};
                         var params3 = {"content" : JSON.stringify(paramObj2)};
                         //updateInManifest("structures",paramObj2);
@@ -5058,7 +5058,7 @@ function populateAnnoForms(){
                     var forProject = detectWho();
                     rangeID +=1;
                     var newRangeObject = {
-                        "@id" : mockID,                        
+                        "@id" : mockID,
                         "@type":"sc:Range",
                         "label": title,
                         "ranges" : children,
@@ -5068,7 +5068,7 @@ function populateAnnoForms(){
                         "forProject" : forProject,
                         "within" : areaForNewGroup.attr("rangeid")
                       };
-                    
+
                     var useBackup = false;
                     if(rangeList instanceof Array){
                     }
@@ -5098,7 +5098,7 @@ function populateAnnoForms(){
                     }
                 });
             }
-           
+
         }
     }
 
@@ -5111,13 +5111,13 @@ function populateAnnoForms(){
     });
     $(".parentSection").remove();
     $(".selectedSection[rangeID='"+rangeID+"']").click();
-    //ensure the one clicked is also unselected. 
+    //ensure the one clicked is also unselected.
     if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
       $(".parentSection").remove();
       $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
     }
     //^^ local
-    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var getURL = "getAnnotationByPropertiesServlet";
     var paramObj1 = {"@id" : rangeID};
     var params1 = {"content" : JSON.stringify(paramObj1)};
     $.post(getURL, params1, function(data){
@@ -5132,7 +5132,7 @@ function populateAnnoForms(){
         var index = rangeList.indexOf(leaf);
         if(index >= 0){
             rangeList.splice(index, 1);
-            var newAnnoUrl = "http://165.134.241.141/brokenBooks/updateRange";
+            var newAnnoUrl = "updateRange";
             var paramObj = {"@id":rangeID, "ranges" : rangeList};
             var params = {"content" : JSON.stringify(paramObj)};
             //updateInManifest("structures",paramObj);
@@ -5140,17 +5140,17 @@ function populateAnnoForms(){
                 $(".parentSection").remove();
                 $(".selectedSection[rangeID='"+rangeID+"']").click();
                 savePlacement();
-                //ensure the one clicked is also unselected. 
+                //ensure the one clicked is also unselected.
                 if($('.selectedSection').length == 0){ //It is directly in a new section, save the new placement, which will create the bredcumb.
                   $(".parentSection").remove();
                   $('.rangeArrangementArea:first').find('.unassigned').addClass("selectedSection");
                 }
             });
         }
-    });  
+    });
   }
 	/*
-		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs. 
+		This range is already in the manifest structures section, so what we are actually trying to do is save this leaf to the already created range.  We must check whether the leaf URI is already in the "ranges" section of the range.  There should be no duplicate URIs.
 	*/
 	function updateRange(rangeID, leaf, arrange){
             //console.log("in update range with "+rangeID, leaf, arrange);
@@ -5192,7 +5192,7 @@ function populateAnnoForms(){
             if(pageURL.indexOf("demo=1") > -1){
                 return false;
             }
-            var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+            var getURL = "getAnnotationByPropertiesServlet";
             var paramObj2 = {"@id" : rangeID};
             var params2 = {"content" : JSON.stringify(paramObj2)};
             $.post(getURL, params2, function(data){
@@ -5202,12 +5202,12 @@ function populateAnnoForms(){
                 else{
                     rangeToUpdate = data;
                 }
-                
-                var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
+
+                var updateURL = "updateRange";
                 if($.inArray(leaf, rangeToUpdate.ranges) === -1){
                     rangeToUpdate[0].ranges.push(leaf);
                 }
-                else{ //if the leaf is already in the array of children ranges, there is no need to update. consecutive locks should be good too. 
+                else{ //if the leaf is already in the array of children ranges, there is no need to update. consecutive locks should be good too.
                     return false;
                 }
                 var paramObj = {"@id":rangeID, "ranges" : rangeToUpdate[0].ranges};
@@ -5232,10 +5232,10 @@ function populateAnnoForms(){
                     }
                 });
             });
-            
+
         //^^ live
 	}
-	
+
 	function resolveImageURI(rv){
 		var uri = $("."+rv+"Canvas").find(".uploadness").find('textarea').val();
 	    $.ajax({
@@ -5243,43 +5243,43 @@ function populateAnnoForms(){
 	        success: function(imageData){
 	            //console.log(imageData);
 	        },
-	        error: function(jqXHR,error, errorThrown) {  
+	        error: function(jqXHR,error, errorThrown) {
 	            alert("Image could not be resolved.  Issue: " +  jqXHR.status + " - " +jqXHR.response);
 	        }
 	    });
 	}
 
 	/*
-		Dont save the fields and return to the image options.  
+		Dont save the fields and return to the image options.
 	*/
 
 	function cancelFolio(){
 		//Don't get data and return to image page
                 var windowURL = document.location.href;
-                
+
                 if(windowURL.indexOf("demo=1") > -1){
                     closeLeafPopover();
                 }
                 else{
                     $.each($("#formTabs").find("tr"), function(){
                         if($(this).attr("set") === "set"){
-                            
+
                         }
                         else{
                             $(this).find(".content").val("");
                         }
                     });
                     if($("#notes").attr("set") === "set"){
-                            
+
                     }
                     else{
                         $("#notes").val("");
                     }
                 }
-                
+
 //		$(".start").hide("blind", "300ms", function(){
 //			$(".imgAdditionArea").show("explode", "500ms");
-//			$("#catalogueInfoFor").val(''); 
+//			$("#catalogueInfoFor").val('');
 //			$("#folioSide2").removeClass("selectedFolio");
 //			$("#folioSide1").removeClass("selectedFolio");
 //			alpha = beta = zeta = false;
@@ -5287,7 +5287,7 @@ function populateAnnoForms(){
 	}
 
 	/*
-		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary. 
+		Fired when user clicks "Begin preparing a leaf".  We must create the canvases and the leaf range first, then feed it information as necessary.
 	*/
 	function submitIntro(test){
             var windowURL = document.location.href;
@@ -5299,9 +5299,9 @@ function populateAnnoForms(){
                 $("#saveText").html("Creating Leaf...");
                 $("#saveCover").show();
             }
-            
+
             var forProject = detectWho();
-            
+
             //$(".intro").hide("blind", "300ms", function(){$(".imgAdditionArea").show("explode", "500ms");});
             $(".intro").hide();
             $(".imgAdditionArea").show("explode", "500ms");
@@ -5325,16 +5325,16 @@ function populateAnnoForms(){
                 "motivation":"sc:painting",
                 "resource":
                     {
-                            
+
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
-                            
-                            "@id" : "http://165.134.241.141/brokenBooks/images/imgNotFound.png",
+
+                            "@id" : "images/imgNotFound.png",
                             "service":
-                                {                                       
+                                {
                                     "@context": "http://iiif.io/api/image/2/context.json",
                                     "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                    "@id" : "http://165.134.241.141/brokenBooks/images/imgNotFound.png"
+                                    "@id" : "images/imgNotFound.png"
                                 },
                             "width": 667,
                             "height":1000
@@ -5352,28 +5352,28 @@ function populateAnnoForms(){
                 "otherContent": [],
                 "within" : ""
             };
-            
+
          annoListID = parseInt(annoListID) + 1;
          $("#folioSide1").attr("onclick","enterCatalogueInfo('http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+"', 'recto');"); //local
       	 $("#folioSide1").attr("canvas","http://www.example.org/iiif/LlangBrev/canvases/"+canvasTag+""); //local
       	 //testManifest.sequences[0].canvases.push(newCanvas1); //local
-      	 var url = "http://165.134.241.141/brokenBooks/saveNewCanvas";
+      	 var url = "saveNewCanvas";
       	 var params1 = {'content': JSON.stringify(newCanvas1)};
          if(windowURL.indexOf("demo=1")>-1){
                 var data = newCanvas1;
                 var newCanvas1HolderImg = newCanvasHolderImg;
                 newCanvas1HolderImg.on = data["@id"];
                 var newCanvas1AnnoList = {
-                    "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                    "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID,
                     "@type":"sc:AnnotationList",
                     "resources" : [],
                     "forProject": forProject,
                     "on" : newCanvas1["@id"],
        	 	}; //local
-                
+
                 annoListCollection[0] = newCanvas1AnnoList;
-      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');"); 
-      	 	$("#folioSide1").attr("canvas", data["@id"]); 
+      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');");
+      	 	$("#folioSide1").attr("canvas", data["@id"]);
       	 	manifestCanvases.push(newCanvas1); //live
                 var listID = newCanvas1AnnoList["@id"];
                 newCanvas1.images = [newCanvas1HolderImg];
@@ -5398,7 +5398,7 @@ function populateAnnoForms(){
                             "otherContent" : [],
                             "within" : ""
                 };
-                                       
+
                 var newCanvas2 = urlCanvas;
                 var newCanvas2HolderImg = newCanvasHolderImg;
                 newCanvas2HolderImg.on = newCanvas2["@id"];
@@ -5407,7 +5407,7 @@ function populateAnnoForms(){
                 $("#folioSide2").attr("canvas",  newCanvas2["@id"]);
                 manifestCanvases.push(newCanvas2); //live
                 var newCanvas2AnnoList = {
-                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID,
                 "@type":"sc:AnnotationList",
                 "resources" : [],
                 "forProject": forProject,
@@ -5438,7 +5438,7 @@ function populateAnnoForms(){
                     };
                     currentLeaf = "http://www.example.org/iiif/LlangBrev/range/"+rangeID; //local
                     createNewRange(leafRangeObject, 'currentLeaf', "", "", "");
-                   
+
          }
          else{
             $.post(url, params1, function(data){ //save first new canvas
@@ -5449,21 +5449,21 @@ function populateAnnoForms(){
                 newCanvas1HolderImg.on = data["@id"];
                 annoListID = parseInt(annoListID) + 1;
                 var newCanvas1AnnoList = {
-                    "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+                    "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID,
                     "@type":"sc:AnnotationList",
                     "resources" : [],
                     "forProject": forProject,
                     "on" : newCanvas1["@id"]
        	 	}; //local
-                
+
                 annoListCollection[0] = newCanvas1AnnoList;
-      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');"); 
-      	 	$("#folioSide1").attr("canvas", data["@id"]); 
+      	 	$("#folioSide1").attr("onclick","enterCatalogueInfo('"+data["@id"]+"', 'recto');");
+      	 	$("#folioSide1").attr("canvas", data["@id"]);
       	 	//testManifest.sequences[0].canvases.push(newCanvas1); //live
-                
+
         	//save anno list for new canvas
                 //annoListCollection[0] = newCanvas1AnnoList;
-        	var listURL1 = "http://165.134.241.141/brokenBooks/saveNewRange";
+        	var listURL1 = "saveNewRange";
         	var listParams1 = {"content" : JSON.stringify(newCanvas1AnnoList)};
         	$.post(listURL1, listParams1, function(data){ //save first canvas annotation list
                     //add holder img annotation in to images field.
@@ -5471,7 +5471,7 @@ function populateAnnoForms(){
         		data = JSON.parse(data);
         		annoListCollection[0]["@id"] = data["@id"];
                         var listID = data["@id"];
-        		var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+        		var updateCanvasURL = "updateCanvas";
                         var imgAnno = {"@id":newCanvas1["@id"], "images":[newCanvas1HolderImg]};
         		var imgParams = {"content":JSON.stringify(imgAnno)};
                         newCanvas1.otherContent =[{"@id":listID,"@type":"sc:AnnotationList"}];
@@ -5489,7 +5489,7 @@ function populateAnnoForms(){
                                 zeta = false;
                             });
         		});
-      
+
         	});
       	 	newCanvas1ServerID = newCanvas1["@id"];
   	        canvasTag = parseInt(canvasTag) + 1;
@@ -5505,7 +5505,7 @@ function populateAnnoForms(){
                             "otherContent" : [],
                             "within" : ""
                 };
-                                       
+
 	      	var params2 = {'content': JSON.stringify(urlCanvas)};
 	      	$.post(url, params2, function(data){
                         //console.log("saved second canvas");
@@ -5518,16 +5518,16 @@ function populateAnnoForms(){
       	 		$("#folioSide2").attr("onclick","enterCatalogueInfo('"+ newCanvas2["@id"]+"','verso');");
       	 		$("#folioSide2").attr("canvas",  newCanvas2["@id"]);
       	 		//testManifest.sequences[0].canvases.push(newCanvas2); //live
-                        
+
                         var newCanvas2AnnoList = {
-	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID, 
+	                "@id":"http://www.example.org/iiif/LlangBrev/annoList/"+annoListID,
 	                "@type":"sc:AnnotationList",
 	                "resources" : [],
                         "forProject": forProject,
 	                "on" :  newCanvas2["@id"]
 	        	};
                         annoListCollection[1] = newCanvas2AnnoList;
-                        var listURL2 = "http://165.134.241.141/brokenBooks/saveNewRange";
+                        var listURL2 = "saveNewRange";
 	        	var listParams2 = {"content" : JSON.stringify(newCanvas2AnnoList)};
 	        	var canvasID = newCanvas2["@id"];
 	        	$.post(listURL2, listParams2, function(data){
@@ -5535,7 +5535,7 @@ function populateAnnoForms(){
 	        		data = JSON.parse(data);
                                 annoListCollection[1]["@id"] = data["@id"];
                                 var listID = data["@id"];
-	        		var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+	        		var updateCanvasURL = "updateCanvas";
                                 var imgAnno2 = {"@id":canvasID, "images":[newCanvas2HolderImg]};
                                 var imgParams2 = {"content":JSON.stringify(imgAnno2)};
                                 newCanvas2.otherContent = [{"@id":listID, "@type":"sc:AnnotationList"}];
@@ -5577,12 +5577,12 @@ function populateAnnoForms(){
                         });
                     });
              }
-            
+
 	}
 
 	function removeInfo(listItem){
 		var serverID = listItem.attr("annoserverid");
-		var url = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+		var url = "deleteAnnotationByAtIDServlet";
 		var paramObj = {"@id" : serverID};
 		var params = {"content" : JSON.stringify(paramObj)};
 		$.post(url, params, function(data){
@@ -5603,12 +5603,12 @@ function populateAnnoForms(){
 		$("#beAdmin").show();
 		$("#beContributer").hide();
 	}
-        
+
     function updateImageAnno(which){
         //console.log("IMAGE!");
         var windowurl = document.location.href;
         if(which === "alpha"){
-            var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+            var updateCanvasURL = "updateCanvas";
             var image = $('textarea[rv="recto"]').val();
             var canvas = $("#folioSide1").attr("canvas");
             var img = new Image();
@@ -5621,7 +5621,7 @@ function populateAnnoForms(){
               }
               // code here to use the dimensions
             }
-            
+
             var anno = {
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
@@ -5629,7 +5629,7 @@ function populateAnnoForms(){
                             {
                                 "@id": image,
                                 "service":
-                                    {                                       
+                                    {
                                         "@context": "http://iiif.io/api/image/2/context.json",
                                         "profile":"http://iiif.io/api/image/2/profiles/level2.json",
                                         "@id" : image
@@ -5639,7 +5639,7 @@ function populateAnnoForms(){
                             },
                             "on" : canvas
                         };
-              
+
               var paramObj = {"@id": $("#folioSide1").attr("canvas"), "images":[anno]};
               var params = {"content":JSON.stringify(paramObj)};
               if(windowurl.indexOf("demo=1") > -1){
@@ -5655,7 +5655,7 @@ function populateAnnoForms(){
               }
       }
       else{
-            var updateCanvasURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+            var updateCanvasURL = "updateCanvas";
             var image = $('textarea[rv="verso"]').val();
             var canvas = $("#folioSide2").attr("canvas");
             var img = new Image();
@@ -5675,7 +5675,7 @@ function populateAnnoForms(){
                             {
                                 "@id": image,
                                 "service":
-                                    {                                       
+                                    {
                                         "@context": "http://iiif.io/api/image/2/context.json",
                                         "profile":"http://iiif.io/api/image/2/profiles/level2.json",
                                         "@id" : image
@@ -5689,7 +5689,7 @@ function populateAnnoForms(){
               var params = {"content":JSON.stringify(paramObj)};
               if(windowurl.indexOf("demo=1") > -1){
                   $(".versoImg").attr("src", image);
-                  
+
               }
               else{
                 //updateInManifest("sequences",paramObj);
@@ -5699,21 +5699,21 @@ function populateAnnoForms(){
                    img.src = image;
                 });
               }
-              
+
       }
       $(".uploadness").hide();
   }
-  
+
     function updateCanvasDimensions(canvas, width, height){
         //console.log("updating canvas "+canvas+" with dimensions "+width+" x "+height);
-        var updateURL = "http://165.134.241.141/brokenBooks/updateCanvas";
+        var updateURL = "updateCanvas";
         var paramObj = {"@id": canvas, "height":height, "width":width};
         var params = {"content":JSON.stringify(paramObj)};
         //updateInManifest("sequences",paramObj);
         $.post(updateURL, params, function(data){
         });
     }
-           
+
   function breakUpConfirm(event){
       var tagName = event.target.tagName;
       var className = event.target.className;
@@ -5735,7 +5735,7 @@ function populateAnnoForms(){
       else{
           targetToBreak = event.target;
       }
-      
+
       var confirm = '';
 //      console.log("Check for lock before allowing break");
 //      console.log(targetToBreak.className);
@@ -5768,8 +5768,8 @@ function populateAnnoForms(){
         });
       }
   }
-  
-  /* 
+
+  /*
    * Remove a leaf from the manifest.  This means removing a range from the server and the manifest, and removing 2 canvases from the server and the manifest.
    * we do not remove the annotation lists or the annotations, which we need to do I believe, I need to double check this in the back end. FIXME.
    *  */
@@ -5781,7 +5781,7 @@ function populateAnnoForms(){
           $(targetToBreak).remove();
       }
       else{
-        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+        var removeURL = "deleteAnnotationByAtIDServlet";
         var paramObj = {"@id" : rangeID2};
         var params = {"content" : JSON.stringify(paramObj)};
         $.each(rangeCollection,function(index){
@@ -5794,7 +5794,7 @@ function populateAnnoForms(){
         $.post(removeURL, params, function(){
             var deleteDepth = parseInt($(targetToBreak).parents(".rangeArrangementArea").attr("depth"));
             $(targetToBreak).remove();
-            //update the folio count since deleting the leaf removed the page.  
+            //update the folio count since deleting the leaf removed the page.
             //Need to go up the selectedSection latter and decrement the folio count that way.  The element inside the
             //section is not removed until collapsed, so this wont work.
             $.each($(".selectedSection"), function(){
@@ -5807,11 +5807,11 @@ function populateAnnoForms(){
                 }
             });
             var paramObj2 = {"@id":canvases[0]};
-            var params2 = {"content" : JSON.stringify(paramObj2)}; 
+            var params2 = {"content" : JSON.stringify(paramObj2)};
             //Below is the unique case of needing to remove the canvases and update the manifest sequences with them removed, it is not broken out into a separate function.
             $.post(removeURL, params2, function(){
                 var paramObj3 = {"@id":canvases[1]};
-                var params3 = {"content" : JSON.stringify(paramObj3)}; 
+                var params3 = {"content" : JSON.stringify(paramObj3)};
                 $.post(removeURL, params3, function(){
                     var matches = 0;
                     var length = manifestCanvases.length;
@@ -5831,7 +5831,7 @@ function populateAnnoForms(){
         //removeAnnosOn(canvases); //TODO?  Or does the back end already handle this?  I dont know...
       }
   }
-  
+
   function removeRange(rangeID2){
       var windowurl = document.location.href;
       if(windowurl.indexOf("demo=1")>-1){
@@ -5845,21 +5845,21 @@ function populateAnnoForms(){
                 return false;
             };
         });
-        var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+        var removeURL = "deleteAnnotationByAtIDServlet";
         var paramObj = {"@id" : rangeID2};
-        var params = {"content" : JSON.stringify(paramObj)}; 
+        var params = {"content" : JSON.stringify(paramObj)};
         $.post(removeURL, params, function(){
             $(targetToBreak).remove();
         });
       }
-      
+
   }
-  
+
   function removeAndUpdate(remove, update, bringup, leaf){
       console.log("Break up led to remove and update");
       var fireUpdate = true;
       var windowurl = document.location.href;
-      var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+      var updateURL ="updateRange";
       if(windowurl.indexOf("demo=1")>-1){
           removeRange(remove);
       }
@@ -5870,7 +5870,7 @@ function populateAnnoForms(){
                 if(rangeList!==undefined && rangeList.length > 0){
                     var index = $.inArray(remove, rangeList);
                     if(index === -1){
-                        //I don't think this part of the code will get hit anymore, but leave it in here anyway.  
+                        //I don't think this part of the code will get hit anymore, but leave it in here anyway.
                        console.log("removing from bucket, dont fire update.  SHOULD NOT FIRE.");
                        if(leaf === "leaf"){
                            removeLeaf(remove, bringup);
@@ -5886,9 +5886,9 @@ function populateAnnoForms(){
                     }
                 }
 
-                if(fireUpdate){ //only go to this part if the range we want was actually in the array we lookedi n. 
+                if(fireUpdate){ //only go to this part if the range we want was actually in the array we lookedi n.
                   if(bringup.length > 0 && (leaf===undefined || leaf !== "leaf")){ //There are children that need to be brought up from the section being removed.
-                      //bringup is an array of those children's ids, merge them at the end of the current range list.  If it is a leaf, those are canvases.  
+                      //bringup is an array of those children's ids, merge them at the end of the current range list.  If it is a leaf, those are canvases.
                      rangeList =  $.merge(rangeList, bringup);
                      $.each(bringup, function(){
                         var paramObj2 = {"@id" : this, "within" : update};
@@ -5902,9 +5902,9 @@ function populateAnnoForms(){
                    var paramObj1 = {"@id" : update, "ranges" : rangeList};
                    var params1 = {"content" : JSON.stringify(paramObj1)};
                    if(windowurl.indexOf("demo=1")===-1){
-                        //we need to update the structures.  The leaf has been removed from the particular range it was placed in.  
+                        //we need to update the structures.  The leaf has been removed from the particular range it was placed in.
                         $.post(updateURL, params1, function(){
-                            
+
                         });
                         if(leaf === "leaf"){
                             //console.log("Remove LLLLLLLLLLLLLEAF");
@@ -5914,17 +5914,17 @@ function populateAnnoForms(){
                             removeRange(remove); //delte the range entirely from the db
                         }
                    }
-                   
+
               }
           }
       });
-        
+
   }
 
   function breakUp(){
       var group = $(targetToBreak);
       var parent = group.closest(".rangeArrangementArea");
-      
+
       $(".breakConfirm").remove();
       var childrenToBringUp = undefined;
       var depth = -1;
@@ -5938,7 +5938,7 @@ function populateAnnoForms(){
                   removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray, "leaf");
               }
           });
-          
+
       }
       else{
           depth = parseInt(group.parent().parent().attr("depth"));
@@ -5955,7 +5955,7 @@ function populateAnnoForms(){
               removeAndUpdate(group.attr("rangeID"), parent.attr("rangeID"), childrenArray);
           }
       }
-       
+
   }
 
   function newGroupForm(column){
@@ -5975,7 +5975,7 @@ function populateAnnoForms(){
       else{
           //do not populate, they are already there
       }
-      
+
   }
 
   function saveNewGroupForm(depth){
@@ -5987,7 +5987,7 @@ function populateAnnoForms(){
       var title=$("#groupTitle").val();
       var toggle1 = "onclick='toggleChildren($(this),\"admin\",event);'";
       var childLeaves = [];
-      
+
       if(title == ""){
           $(".noTitleWarning").show();
           setTimeout($('.noTitleWarning').fadeOut(1000), 2000);
@@ -5995,7 +5995,7 @@ function populateAnnoForms(){
       else{
           var checkedLeaves = $("#allLeaves").find("input:checked");
           var leafCount = checkedLeaves.length;
-          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='http://165.134.241.141/brokenBooks/images/b_page.png'/></span>");
+          var leafCountHTML = $("<span class='folioCount'><span class='countInt'>"+leafCount+"</span><img class='pageIcon' src='images/b_page.png'/></span>");
           var bucket = $("div[depth='1']").find(".unassigned");
           var bucketCount = parseInt(bucket.find(".folioCount").find(".countInt").html());
           rangeID = parseInt(rangeID) + 1;
@@ -6010,7 +6010,7 @@ function populateAnnoForms(){
               var leafLabel = $(this).attr("label");
               var lockUp = "lock('"+leafID+"','up',event);";
               var lockDown = "lock('"+leafID+"','down',event);";
-              var existing = "<span onclick=\"existing('"+leafID+"','"+rangeForNewGroup+"')\" class='folioCount'><img class='leafIcon' src='http://165.134.241.141/brokenBooks/images/leaf.png'/></span>";
+              var existing = "<span onclick=\"existing('"+leafID+"','"+rangeForNewGroup+"')\" class='folioCount'><img class='leafIcon' src='images/leaf.png'/></span>";
               $.each(allLeaves, function(){
                   if(this["@id"] == leafID){
                       childLeaves.push(this["@id"]);
@@ -6043,14 +6043,14 @@ function populateAnnoForms(){
               var rangeForNewGroup = $("div[depth='"+depth+"']").attr("rangeid");
               newGroupUpdate(rangeForNewGroup, childLeaves, newGroup, depth);
           }
-          
+
       }
   }
-  
+
   //
   function newGroupUpdate(range, children, $newGroup, depth){
     //check if children are a part of the parent aggr ranges and if so, splice them
-    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var getURL = "getAnnotationByPropertiesServlet";
     var windowURL = document.location.href;
     var paramObj = {"@id" : range};
     var params = {"content" : JSON.stringify(paramObj)};
@@ -6074,7 +6074,7 @@ function populateAnnoForms(){
         data= JSON.parse(data);
         var rangeObj = data[0];
         var rangeList = rangeObj.ranges;
-        var saveURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+        var saveURL = "saveNewRange";
         var params2 = {"content" : JSON.stringify(newRangeObject)};
         $.post(saveURL, params2, function(data){ //save the new group
             data = JSON.parse(data);
@@ -6082,11 +6082,11 @@ function populateAnnoForms(){
             newRangeObject["@id"] = newGroupID;
             //manifest.structures.push(newRangeObject);
             rangeCollection.push(newRangeObject);
-            //updateManifestStructures(); 
+            //updateManifestStructures();
             rangeList.push(newGroupID); //add new group ID to the range's range collection receiving the new group
             var relation = $(".adminTrail").find("div[depth='"+depth+"']").attr("rangeid");
             $newGroup.attr("rangeid", newGroupID).attr("relation", relation);
-            var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+            var updateURL ="updateRange";
             var paramObj2 = {"@id" : range, "ranges" : rangeList};
             var params3 = {"content" : JSON.stringify(paramObj2)};
             //updateInManifest("structures", paramObj2);
@@ -6103,13 +6103,13 @@ function populateAnnoForms(){
                 }
                 $.each(children, function(){
                     //TODO: Could do a batch update here.
-                    var updateURL ="http://165.134.241.141/brokenBooks/updateRange";
+                    var updateURL ="updateRange";
                     var paramObj3 = {"@id" : this, "within" : newGroupID};
                     var params4 = {"content" : JSON.stringify(paramObj3)};
                     $("div[depth='1']").find(".unassigned").children("div[rangeID='"+this+"']").remove();
                     //updateInManifest("structures", paramObj3);
                     $.post(updateURL, params4, function(){
-                        
+
                     });
                 });
                 cancelNewGroupForm();
@@ -6131,8 +6131,8 @@ function existing(leaf, leafIsIn){
     var betaCanvasURI = "http://www.example.org/iiif/LlangBrev/canvas/2";
     var alphaCanvasObj = {};
     var betaCanvasObj = {};
-    var alphaImage  = "http://165.134.241.141/brokenBooks/images/addImg.jpg";
-    var betaImage = "http://165.134.241.141/brokenBooks/images/addImg.jpg";
+    var alphaImage  = "images/addImg.jpg";
+    var betaImage = "images/addImg.jpg";
     var alphaLabel = "Folio Side A Label";
     var betaLabel = "Folio Side B Label";
     var leafLabel = "Leaf Label";
@@ -6144,7 +6144,7 @@ function existing(leaf, leafIsIn){
         var leafObject = undefined;
         currentLeafServerID = leaf;
         $.each(rangeCollection, function(){
-            //For the demo, you can cheat and not make the calls by making a mock list above and using it.  
+            //For the demo, you can cheat and not make the calls by making a mock list above and using it.
             if(this["@id"] == leaf){
                 leafObject = this;
                 alphaCanvasURI = this.canvases[0];
@@ -6174,9 +6174,9 @@ function existing(leaf, leafIsIn){
                     leafAnnoList = "";
                     //leafAnnoList = "http://www.example.org/iiif/LlangBrev/annoList/empty";
                     annoListCollection[2] = {"@id":"empty","resources":[]};
-                    
+
                 }
-                
+
                 $("#oneAndtwo").attr("canvas", leaf);
                 $("#oneAndtwo").attr("onclick","enterCatalogueInfo('leaf');"); ;
                 $("#leafLabel").val(leafLabel);
@@ -6200,31 +6200,31 @@ function existing(leaf, leafIsIn){
                           alphaLabel = this.label;
                         }
                         //console.log("checking for alpha image");
-                        
+
                         if(this.images && this.images.length > 0){
                             if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
-                                
+
                             }
                             else if (this.images[0].resource["@id"] === ""){
-                                
+
                             }
                             else{
                                 //console.log("FOUND ALPHA");
                                 alphaImage = this.images[0].resource["@id"];
                             }
                             if(alphaImage.indexOf("addImg") > -1 || alphaImage.indexOf("imgNotFound") > -1){
-                                $("#oneAndtwo").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                                $("#leafTmp").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                                $("#folioSide1").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                                $("#oneAndtwo").find(".rectoImg").attr("src","images/imgNotFound.png");
+                                $("#leafTmp").find(".rectoImg").attr("src","images/imgNotFound.png");
+                                $("#folioSide1").find(".rectoImg").attr("src","images/addImg.jpg");
                             }
                             else{
                                 $(".rectoImg").attr("src", alphaImage);
                             }
                         }
-                            $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
+                            $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');");
                             $("#folioSide1").attr("canvas", alphaCanvasURI);
                             $("#folioSide1").click();
-                        
+
                       }
                     });
                 }
@@ -6248,10 +6248,10 @@ function existing(leaf, leafIsIn){
                         }
                         if(alphaCanvasData.images && alphaCanvasData.images.length > 0){
                             if(alphaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
-                                
+
                             }
                             else if (alphaCanvasData.images[0].resource["@id"] === ""){
-                                
+
                             }
                             else{
                                 alphaImage = alphaCanvasData.images[0].resource["@id"];
@@ -6270,7 +6270,7 @@ function existing(leaf, leafIsIn){
                                 }
                                 annoList1.resources = tmpResources;
                                 annoListCollection[0] = annoList1;
-                                $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');"); 
+                                $("#folioSide1").attr("onclick","enterCatalogueInfo('"+alphaCanvasURI+"', 'recto');");
                                 $("#folioSide1").attr("canvas", alphaCanvasURI);
                                 $("#folioSide1").click();
                                 //console.log("populate from existing");
@@ -6278,16 +6278,16 @@ function existing(leaf, leafIsIn){
                             }
                         }); //live
                         if(alphaImage.indexOf("addImg") > -1 || alphaImage.indexOf("imgNotFound") > -1){
-                            $("#oneAndtwo").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                            $("#leafTmp").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                            $("#folioSide1").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                            $("#oneAndtwo").find(".rectoImg").attr("src","images/imgNotFound.png");
+                            $("#leafTmp").find(".rectoImg").attr("src","images/imgNotFound.png");
+                            $("#folioSide1").find(".rectoImg").attr("src","images/addImg.jpg");
                         }
                         else{
                             $(".rectoImg").attr("src", alphaImage);
                         }
                         //$("#folioSide1").addClass("selectedFolio");
                         $("#folio1Label").val(alphaLabel);
-                        
+
                     }
                     }); //live
                 }
@@ -6309,26 +6309,26 @@ function existing(leaf, leafIsIn){
                         //console.log("lloking for beta image");
                         if(this.images && this.images.length > 0){
                             if(this.images[0].resource["@id"].indexOf("imgNotFound") > -1){
-                                
+
                             }
                             else if (this.images[0].resource["@id"] === ""){
-                                
+
                             }
                             else{
                                 //console.log("BETA IMAGE FOUND");
                                 betaImage = this.images[0].resource["@id"];
                                 if(betaImage.indexOf("addImg") > -1 || betaImage.indexOf("imgNotFound") > -1){
-                                    $("#oneAndtwo").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                                    $("#leafTmp").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                                    $("#folioSide1").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                                    $("#oneAndtwo").find(".versoImg").attr("src","images/imgNotFound.png");
+                                    $("#leafTmp").find(".versoImg").attr("src","images/imgNotFound.png");
+                                    $("#folioSide1").find(".versoImg").attr("src","images/addImg.jpg");
                                 }
                                 else{
                                     $(".versoImg").attr("src", betaImage);
                                 }
                             }
                         }
-                         $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
-                         $("#folioSide2").attr("canvas", betaCanvasURI); 
+                         $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');");
+                         $("#folioSide2").attr("canvas", betaCanvasURI);
                       }
                     });
                 }
@@ -6352,10 +6352,10 @@ function existing(leaf, leafIsIn){
                         }
                         if(betaCanvasData.images && betaCanvasData.images.length > 0){
                             if(betaCanvasData.images[0].resource["@id"].indexOf("imgNotFound") > -1){
-                                
+
                             }
                             else if (betaCanvasData.images[0].resource["@id"] === ""){
-                                
+
                             }
                             else{
                                 betaImage = betaCanvasData.images[0].resource["@id"];
@@ -6368,7 +6368,7 @@ function existing(leaf, leafIsIn){
                                     annoList2 = JSON.parse(annoList2);
                                 }
                                 var tmpResources = annoList2.resources;
-                               
+
                                 if(typeof tmpResources !== "object"){
                                     tmpResources = tmpResources.replace('\"', '"');
                                     tmpResources = JSON.parse(tmpResources);
@@ -6377,12 +6377,12 @@ function existing(leaf, leafIsIn){
                                 annoListCollection[1] = annoList2;
                             }
                         });//live
-                        $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');"); 
-                        $("#folioSide2").attr("canvas", betaCanvasURI); 
+                        $("#folioSide2").attr("onclick","enterCatalogueInfo('"+betaCanvasURI+"', 'verso');");
+                        $("#folioSide2").attr("canvas", betaCanvasURI);
                         if(betaImage.indexOf("addImg") > -1 || betaImage.indexOf("imgNotFound") > -1){
-                            $("#oneAndtwo").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                            $("#leafTmp").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-                            $("#folioSide1").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+                            $("#oneAndtwo").find(".versoImg").attr("src","images/imgNotFound.png");
+                            $("#leafTmp").find(".versoImg").attr("src","images/imgNotFound.png");
+                            $("#folioSide1").find(".versoImg").attr("src","images/addImg.jpg");
                         }
                         else{
                             $(".versoImg").attr("src", betaImage);
@@ -6419,7 +6419,7 @@ function existing(leaf, leafIsIn){
 
             }
         });
-        
+
     }
 
     $(".leafPopover").show();
@@ -6431,7 +6431,7 @@ function existing(leaf, leafIsIn){
     }
     //If admins can see this area, then the following doesn't have to be hidden.
     $("#placement").children("input[type='button']").hide();
-   
+
     $("#placement").children("p:first").html("This area shows where the leaf is positioned in the structure.  This cannot be altered here.  If you want to move your leaf to a new section \n\
       close this and use the drag and drop interface.");
 
@@ -6440,9 +6440,9 @@ function existing(leaf, leafIsIn){
     beta = false;
     zeta = false;
     //$(".popoverTrail").find(".selectedSection:first").click(); //collapse the tree
-    selectInTree(leafIsIn); 
+    selectInTree(leafIsIn);
     //console.log("Click folio side 1, hide saveCover, change saveText");
-    
+
     //$("#folioSide1").addClass("selectedSection");
     if(windowURL.indexOf("demo=1")>-1){
         //console.log("demo, populate anno forms with annos:");
@@ -6452,7 +6452,7 @@ function existing(leaf, leafIsIn){
         $("#saveCover").hide();
         $("#saveText").html("Updating...");
     }
-    
+
     $(".popoverTrail").children(".rangeArrangementArea").append(arrangeAreaCover);
 
 }
@@ -6460,7 +6460,7 @@ function existing(leaf, leafIsIn){
 function selectInTree(child){
     var depth = $(".popoverTrail").find(".rangeArrangementArea").length;
     var lastArrangeArea = $(".popoverTrail").find('.rangeArrangementArea[depth="'+depth+'"]');
-  
+
     var childToFindParents = lastArrangeArea.find(".arrangeSection[rangeID='"+child+"']");
     var theParent = childToFindParents.parent();
     var control = true;
@@ -6496,13 +6496,13 @@ function selectInTree(child){
     }
 }
 
-//Leaf locking happens in two directions.  If you lock a leaf to the leaf below, you have to update both leaves of the relationsip.  
+//Leaf locking happens in two directions.  If you lock a leaf to the leaf below, you have to update both leaves of the relationsip.
 function lock(leafURI, direction, event){
-    
+
     var forProject = detectWho();
     var windowURL = document.location.href;
-   // var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
-    var updateAnnoURL = "http://165.134.241.141/brokenBooks/updateRange";
+   // var getURL = "getAnnotationByPropertiesServlet";
+    var updateAnnoURL = "updateRange";
     if($("div[depth='1']").find(".unassigned").attr("class").indexOf("selectedSection") > -1){
         //cannot lock leaves in the bucket
         alert("cannot lock leaves in the bucket.  Assign to a section first.");
@@ -6524,12 +6524,12 @@ function lock(leafURI, direction, event){
             else{
                 leafToLockWith = leafToLock.prev();
             }
-            
+
         }
         if(leafToLockWith.attr("class").indexOf("ordered") > -1){
             leafToLockWith = leafToLockWith.children(".arrangeSection:last");
         }
-        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined 
+        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined
         && leafToLockWith.attr("class").indexOf("arrangeSection")>-1 && leafToLockWith.attr("leaf") === "true"){
             leafToLock.attr("draggable", "false");
             leafToLockWith.attr("draggable", "false");
@@ -6561,7 +6561,7 @@ function lock(leafURI, direction, event){
 
                 });
             }
-            
+
             if(leafToLockWith.parent().attr("isOrdered") === "true"){
                     console.log("is ordered. we need to either combine both ordered ranges into one and delete the other or put this leaf into already existing list.");
                     if(leafToLock.parent().attr("isOrdered") === "true"){
@@ -6569,7 +6569,7 @@ function lock(leafURI, direction, event){
                         var idList1 = leafToLock.parent().attr("rangeid");
                         var idList2 = leafToLockWith.parent().attr("rangeid");
                         var domList1 = leafToLock.parent();
-                        var domList2 = leafToLockWith.parent();  
+                        var domList2 = leafToLockWith.parent();
                         var childrenToMove = domList1.children();
 //                        var paramObj = {"@id":idList2};
 //                        var params = {"content":JSON.stringify(paramObj)};
@@ -6634,7 +6634,7 @@ function lock(leafURI, direction, event){
                                                 //updateInManifest("structures", paramObj5);
                                                 $.post(updateAnnoURL, params5, function(){
                                                     //console.log(idList1+" no longer in any lists, delete it");
-                                                    var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+                                                    var removeURL = "deleteAnnotationByAtIDServlet";
                                                     var paramObj3 = {"@id":idList1};
                                                     var params3 = {"content":JSON.stringify(paramObj3)};
                                                     var index = 0;
@@ -6646,7 +6646,7 @@ function lock(leafURI, direction, event){
                                                             return false;
                                                         }
                                                     });
-                                                    
+
                                                     $.post(removeURL, params3, function(){
                                                         //console.log("deleted");
                                                         domList1.remove();
@@ -6658,7 +6658,7 @@ function lock(leafURI, direction, event){
                                 }
                             }
                         });
-                       
+
                     }
                     else{
                         console.log("We must add leaftolock to the end of leaftolockwith b/c leaf to lock is not in a group.");
@@ -6716,10 +6716,10 @@ function lock(leafURI, direction, event){
                                         });
                                     });
                                 }
-                                
+
                             }
-                        });                    
-                    }                  
+                        });
+                    }
             }
             else{
                 console.log("Leaf to lock with is not in a group.  Prolly need to make a new one.");
@@ -6815,7 +6815,7 @@ function lock(leafURI, direction, event){
                         newRange.append(copy2);
                         newRange.append(copy1);
                         leafToLockWith.before(newRange);
-                       
+
                         //console.log("update the ranges 1 field of "+getID);
                         $.each(rangeCollection, function(){
                             if(this["@id"] === getID){
@@ -6833,11 +6833,11 @@ function lock(leafURI, direction, event){
                                 leafToLock.remove();
                                 leafToLockWith.remove();
                             }
-                            
+
                         });
                     }
                     else{
-                        var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                        var newURL = "saveNewRange";
                         var params = {"content":JSON.stringify(orderedRangeObject)};
                        // console.log("save it....");
                         $.post(newURL, params, function(data){
@@ -6879,10 +6879,10 @@ function lock(leafURI, direction, event){
                             });
                         });
                     }
-                    
+
                 }
-                
-            }           
+
+            }
             //paginate lock icons and their onclick functions
             //console.log("paginate locks");
             //console.log(area);
@@ -6912,7 +6912,7 @@ function lock(leafURI, direction, event){
         if(leafToLockWith.attr("class").indexOf("ordered") > -1){
             leafToLockWith = leafToLockWith.children(".arrangeSection:first");
         }
-        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined 
+        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined
         && leafToLockWith.attr("class").indexOf("arrangeSection")>-1 && leafToLockWith.attr("leaf") === "true"){
             leafToLock.attr("draggable", "false");
             leafToLockWith.attr("draggable", "false");
@@ -6927,7 +6927,7 @@ function lock(leafURI, direction, event){
             if(windowURL.indexOf("demo=1") > -1){
                $.post(updateAnnoURL, lockparams, function(){
 
-                }); 
+                });
             }
 
             //update leaf being locked with to know it is locked down.  This helps tremendously with the UI.
@@ -6943,7 +6943,7 @@ function lock(leafURI, direction, event){
 
                 });
             }
-            
+
             if(leafToLockWith.parent().attr("isOrdered") === "true"){
                     //console.log("is ordered. we need to either combine both ordered ranges into one and delete the other or put this leaf into already existing list.");
                     if(leafToLock.parent().attr("isOrdered") === "true"){
@@ -6951,7 +6951,7 @@ function lock(leafURI, direction, event){
                         var idList2 = leafToLock.parent().attr("rangeid");
                         var idList1 = leafToLockWith.parent().attr("rangeid");
                         var domList2 = leafToLock.parent();
-                        var domList1 = leafToLockWith.parent();  
+                        var domList1 = leafToLockWith.parent();
                         var childrenToMove = domList1.children();
                         $.each(rangeCollection, function(){
                             if(this["@id"] === idList2){
@@ -7021,7 +7021,7 @@ function lock(leafURI, direction, event){
                                                 //updateInManifest("structures", paramObj5);
                                                 $.post(updateAnnoURL, params5, function(){
                                                     //console.log(idList1+" no longer in any lists, delete it");
-                                                    var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
+                                                    var removeURL = "deleteAnnotationByAtIDServlet";
                                                     var paramObj3 = {"@id":idList1};
                                                     var params3 = {"content":JSON.stringify(paramObj3)};
                                                     //console.log(idList1+" no longer in any lists, delete it");
@@ -7042,9 +7042,9 @@ function lock(leafURI, direction, event){
                                         });
                                     });
                                 }
-                                
+
                             }
-                        });  
+                        });
                     }
                     else{
                         //console.log("We must add leaftolock to the beginning of leaftolockwith.parent()");
@@ -7103,10 +7103,10 @@ function lock(leafURI, direction, event){
 
                                     });
                                 }
-                                
+
                             }
                         });
-                        
+
 //                        var paramObj = {"@id":rangeListToRemoveFrom};
 //                        var params = {"content":JSON.stringify(paramObj)};
 //                        $.post(getURL, params, function(data){
@@ -7142,7 +7142,7 @@ function lock(leafURI, direction, event){
 //                            });
 //
 //                        });
-                        
+
                     }
             }
             else{
@@ -7209,7 +7209,7 @@ function lock(leafURI, direction, event){
 
                         }
                     });
-                    
+
 //                    var paramObj = {"@id":rangeListToRemoveFrom};
 //                    var params = {"content":JSON.stringify(paramObj)};
 //                    $.post(getURL, params, function(data){
@@ -7239,11 +7239,11 @@ function lock(leafURI, direction, event){
 //                                var paramObj4= {"@id":rangeListToSpliceInto, "ranges":rangeList2};
 //                                var params4 = {"content":JSON.stringify(paramObj4)};
 //                                $.post(updateAnnoURL, params4, function(){
-//                                    
+//
 //                                });
 //                            });
 //                        });
-//                      
+//
 //                    });
                 }
                 else{
@@ -7269,8 +7269,8 @@ function lock(leafURI, direction, event){
                         "isReferencedBy":manifestID,
                         "isOrdered" : "true"
         		};
-                        
-                    var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+
+                    var newURL = "saveNewRange";
                     var params = {"content":JSON.stringify(orderedRangeObject)};
                     //console.log("save it....");
                     if(windowURL.indexOf("demo=1") > -1){
@@ -7300,8 +7300,8 @@ function lock(leafURI, direction, event){
                                 leafToLock.remove();
                                 leafToLockWith.remove();
                             }
-                            
-                        });                        
+
+                        });
                     }
                     else{
                         $.post(newURL, params, function(data){
@@ -7341,7 +7341,7 @@ function lock(leafURI, direction, event){
                                         leafToLockWith.remove();
                                     });
                                 }
-                                
+
                             });
 
     //                        var paramObj12 = {"@id":getID};
@@ -7367,9 +7367,9 @@ function lock(leafURI, direction, event){
     //                        });
                         });
                     }
-                    
+
                 }
-                
+
             }
             //paginate lock icons and their onclick functions
             area.find(".arrangeSection[rangeid='"+leafURI+"']").find(".lockDown").attr("class","lockedDown").attr("onclick","unlock('"+leafURI+"','down',event);");
@@ -7379,18 +7379,18 @@ function lock(leafURI, direction, event){
         else{
             alert("cannot lock this way. Error 2");
         }
-    }    
+    }
 }
 
 function unlock(leafURI, direction, event){
     var leafURIcpy = leafURI;
     var windowURL = document.location.href;
-    var removeURL = "http://165.134.241.141/brokenBooks/deleteAnnotationByAtIDServlet";
-    var updateURL = "http://165.134.241.141/brokenBooks/updateRange";
-    var getURL = "http://165.134.241.141/brokenBooks/getAnnotationByPropertiesServlet";
+    var removeURL = "deleteAnnotationByAtIDServlet";
+    var updateURL = "updateRange";
+    var getURL = "getAnnotationByPropertiesServlet";
     var forProject = detectWho();
 //    if(windowURL.indexOf("demo=1") > -1){
-//        return false; 
+//        return false;
 //    }
     var area = $(event.target).closest(".rangeArrangementArea");
     var leafToLock = $(event.target).parent();
@@ -7400,7 +7400,7 @@ function unlock(leafURI, direction, event){
     if(direction === "up"){
         leafToLockWith = leafToLock.prev();
         var ltlwID = leafToLockWith.attr("rangeid");
-        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined 
+        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined
         && leafToLockWith.attr("class").indexOf("arrangeSection")>-1 && leafToLockWith.attr("leaf") === "true"){
             var lockparamobj = {"@id":leafToLock.attr("rangeid"), "lockedup":"false"};
             var lockparams = {"content":JSON.stringify(lockparamobj)};
@@ -7442,7 +7442,7 @@ function unlock(leafURI, direction, event){
 
                 });
             }
-            
+
             //update leaf being locked with to know it is locked down.  This helps tremendously with the UI.
 
             if(numOrdered > 2){
@@ -7530,7 +7530,7 @@ function unlock(leafURI, direction, event){
 
                                         }
                                     });
-                                    //wait for while loop. causes a small blip of the locked leaves to appear and disappear, all good. 
+                                    //wait for while loop. causes a small blip of the locked leaves to appear and disappear, all good.
                                     //DO not need withins for demo.
 //                                    setTimeout(function(){
 //                                        console.log("update withings");
@@ -7542,7 +7542,7 @@ function unlock(leafURI, direction, event){
 //                                            $.post(updateURL, params5);
 //                                        });
 //                                    },300);
-                                
+
                             }
                             else{
                                 //console.log("Otherwise, just pop out to parent");
@@ -7596,7 +7596,7 @@ function unlock(leafURI, direction, event){
                                         "isOrdered" : "true"
                                     };
 
-                                    var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                                    var newURL = "saveNewRange";
                                     var params = {"content":JSON.stringify(orderedRangeObject)};
                                     $.post(newURL, params, function(data){
                                         //console.log("saved range, update URI");
@@ -7631,7 +7631,7 @@ function unlock(leafURI, direction, event){
                                             }
                                         });
 
-                                        //wait for while loop. causes a small blip of the locked leaves to appear and disappear, all good. 
+                                        //wait for while loop. causes a small blip of the locked leaves to appear and disappear, all good.
                                         setTimeout(function(){
                                            // console.log("update withings");
                                             leafToLock.before(newRange);
@@ -7677,12 +7677,12 @@ function unlock(leafURI, direction, event){
 
                             });
                         }
-                        
-                        
+
+
                     }
                 });
-                
-                
+
+
 //                $.post(getURL, params, function(data){
 //                    var rangeObj = JSON.parse(data)[0];
 //                    var rangeList = rangeObj.ranges;
@@ -7699,10 +7699,10 @@ function unlock(leafURI, direction, event){
 //                    console.log("ranges after");
 //                    console.log(rangeList);
 //                    console.log("update range list of range spliced out of.");
-//                    
+//
 //                    console.log("ordered range ranges");
 //                    console.log(rangeIDs);
-//                    
+//
 //                    var paramObj2 = {"@id":leafURI, "ranges": rangeList};
 //                    var params2 = {"content":JSON.stringify(paramObj2)};
 //                    $.post(updateURL, params2, function(){
@@ -7724,8 +7724,8 @@ function unlock(leafURI, direction, event){
 //                                "lockeddown": "",
 //                                "isOrdered" : "true"
 //                            };
-//                            
-//                            var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+//
+//                            var newURL = "saveNewRange";
 //                            var params = {"content":JSON.stringify(orderedRangeObject)};
 //                            $.post(newURL, params, function(data){
 //                                console.log("saved range, update URI");
@@ -7742,7 +7742,7 @@ function unlock(leafURI, direction, event){
 //                                    $(this).remove();
 //                                    newRange.append(clone);
 //                                });
-//                                
+//
 //                                //Need to update area ranges field to include the new group.
 //                                console.log("update area ranges field");
 //                                var paramObj33 = {"@id":newWithin};
@@ -7758,8 +7758,8 @@ function unlock(leafURI, direction, event){
 //
 //                                    });
 //                                });
-//                                
-//                                //wait for while loop. causes a small blip of the locked leaves to appear and disappear, all good. 
+//
+//                                //wait for while loop. causes a small blip of the locked leaves to appear and disappear, all good.
 //                                setTimeout(function(){
 //                                    console.log("update withings");
 //                                    leafToLock.before(newRange);
@@ -7774,7 +7774,7 @@ function unlock(leafURI, direction, event){
 //                        }
 //                        else{
 //                            console.log("Otherwise, just pop out to parent");
-//                            
+//
 //                            var paramObj3 = {"@id":newWithin};
 //                            var params3 = {"content" : JSON.stringify(paramObj3)};
 //                            $.post(getURL, params3, function(data){
@@ -7790,7 +7790,7 @@ function unlock(leafURI, direction, event){
 //                                var paramObj6 = {"@id":newWithin, "ranges":ranges};
 //                                var params6 = {"content":JSON.stringify(paramObj6)};
 //                                $.post(updateURL, params6, function(){
-//                                    
+//
 //                                });
 //                                console.log("update within of range popped");
 //                                var paramObj2 = {"@id":ltlwID, "within":newWithin};
@@ -7800,9 +7800,9 @@ function unlock(leafURI, direction, event){
 //                                });
 //                            });
 //                        }
-//                        
+//
 //                    });
-//                    
+//
 //                });
             }
             else{
@@ -7815,10 +7815,10 @@ function unlock(leafURI, direction, event){
                 var rangeAfter = rangeToRemove.next();
                 var copy1 = leafToLock.clone();
                 var copy2 = leafToLockWith.clone();
-                
+
                 copy1.attr("draggable","true").css("display", "block");
                 copy2.attr("draggable","true").css("display", "block");
-                
+
                 //console.log("ID to remove: "+removeID);
                 var index = 0;
                 if(windowURL.indexOf("demo=1") > -1){
@@ -7930,7 +7930,7 @@ function unlock(leafURI, direction, event){
                                 });
                             }
                         });
-                                
+
                         var paramObj1 = {"@id":leafToLock.attr("rangeid"), "within":updateID};
                         var params1 = {"content":JSON.stringify(paramObj1)};
                         //updateInManifest("structures", paramObj1);
@@ -7946,7 +7946,7 @@ function unlock(leafURI, direction, event){
 
                     });
                 }
-                
+
 //                var paramObj = {"@id":removeID};
 //                var params = {"content":JSON.stringify(paramObj)};
 //                $.post(removeURL, params, function(){
@@ -7969,7 +7969,7 @@ function unlock(leafURI, direction, event){
 //                        rangeToRemove.parent().append(copy1);
 //                        rangeToRemove.remove();
 //                    }
-//                    
+//
 //                    console.log("need to update ranges array of range that range was just remove from "+updateID);
 //                    console.log("remove "+removeID);
 //                    console.log("splice in "+copy1.attr("rangeid"),copy2.attr("rangeid") +" to "+updateID);
@@ -7997,7 +7997,7 @@ function unlock(leafURI, direction, event){
 //                            console.log("range list updated");
 //                        });
 //                    });
-//                                        
+//
 //                    var paramObj1 = {"@id":leafToLock.attr("rangeid"), "within":updateID};
 //                    var params1 = {"content":JSON.stringify(paramObj1)};
 //                    $.post(updateURL, params1, function(){
@@ -8008,7 +8008,7 @@ function unlock(leafURI, direction, event){
 //                    $.post(updateURL, params2, function(){
 //                        console.log("WITHIN 2 UPDATED");
 //                    });
-//                    
+//
 //                });
             }
             area.find(".arrangeSection[rangeid='"+leafURIcpy+"']").find(".lockedUp").attr("class","lockUp").attr("onclick","lock('"+leafURIcpy+"','up',event);");
@@ -8022,7 +8022,7 @@ function unlock(leafURI, direction, event){
     else{
         leafToLockWith = leafToLock.next();
         var ltlwID = leafToLockWith.attr("rangeid");
-        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined 
+        if(leafToLockWith!== undefined && leafToLockWith.attr("class")!==undefined
         && leafToLockWith.attr("class").indexOf("arrangeSection")>-1 && leafToLockWith.attr("leaf") === "true"){
             var lockparamobj = {"@id":leafToLock.attr("rangeid"), "lockeddown":"false"};
             var lockparams = {"content":JSON.stringify(lockparamobj)};
@@ -8088,7 +8088,7 @@ function unlock(leafURI, direction, event){
                             //console.log(rangeList);
                             while(leafAfter.attr("leaf")==="true"){
                                 rangeList.splice( $.inArray(leafAfter.attr("rangeid"), rangeList), 1 );
-                                rangesRemoved.push(leafAfter); 
+                                rangesRemoved.push(leafAfter);
                                 rangeIDs.push(leafAfter.attr("rangeid"));
                                 leafAfter = leafAfter.next();
                             }
@@ -8154,7 +8154,7 @@ function unlock(leafURI, direction, event){
                                                 });
                                             }
                                         });
-                                    
+
                                 }
                                 else{
                                     //console.log("Otherwise, just pop out to parent");
@@ -8195,7 +8195,7 @@ function unlock(leafURI, direction, event){
                                             "isReferencedBy":manifestID,
                                             "isOrdered" : "true"
                                         };
-                                        var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                                        var newURL = "saveNewRange";
                                         var params31 = {"content":JSON.stringify(orderedRangeObject)};
                                         $.post(newURL, params31, function(data){
                                             //console.log("saved range, update URI");
@@ -8248,7 +8248,7 @@ function unlock(leafURI, direction, event){
                                     }
                                     else{
                                        // console.log("Otherwise, just pop out to parent");
-                         
+
                                         $.each(rangeCollection, function(){
                                             if(this["@id"] === newWithin){
                                                 var range=this;
@@ -8279,7 +8279,7 @@ function unlock(leafURI, direction, event){
                                 });
                             }
 
-                            
+
 //                            $.post(updateURL, params2, function(){
 //                                if(rangesRemoved.length > 1){
 //                                    var orderedRangeObject = {
@@ -8298,7 +8298,7 @@ function unlock(leafURI, direction, event){
 //                                        "lockeddown": "",
 //                                        "isOrdered" : "true"
 //                                    };
-//                                    var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+//                                    var newURL = "saveNewRange";
 //                                    var params31 = {"content":JSON.stringify(orderedRangeObject)};
 //                                    $.post(newURL, params31, function(data){
 //                                        console.log("saved range, update URI");
@@ -8377,9 +8377,9 @@ function unlock(leafURI, direction, event){
 //                            });
                         }
                     });
-                    
-                    
-                    
+
+
+
                     $.post(getURL, params11, function(data){
                         var rangeObj = JSON.parse(data)[0];
                         var rangeList = rangeObj.ranges;
@@ -8389,14 +8389,14 @@ function unlock(leafURI, direction, event){
 //                        console.log(rangeList);
                         while(leafAfter.attr("leaf")==="true"){
                             rangeList.splice( $.inArray(leafAfter.attr("rangeid"), rangeList), 1 );
-                            rangesRemoved.push(leafAfter); 
+                            rangesRemoved.push(leafAfter);
                             rangeIDs.push(leafAfter.attr("rangeid"));
                             leafAfter = leafAfter.next();
                         }
 //                        console.log("ranges after");
 //                        console.log(rangeList);
 //                        console.log("update range list of range spliced out of.");
-//                        
+//
 //                        console.log("ordered range ranges");
 //                        console.log(rangeIDs);
                         var paramObj2 = {"@id":leafURI, "ranges": rangeList};
@@ -8420,7 +8420,7 @@ function unlock(leafURI, direction, event){
                                     "isReferencedBy":manifestID,
                                     "isOrdered" : "true"
                                 };
-                                var newURL = "http://165.134.241.141/brokenBooks/saveNewRange";
+                                var newURL = "saveNewRange";
                                 var params31 = {"content":JSON.stringify(orderedRangeObject)};
                                 $.post(newURL, params31, function(data){
                                     //console.log("saved range, update URI");
@@ -8437,7 +8437,7 @@ function unlock(leafURI, direction, event){
                                         $(this).remove();
                                         newRange.append(clone);
                                     });
-                                    
+
                                     //Need to update area ranges field to include the new group.
                                     //console.log("update area ranges");
                                     var paramObj33 = {"@id":newWithin};
@@ -8454,7 +8454,7 @@ function unlock(leafURI, direction, event){
 
                                         });
                                     });
-                                    
+
                                     //wait for while loop
                                     setTimeout(function(){
                                         leafToLock.after(newRange);
@@ -8513,7 +8513,7 @@ function unlock(leafURI, direction, event){
                     var rangeAfter = rangeToRemove.next();
                     var copy1 = leafToLock.clone();
                     var copy2 = leafToLockWith.clone();
-                    
+
                     copy1.attr("draggable","true").css("display", "block");
                     copy2.attr("draggable","true").css("display", "block");
 
@@ -8521,7 +8521,7 @@ function unlock(leafURI, direction, event){
                     var params = {"content":JSON.stringify(paramObj)};
                     var index = 0;
                     if(windowURL.indexOf("demo=1")> -1){
-                        
+
                         $.each(rangeCollection, function(){
                             index+=1;
                             if(this["@id"] === removeID){
@@ -8722,12 +8722,12 @@ function closeLeafPopover(){
     $("#folio1Label").val("");
     $("#folio2Label").val("");
     $("#oneAndtwoLabel").val("");
-    $("#oneAndtwo").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-    $("#oneAndtwo").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-    $("#leafTmp").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-    $("#leafTmp").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/imgNotFound.png");
-    $("#folioSide1").find(".rectoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
-    $("#folioSide2").find(".versoImg").attr("src","http://165.134.241.141/brokenBooks/images/addImg.jpg");
+    $("#oneAndtwo").find(".rectoImg").attr("src","images/imgNotFound.png");
+    $("#oneAndtwo").find(".versoImg").attr("src","images/imgNotFound.png");
+    $("#leafTmp").find(".rectoImg").attr("src","images/imgNotFound.png");
+    $("#leafTmp").find(".versoImg").attr("src","images/imgNotFound.png");
+    $("#folioSide1").find(".rectoImg").attr("src","images/addImg.jpg");
+    $("#folioSide2").find(".versoImg").attr("src","images/addImg.jpg");
     //$(".popoverTrail").find(".selectedSection:first").click();
     annoListCollection = new Array(3);
     $(".selectedFolio").removeClass("selectedFolio");
