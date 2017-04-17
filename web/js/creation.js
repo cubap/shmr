@@ -103,13 +103,12 @@ function getResource (uri) {
 
 function preview (obj) {
     switch (typeof obj) {
-        case "image":
+        case "object":
+            if (obj.nodeType === 1 && obj.tagName === "img"){
             makeCanvasFromImage(obj);
             $("#imagePreview")
                 .show();
-            break;
-        case "object":
-            if (obj['@type'].indexOf(':Manifest') > -1) {
+            } else if (obj['@type'].indexOf(':Manifest') > -1) {
                 // assume sc:Manifest, which is not 100% accurate
                 dc.manifest = obj;
             } else if (obj['@type'].indexOf(':Canvas') > -1) {
@@ -130,6 +129,10 @@ function preview (obj) {
         default:
             throw new Error("unrecognized result from getResource()");
     }
+}
+
+function makeCanvasFromImage (img){
+    $('#imagePreview').html($("img").attr('src',img.src));
 }
 
 function makeManifestFromCanvas (obj) {
@@ -157,6 +160,10 @@ function makeManifestFromCanvas (obj) {
         content: JSON.stringify(manifestObj)
     };
     var params = JSON.stringify(paramsObj);
+
+    // short circuited...
+    return dc.manifest = manifestObj;
+
     $.post("saveNewRange", params, function (manifestID) {
         // success
         saveRootRange(moment, manifestID, {
@@ -165,6 +172,7 @@ function makeManifestFromCanvas (obj) {
         });
         manifestObj['@id'] = manifestID;
         dc.manifest = manifestObj;
+        redraw();
     });
 }
 
@@ -292,4 +300,19 @@ function Canvas (config) {
     return c;
 }
 
+function redraw() {
+    sessionStorage.setItem('manifest',dc.manifest);
+    if(!dc.URL){
+        var json = JSON.stringify(dc.manifest);
+        var blob = new Blob([json], {type: "application/json"});
+        dc.URL = URL.createObjectURL(blob);
+    }
+    var itemPreview = $("#preview");
+    var mDiv = $("#manifestView");
+    Mirador({
+      id: "manifestView",
+      data: [dc.URL]
+    });
+
+};
 // TODO: include a switch for LocalStorage, so the special URLs can be stored locally.
