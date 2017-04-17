@@ -104,10 +104,11 @@ function getResource (uri) {
 function preview (obj) {
     switch (typeof obj) {
         case "object":
-            if (obj.nodeType === 1 && obj.tagName === "img"){
+            if (obj.nodeType === 1 && obj.tagName.toLowerCase() === "img"){
             makeCanvasFromImage(obj);
             $("#imagePreview")
                 .show();
+            $('#imagePreview').empty().append($("<img>").attr('src',obj.src));
             } else if (obj['@type'].indexOf(':Manifest') > -1) {
                 // assume sc:Manifest, which is not 100% accurate
                 dc.manifest = obj;
@@ -129,10 +130,11 @@ function preview (obj) {
         default:
             throw new Error("unrecognized result from getResource()");
     }
+    redraw();
 }
 
 function makeCanvasFromImage (img){
-    $('#imagePreview').html($("img").attr('src',img.src));
+
 }
 
 function makeManifestFromCanvas (obj) {
@@ -307,12 +309,28 @@ function redraw() {
         var blob = new Blob([json], {type: "application/json"});
         dc.URL = URL.createObjectURL(blob);
     }
-    var itemPreview = $("#preview");
-    var mDiv = $("#manifestView");
-    Mirador({
-      id: "manifestView",
-      data: [dc.URL]
-    });
+    var imagePreview = $("#imagePreview");
+    var mDiv = $("#manifestView").find('iframe');
+mDiv.attr('src',"mirador-embed.html?url="+dc.URL);
+$("#startProject,#manifestView").show();
 
 };
 // TODO: include a switch for LocalStorage, so the special URLs can be stored locally.
+
+
+$(function(){
+
+// dumb rotately to get rid of later
+if(!window.rotately){
+    rotately = Date.now()%3+1;
+}
+if(rotately===1){
+    //replace "deep codex" with "Bryan's rejiggery"
+    $("#logo").attr('src','images/logo2.png');
+    $('body :not(script)').contents().filter(function() {
+    return this.nodeType === 3;
+  }).replaceWith(function() {
+      return this.nodeValue.replace('Deep Codex',"Bryan's Rejiggery Thing");
+  });
+}
+});
