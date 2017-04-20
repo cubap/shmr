@@ -14,7 +14,9 @@
         <script>
                     Mirador({
       id: "manifestView",
-      data: [],
+      data: [{manifestUri: (function(){
+                   return location.search.substring(location.search.indexOf('url=')+4);
+               })(),location:"local"}],
         "windowObjects": [
               {
                "loadedManifest": (function(){

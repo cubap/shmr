@@ -25,10 +25,11 @@ function showSlugged (text) {
         $('#hexUrl')
             .text(hex);
         try {
+            sessionStorage.setItem('pTitle', text);
             sessionStorage.setItem('slug', $baseUrl + slug);
             sessionStorage.setItem('admin', hex);
         } catch (e) {
-            console.error("sessionStorage failed. This could mean anything. Hold tight to your loved ones.");
+            console.error("localStorage failed. This could mean anything. Hold tight to your loved ones.");
         }
         return $("#urlContainer")
             .show();
@@ -130,6 +131,8 @@ function preview (obj) {
         default:
             throw new Error("unrecognized result from getResource()");
     }
+    URL.revokeObjectURL(dc.URL);
+    dc.URL = null;
     redraw();
 }
 
@@ -303,7 +306,7 @@ function Canvas (config) {
 }
 
 function redraw() {
-    sessionStorage.setItem('manifest',dc.manifest);
+    localStorage.setItem('manifest',dc.manifest);
     if(!dc.URL){
         var json = JSON.stringify(dc.manifest);
         var blob = new Blob([json], {type: "application/json"});
@@ -315,10 +318,191 @@ mDiv.attr('src',"mirador-embed.html?url="+dc.URL);
 $("#startProject,#manifestView").show();
 
 };
+
+    function makeNewUID(providedInfo){
+        var saveNewURL = "saveNewRange";
+        var agent = {
+            "@type" : "foaf:Agent",
+            "firstName" : dc.ip+"",
+            "lastName" : "Deep Codex User",
+            "mbox" :"unknown",
+            "sandbox" : "true"
+        };
+        var paramsObj = {content:agent};
+        var params = JSON.stringify(paramsObj);
+        var newUserID = "";
+        var url = window.location.href;
+            //use that user
+        var user = /user=([^&]+)/.exec(url)[1]; // Value is in [1] ('384' in our case)
+        var newUserID = user ? user : 'unknown';
+        if(newUserID === "unknown"){
+            $(".userInfo").show();
+            $.post(saveNewURL, params, function(userID){
+                newUserID = userID;
+                saveManifestObj(newUserID);
+                var windowURL = document.location.href + "?user="+userID;
+                window.history.pushState("Object", "Title", windowURL);
+            });
+        }
+        else{
+            saveManifestObj(newUserID);
+        }
+    }
+
+    function saveManifestObj(userID){
+        var manifestMetadataArray = [];
+        var manifestObj = {
+            "@type":"sc:Manifest",
+            "label":"Ray's Manifest",
+            "@context":"http://iiif.io/api/presentation/2/context.json",
+            "metadata":manifestMetadataArray,
+            "forProject":"broken_books_"+userID,
+            "structures":[],
+            "sequences":[
+                {
+                    "@id":"http://localhost:8080/brokenBooks/sequence/normal",
+                    "@type":"sc:Sequence",
+                    "label":"Manifest Sequence",
+                    "canvases":[]
+                }
+            ]
+        };
+        var saveNewURL = "saveNewRage";
+        var paramsObj = {content:JSON.stringify(manifestObj)};
+        var params = JSON.stringify(paramsObj);
+        $.post(saveNewURL,params,function(manifestID){
+            saveRootRange(userID, manifestID);
+        });
+
+    }
+
+    function saveRootRange(userID, manifestID){
+        var rootRange = {
+                "@type" : "sc:Range",
+                "within" : "root",
+                "otherContent" : [],
+                "canvases" : [],
+                "label" : "Table of Contents",
+                "forProject" : "broken_books_"+userID, //need UID function for this
+                "isReferencedBy" : manifestID, //won't have this yet
+                "ranges" : []
+        };
+        var saveNewURL = "saveNewRage";
+        var paramsObj = {content:JSON.stringify(rootRange)};
+        var params = JSON.stringify(paramsObj);
+        $.post(saveNewURL,params,function(rootRangeID){
+            rootRange["@id"] = rootRangeID;
+            var postURL = "updateRange";
+            var paramObj1 = {"@id" : manifestID, "structures":[rootRange]};
+            var params1 = {"content" : JSON.stringify(paramObj1)};
+            $.post(postURL, params1, function(data){
+
+            });
+        });
+    }
+
 // TODO: include a switch for LocalStorage, so the special URLs can be stored locally.
 
+/**
+ * Stores the IP in localStorage once to allow for some persistent
+ * identity of the machine using the tool.
+ * @param {type} on
+ * @return {undefined}
+ */
+function setIP(on){
+    if(on.ip){
+        return on.ip;
+    }
+    if(localStorage.getItem('ip')){
+        var i = localStorage.getItem('ip');
+        return on.ip=i;
+    }
+    $.get('https://api.ipify.org',function(ip)
+    {
+        localStorage.setItem('ip',ip);
+        return on.ip = ip;
+    });
+}
+
+function loadProjectTitle(){
+    dc.pTitle = sessionStorage.getItem('pTitle');
+}
+
+function loadAgent(on){
+    if(on.agent){
+        return on.agent;
+    }
+    if(localStorage.getItem('agent')){
+        var a = JSON.parse(localStorage.getItem('agent'));
+        return on.agent=a;
+    }
+        var agent = {
+        "@type" : "foaf:Agent",
+        "firstName" : "",
+        "lastName" : "Deep Codex User",
+        "mbox" :"unknown",
+        "sandbox" : "true"
+    };
+    var ip = setIP(on);
+    if(typeof(ip) === "string"){
+        agent.firstName = ip;
+    } else {
+        // promise
+        ip.done(function(data){
+            agent.firstName = data.ip;
+            localStorage.setItem('agent',JSON.stringify(agent));
+            on.agent = agent;
+        });
+    }
+    on.agent=agent;
+    localStorage.setItem('agent',JSON.stringify(agent));
+}
+function loadManifests(on){
+    if(localStorage.getItem('manifests')){
+        var ms = localStorage.getItem('manifests');
+        return on.manifests=ms;
+    }
+    if(on.manifests){
+        return on.manifests;
+    }
+    localStorage.setItem('manifests',[]);
+    return on.manifests=[];
+}
+function useManifest(event,m){
+    dc.manifest = m;
+    redraw();
+}
+
+/**
+ * Initialize Deep Codex in the local storage and establish the
+ * machine user. No remote location for this yet.
+ * @return {undefined}
+ */
+function init(){
+dc = dc || {};
+    loadAgent(dc);
+    loadManifests(dc);
+    loadProjectTitle();
+    $('.projectTitle').text(dc.pTitle);
+
+console.log(dc);
+
+if(dc.manifests.length){
+    var domList = $("<ul>");
+    var a,li;
+    for(var i=0;i<dc.manifests.length;i++){
+        li=$("<li>");
+        a=$("<a>");
+        a.click(useManifest).text;
+        domList.append(li.append(a));
+    }
+    $("#projects").append(domList).show();
+}
+}
 
 $(function(){
+
+init();
 
 // dumb rotately to get rid of later
 if(!window.rotately){

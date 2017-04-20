@@ -8,7 +8,7 @@
     <head>
         <title>Initialize New Codex</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="css/brokenbooks.css">
+        <!--        <link rel="stylesheet" href="css/brokenbooks.css">-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="js/bb.js"></script>
@@ -28,7 +28,7 @@
             </div>
         </header>
         <section class="container">
-            <p class='is-medium content'>We all start somewhere. To create the very first leaf, enter a link to an
+            <p class='is-medium content'>We all start somewhere. To create the very first leaf in <strong class='projectTitle'>your project</strong> enter a link to an
                 <dfn title="Any old image will do, as long as it is on the Internet">image</dfn>,
             a <dfn title="A SharedCanvas Canvas, which adheres to the IIIF standard.">canvas</dfn>,
             or a <dfn title="A SharedCanvas Manifest, which adheres to the IIIF standard.">manifest</dfn>.
@@ -58,8 +58,8 @@
             </div>
         </section>
         <section>
-            <div id="manifestView" style="width:100%;height:100%;">
-                <iframe style="width:100%;height:30vh;" title="Mirador" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+            <div id="manifestView">
+                <iframe style="width:100%;height:60rem;" title="Mirador" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
             </div>
         </section>
         <!--        <div>
@@ -70,90 +70,5 @@
                 <input onclick="beginProjectForm();" type="button" value="I just want to start from scratch"/>
             </div>
                 <div class="projectPopover"></div>-->
-<script>
-
-    function makeNewUID(providedInfo){
-        var saveNewURL = "saveNewRage";
-        var agent = {
-            "@type" : "foaf:Agent",
-            "firstName" : "Test",
-            "lastName" : "Agent",
-            "mbox" :"unknown",
-            "sandbox" : "true"
-        };
-        var paramsObj = {content:agent};
-        var params = JSON.stringify(paramsObj);
-        var newUserID = "";
-        var url = window.location.href;
-            //use that user
-        var user = /user=([^&]+)/.exec(url)[1]; // Value is in [1] ('384' in our case)
-        var newUserID = user ? user : 'unknown';
-        if(newUserID === "unknown"){
-            $(".userInfo").show();
-            $.post(saveNewURL, params, function(userID){
-                newUserID = userID;
-                saveManifestObj(newUserID);
-                var windowURL = document.location.href + "?user="+userID;
-                window.history.pushState("Object", "Title", windowURL);
-            });
-        }
-        else{
-            saveManifestObj(newUserID);
-        }
-    }
-
-    function saveManifestObj(userID){
-        var manifestMetadataArray = [];
-        var manifestObj = {
-            "@type":"sc:Manifest",
-            "label":"Ray's Manifest",
-            "@context":"http://iiif.io/api/presentation/2/context.json",
-            "metadata":manifestMetadataArray,
-            "forProject":"broken_books_"+userID,
-            "structures":[],
-            "sequences":[
-                {
-                    "@id":"http://localhost:8080/brokenBooks/sequence/normal",
-                    "@type":"sc:Sequence",
-                    "label":"Manifest Sequence",
-                    "canvases":[]
-                }
-            ]
-        };
-        var saveNewURL = "saveNewRage";
-        var paramsObj = {content:JSON.stringify(manifestObj)};
-        var params = JSON.stringify(paramsObj);
-        $.post(saveNewURL,params,function(manifestID){
-            saveRootRange(userID, manifestID);
-        });
-
-    }
-
-    function saveRootRange(userID, manifestID){
-        var rootRange = {
-                "@type" : "sc:Range",
-                "within" : "root",
-                "otherContent" : [],
-                "canvases" : [],
-                "label" : "Table of Contents",
-                "forProject" : "broken_books_"+userID, //need UID function for this
-                "isReferencedBy" : manifestID, //won't have this yet
-                "ranges" : []
-        };
-        var saveNewURL = "saveNewRage";
-        var paramsObj = {content:JSON.stringify(rootRange)};
-        var params = JSON.stringify(paramsObj);
-        $.post(saveNewURL,params,function(rootRangeID){
-            rootRange["@id"] = rootRangeID;
-            var postURL = "updateRange";
-            var paramObj1 = {"@id" : manifestID, "structures":[rootRange]};
-            var params1 = {"content" : JSON.stringify(paramObj1)};
-            $.post(postURL, params1, function(data){
-
-            });
-        });
-    }
-
-</script>
     </body>
 </html>
