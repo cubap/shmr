@@ -14,6 +14,10 @@ String.prototype.slug = function () {
 
 
 var $baseUrl = window.location;
+// add trailing slash if not
+if($baseUrl.charAt($baseUrl.length-1)!=="/"){
+    $baseUrl+="/";
+}
 var dc = dc || {};
 
 function showSlugged (text) {
