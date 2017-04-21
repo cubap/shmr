@@ -13,7 +13,7 @@ String.prototype.slug = function () {
 };
 
 
-var $baseUrl = window.location;
+var $baseUrl = window.location.href;
 // add trailing slash if not
 if($baseUrl.charAt($baseUrl.length-1)!=="/"){
     $baseUrl+="/";
