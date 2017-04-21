@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/mirador-combined.css">
+        <script src="js/mirador.js"></script>
+    </head>
+    <body>
+        <div id="manifestView" style="width:100%;height:100%;">
+
+        </div>
+        <script>
+                    Mirador({
+      id: "manifestView",
+      data: [{manifestUri: (function(){
+                   return location.search.substring(location.search.indexOf('url=')+4);
+               })(),location:"local"}],
+        "windowObjects": [
+              {
+               "loadedManifest": (function(){
+                   return location.search.substring(location.search.indexOf('url=')+4);
+               })(),
+               "viewType" : "BookView",
+               "displayLayout": false,
+               "bottomPanel" : false,
+               "sidePanel" : false,
+               "annotationLayer": false
+                      }
+                  ]
+    });
+        </script>
+    </body>
+</html>

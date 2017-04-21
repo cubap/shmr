@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
-        <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">
+        <link rel="stylesheet" href="css/brokenbooks.css">
         <style>
             .range{
                 border: 2px solid red;

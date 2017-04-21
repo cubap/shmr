@@ -2,11 +2,11 @@
 <html>
 	<head>
             <meta charset="utf-8">
-            <link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">	
+            <link rel="stylesheet" href="css/brokenbooks.css">	
             <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>  
-            <script src="../brokenBooks/js/bb.js"></script>  
+            <script src="js/bb.js"></script>  
             
             <title>Contribute</title>
             <style>
@@ -77,7 +77,7 @@
                     <div class="demoContent demoHdrTxt">
                         Here you can create a leaf.  Once you are finished and the information is submitted it will be reviewed for accuracy.  
                         If your data is accurate, your leaf will be placed with the other Llangattock Breviary leaves. <br>
-                        <img class="prepareleaf" src="../brokenBooks/images/prepareleaf.png" onclick="submitIntro()">
+                        <img class="prepareleaf" src="images/prepareleaf.png" onclick="submitIntro()">
                         <!--<input type="button" onclick="submitIntro();" value="Prepare A Leaf" />-->
                     </div>
                 </div>
@@ -90,16 +90,16 @@ var admin = false;
 var contributer = true;
 var windowurl = document.location.href;
 if(windowurl.indexOf("home.html") === -1){    
-    document.write('<link rel="stylesheet" href="../brokenBooks/css/brokenbooks.css">');
+    document.write('<link rel="stylesheet" href="css/brokenbooks.css">');
     document.write('<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">');
     document.write('<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"><\/script>');
     document.write('<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"><\/script>');
-    document.write('<script src="../brokenBooks/js/bb.js"><\/script>');
+    document.write('<script src="js/bb.js"><\/script>');
 }
 	$(function(){
                 getManifestID();
-		$(".leafPopover").load("../brokenBooks/leafPopover.html", function(){
-                    $(".leaf").load("../brokenBooks/leafInformation.html", function(){
+		$(".leafPopover").load("leafPopover.html", function(){
+                    $(".leaf").load("leafInformation.html", function(){
                         console.log("SET TABS");
                         $("#formTabs").tabs({
                             activate: function(event ,ui){
@@ -175,7 +175,7 @@ if(windowurl.indexOf("home.html") === -1){
                 "label" : "S",
                 "canvases" : []
             };
-            var postURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var postURL = "updateRange";
             var paramObj1 = {"@id" : "http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5", "sequences":[seq]};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){
@@ -202,7 +202,7 @@ if(windowurl.indexOf("home.html") === -1){
                     "ranges" : [ ]
             };
 
-            var postURL = "http://165.134.241.141/brokenBooks/updateRange";
+            var postURL = "updateRange";
             var paramObj1 = {"@id" : "http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5", "structures":[rootRange]};
             var params1 = {"content" : JSON.stringify(paramObj1)};
             $.post(postURL, params1, function(rootRangeList){

@@ -7786,14 +7786,14 @@ e(a)}n+="}"}else e(t);return Function("str",n)}function r(){this.line=Pt,this.co
              @see: createOpenSeadragonInstance in imageView.js for what to do with invalid image service.
          */
           resource = {
-                  "@id":"http://165.134.241.141/brokenBooks/images/imgNotFound.png",
+                  "@id":"images/imgNotFound.png",
                   "format":"image/jpg",
                   "@type":"dctypes:Image",
                   "service":
                       {                                       
                           "@context": "http://iiif.io/api/image/2/context.json",
                           "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                          "@id" : "http://165.134.241.141/brokenBooks/images/imgNotFound.png"
+                          "@id" : "images/imgNotFound.png"
                       },
                   "width": 667,
                   "height":1000
@@ -13899,18 +13899,18 @@ bindEvents: function() {
                                  '<div title="Change Image Brightness" class="mirador-osd-brightness hud-control">',
                                  '<span>Brightness</span>',
                                  '<span class="brightnessSlider"></span>',
-                                 '<img class="imgManipIcon" src="../brokenBooks/images/brightness.png">',
+                                 '<img class="imgManipIcon" src="images/brightness.png">',
                                  '</div>',
                                  '<div title="Change Image Contrast" class="mirador-osd-contrast hud-control">',
                                  '<span>Contrast</span>',
                                  '<span class="contrastSlider"></span>',
-                                 '<img class="imgManipIcon" src="../brokenBooks/images/contrast.png">',
+                                 '<img class="imgManipIcon" src="images/contrast.png">',
                                  '</div>',
                                  '<a title="Toggle Grayscale" class="mirador-osd-toggle-grayscale hud-control">',
-                                 '<span>Grayscale</span><img class="imgManipIcon" src="../brokenBooks/images/grayscale.png">',
+                                 '<span>Grayscale</span><img class="imgManipIcon" src="images/grayscale.png">',
                                  '</a>',
                                  '<a title="Invert Colors" class="mirador-osd-toggle-invert hud-control">',
-                                 '<span>Invert<span><img class="imgManipIcon" src="../brokenBooks/images/invert.png">',
+                                 '<span>Invert<span><img class="imgManipIcon" src="images/invert.png">',
                                  '</a>',
                                  '<a title="Rotate +180 degrees" class="mirador-osd-flip hud-control">',
                                  '<i class="fa fa-refresh"></i>',
@@ -16521,7 +16521,7 @@ bindEvents: function() {
       //bh edit:  if there is no image or a missing resource, then set the image id to be the default image
       var id = "";
       if(!image.images[0] || !image.images[0].resource || image.images[0].resource["@id"] === ""){
-        id = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+        id = "images/imgNotFound.png";
         return id;
       }
       else if (!image.images[0].resource.service) {
@@ -16531,7 +16531,7 @@ bindEvents: function() {
       }
       else{
         if(image.images[0].resource.service["@id"] === ""){
-          id = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+          id = "images/imgNotFound.png";
         }
         else{
           id = image.images[0].resource.service["@id"];
@@ -17100,14 +17100,14 @@ bindEvents: function() {
         if(canvas.images[0] === undefined || canvas.images[0] === ""){
           //place a holder image.  
           resource = {
-                            "@id":"http://165.134.241.141/brokenBooks/images/imgNotFound.png",
+                            "@id":"images/imgNotFound.png",
                             "format":"image/jpg",
                             "@type":"dctypes:Image",
                             "service":
                                 {                                       
                                     "@context": "http://iiif.io/api/image/2/context.json",
                                     "profile":"http://iiif.io/api/image/2/profiles/level2.json",
-                                    "@id" : "http://165.134.241.141/brokenBooks/images/imgNotFound.png"
+                                    "@id" : "images/imgNotFound.png"
                                 },
                             "width": 667,
                             "height":1000
@@ -17289,9 +17289,9 @@ bindEvents: function() {
 
     img.onerror = function() {
       console.log("image had an error");
-      var defaultImage = "http://165.134.241.141/brokenBooks/images/imgNotResolved.png";
+      var defaultImage = "images/imgNotResolved.png";
       if(imageUrl === undefined || imageUrl === ""){
-        defaultImage = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+        defaultImage = "images/imgNotFound.png";
       }
       dfd.resolve(defaultImage);
       imageUrl = defaultImage;
@@ -17300,9 +17300,9 @@ bindEvents: function() {
 
     dfd.fail(function() {
       console.log('image failed to load: ' + img.src);
-      var defaultImage2 = "http://165.134.241.141/brokenBooks/images/imgNotResolved.png";
+      var defaultImage2 = "images/imgNotResolved.png";
       if(imageUrl === undefined || imageUrl === ""){
-        defaultImage2 = "http://165.134.241.141/brokenBooks/images/imgNotFound.png";
+        defaultImage2 = "images/imgNotFound.png";
       }
       dfd.resolve(defaultImage2);
       imageUrl = defaultImage2;
