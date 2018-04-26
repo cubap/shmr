@@ -113,9 +113,7 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
         $("#focusedRange").css("height", windowHeight+"px");
         //this will be superfluous when the annotation store has ranges from other projects
         var url="http://165.134.105.29/annotationstore/annotation/577d2cace4b075dfb3779f08"; // DTC default
-        var params = {"content" : JSON.stringify(properties)};
-        //console.log("GET RANGES LIVE");
-        $.post(url, params, function(data){
+        $.post(url, function(data){
            var manifest_data = JSON.parse(data);
            miradorURI = manifest_data[0]["@id"];
            //https://github.com/IIIF/mirador/wiki/Complete-Configuration-API
