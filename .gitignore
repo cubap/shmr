@@ -18,3 +18,4 @@ data/Harvard
 build/
 
 /dist/
+*.sqlite
