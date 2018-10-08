@@ -3,18 +3,24 @@
 author: Patrick Cuba <cubap@slu.edu>
 -->
 <html>
-    <head>
-        <title>Deep Codex</title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/deep-codex.css">
-    </head>
-    <body>
-<div class="container">
-    <div id="messages"></div>
-    <div id="canvasDescription"></div>
-    <div id="canvasView"></div>
-    <nav id="manifestNav"></nav>
-</div>
-        <script src="js/deep-codex.js"></script>
-    </body>
+
+<head>
+    <title>Deep Codex</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/deep-codex.css">
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+</head>
+
+<body>
+    <div class="container">
+        <div id="messages" class="row"></div>
+        <div class="row">
+            <div id="canvasView" class="col"></div>
+            <div id="canvasDescription" class="col"></div>
+        </div>
+        <nav id="manifestNav" class="row"></nav>
+    </div>
+    <script src="js/deep-codex.js"></script>
+</body>
+
 </html>

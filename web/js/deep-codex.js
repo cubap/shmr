@@ -35,19 +35,20 @@ function fromIdInArray(id,array) {
 function renderCanvas(canvas) {
 	let elemWidth = canvasView.offsetWidth
 	let elemHeight = elemWidth * (canvas.height/canvas.width)
-	let tmpl = `<h2>${canvas.label || "[ unlabeled ]"}</h2>`
+	let tmpl = ``
+	let tmplData = `<h2>${canvas.label || "[ unlabeled ]"}</h2>`
 	let presi = (canvas["@context"] && canvas["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
 	try {
 		switch(presi) {
-			case 3: tmpl += `<img src="${canvas.items[0].items[0].id}" alt="canvas image" >`
+			case 3: tmpl = `<img src="${canvas.items[0].items[0].id}" alt="canvas image" >`
 			break
-			default : tmpl += `<img src="${canvas.images[0].resource["@id"]}" alt="canvas image" >`
+			default : tmpl = `<img src="${canvas.images[0].resource["@id"]}" alt="canvas image" >`
 		}
 	} catch(err) {
-		tmpl += `<img src="" alt="no image detected" width="${elemWidth}" height="${elemHeight}">`
+		tmpl = `<img src="" alt="no image detected" width="${elemWidth}" height="${elemHeight}">`
 	}
-	tmpl += `<div>showing a canvas</div>`
-	canvasDescription.innerHTML = canvas.metadata ? `<dl>${canvas.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${b.value}</dd>`,``)}</dl>` : `no metadata`
+	canvasDescription.innerHTML = canvas.metadata ? `${tmplData}<dl>${canvas.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${b.value}</dd>`,``)}</dl>` : `${tmplData}<p>no metadata</p>`
+	canvasDescription.innerHTML += descriptionFormTemplate([{label:"test",value:"filled"}])
 	canvasView.innerHTML = tmpl
 }
 
@@ -56,15 +57,24 @@ function renderManifest(manifest={}) {
 	let presi = (manifest["@context"] && manifest["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
 	try {
 		switch(presi){
-			case 3: tmpl = manifest.items.reduce((a,b)=>a+=`<a href="#${b.id}">${b.label}</a>`,``)
+			case 3: tmpl = manifest.items.reduce((a,b)=>a+=`<a href="#${b.id}" class="button">${b.label}</a>`,``)
 			break
-			default: tmpl = manifest.sequences[0].canvases.reduce((a,b)=>a+=`<a href="#${b["@id"]}">${b.label}</a>`,``)
+			default: tmpl = manifest.sequences[0].canvases.reduce((a,b)=>a+=`<a href="#${b["@id"]}" class="button">${b.label}</a>`,``)
 		}
+		tmpl = `<a href="#${manifest["@id"]}" class="button">IIIF Manifest</a> ${tmpl}`
 	} catch(err) {
 		tmpl = `No pages here`
 	}
 	manifestNav.setAttribute("src",manifest["@id"]||manifest.id)
 	manifestNav.innerHTML = tmpl
+}
+
+function descriptionFormTemplate(fields) {
+	return `<form> ${fields.reduce((a,b)=>formField(b),1)} </form>`
+}
+
+function formField(field) {
+	return `<label>${field.label}</label><input type="text" value="${field.value}">`
 }
 
 function showMessage(message, clear) {
