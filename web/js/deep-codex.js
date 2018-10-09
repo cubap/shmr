@@ -48,7 +48,32 @@ function renderCanvas(canvas) {
 		tmpl = `<img src="" alt="no image detected" width="${elemWidth}" height="${elemHeight}">`
 	}
 	canvasDescription.innerHTML = canvas.metadata ? `${tmplData}<dl>${canvas.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${b.value}</dd>`,``)}</dl>` : `${tmplData}<p>no metadata</p>`
-	canvasDescription.innerHTML += descriptionFormTemplate([{label:"test",value:"filled"}])
+	
+	// Dummy schema
+	let fields = [
+		{
+			label: "test",
+			default_value: "filled",
+			options: {
+				helptext: "",
+				type: "number", // memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
+				required: false,
+				min: null,		// range, date
+				max: null,		// range, date
+				step: null,		// range
+				pattern: null	// tel
+			},
+			type: "rr:test"		// web ontology from schema (JSON-LD @type)
+		}, {
+			label: "multiple",
+			default_value: "grommit",
+			options: {
+				type: "memo"
+			}
+		}
+	]
+	
+	canvasDescription.innerHTML += descriptionFormTemplate(fields)
 	canvasView.innerHTML = tmpl
 }
 
@@ -70,11 +95,32 @@ function renderManifest(manifest={}) {
 }
 
 function descriptionFormTemplate(fields) {
-	return `<form> ${fields.reduce((a,b)=>formField(b),1)} </form>`
+	return `<form> ${fields.reduce((a,b)=>a+=formField(b),``)} </form>`
 }
 
 function formField(field) {
-	return `<label>${field.label}</label><input type="text" value="${field.value}">`
+	let tmpl = `<label>${field.label}</label>`
+	if(!field.options) { field.options = {} }
+	switch(field.options.type) {
+		// memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
+		case "memo" : tmpl += `<textarea at-type="${field.type}"${field.options.required ? ` required="true"` : ``}>${field.default_value}</textarea>`
+		break
+		case "number" : 
+		case "email" :
+		case "url" :
+		case "tel" :
+		case "range" :
+		case "date" :
+		case "month" :
+		case "week" :
+		case "time" :
+		case "datetime" :
+		case "color" : tmpl += `<input type="${field.options.type}" at-type="${field.type}"${field.options.required ? ` required="true"` : null} value="${field.default_value}">`
+		break
+		default : tmpl += `<input type="text" at-type="${field.type}"${field.options.required ? ` required="true"` : ``} value="${field.default_value}">`
+	}
+
+	return tmpl
 }
 
 function showMessage(message, clear) {
