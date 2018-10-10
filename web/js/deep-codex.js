@@ -1,35 +1,152 @@
+// import {Deer} from './deer.js'
+
 const SCREEN = {}
+SCREEN.annotations = {}
+const URLS = {}
+URLS.BASE_ID = "http://devstore.rerum.io/v1"
+URLS.CREATE = "http://tinydev.rerum.io/app/create"
+URLS.UPDATE = "http://tinydev.rerum.io/app/update"
+URLS.QUERY= "http://tinydev.rerum.io/app/query"
+
 function loadHash() {
     let params = getParams(window.location.href)
 	let hash = window.location.hash.substr(1)
-	canvasView.setAttribute("deep-canvas-id",hash)
+	main.setAttribute("deep-id",hash)
 	canvasView.innerText = hash
-	fetch(hash)
-	.then(response=>response.json()).catch(error=>showMessage(error))
-	.then(function(obj){
-		switch(obj["@type"]) {
-			case "sc:Canvas" : 
-			SCREEN.canvas = obj
-			break
-			case "sc:Manifest" : 
-			SCREEN.manifest = obj
-			let presi = (obj["@context"] && obj["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
-			SCREEN.canvas = (presi===3) ? fromIdInArray(SCREEN.manifest.start.id,SCREEN.manifest.items)||SCREEN.manifest.items[0] : fromIdInArray(SCREEN.manifest.startCanvas,SCREEN.manifest.sequences[0].canvases)||SCREEN.manifest.sequences[0].canvases[0]
-		}
-		renderCanvas(SCREEN.canvas)
-		renderManifest(SCREEN.manifest)
+}
 
-	}).catch(error=>showMessage(error))
+function render(obj) {
+	switch(obj["@type"]) {
+		case "sc:Canvas" : 
+		SCREEN.canvas = obj
+		localStorage.setItem(obj["@id"],JSON.stringify(obj))
+		canvasView.setAttribute("deep-id",obj["@id"])
+		renderCanvas(SCREEN.canvas)
+		break
+		case "sc:Manifest" : 
+		SCREEN.manifest = obj
+		manifestNav.setAttribute("deep-id",obj["@id"])
+		renderManifest(SCREEN.manifest)
+		let presi = (obj["@context"] && obj["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
+		SCREEN.canvas = (presi===3) 
+			? fromIdInArray(SCREEN.manifest.start.id,SCREEN.manifest.items)||SCREEN.manifest.items[0]
+			: fromIdInArray(SCREEN.manifest.startCanvas,SCREEN.manifest.sequences[0].canvases)||SCREEN.manifest.sequences[0].canvases[0]
+		let canvasList = (presi===3) ? SCREEN.manifest.items : SCREEN.manifest.sequences[0].canvases
+		canvasList.map(item=>{
+			let id = item["@id"]
+			try {
+				if(!localStorage.getItem(id)){
+					localStorage.setItem(id,JSON.stringify(item))
+				}
+				let stored = JSON.parse(localStorage.getItem(id))
+				if(!(stored.items || stored.images)) {
+					throw "Please expand this item"
+				}
+			} catch(err) {
+				fetch(id).then(response=>response.json()).catch(error=>showMessage(error))
+				.then(obj=>localStorage.setItem(obj["@id"],JSON.stringify(obj)))
+			}
+		})
+		localStorage.setItem(obj["@id"],JSON.stringify(obj))
+		renderCanvas(SCREEN.canvas)
+	}
+}
+/**
+ * Observer callback for rendering newly loaded objects. Checks the
+ * mutationsList for "deep-object" attribute changes.
+ * @param {Array} mutationsList of MutationRecord objects
+ */
+async function newObjectRender(mutationsList) {
+	for (var mutation of mutationsList) {
+		if (mutation.attributeName === "deep-id") {
+			let id = mutation.target.getAttribute("deep-id")
+			let obj = localStorage.getItem("id")
+			if(!obj || !(obj.items || obj.images)) {
+				obj = await fetch(id)
+				.then(response=>response.json()).catch(error=>showMessage(error))
+			}
+			render(obj)
+		}
+	}
 }
 
 function fromIdInArray(id,array) {
 	let item
-	for(i of array){
+	for(let i of array){
 		if(i["@id"]===id || i.id===id){
 			return i
 		}
 	}
 	return null
+}
+
+/**
+ * Execute query for any annotations in RERUM which target the
+ * id passed in. Promise resolves to an array of annotations.
+ * @param {String} id URI for the targeted entity
+ */
+async function findByTargetId(id) {
+	let everything = Object.keys(localStorage).map(JSON.parse(localStorage.getItem(k)))
+	let obj = {
+		target: id
+	}
+	let matches = await fetch(URLS.QUERY, {
+		method: "POST",
+		body: JSON.stringify(obj),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	}).then(response => response.json())
+	let local_matches = everything.filter(o => o.target === id)
+	matches = local_matches.concat(matches)
+	return matches
+}
+
+function aggregateAnnotations(obj) {
+	// otherContent, annotations, queried (all commenting or describing)
+	let annos = []
+	if(obj.otherContent) { annos = annos.concat(obj.otherContent.reduce(a,b=>(a.resources||([a["@id"] && a]||[{"@id":a}])).concat(b.resources||([b["@id"] && b]||[{"@id":b}])))) }
+	if(obj.annotations) { annos = annos.concat(obj.annotations.reduce(a,b=>(a.items||([a.id] && [a] || [{id:a}])).concat(b.items||([b.id && b]||[{id:b}])))) }
+	SCREEN.promises = SCREEN.promises || []
+	SCREEN.promises = SCREEN.promises.concat(findByTargetId(obj["@id"]||obj.id).catch(err=>[]))
+	for(let entry of annos) {
+		switch(typeof entry){
+			case "object": 
+			if(!Array.isArray(entry)) {
+				switch(entry["@type"] || entry.type) {
+					case "sc:AnnotationList" : 
+					case "AnnotationList" :
+					if(entry.resources) {
+						SCREEN.promises = SCREEN.promises.concat(entry.resources)
+					} else {
+						SCREEN.promises = SCREEN.promises.concat(fetch((entry["@id"])).then(response => response.json()).catch(err=>{}))
+					}
+					break
+					case "AnnotationPage" :
+					if(entry.items) {
+						SCREEN.promises = SCREEN.promises.concat(entry.items)
+					} else {
+						SCREEN.promises = SCREEN.promises.concat(fetch((entry.id)).then(response => response.json()).catch(err=>{}))
+					}
+					break
+					case "Annotation" :
+					case "oa:Annotation" :
+					// Annotation found!
+					localStorage.setItem(entry.id||entry["@id"],JSON.stringify(entry))
+					SCREEN.annotations[entry.id||entry["@id"]] = entry
+					### TODO BADAH!
+					break
+					default : // just discard and move on
+				}
+			} else {
+				SCREEN.promises = SCREEN.promises.concat(entry)
+			}
+			break
+			case "string":
+			let resource = fetch(entry).then(response => response.json())
+			SCREEN.promises = SCREEN.promises.concat(resource)
+		}
+	}
 }
 
 function renderCanvas(canvas) {
@@ -119,7 +236,6 @@ function formField(field) {
 		break
 		default : tmpl += `<input type="text" at-type="${field.type}"${field.options.required ? ` required="true"` : ``} value="${field.default_value}">`
 	}
-
 	return tmpl
 }
 
@@ -149,4 +265,8 @@ function getParams(url) {
 	return params;
 }
 
+const newObjectLoader = new MutationObserver(newObjectRender)
+newObjectLoader.observe(document.getElementById("main"), {
+	attributes: true
+})
 window.onload = window.onhashchange = loadHash
