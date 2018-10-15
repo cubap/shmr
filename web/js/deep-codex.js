@@ -2,6 +2,8 @@
 
 const SCREEN = {}
 SCREEN.annotations = {}
+SCREEN.targets = {}
+SCREEN.promises = []
 const URLS = {}
 URLS.BASE_ID = "http://devstore.rerum.io/v1"
 URLS.CREATE = "http://tinydev.rerum.io/app/create"
@@ -11,17 +13,25 @@ URLS.QUERY= "http://tinydev.rerum.io/app/query"
 function loadHash() {
     let params = getParams(window.location.href)
 	let hash = window.location.hash.substr(1)
-	main.setAttribute("deep-id",hash)
+	changeObject(hash)
 	canvasView.innerText = hash
 }
 
-function render(obj) {
+main.addEventListener('filed-annotation', function(event){
+	if(event.target_object === objectDescription.getAttribute("deep-id")) {
+		renderObjectDescription(SCREEN.canvas)
+	}
+})
+
+function render(obj={}) {
+	aggregateAnnotations(obj)
 	switch(obj["@type"]) {
 		case "sc:Canvas" : 
 		SCREEN.canvas = obj
 		localStorage.setItem(obj["@id"],JSON.stringify(obj))
 		canvasView.setAttribute("deep-id",obj["@id"])
-		renderCanvas(SCREEN.canvas)
+		objectDescription.setAttribute("deep-id",obj["@id"])
+		renderCanvasImage(SCREEN.canvas)
 		break
 		case "sc:Manifest" : 
 		SCREEN.manifest = obj
@@ -32,6 +42,8 @@ function render(obj) {
 			? fromIdInArray(SCREEN.manifest.start.id,SCREEN.manifest.items)||SCREEN.manifest.items[0]
 			: fromIdInArray(SCREEN.manifest.startCanvas,SCREEN.manifest.sequences[0].canvases)||SCREEN.manifest.sequences[0].canvases[0]
 		let canvasList = (presi===3) ? SCREEN.manifest.items : SCREEN.manifest.sequences[0].canvases
+		SCREEN.promises.push(canvasList)
+		aggregateAnnotations()
 		canvasList.map(item=>{
 			let id = item["@id"]
 			try {
@@ -48,8 +60,9 @@ function render(obj) {
 			}
 		})
 		localStorage.setItem(obj["@id"],JSON.stringify(obj))
-		renderCanvas(SCREEN.canvas)
+		renderCanvasImage(SCREEN.canvas)
 	}
+	renderObjectDescription(obj)
 }
 /**
  * Observer callback for rendering newly loaded objects. Checks the
@@ -85,87 +98,107 @@ function fromIdInArray(id,array) {
  * id passed in. Promise resolves to an array of annotations.
  * @param {String} id URI for the targeted entity
  */
-async function findByTargetId(id) {
-	let everything = Object.keys(localStorage).map(JSON.parse(localStorage.getItem(k)))
+async function findByTargetId(id,noFetch) {
 	let obj = {
 		target: id
 	}
-	let matches = await fetch(URLS.QUERY, {
-		method: "POST",
-		body: JSON.stringify(obj),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	}).then(response => response.json())
-	let local_matches = everything.filter(o => o.target === id)
-	matches = local_matches.concat(matches)
-	return matches
+	if(!noFetch) {
+		fetch(URLS.QUERY, {
+			method: "POST",
+			body: JSON.stringify(obj),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		}).then(response => response.json())
+		.then(matches=>matches.map(fileAnnotation))
+	}
+	return SCREEN.targets[target]
 }
 
-function aggregateAnnotations(obj) {
+function aggregateAnnotations(obj={}) {
 	// otherContent, annotations, queried (all commenting or describing)
-	let annos = []
-	if(obj.otherContent) { annos = annos.concat(obj.otherContent.reduce(a,b=>(a.resources||([a["@id"] && a]||[{"@id":a}])).concat(b.resources||([b["@id"] && b]||[{"@id":b}])))) }
-	if(obj.annotations) { annos = annos.concat(obj.annotations.reduce(a,b=>(a.items||([a.id] && [a] || [{id:a}])).concat(b.items||([b.id && b]||[{id:b}])))) }
 	SCREEN.promises = SCREEN.promises || []
-	SCREEN.promises = SCREEN.promises.concat(findByTargetId(obj["@id"]||obj.id).catch(err=>[]))
-	for(let entry of annos) {
+	if(obj.otherContent) { SCREEN.promises = SCREEN.promises.concat(obj.otherContent) }
+	if(obj.annotations) { SCREEN.promises = SCREEN.promises.concat(obj.annotations) }
+	let id = obj["@id"]||obj.id
+	if(id){ SCREEN.promises = SCREEN.promises.concat(findByTargetId(id).catch(err=>[]))	}
+	while (SCREEN.promises.length) {
+		let entry = SCREEN.promises.pop()
 		switch(typeof entry){
 			case "object": 
 			if(!Array.isArray(entry)) {
+				if(typeof entry.then === "function") {
+					entry.then(result=>SCREEN.promises.push(result)).then(aggregateAnnotations)
+					continue
+				}
 				switch(entry["@type"] || entry.type) {
 					case "sc:AnnotationList" : 
 					case "AnnotationList" :
 					if(entry.resources) {
 						SCREEN.promises = SCREEN.promises.concat(entry.resources)
 					} else {
-						SCREEN.promises = SCREEN.promises.concat(fetch((entry["@id"])).then(response => response.json()).catch(err=>{}))
+						SCREEN.promises = SCREEN.promises.push(fetch((entry["@id"])).then(response => response.json()).catch(err=>{}))
 					}
 					break
 					case "AnnotationPage" :
 					if(entry.items) {
 						SCREEN.promises = SCREEN.promises.concat(entry.items)
 					} else {
-						SCREEN.promises = SCREEN.promises.concat(fetch((entry.id)).then(response => response.json()).catch(err=>{}))
+						SCREEN.promises = SCREEN.promises.push(fetch((entry.id)).then(response => response.json()).catch(err=>{}))
 					}
 					break
 					case "Annotation" :
 					case "oa:Annotation" :
 					// Annotation found!
-					localStorage.setItem(entry.id||entry["@id"],JSON.stringify(entry))
-					SCREEN.annotations[entry.id||entry["@id"]] = entry
-					### TODO BADAH!
+					fileAnnotation(entry)
 					break
 					default : // just discard and move on
 				}
 			} else {
+				if (entry.length === 0) {
+					// empty result, please do nothing and move on.
+					continue
+				}
 				SCREEN.promises = SCREEN.promises.concat(entry)
 			}
 			break
 			case "string":
 			let resource = fetch(entry).then(response => response.json())
-			SCREEN.promises = SCREEN.promises.concat(resource)
+			SCREEN.promises = SCREEN.promises.push(resource)
 		}
 	}
 }
 
-function renderCanvas(canvas) {
-	let elemWidth = canvasView.offsetWidth
-	let elemHeight = elemWidth * (canvas.height/canvas.width)
-	let tmpl = ``
-	let tmplData = `<h2>${canvas.label || "[ unlabeled ]"}</h2>`
-	let presi = (canvas["@context"] && canvas["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
-	try {
-		switch(presi) {
-			case 3: tmpl = `<img src="${canvas.items[0].items[0].id}" alt="canvas image" >`
-			break
-			default : tmpl = `<img src="${canvas.images[0].resource["@id"]}" alt="canvas image" >`
+function fileAnnotation(annotation){
+	let motivation = annotation.motivation || annotation["oa:Motivation"]
+	let category
+	if(motivation.indexOf("describing")>-1) { category="description" }
+	if(motivation.indexOf("commenting")>-1) { category="commentary" }
+	if(motivation.indexOf("classifying")>-1) { category="classification" }
+	if(motivation.indexOf("linking")>-1) { category="links" }
+	if(motivation.indexOf("tagging")>-1) { category="tags" }
+	if(category===undefined) { continue } // I don't know what this is; let's move on.
+	let id = annotation.id||annotation["@id"]
+	let target = annotation.on || annotation.target
+	localStorage.setItem(id,JSON.stringify(annotation))
+	SCREEN.annotations[id] = annotation
+	if(SCREEN.targets[target] && SCREEN.targets[target][category]) {
+		if(SCREEN.targets[target][category].indexOf(id) === -1) {
+			SCREEN.targets[target][category].push(id)
+		} else {
+			// It is already there, calm down.
 		}
-	} catch(err) {
-		tmpl = `<img src="" alt="no image detected" width="${elemWidth}" height="${elemHeight}">`
+	} else {
+		SCREEN.targets[target] = [id]
 	}
-	canvasDescription.innerHTML = canvas.metadata ? `${tmplData}<dl>${canvas.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${b.value}</dd>`,``)}</dl>` : `${tmplData}<p>no metadata</p>`
-	
+	let announcement = new CustomEvent("filed-annotation",{
+		target_object: target,
+		category: category,
+		anno_id: id
+	})
+}
+
+function renderObjectDescription(object, fieldsX) {
 	// Dummy schema
 	let fields = [
 		{
@@ -186,12 +219,62 @@ function renderCanvas(canvas) {
 			default_value: "grommit",
 			options: {
 				type: "memo"
+			},
+			type: "cidoc-crm:Stuff"
+		}, {
+			label: "multiple",
+			default_value: "grommit",
+			options: {
+				type: "date"
+			}
+		}, {
+			label: "multiple",
+			default_value: "grommit",
+			options: {
+				type: "text"
 			}
 		}
 	]
+
+	let tmplData = `<h2>${object.label || "[ unlabeled ]"}</h2>`
+	let presi = (object["@context"] && object["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
+	tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${b.value}</dd>`,``)}</dl>` : `<p>no metadata</p>`
+
+	for(key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
+		// categories expected: description, commentary, classification, links, tags
+		tmplData += `<h3>${key}</h3>
+		<dl class="meta-${key}">`
+		for(id of SCREEN.targets[objectDescription.getAttribute("deep-id")][key]) {
+			let annotation = SCREEN.annotations[id]
+			let label = annotation.label||annotation.type||annotation['@type']||annotation.name||annotation.title
+			let value = getValue(annotation)
+			tmplData += `<dt>${label}</dt><dd>${value}</dd>`
+		}
+	}
 	
-	canvasDescription.innerHTML += descriptionFormTemplate(fields)
+	tmplData += descriptionFormTemplate(fields)
+	objectDescription.innerHTML = tmplData
+}
+
+function renderCanvasImage(canvas) {
+	let elemWidth = canvasView.offsetWidth
+	let elemHeight = elemWidth * (canvas.height/canvas.width)
+	let tmpl = ``
+	let presi = (canvas["@context"] && canvas["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
+	try {
+		switch(presi) {
+			case 3: tmpl = `<img src="${canvas.items[0].items[0].id}" alt="canvas image" >`
+			break
+			default : tmpl = `<img src="${canvas.images[0].resource["@id"]}" alt="canvas image" >`
+		}
+	} catch(err) {
+		tmpl = `<img src="" alt="no image detected" width="${elemWidth}" height="${elemHeight}">`
+	}
 	canvasView.innerHTML = tmpl
+}
+
+function changeObject(newId) {
+	main.setAttribute("deep-id",newId)
 }
 
 function renderManifest(manifest={}) {
@@ -199,9 +282,9 @@ function renderManifest(manifest={}) {
 	let presi = (manifest["@context"] && manifest["@context"].indexOf("/3/context.json")>-1) ? 3 : 2
 	try {
 		switch(presi){
-			case 3: tmpl = manifest.items.reduce((a,b)=>a+=`<a href="#${b.id}" class="button">${b.label}</a>`,``)
+			case 3: tmpl = manifest.items.reduce((a,b)=>a+=`<a onclick="changeObject('${b.id}')" class="button">${b.label}</a>`,``)
 			break
-			default: tmpl = manifest.sequences[0].canvases.reduce((a,b)=>a+=`<a href="#${b["@id"]}" class="button">${b.label}</a>`,``)
+			default: tmpl = manifest.sequences[0].canvases.reduce((a,b)=>a+=`<a onclick="changeObject('${b["@id"]}')" class="button">${b.label}</a>`,``)
 		}
 		tmpl = `<a href="#${manifest["@id"]}" class="button">IIIF Manifest</a> ${tmpl}`
 	} catch(err) {
@@ -209,6 +292,7 @@ function renderManifest(manifest={}) {
 	}
 	manifestNav.setAttribute("src",manifest["@id"]||manifest.id)
 	manifestNav.innerHTML = tmpl
+
 }
 
 function descriptionFormTemplate(fields) {
@@ -244,6 +328,50 @@ function showMessage(message, clear) {
 	msg.innerHTML = `${message}`
 	if(clear) {messages.innerHTML=''}
 	messages.appendChild(msg)
+}
+
+function getValue(property, asType) {
+	// TODO: There must be a best way to do this...
+	let prop;
+	if (!Array.isArray(property)) {
+		prop = property.map(getValue)
+	}
+	if (typeof property === "object") {
+		// TODO: JSON-LD insists on "@value", but this is simplified in a lot
+		// of contexts. Reading that is ideal in the future.
+		prop =
+			p.hasOwnProperty("@value") && p["@value"] ||
+			p.hasOwnProperty("value") && p["value"] ||
+			p.hasOwnProperty("$value") && p["$value"] ||
+			p.hasOwnProperty("val") && p["val"]
+	} else {
+		prop = property
+	}
+	try {
+		switch (asType.toUpperCase()) {
+			case "STRING":
+				prop = prop.toString();
+				break
+			case "NUMBER":
+				prop = parseFloat(prop);
+				break
+			case "INTEGER":
+				prop = parseInt(prop);
+				break
+			case "BOOLEAN":
+				prop = !Boolean(["false", "no", "0", "", "undefined", "null"].indexOf(String(prop).toLowerCase().trim()));
+				break
+			default:
+		}
+	} catch (err) {
+		if (asType) {
+			throw new Error("asType: '" + asType + "' is not possible.\n" + err.message)
+		} else {
+			// no casting requested
+		}
+	} finally {
+		return prop
+	}
 }
 
 /**
