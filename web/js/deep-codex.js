@@ -132,6 +132,12 @@ function aggregateAnnotations(obj={}) {
 					continue
 				}
 				switch(entry["@type"] || entry.type) {
+					case "sc:Manifest" :
+					case "Manifest" :
+					case "sc:Canvas" :
+					case "Canvas" :
+					aggregateAnnotations(entry)			
+					break
 					case "sc:AnnotationList" : 
 					case "AnnotationList" :
 					if(entry.resources) {
