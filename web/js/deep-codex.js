@@ -28,7 +28,6 @@ function render(obj = {}) {
 	switch (obj["@type"]) {
 		case "sc:Canvas":
 			SCREEN.canvas = obj
-			localStorage.setItem(obj["@id"], JSON.stringify(obj))
 			canvasView.setAttribute("deep-id", obj["@id"])
 			objectDescription.setAttribute("deep-id", obj["@id"])
 			renderCanvasImage(SCREEN.canvas)
@@ -73,10 +72,14 @@ async function newObjectRender(mutationsList) {
 	for (var mutation of mutationsList) {
 		if (mutation.attributeName === "deep-id") {
 			let id = mutation.target.getAttribute("deep-id")
-			let obj = localStorage.getItem("id")
-			if (!obj || !(obj.items || obj.images)) {
+			let obj = {}
+			try {
+obj = JSON.parse(localStorage.getItem(id))
+			} catch (err) { }
+			if (!(obj.items || obj.images || obj.sequences)) {
 				obj = await fetch(id)
 					.then(response => response.json()).catch(error => showMessage(error))
+					.then(data=>localStorage.setItem(data["@id"]||data.id,JSON.stringify(data))).catch(error => showMessage(error))
 			}
 			render(obj)
 		}
@@ -145,7 +148,7 @@ async function aggregateAnnotations(obj = {}) {
 				if (typeof entry.then === "function") {
 					let result = await entry
 					SCREEN.promises.push(result)
-					return aggregateAnnotations()
+					return aggregateAnnotations(result)
 				}
 				switch (entry["@type"] || entry.type) {
 					case "sc:Manifest":
