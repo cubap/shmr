@@ -18,4 +18,5 @@ nav a {
     border: thin solid black;
     padding: .25rem;
     display: inline-block;
+    cursor: pointer;
 }
