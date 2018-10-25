@@ -18,3 +18,5 @@ data/Harvard
 build/
 
 /dist/
+*.sqlite
+web/.vs/web/v15/.suo
