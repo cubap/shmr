@@ -23,3 +23,8 @@ nav a {
     display: inline-block;
     cursor: pointer;
 }
+label {
+    display: block;
+    font-variant: small-caps;
+    margin-top: 1rem;
+}

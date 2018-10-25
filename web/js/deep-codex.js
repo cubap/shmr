@@ -223,45 +223,45 @@ function fileAnnotation(annotation) {
 	dispatchEvent(announcement)
 }
 
-function renderObjectDescription(object, fieldsX) {
+async function renderObjectDescription(object) {
 	// Dummy schema
-	let fields = [{
-		label: "test",
-		default_value: "filled",
-		options: {
-			helptext: "",
-			type: "number", // memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
-			required: false,
-			min: null, // range, date
-			max: null, // range, date
-			step: null, // range
-			pattern: null // tel
-		},
-		type: "rr:test" // web ontology from schema (JSON-LD @type)
-	}, {
-		label: "multiple",
-		default_value: "grommit",
-		options: {
-			type: "memo"
-		},
-		type: "cidoc-crm:Stuff"
-	}, {
-		label: "multiple",
-		default_value: "grommit",
-		options: {
-			type: "date"
-		}
-	}, {
-		label: "multiple",
-		default_value: "grommit",
-		options: {
-			type: "text"
-		}
-	}]
+	// let fields = [{
+	// 	label: "test",
+	// 	default_value: "filled",
+	// 	options: {
+	// 		helptext: "",
+	// 		type: "number", // memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
+	// 		required: false,
+	// 		min: null, // range, date
+	// 		max: null, // range, date
+	// 		step: null, // range
+	// 		pattern: null // tel
+	// 	},
+	// 	type: "rr:test" // web ontology from schema (JSON-LD @type)
+	// }, {
+	// 	label: "multiple",
+	// 	default_value: "grommit",
+	// 	options: {
+	// 		type: "memo"
+	// 	},
+	// 	type: "cidoc-crm:Stuff"
+	// }, {
+	// 	label: "multiple",
+	// 	default_value: "grommit",
+	// 	options: {
+	// 		type: "date"
+	// 	}
+	// }, {
+	// 	label: "multiple",
+	// 	default_value: "grommit",
+	// 	options: {
+	// 		type: "text"
+	// 	}
+	// }]
 
 	let tmplData = `<h2>${object.label || "[ unlabeled ]"}</h2>`
 	let presi = (object["@context"] && object["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
-	tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : `<p>no metadata</p>`
+	tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : ``
 
 	for (key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
 		// categories expected: description, commentary, classification, links, tags
@@ -274,7 +274,7 @@ function renderObjectDescription(object, fieldsX) {
 			tmplData += `<dt>${label}</dt><dd>${value}</dd>`
 		}
 	}
-
+	let fields = CONFIG.fields
 	tmplData += descriptionFormTemplate(fields)
 	objectDescription.innerHTML = tmplData
 }
@@ -334,8 +334,8 @@ function formField(field) {
 	switch (field.options.type) {
 		// memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
 		case "memo":
-			tmpl += `<textarea at-type="${field.type}"${field.options.required ? ` required="true"` : ``}>${field.default_value}</textarea>`
-			break
+		tmpl += `<textarea at-type="${field.type}"${field.options.required ? ` required="true"` : ``}>${field.default_value}</textarea>`
+		break
 		case "number":
 		case "email":
 		case "url":
@@ -347,10 +347,18 @@ function formField(field) {
 		case "time":
 		case "datetime":
 		case "color":
-			tmpl += `<input type="${field.options.type}" at-type="${field.type}"${field.options.required ? ` required="true"` : null} value="${field.default_value}">`
-			break
+		tmpl += `<input type="${field.options.type}" at-type="${field.type}"${field.options.required ? ` required="true"` : null} value="${field.default_value}">`
+		break
 		default:
-			tmpl += `<input type="text" at-type="${field.type}"${field.options.required ? ` required="true"` : ``} value="${field.default_value}">`
+			if(field.options.type&&field.options.type.indexOf("array_")===0) {
+				field.options.type = field.options.type.substring(6)
+				return formField(field)
+			} else {
+				tmpl += `<input type="text" at-type="${field.type}"${field.options.required ? ` required="true"` : ``} value="${field.default_value}">`
+			}
+			if(field.options.helptext){
+				tmpl+=`<small>${field.options.helptext}</small>`
+			}
 	}
 	return tmpl
 }
