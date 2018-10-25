@@ -109,38 +109,14 @@ Ray Celemens at Yale, Curator of Manuscripts.  Offload work off to him.
 </html>
 <script>
     $(function(){
-        var manifestURI = "getManifest.html";
-        var miradorURI = "unknown";
-        var thisURL = document.location.href;
-        if (thisURL.indexOf("?LFD") > -1 ){
-            //miradorURI = "getManifest?username=lisa";
-            manifestURI+="?LFD";
-        }
-        else if(thisURL.indexOf("?RC") > -1 ){
-            //miradorURI = "getManifest?username=debra";
-            manifestURI+="?RC";
-            //http://165.134.241.141/annotationstore/annotation/577fca85e4b0dbe2fb5deef5
-        }
-        else if(thisURL.indexOf("?DTC") > -1 ){
-            manifestURI+="?DTC";
-            //http://165.134.241.141/annotationstore/annotation/577d2cace4b075dfb3779f08
-        }
-        else{ //Some other default if I dont have a user? FIXME
-           // miradorURI = "getManifest?username=debra";
-            manifestURI+="?DTC";
-        }
-        window.history.pushState("Object", "Title", manifestURI);
         var windowHeight = window.innerHeight - 25;
         $("#focusedRange").css("height", windowHeight+"px");
-        var forProject = detectWho();
-        var properties={"@type" : "sc:Manifest", "forProject":forProject};
         //this will be superfluous when the annotation store has ranges from other projects
-        var url="getAnnotationByPropertiesServlet";
-        var params = {"content" : JSON.stringify(properties)};
-        //console.log("GET RANGES LIVE");
-        $.post(url, params, function(data){
-           var manifest_data = JSON.parse(data);
-           miradorURI = manifest_data[0]["@id"];
+        var url="http://165.134.105.29/annotationstore/annotation/577d2cace4b075dfb3779f08"; // DTC default
+        $.post(url, function(data){
+           var manifest_data = data;
+		   if(!manifest_data["@id"]) manifest_data = JSON.parse(data);
+           miradorURI = manifest_data["@id"];
            //https://github.com/IIIF/mirador/wiki/Complete-Configuration-API
             Mirador({
                 "id": "focusedRange", // The CSS ID selector for the containing element.
