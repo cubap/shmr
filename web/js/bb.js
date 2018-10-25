@@ -2930,9 +2930,8 @@ function gatherRangesForArrange(which, username){
 }
 
 function syncData(username, url ,params, which){
-    var url2 = "getManifest";
-    var params2 = {"username":username};
-    $.post(url2, params2)
+        var url2="http://165.134.105.29/annotationstore/annotation/577d2cace4b075dfb3779f08"; // DTC default
+    $.post(url2)
     .done(function(data){
         var server_data = JSON.parse(data);
         var serverSequence = server_data.sequences[0];
