@@ -1,5 +1,3 @@
-// import {Deer} from './deer.js'
-
 const SCREEN = {}
 SCREEN.annotations = {}
 SCREEN.targets = {}
@@ -76,10 +74,9 @@ async function newObjectRender(mutationsList) {
 			try {
 obj = JSON.parse(localStorage.getItem(id))
 			} catch (err) { }
-			if (!(obj.items || obj.images || obj.sequences)) {
-				obj = await fetch(id)
-					.then(response => response.json()).catch(error => showMessage(error))
-					.then(data=>localStorage.setItem(data["@id"]||data.id,JSON.stringify(data))).catch(error => showMessage(error))
+			if (!obj || !(obj.items || obj.images || obj.sequences)) {
+				obj = await fetch(id).then(response => response.json()).catch(error => showMessage(error))
+				localStorage.setItem(obj["@id"]||obj.id,JSON.stringify(obj))
 			}
 			render(obj)
 		}
@@ -121,14 +118,14 @@ async function findByTargetId(id, noFetch) {
 async function aggregateAnnotations(obj = {}) {
 	// otherContent, annotations, queried (all commenting or describing)
 	if (obj.otherContent) {
-		SCREEN.promises = SCREEN.promises.concat(obj.otherContent)
+		SCREEN.promises = obj.otherContent.concat(SCREEN.promises)
 	}
 	if (obj.annotations) {
-		SCREEN.promises = SCREEN.promises.concat(obj.annotations)
+		SCREEN.promises = obj.annotations.concat(SCREEN.promises)
 	}
 	let id = obj["@id"] || obj.id
 	if (id) {
-		SCREEN.promises = SCREEN.promises.concat(findByTargetId(id).catch(err => []))
+		// SCREEN.promises = SCREEN.promises.concat(findByTargetId(id).catch(err => []))
 	}
 	if (SCREEN.promises.length === 0) return true
 	let entry = SCREEN.promises.shift()
@@ -139,15 +136,14 @@ async function aggregateAnnotations(obj = {}) {
 			break
 		case "object":
 			if (Array.isArray(entry)) {
-				if (entry.length === 0) {
-					return // empty result, please do nothing and move on.
+				if (entry.length > 0) {
+					SCREEN.promises = SCREEN.promises.concat(entry)
 				}
-				SCREEN.promises = SCREEN.promises.concat(entry)
 				return aggregateAnnotations()
 			} else {
 				if (typeof entry.then === "function") {
 					let result = await entry
-					SCREEN.promises.push(result)
+					SCREEN.promises.unshift(result)
 					return aggregateAnnotations(result)
 				}
 				switch (entry["@type"] || entry.type) {
@@ -159,14 +155,14 @@ async function aggregateAnnotations(obj = {}) {
 					case "sc:AnnotationList":
 					case "AnnotationList":
 						if (entry.resources) {
-							SCREEN.promises = SCREEN.promises.concat(entry.resources)
+							SCREEN.promises = entry.resources.concat(SCREEN.promises)
 						} else {
 							SCREEN.promises.push(fetch((entry["@id"])).then(response => response.json()).catch(err => {}))
 						}
 						return aggregateAnnotations()
 					case "AnnotationPage":
 						if (entry.items) {
-							SCREEN.promises = SCREEN.promises.concat(entry.items)
+							SCREEN.promises = entry.items.concat(SCREEN.promises)
 						} else {
 							SCREEN.promises.push(fetch((entry.id)).then(response => response.json()).catch(err => {}))
 						}
@@ -189,21 +185,23 @@ function fileAnnotation(annotation) {
 	if (motivation.indexOf("describing") > -1) {
 		category = "description"
 	}
-	if (motivation.indexOf("commenting") > -1) {
+	else if (motivation.indexOf("commenting") > -1) {
 		category = "commentary"
 	}
-	if (motivation.indexOf("classifying") > -1) {
+	else if (motivation.indexOf("classifying") > -1) {
 		category = "classification"
 	}
-	if (motivation.indexOf("linking") > -1) {
+	else if (motivation.indexOf("linking") > -1) {
 		category = "links"
 	}
-	if (motivation.indexOf("tagging") > -1) {
+	else if (motivation.indexOf("tagging") > -1) {
 		category = "tags"
 	}
-	if (category === undefined) {
-		continue
-	} // I don't know what this is; let's move on.
+	else {
+		category = undefined
+		// I don't know what this is; let's move on.
+		return false
+	}
 	let id = annotation.id || annotation["@id"]
 	let target = annotation.on || annotation.target
 	localStorage.setItem(id, JSON.stringify(annotation))
@@ -222,6 +220,7 @@ function fileAnnotation(annotation) {
 		category: category,
 		anno_id: id
 	})
+	dispatchEvent(announcement)
 }
 
 function renderObjectDescription(object, fieldsX) {
@@ -314,7 +313,7 @@ function renderManifest(manifest = {}) {
 			default:
 				tmpl = manifest.sequences[0].canvases.reduce((a, b) => a += `<a onclick="changeObject('${b["@id"]}')" class="button">${b.label}</a>`, ``)
 		}
-		tmpl = `<a href="#${manifest["@id"]}" class="button">IIIF Manifest</a> ${tmpl}`
+		tmpl = `<a  onclick="changeObject('${manifest["@id"]}')" class="button">IIIF Manifest</a> ${tmpl}`
 	} catch (err) {
 		tmpl = `No pages here`
 	}
