@@ -273,7 +273,7 @@ function renderManifest(manifest = {}) {
 			default:
 				tmpl = manifest.sequences[0].canvases.reduce((a, b) => a += `<a onclick="changeObject('${b["@id"]}')" class="button">${b.label}</a>`, ``)
 		}
-		tmpl = `<a  onclick="changeObject('${manifest["@id"]}')" class="button">IIIF Manifest</a> ${tmpl}`
+		tmpl = `<a target="_blank" href="http://universalviewer.io/uv.html?manifest=${manifest["@id"]}" class="button">View in UV</a><a  onclick="changeObject('${manifest["@id"]}')" class="button">IIIF Manifest</a> ${tmpl}`
 	} catch (err) {
 		tmpl = `No pages here`
 	}
