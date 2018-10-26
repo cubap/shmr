@@ -1,5 +1,4 @@
-const CONFIG =
-{
+const CONFIG = {
     "fields": [{
         "label": "short description",
         "default_value": "",
@@ -7,6 +6,7 @@ const CONFIG =
             "helptext": "Enter a short description of the contents of this page.",
             "type": "text", // array_, memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
             "required": false,
+            "validation": null, // function(value){true||false}
             "min": null, // range, date
             "max": null, // range, date
             "step": null, // range
@@ -29,7 +29,7 @@ const CONFIG =
             "helptext": "Locations pictured"
         },
         "type": "schema:Place"
-    },{
+    }, {
         "label": "events",
         "default_value": "",
         "options": {
@@ -46,3 +46,39 @@ const CONFIG =
         }
     }]
 }
+
+// Dummy schema
+// let fields = [{
+// 	label: "test",
+// 	default_value: "filled",
+// 	options: {
+// 		helptext: "",
+// 		type: "number", // memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
+// 		required: false,
+// 		readonly: false,
+// 		min: null, // range, date
+// 		max: null, // range, date
+// 		step: null, // range
+// 		pattern: null // tel
+// 	},
+// 	type: "rr:test" // web ontology from schema (JSON-LD @type)
+// }, {
+// 	label: "multiple",
+// 	default_value: "grommit",
+// 	options: {
+// 		type: "memo"
+// 	},
+// 	type: "cidoc-crm:Stuff"
+// }, {
+// 	label: "multiple",
+// 	default_value: "grommit",
+// 	options: {
+// 		type: "date"
+// 	}
+// }, {
+// 	label: "multiple",
+// 	default_value: "grommit",
+// 	options: {
+// 		type: "text"
+// 	}
+// }]
