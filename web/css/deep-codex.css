@@ -1,25 +1,39 @@
 #canvasView {
     position: relative;
 }
+
 #canvasView img {
     max-width: 100%;
     max-height: 100%;
 }
-#messages {
-    width:100%;
+
+#objectDescription {
+    padding-bottom: 10rem;
 }
+
+#messages {
+    width: 100%;
+}
+
 nav {
     white-space: nowrap;
     flex-flow: nowrap !important;
-    overflow: scroll;    
+    overflow: scroll;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100vw;
 }
+
 nav a {
     border: thin solid black;
     padding: .25rem;
     display: inline-block;
     cursor: pointer;
+}
+
+label {
+    display: block;
+    font-variant: small-caps;
+    margin-top: 1rem;
 }

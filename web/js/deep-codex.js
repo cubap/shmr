@@ -9,57 +9,57 @@ URLS.UPDATE = "http://tinydev.rerum.io/app/update"
 URLS.QUERY = "http://tinydev.rerum.io/app/query"
 
 function loadHash() {
-	let params = getParams(window.location.href)
-	let hash = window.location.hash.substr(1)
-	changeObject(hash)
-	canvasView.innerText = hash
+    let params = getParams(window.location.href)
+    let hash = window.location.hash.substr(1)
+    changeObject(hash)
+    canvasView.innerText = hash
 }
 
-main.addEventListener('filed-annotation', function (event) {
-	if (event.target_object === objectDescription.getAttribute("deep-id")) {
-		renderObjectDescription(SCREEN.canvas)
-	}
+main.addEventListener('filed-annotation', function(event) {
+    if (event.target_object === objectDescription.getAttribute("deep-id")) {
+        renderObjectDescription(SCREEN.canvas)
+    }
 })
 
 function render(obj = {}) {
-	aggregateAnnotations(obj)
-	switch (obj["@type"]) {
-		case "sc:Canvas":
-			SCREEN.canvas = obj
-			canvasView.setAttribute("deep-id", obj["@id"])
-			objectDescription.setAttribute("deep-id", obj["@id"])
-			renderCanvasImage(SCREEN.canvas)
-			break
-		case "sc:Manifest":
-			SCREEN.manifest = obj
-			manifestNav.setAttribute("deep-id", obj["@id"])
-			renderManifest(SCREEN.manifest)
-			let presi = (obj["@context"] && obj["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
-			SCREEN.canvas = (presi === 3) ?
-				fromIdInArray(SCREEN.manifest.start.id, SCREEN.manifest.items) || SCREEN.manifest.items[0] :
-				fromIdInArray(SCREEN.manifest.startCanvas, SCREEN.manifest.sequences[0].canvases) || SCREEN.manifest.sequences[0].canvases[0]
-			let canvasList = (presi === 3) ? SCREEN.manifest.items : SCREEN.manifest.sequences[0].canvases
-			SCREEN.promises.push(canvasList)
-			aggregateAnnotations()
-			canvasList.map(item => {
-				let id = item["@id"]
-				try {
-					if (!localStorage.getItem(id)) {
-						localStorage.setItem(id, JSON.stringify(item))
-					}
-					let stored = JSON.parse(localStorage.getItem(id))
-					if (!(stored.items || stored.images)) {
-						throw "Please expand this item"
-					}
-				} catch (err) {
-					fetch(id).then(response => response.json()).catch(error => showMessage(error))
-						.then(obj => localStorage.setItem(obj["@id"], JSON.stringify(obj)))
-				}
-			})
-			localStorage.setItem(obj["@id"], JSON.stringify(obj))
-			renderCanvasImage(SCREEN.canvas)
-	}
-	renderObjectDescription(obj)
+    aggregateAnnotations(obj)
+    switch (obj["@type"]) {
+        case "sc:Canvas":
+            SCREEN.canvas = obj
+            canvasView.setAttribute("deep-id", obj["@id"])
+            objectDescription.setAttribute("deep-id", obj["@id"])
+            renderCanvasImage(SCREEN.canvas)
+            break
+        case "sc:Manifest":
+            SCREEN.manifest = obj
+            manifestNav.setAttribute("deep-id", obj["@id"])
+            renderManifest(SCREEN.manifest)
+            let presi = (obj["@context"] && obj["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
+            SCREEN.canvas = (presi === 3) ?
+                fromIdInArray(SCREEN.manifest.start.id, SCREEN.manifest.items) || SCREEN.manifest.items[0] :
+                fromIdInArray(SCREEN.manifest.startCanvas, SCREEN.manifest.sequences[0].canvases) || SCREEN.manifest.sequences[0].canvases[0]
+            let canvasList = (presi === 3) ? SCREEN.manifest.items : SCREEN.manifest.sequences[0].canvases
+            SCREEN.promises.push(canvasList)
+            aggregateAnnotations()
+            canvasList.map(item => {
+                let id = item["@id"]
+                try {
+                    if (!localStorage.getItem(id)) {
+                        localStorage.setItem(id, JSON.stringify(item))
+                    }
+                    let stored = JSON.parse(localStorage.getItem(id))
+                    if (!(stored.items || stored.images)) {
+                        throw "Please expand this item"
+                    }
+                } catch (err) {
+                    fetch(id).then(response => response.json()).catch(error => showMessage(error))
+                        .then(obj => localStorage.setItem(obj["@id"], JSON.stringify(obj)))
+                }
+            })
+            localStorage.setItem(obj["@id"], JSON.stringify(obj))
+            renderCanvasImage(SCREEN.canvas)
+    }
+    renderObjectDescription(obj)
 }
 /**
  * Observer callback for rendering newly loaded objects. Checks the
@@ -67,30 +67,30 @@ function render(obj = {}) {
  * @param {Array} mutationsList of MutationRecord objects
  */
 async function newObjectRender(mutationsList) {
-	for (var mutation of mutationsList) {
-		if (mutation.attributeName === "deep-id") {
-			let id = mutation.target.getAttribute("deep-id")
-			let obj = {}
-			try {
-obj = JSON.parse(localStorage.getItem(id))
-			} catch (err) { }
-			if (!obj || !(obj.items || obj.images || obj.sequences)) {
-				obj = await fetch(id).then(response => response.json()).catch(error => showMessage(error))
-				localStorage.setItem(obj["@id"]||obj.id,JSON.stringify(obj))
-			}
-			render(obj)
-		}
-	}
+    for (var mutation of mutationsList) {
+        if (mutation.attributeName === "deep-id") {
+            let id = mutation.target.getAttribute("deep-id")
+            let obj = {}
+            try {
+                obj = JSON.parse(localStorage.getItem(id))
+            } catch (err) {}
+            if (!obj || !(obj.items || obj.images || obj.sequences)) {
+                obj = await fetch(id).then(response => response.json()).catch(error => showMessage(error))
+                localStorage.setItem(obj["@id"] || obj.id, JSON.stringify(obj))
+            }
+            render(obj)
+        }
+    }
 }
 
 function fromIdInArray(id, array) {
-	let item
-	for (let i of array) {
-		if (i["@id"] === id || i.id === id) {
-			return i
-		}
-	}
-	return null
+    let item
+    for (let i of array) {
+        if (i["@id"] === id || i.id === id) {
+            return i
+        }
+    }
+    return null
 }
 
 /**
@@ -99,169 +99,129 @@ function fromIdInArray(id, array) {
  * @param {String} id URI for the targeted entity
  */
 async function findByTargetId(id, noFetch) {
-	let obj = {
-		target: id
-	}
-	if (!noFetch) {
-		fetch(URLS.QUERY, {
-				method: "POST",
-				body: JSON.stringify(obj),
-				headers: {
-					"Content-Type": "application/json"
-				}
-			}).then(response => response.json())
-			.then(matches => matches.map(fileAnnotation))
-	}
-	return SCREEN.targets[target]
+    let obj = {
+        target: id
+    }
+    if (!noFetch) {
+        fetch(URLS.QUERY, {
+                method: "POST",
+                body: JSON.stringify(obj),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => response.json())
+            .then(matches => matches.map(fileAnnotation))
+    }
+    return SCREEN.targets[target]
 }
 
 async function aggregateAnnotations(obj = {}) {
-	// otherContent, annotations, queried (all commenting or describing)
-	if (obj.otherContent) {
-		SCREEN.promises = obj.otherContent.concat(SCREEN.promises)
-	}
-	if (obj.annotations) {
-		SCREEN.promises = obj.annotations.concat(SCREEN.promises)
-	}
-	let id = obj["@id"] || obj.id
-	if (id) {
-		// SCREEN.promises = SCREEN.promises.concat(findByTargetId(id).catch(err => []))
-	}
-	if (SCREEN.promises.length === 0) return true
-	let entry = SCREEN.promises.shift()
-	switch (typeof entry) {
-		case "string":
-			let resource = fetch(entry).then(response => response.json())
-			SCREEN.promises.push(resource)
-			break
-		case "object":
-			if (Array.isArray(entry)) {
-				if (entry.length > 0) {
-					SCREEN.promises = SCREEN.promises.concat(entry)
-				}
-				return aggregateAnnotations()
-			} else {
-				if (typeof entry.then === "function") {
-					let result = await entry
-					SCREEN.promises.unshift(result)
-					return aggregateAnnotations(result)
-				}
-				switch (entry["@type"] || entry.type) {
-					case "sc:Manifest":
-					case "Manifest":
-					case "sc:Canvas":
-					case "Canvas":
-					return aggregateAnnotations(entry)
-					case "sc:AnnotationList":
-					case "AnnotationList":
-						if (entry.resources) {
-							SCREEN.promises = entry.resources.concat(SCREEN.promises)
-						} else {
-							SCREEN.promises.push(fetch((entry["@id"])).then(response => response.json()).catch(err => {}))
-						}
-						return aggregateAnnotations()
-					case "AnnotationPage":
-						if (entry.items) {
-							SCREEN.promises = entry.items.concat(SCREEN.promises)
-						} else {
-							SCREEN.promises.push(fetch((entry.id)).then(response => response.json()).catch(err => {}))
-						}
-						return aggregateAnnotations()
-					case "Annotation":
-					case "oa:Annotation":
-						// Annotation found!
-						fileAnnotation(entry)
-						return aggregateAnnotations()
-					default: // just discard and move on
-					return aggregateAnnotations()
-				}
-			}
-	}
+    // otherContent, annotations, queried (all commenting or describing)
+    if (obj.otherContent) {
+        SCREEN.promises = obj.otherContent.concat(SCREEN.promises)
+    }
+    if (obj.annotations) {
+        SCREEN.promises = obj.annotations.concat(SCREEN.promises)
+    }
+    let id = obj["@id"] || obj.id
+    if (id) {
+        // SCREEN.promises = SCREEN.promises.concat(findByTargetId(id).catch(err => []))
+    }
+    if (SCREEN.promises.length === 0) return true
+    let entry = SCREEN.promises.shift()
+    switch (typeof entry) {
+        case "string":
+            let resource = fetch(entry).then(response => response.json())
+            SCREEN.promises.push(resource)
+            break
+        case "object":
+            if (Array.isArray(entry)) {
+                if (entry.length > 0) {
+                    SCREEN.promises = SCREEN.promises.concat(entry)
+                }
+                return aggregateAnnotations()
+            } else {
+                if (typeof entry.then === "function") {
+                    let result = await entry
+                    SCREEN.promises.unshift(result)
+                    return aggregateAnnotations(result)
+                }
+                switch (entry["@type"] || entry.type) {
+                    case "sc:Manifest":
+                    case "Manifest":
+                    case "sc:Canvas":
+                    case "Canvas":
+                        return aggregateAnnotations(entry)
+                    case "sc:AnnotationList":
+                    case "AnnotationList":
+                        if (entry.resources) {
+                            SCREEN.promises = entry.resources.concat(SCREEN.promises)
+                        } else {
+                            SCREEN.promises.push(fetch((entry["@id"])).then(response => response.json()).catch(err => {}))
+                        }
+                        return aggregateAnnotations()
+                    case "AnnotationPage":
+                        if (entry.items) {
+                            SCREEN.promises = entry.items.concat(SCREEN.promises)
+                        } else {
+                            SCREEN.promises.push(fetch((entry.id)).then(response => response.json()).catch(err => {}))
+                        }
+                        return aggregateAnnotations()
+                    case "Annotation":
+                    case "oa:Annotation":
+                        // Annotation found!
+                        fileAnnotation(entry)
+                        return aggregateAnnotations()
+                    default: // just discard and move on
+                        return aggregateAnnotations()
+                }
+            }
+    }
 }
 
 function fileAnnotation(annotation) {
-	let motivation = annotation.motivation || annotation["oa:Motivation"]
-	let category
-	if (motivation.indexOf("describing") > -1) {
-		category = "description"
-	}
-	else if (motivation.indexOf("commenting") > -1) {
-		category = "commentary"
-	}
-	else if (motivation.indexOf("classifying") > -1) {
-		category = "classification"
-	}
-	else if (motivation.indexOf("linking") > -1) {
-		category = "links"
-	}
-	else if (motivation.indexOf("tagging") > -1) {
-		category = "tags"
-	}
-	else {
-		category = undefined
-		// I don't know what this is; let's move on.
-		return false
-	}
-	let id = annotation.id || annotation["@id"]
-	let target = annotation.on || annotation.target
-	localStorage.setItem(id, JSON.stringify(annotation))
-	SCREEN.annotations[id] = annotation
-	if (SCREEN.targets[target] && SCREEN.targets[target][category]) {
-		if (SCREEN.targets[target][category].indexOf(id) === -1) {
-			SCREEN.targets[target][category].push(id)
-		} else {
-			// It is already there, calm down.
-		}
-	} else {
-		SCREEN.targets[target] = [id]
-	}
-	let announcement = new CustomEvent("filed-annotation", {
-		target_object: target,
-		category: category,
-		anno_id: id
-	})
-	dispatchEvent(announcement)
+    let motivation = annotation.motivation || annotation["oa:Motivation"]
+    let category
+    if (motivation.indexOf("describing") > -1) {
+        category = "description"
+    } else if (motivation.indexOf("commenting") > -1) {
+        category = "commentary"
+    } else if (motivation.indexOf("classifying") > -1) {
+        category = "classification"
+    } else if (motivation.indexOf("linking") > -1) {
+        category = "links"
+    } else if (motivation.indexOf("tagging") > -1) {
+        category = "tags"
+    } else {
+        category = undefined
+            // I don't know what this is; let's move on.
+        return false
+    }
+    let id = annotation.id || annotation["@id"]
+    let target = annotation.on || annotation.target
+    localStorage.setItem(id, JSON.stringify(annotation))
+    SCREEN.annotations[id] = annotation
+    if (SCREEN.targets[target] && SCREEN.targets[target][category]) {
+        if (SCREEN.targets[target][category].indexOf(id) === -1) {
+            SCREEN.targets[target][category].push(id)
+        } else {
+            // It is already there, calm down.
+        }
+    } else {
+        SCREEN.targets[target] = [id]
+    }
+    let announcement = new CustomEvent("filed-annotation", {
+        target_object: target,
+        category: category,
+        anno_id: id
+    })
+    dispatchEvent(announcement)
 }
 
-function renderObjectDescription(object, fieldsX) {
-	// Dummy schema
-	let fields = [{
-		label: "test",
-		default_value: "filled",
-		options: {
-			helptext: "",
-			type: "number", // memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
-			required: false,
-			min: null, // range, date
-			max: null, // range, date
-			step: null, // range
-			pattern: null // tel
-		},
-		type: "rr:test" // web ontology from schema (JSON-LD @type)
-	}, {
-		label: "multiple",
-		default_value: "grommit",
-		options: {
-			type: "memo"
-		},
-		type: "cidoc-crm:Stuff"
-	}, {
-		label: "multiple",
-		default_value: "grommit",
-		options: {
-			type: "date"
-		}
-	}, {
-		label: "multiple",
-		default_value: "grommit",
-		options: {
-			type: "text"
-		}
-	}]
-
-	let tmplData = `<h2>${object.label || "[ unlabeled ]"}</h2>`
-	let presi = (object["@context"] && object["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
-	tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : `<p>no metadata</p>`
+async function renderObjectDescription(object) {
+    let tmplData = `<h2>${object.label || "[ unlabeled ]"}</h2>`
+    let presi = (object["@context"] && object["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
+    tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : ``
 
 	for (key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
 		// categories expected: description, commentary, classification, links, tags
@@ -274,7 +234,7 @@ function renderObjectDescription(object, fieldsX) {
 			tmplData += `<dt>${label}</dt><dd>${value}</dd>`
 		}
 	}
-
+	let fields = CONFIG.fields
 	tmplData += descriptionFormTemplate(fields)
 	objectDescription.innerHTML = tmplData
 }
@@ -322,20 +282,39 @@ function renderManifest(manifest = {}) {
 
 }
 
-function descriptionFormTemplate(fields) {
-	return `<form> ${fields.reduce((a,b)=>a+=formField(b),``)} </form>`
+function saveAnnotations(event){
+	event.preventDefault()
+	alert("whatever")
 }
 
-function formField(field) {
-	let tmpl = `<label>${field.label}</label>`
+function descriptionFormTemplate(fields) {
+	return `<form onsubmit="saveAnnotations(event)">
+		${fields.reduce((a,b)=>a+=formField(b),``)}
+		<input type="submit" value="save">
+		</form>`
+}
+
+function formField(field,noLabel) {
+	let tmpl = noLabel ? `` : `<label>${field.label}</label>`
 	if (!field.options) {
 		field.options = {}
 	}
+	if(field.options.type&&field.options.type.indexOf("array_")===0) {
+		let itemField = Object.assign({},field, {options:{type:field.options.type.substring(6)}})
+		tmpl += `<div class="form-group">
+					${formField(itemField, true)}
+					`
+					if(field.options.helptext){
+						tmpl+=`<small>${field.options.helptext}</small>
+						<button role="button" type="button" onclick="alert('Sure, we will add that.')">&plus;</button>`
+					}
+					tmpl+=`</div>`
+	} else {
 	switch (field.options.type) {
 		// memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
 		case "memo":
-			tmpl += `<textarea at-type="${field.type}"${field.options.required ? ` required="true"` : ``}>${field.default_value}</textarea>`
-			break
+		tmpl += `<textarea at-type="${field.type}"${field.options.required ? ` required="true"` : ``}>${field.default_value}</textarea>`
+		break
 		case "number":
 		case "email":
 		case "url":
@@ -347,10 +326,14 @@ function formField(field) {
 		case "time":
 		case "datetime":
 		case "color":
-			tmpl += `<input type="${field.options.type}" at-type="${field.type}"${field.options.required ? ` required="true"` : null} value="${field.default_value}">`
-			break
+		tmpl += `<input type="${field.options.type}" at-type="${field.type}"${field.options.required ? ` required="true"` : null} value="${field.default_value}">`
+		break
 		default:
-			tmpl += `<input type="text" at-type="${field.type}"${field.options.required ? ` required="true"` : ``} value="${field.default_value}">`
+				tmpl += `<input type="text" at-type="${field.type}"${field.options.required ? ` required="true"` : ``} value="${field.default_value}">`
+			}
+			if(field.options.helptext){
+				tmpl+=`<small>${field.options.helptext}</small>`
+			}
 	}
 	return tmpl
 }
