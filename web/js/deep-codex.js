@@ -306,7 +306,7 @@ function formField(field,noLabel) {
 					`
 					if(field.options.helptext){
 						tmpl+=`<small>${field.options.helptext}</small>
-						<button onclick="alert('Sure, we will add that.')">&plus;</button>`
+						<button role="button" type="button" onclick="alert('Sure, we will add that.')">&plus;</button>`
 					}
 					tmpl+=`</div>`
 	} else {
