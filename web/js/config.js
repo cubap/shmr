@@ -1,9 +1,9 @@
 const CONFIG = {
     "fields": [{
-        "label": "short description",
+        "label": "short describing",
         "default_value": "",
         "options": {
-            "helptext": "Enter a short description of the contents of this page.",
+            "helptext": "Enter a short describing of the contents of this page.",
             "type": "text", // array_, memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
             "required": false,
             "validation": null, // function(value){true||false}
@@ -12,6 +12,7 @@ const CONFIG = {
             "step": null, // range
             "pattern": null // tel
         },
+        "motivation":"describing",
         "type": "schema:description" // web ontology from schema (JSON-LD @type)
     }, {
         "label": "people",
@@ -20,6 +21,7 @@ const CONFIG = {
             "type": "array_text",
             "helptext": "Individuals within this image"
         },
+        "motivation":"describing",
         "type": "schema:Person"
     }, {
         "label": "places",
@@ -28,6 +30,7 @@ const CONFIG = {
             "type": "array_text",
             "helptext": "Locations pictured"
         },
+        "motivation":"describing",
         "type": "schema:Place"
     }, {
         "label": "events",
@@ -36,6 +39,7 @@ const CONFIG = {
             "type": "array_text",
             "helptext": "Event occurring in this image"
         },
+        "motivation":"describing",
         "type": "schema:Event"
     }, {
         "label": "notes",
@@ -43,7 +47,9 @@ const CONFIG = {
         "options": {
             "type": "array_memo",
             "helptext": "Open notes field"
-        }
+        },
+        "motivation":"describing",
+        "type": "schema:note"
     }]
 }
 
