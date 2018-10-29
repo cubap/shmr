@@ -1,4 +1,4 @@
-import {Deer} from "./deer.js"
+import { Deer } from "./deer.js"
 
 const SCREEN = {}
 SCREEN.annotations = {}
@@ -43,8 +43,8 @@ function render(obj = {}) {
             SCREEN.canvas = (presi === 3) ?
                 fromIdInArray(SCREEN.manifest.start.id, SCREEN.manifest.items) || SCREEN.manifest.items[0] :
                 fromIdInArray(SCREEN.manifest.startCanvas, SCREEN.manifest.sequences[0].canvases) || SCREEN.manifest.sequences[0].canvases[0]
-			objectDescription.setAttribute("deep-id",SCREEN.canvas["@id"]||SCREEN.canvas.id||"")
-			let canvasList = (presi === 3) ? SCREEN.manifest.items : SCREEN.manifest.sequences[0].canvases
+            objectDescription.setAttribute("deep-id", SCREEN.canvas["@id"] || SCREEN.canvas.id || "")
+            let canvasList = (presi === 3) ? SCREEN.manifest.items : SCREEN.manifest.sequences[0].canvases
             SCREEN.promises.push(canvasList)
             aggregateAnnotations()
             canvasList.map(item => {
@@ -214,8 +214,8 @@ function fileAnnotation(annotation) {
             // It is already there, calm down.
         }
     } else {
-		let toAssign = {}
-		toAssign[category] = [id]
+        let toAssign = {}
+        toAssign[category] = [id]
         SCREEN.targets[target] = toAssign
     }
     let announcement = new CustomEvent("filed-annotation", {
@@ -255,6 +255,7 @@ async function renderObjectDescription(object) {
 }
 
 function renderCanvasImage(canvas) {
+	canvasView.classList.add("blur")
 	let elemWidth = canvasView.offsetWidth
 	let elemHeight = elemWidth * (canvas.height / canvas.width)
 	let tmpl = ``
@@ -270,7 +271,12 @@ function renderCanvasImage(canvas) {
 	} catch (err) {
 		tmpl = `<img src="" alt="no image detected" width="${elemWidth}" height="${elemHeight}">`
 	}
-	canvasView.innerHTML = tmpl
+	let image = new Image()
+	image.onload = image.onerror = () => {
+		canvasView.classList.remove("blur")
+		canvasView.innerHTML = tmpl
+	}
+	image.src = (presi === 2) ? canvas.images[0].resource["@id"] : canvas.items[0].items[0].id
 }
 
 function changeObject(newId) {

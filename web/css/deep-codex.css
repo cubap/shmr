@@ -1,5 +1,7 @@
 #canvasView {
     position: relative;
+    filter: blur(0);
+    transition: blur 250ms;
 }
 
 #canvasView img {
@@ -36,4 +38,8 @@ label {
     display: block;
     font-variant: small-caps;
     margin-top: 1rem;
+}
+
+.blur {
+    filter: blur(1rem)
 }
