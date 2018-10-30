@@ -82,7 +82,11 @@ async function newObjectRender(mutationsList) {
             } catch (err) {}
             if (!obj || !(obj.items || obj.images || obj.sequences)) {
                 obj = await fetch(id).then(response => response.json()).catch(error => showMessage(error))
-                localStorage.setItem(obj["@id"] || obj.id, JSON.stringify(obj))
+				if(obj) {
+					localStorage.setItem(obj["@id"] || obj.id, JSON.stringify(obj))
+				} else {
+					return false
+				}
             }
             render(obj)
         }
@@ -243,11 +247,12 @@ async function renderObjectDescription(object) {
     tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : ``
 
 	for (let key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
-		// categories expected: description, commentary, classification, links, tags
+		// categories expected: description, commentary, classification, links, tags, transcription
 		let list = `<h3>${key}</h3>
 		<dl class="meta-${key}">`
 		for (let id of SCREEN.targets[objectDescription.getAttribute("deep-id")][key]) {
 			let annotations = SCREEN.annotations[id].body
+			if(!annotations) {continue}
 			if(!Array.isArray(annotations)) { annotations = [annotations] }
 			for(let i in annotations) {
 				for(let k in annotations[i]) {
@@ -257,7 +262,7 @@ async function renderObjectDescription(object) {
 				}
 			}
 		}
-		tmplData += (SCREEN.targets[objectDescription.getAttribute("deep-id")][key].length) ? `<h3>${key}</h3>
+		tmplData += (list.includes("<dd>")) ? `<h3>${key}</h3>
 		${list}</dl>` : ``
 	}
 	tmplData += buildTranscription(object)
