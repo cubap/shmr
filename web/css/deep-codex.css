@@ -43,3 +43,8 @@ label {
 .blur {
     filter: blur(1rem)
 }
+
+pre {
+    overflow: auto;
+    max-height: 15rem;
+}

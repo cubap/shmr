@@ -245,7 +245,13 @@ function fileAnnotation(annotation) {
 async function renderObjectDescription(object) {
     let tmplData = `<h2>${object.label || "[ unlabeled ]"}</h2>`
     let presi = (object["@context"] && object["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
-    tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : ``
+    tmplData += object.metadata ? `<dl>${object.metadata.reduce(function(a,b){
+		let value = getValue(b)
+		if(value.trim().length>0) {
+			a+=`<dt>${b.label}</dt><dd>${value}</dd>`
+		} 
+		return a
+	},``)}</dl>` : ``
 
 	for (let key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
 		// categories expected: description, commentary, classification, links, tags, transcription
