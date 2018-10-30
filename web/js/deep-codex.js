@@ -14,8 +14,9 @@ const SOURCE = "oa-source"
 const MOTIVATION = "oa-motivation"
 
 function loadHash() {
-    let params = getParams(window.location.href)
-    let hash = window.location.hash.substr(1)
+	let params = (new URL(document.location)).searchParams
+	var manifest = params.get("manifest")
+    let hash = (manifest) ? manifest : window.location.hash.substr(1)
     changeObject(hash)
     canvasView.innerText = hash
 }
@@ -258,7 +259,9 @@ async function renderObjectDescription(object) {
 				for(let k in annotations[i]) {
 					let label = annotations[i][k].label || annotations[i][k].type || annotations[i][k]['@type'] || annotations[i][k].name || annotations[i][k].title || k
 					let value = getValue(annotations[i][k])
-					list += `<dt>${label}</dt><dd>${value}</dd>`
+					if(value.trim().length>0) {
+						list += `<dt>${label}</dt><dd>${value}</dd>`
+					}
 				}
 			}
 		}
@@ -523,25 +526,6 @@ function getValue(property, alsoPeek=[], asType) {
 	} finally {
 		return (prop.length === 1) ? prop[0] : prop
 	}
-}
-
-/**
- * Get the URL parameters
- * source: https://css-tricks.com/snippets/javascript/get-url-variables/
- * @param  {String} url The URL
- * @return {Object}     The URL parameters
- */
-function getParams(url) {
-	var params = {};
-	var parser = document.createElement('a');
-	parser.href = url;
-	var query = parser.search.substring(1);
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		params[pair[0]] = decodeURIComponent(pair[1]);
-	}
-	return params;
 }
 
 const newObjectLoader = new MutationObserver(newObjectRender)

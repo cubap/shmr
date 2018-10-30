@@ -3,7 +3,7 @@ const CONFIG = {
         "label": "short describing",
         "default_value": "",
         "options": {
-            "helptext": "Enter a short describing of the contents of this page.",
+            "helptext": "Enter a short description of the contents of this page.",
             "type": "text", // array_, memo, text, number, email, url, tel, range, date, month, week, time, datetime, color
             "required": false,
             "validation": null, // function(value){true||false}
