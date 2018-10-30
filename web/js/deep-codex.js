@@ -198,6 +198,8 @@ function fileAnnotation(annotation) {
         category = "links"
     } else if (motivation.indexOf("tagging") > -1) {
         category = "tags"
+    } else if (motivation.indexOf("transcribing") > -1) {
+        category = "transcription"
     } else {
         category = undefined
             // I don't know what this is; let's move on.
@@ -205,6 +207,15 @@ function fileAnnotation(annotation) {
     }
     let id = annotation.id || annotation["@id"]
     let target = annotation.on || annotation.target
+    try {
+        new URL(target)
+        let index = target.indexOf("#")
+        if (index > -1) {
+            target = target.substring(0, index)
+        }
+    } catch (err) {
+        // not a URL-style id, move on
+    }
     localStorage.setItem(id, JSON.stringify(annotation))
     SCREEN.annotations[id] = annotation
     if (SCREEN.targets[target] && SCREEN.targets[target][category]) {
@@ -233,7 +244,7 @@ async function renderObjectDescription(object) {
 
 	for (let key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
 		// categories expected: description, commentary, classification, links, tags
-		tmplData += `<h3>${key}</h3>
+		let list = `<h3>${key}</h3>
 		<dl class="meta-${key}">`
 		for (let id of SCREEN.targets[objectDescription.getAttribute("deep-id")][key]) {
 			let annotations = SCREEN.annotations[id].body
@@ -241,17 +252,40 @@ async function renderObjectDescription(object) {
 			for(let i in annotations) {
 				for(let k in annotations[i]) {
 					let label = annotations[i][k].label || annotations[i][k].type || annotations[i][k]['@type'] || annotations[i][k].name || annotations[i][k].title || k
-				let value = getValue(annotations[i][k])
-				tmplData += `<dt>${label}</dt><dd>${value}</dd>`
+					let value = getValue(annotations[i][k])
+					list += `<dt>${label}</dt><dd>${value}</dd>`
+				}
 			}
 		}
+		tmplData += (SCREEN.targets[objectDescription.getAttribute("deep-id")][key].length) ? `<h3>${key}</h3>
+		${list}</dl>` : ``
 	}
-	}
+	tmplData += buildTranscription(object)
 	let fields = CONFIG.fields
 	tmplData += descriptionFormTemplate(fields)
 	objectDescription.innerHTML = tmplData
 	objectDescription.getElementsByTagName("form")[0].onsubmit = saveAnnotations
 	dirtyWatch(objectDescription.querySelectorAll("input, textarea"))
+}
+
+function buildTranscription(object) {
+    let tmplData = `<label>transcription</label>`
+	let presi = (object["@context"] && object["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
+	let id = object.id || object["@id"]
+	if(!SCREEN.targets[id]){return ``}
+	let text = ``
+	for (let aid of SCREEN.targets[id].transcription) {
+		let annotation = SCREEN.annotations[aid].resource
+		let value = getValue(annotation,["chars","cnt:chars"])
+		if(value.trim().length>0) {
+			text += `${value}\n`
+		}
+	}
+	if(text.length>1) {
+		return `${tmplData} <pre>${text}</pre>`
+	} else {
+		return ``
+	}
 }
 
 function renderCanvasImage(canvas) {
@@ -435,7 +469,7 @@ function showMessage(message, clear) {
 	messages.appendChild(msg)
 }
 
-function getValue(property, asType) {
+function getValue(property, alsoPeek=[], asType) {
 	// TODO: There must be a best way to do this...
 	let prop;
 	if (Array.isArray(property)) {
@@ -444,11 +478,16 @@ function getValue(property, asType) {
 	if (typeof property === "object") {
 		// TODO: JSON-LD insists on "@value", but this is simplified in a lot
 		// of contexts. Reading that is ideal in the future.
-		prop =
-			property.hasOwnProperty("@value") && property["@value"] ||
-			property.hasOwnProperty("value") && property["value"] ||
-			property.hasOwnProperty("$value") && property["$value"] ||
-			property.hasOwnProperty("val") && property["val"]
+		if(!Array.isArray(alsoPeek)) { alsoPeek = [ alsoPeek ] }
+		alsoPeek = alsoPeek.concat(["@value","value","$value","val"])
+		for (let k of alsoPeek) {
+			if(property.hasOwnProperty(k)) {
+				prop = property[k]
+				break
+			} else {
+				prop = property
+			}
+		}
 	} else {
 		prop = property
 	}
