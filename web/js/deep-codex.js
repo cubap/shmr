@@ -14,8 +14,9 @@ const SOURCE = "oa-source"
 const MOTIVATION = "oa-motivation"
 
 function loadHash() {
-    let params = getParams(window.location.href)
-    let hash = window.location.hash.substr(1)
+	let params = (new URL(document.location)).searchParams
+	var manifest = params.get("manifest")
+    let hash = (manifest) ? manifest : window.location.hash.substr(1)
     changeObject(hash)
     canvasView.innerText = hash
 }
@@ -82,7 +83,11 @@ async function newObjectRender(mutationsList) {
             } catch (err) {}
             if (!obj || !(obj.items || obj.images || obj.sequences)) {
                 obj = await fetch(id).then(response => response.json()).catch(error => showMessage(error))
-                localStorage.setItem(obj["@id"] || obj.id, JSON.stringify(obj))
+				if(obj) {
+					localStorage.setItem(obj["@id"] || obj.id, JSON.stringify(obj))
+				} else {
+					return false
+				}
             }
             render(obj)
         }
@@ -240,24 +245,33 @@ function fileAnnotation(annotation) {
 async function renderObjectDescription(object) {
     let tmplData = `<h2>${object.label || "[ unlabeled ]"}</h2>`
     let presi = (object["@context"] && object["@context"].indexOf("/3/context.json") > -1) ? 3 : 2
-    tmplData += object.metadata ? `<dl>${object.metadata.reduce((a,b)=>a+=`<dt>${b.label}</dt><dd>${getValue(b)}</dd>`,``)}</dl>` : ``
+    tmplData += object.metadata ? `<dl>${object.metadata.reduce(function(a,b){
+		let value = getValue(b)
+		if(value.trim().length>0) {
+			a+=`<dt>${b.label}</dt><dd>${value}</dd>`
+		} 
+		return a
+	},``)}</dl>` : ``
 
 	for (let key in SCREEN.targets[objectDescription.getAttribute("deep-id")]) {
-		// categories expected: description, commentary, classification, links, tags
+		// categories expected: description, commentary, classification, links, tags, transcription
 		let list = `<h3>${key}</h3>
 		<dl class="meta-${key}">`
 		for (let id of SCREEN.targets[objectDescription.getAttribute("deep-id")][key]) {
 			let annotations = SCREEN.annotations[id].body
+			if(!annotations) {continue}
 			if(!Array.isArray(annotations)) { annotations = [annotations] }
 			for(let i in annotations) {
 				for(let k in annotations[i]) {
 					let label = annotations[i][k].label || annotations[i][k].type || annotations[i][k]['@type'] || annotations[i][k].name || annotations[i][k].title || k
 					let value = getValue(annotations[i][k])
-					list += `<dt>${label}</dt><dd>${value}</dd>`
+					if(value.trim().length>0) {
+						list += `<dt>${label}</dt><dd>${value}</dd>`
+					}
 				}
 			}
 		}
-		tmplData += (SCREEN.targets[objectDescription.getAttribute("deep-id")][key].length) ? `<h3>${key}</h3>
+		tmplData += (list.includes("<dd>")) ? `<h3>${key}</h3>
 		${list}</dl>` : ``
 	}
 	tmplData += buildTranscription(object)
@@ -518,25 +532,6 @@ function getValue(property, alsoPeek=[], asType) {
 	} finally {
 		return (prop.length === 1) ? prop[0] : prop
 	}
-}
-
-/**
- * Get the URL parameters
- * source: https://css-tricks.com/snippets/javascript/get-url-variables/
- * @param  {String} url The URL
- * @return {Object}     The URL parameters
- */
-function getParams(url) {
-	var params = {};
-	var parser = document.createElement('a');
-	parser.href = url;
-	var query = parser.search.substring(1);
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		params[pair[0]] = decodeURIComponent(pair[1]);
-	}
-	return params;
 }
 
 const newObjectLoader = new MutationObserver(newObjectRender)
