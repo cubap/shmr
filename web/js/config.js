@@ -1,6 +1,6 @@
 const CONFIG = {
     "fields": [{
-        "label": "short describing",
+        "label": "short description",
         "default_value": "",
         "options": {
             "helptext": "Enter a short description of the contents of this page.",
