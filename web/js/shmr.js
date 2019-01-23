@@ -13,23 +13,33 @@ const KEYS = "at-type"
 const SOURCE = "oa-source"
 const MOTIVATION = "oa-motivation"
 
-function loadHash() {
+// inject the elements needed for the object
+// #container is root
+window.messages = document.createElement("div")
+window.messages.id = "messages"
+container.append(messages)
+
+window.ux = document.createElement("div")
+window.ux.id = "ux"
+container.append(ux)
+
+function loadCollection() {
 	let params = (new URL(document.location)).searchParams
-	var manifest = params.get("manifest")
-    let hash = (manifest) ? manifest : window.location.hash.substr(1)
-    changeObject(hash)
-    canvasView.innerText = hash
+	let collection = params.get("collection")
+    changeObject(collection)
+    ux.innerText = collection
 }
 
-main.addEventListener('filed-annotation', function(event) {
+ux.addEventListener('filed-annotation', function(event) {
     if (event.target_object === objectDescription.getAttribute("deep-id")) {
         renderObjectDescription(SCREEN.canvas)
     }
 })
 
 function render(obj = {}) {
-    aggregateAnnotations(obj)
-    switch (obj["@type"]) {
+	aggregateAnnotations(obj)
+	let type = Array.isArray(obj["@type"]) ? obj["@type"][0] : obj["@type"] // TODO: subroutine to detect
+    switch (type) {
         case "sc:Canvas":
             SCREEN.canvas = obj
             canvasView.setAttribute("deep-id", obj["@id"])
@@ -64,7 +74,10 @@ function render(obj = {}) {
                 }
             })
             localStorage.setItem(obj["@id"], JSON.stringify(obj))
-            renderCanvasImage(SCREEN.canvas)
+			renderCanvasImage(SCREEN.canvas)
+			break;
+		case "ItemList":
+			ux.innerHTML = `<ul>${obj.itemListElement.reduce((a,b)=>a+=`<li>${b.name || b.label || b["@type"] }</li>`,``)}</ul>`
     }
     renderObjectDescription(obj)
 }
@@ -76,7 +89,8 @@ function render(obj = {}) {
 async function newObjectRender(mutationsList) {
     for (var mutation of mutationsList) {
         if (mutation.attributeName === "deep-id") {
-            let id = mutation.target.getAttribute("deep-id")
+			let id = mutation.target.getAttribute("deep-id")
+			if (id === "null") return
             let obj = {}
             try {
                 obj = JSON.parse(localStorage.getItem(id))
@@ -328,7 +342,7 @@ function renderCanvasImage(canvas) {
 }
 
 function changeObject(newId) {
-	main.setAttribute("deep-id", newId)
+	ux.setAttribute("deep-id", newId)
 }
 
 function renderManifest(manifest = {}) {
@@ -535,7 +549,7 @@ function getValue(property, alsoPeek=[], asType) {
 }
 
 const newObjectLoader = new MutationObserver(newObjectRender)
-newObjectLoader.observe(document.getElementById("main"), {
+newObjectLoader.observe(ux, {
 	attributes: true
 })
 
@@ -551,4 +565,4 @@ if ('serviceWorker' in navigator) {
 	});
   }
 
-window.onload = window.onhashchange = loadHash
+window.onload = window.onhashchange = loadCollection
