@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--
+author: Patrick Cuba <cubap@slu.edu>
+-->
+<html>
+
+<head>
+    <title>Slavery, History, Memory and Reconciliation Project</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/shmr.css">
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+</head>
+
+<body>
+    <div class="container">
+        <form>
+            <label>JSON
+                <textarea id="form_item" oninput="fillForm()"></textarea>
+            </label>
+            <p>Manually enter information from external links.</p>
+            <label>url (webpage link)
+                <input type="url" id="form_url" data-key="url">
+            </label>
+            <label>name (simple title)
+                <input type="text" id="form_name" data-key="name">
+            </label>
+            <label>depiction (image link)
+                <input type="url" id="form_depiction" data-key="http://xmlns.com/foaf/spec/#term_depiction">
+            </label>
+            <label>file attachment (document link)
+                <input type="url" id="form_file" data-key="url">
+            </label>
+
+            <p>description details</p>
+            <label>JSON
+                <textarea id="form_description" oninput="fillDublin()"></textarea>
+            </label>
+            <label>title (simple title)
+                <input type="text" id="form_dctitle" data-key="dc:title">
+            </label>
+            <label>subject (semicolon delimited)
+                <input type="text" id="form_dcsubject" data-key="dc:subject">
+            </label>
+            <label>description (HTMLy is fine)
+                <input type="text" id="form_dcdescription" data-key="dc:description">
+            </label>
+            <label>creator (string for now, agent later)
+                <input type="text" id="form_dccreator" data-key="dc:creator">
+            </label>
+            <label>source (link for now)
+                <input type="text" id="form_dcsource" data-key="dc:source">
+            </label>
+            <label>Publisher (string for now, agent later)
+                <input type="text" id="form_dcpublisher" data-key="dc:publisher">
+            </label>
+            <label>Date YYYY-MM-DD (Gregorian)
+                <input type="date" id="form_dcdate" data-key="dc:date">
+            </label>
+            <label>Contributor (string for now, agent later)
+                <input type="text" id="form_dccontributor" data-key="dc:contributor">
+            </label>
+            <label>relation (link)
+                <input type="text" id="form_dcrelation" data-key="dc:relation">
+            </label>
+            <label>rights (string)
+                <input type="text" id="form_dcrights" data-key="dc:rights">
+            </label>
+            <label>format (string)
+                <input type="text" id="form_dcformat" data-key="dc:format">
+            </label>
+            <label>language (string)
+                <input type="text" id="form_dclanguage" data-key="dc:language">
+            </label>
+            <label>type (string)
+                <input type="text" id="form_dctype" data-key="dc:type">
+            </label>
+            <label>identifier (string)
+                <input type="text" id="form_dcidentifier" data-key="dc:identifier">
+            </label>
+            <label>type (HTMLy)
+                <h2>Text Item Type Metadata</h2>
+                <textarea type="text" id="form_dctext" data-key="dc:text"></textarea>
+            </label>
+
+            <script>
+function fillForm() {
+    
+}
+
+                function fillDublin() {
+                    let content = `${form_description.value.replace(/\\r\\n/g,"<p>").replace(/\\n/g,"").replace(/\\/g,"")}`
+                    let contentDiv = document.createElement("div")
+                    contentDiv.innerHTML = content
+                    let elementset = contentDiv.getElementsByClassName("element")
+                    for (el of elementset) {
+                        let dcterm = "form_dc"+el.getElementsByTagName("h3")[0].textContent.toLowerCase()
+                        let values = el.getElementsByClassName("element-text")[0].innerHTML
+                        if(window[dcterm]) {
+                            window[dcterm].value = values
+                        } else {
+                            console.log('el.getElementsByTagName("h3")[0].textContent'+" is not recorded.")
+                        }
+                    }
+                }
+            </script>
+        </form>
+    </div>
+    <script src="js/shmr.js" type="module"></script>
+    <script src="js/config.js"></script>
+</body>
+
+</html>

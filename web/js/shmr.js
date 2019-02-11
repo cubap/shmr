@@ -11,16 +11,19 @@ URLS.BASE_ID = "http://devstore.rerum.io/v1"
 URLS.CREATE = "http://tinydev.rerum.io/app/create"
 URLS.UPDATE = "http://tinydev.rerum.io/app/update"
 URLS.QUERY = "http://tinydev.rerum.io/app/query"
+URLS.SINCE = URLS.BASE_ID+"/since"
 const KEYS = "at-type"
 const SOURCE = "oa-source"
 const MOTIVATION = "oa-motivation"
+const COLLECTIONPAGE = "Slavery, History, Memory and Reconciliation Project"
+// ?collection=http://devstore.rerum.io/v1/id/5c59b2c1e4b0aa073f23ac5e
 
 // inject the elements needed for the object
 // #container is root
 
-container.innerHTML = `<div id="messages"></div>
-<div id="collection">collection</div>
-<div id="ux"></div>`
+container.innerHTML = `<div id="messages" class="col-12"></div>
+<div id="collection" class="col-3">collection</div>
+<div id="ux" class="col-9"></div>`
 
 function loadCollection() {
 	let params = (new URL(document.location)).searchParams
@@ -28,13 +31,36 @@ function loadCollection() {
 	collection.innerText = collectionId
 	collection.setAttribute("deep-id", collectionId)
 	ux.innerText = ""
-	fetch(collectionId).then(response => response.json()).then(function (list) {
-		renderList(list)
-		let hash = window.location.hash.substr(1)
-		if (hash) {
-			ux.setAttribute("deep-id", hash)
+	if(collectionId){
+		fetch(collectionId).then(response => response.json()).then(function (list) {
+			renderList(list)
+			let hash = window.location.hash.substr(1)
+			if (hash) {
+				ux.setAttribute("deep-id", hash)
+			}
+		})
+	} else {
+		let queryObj = {
+			targetCollection: COLLECTIONPAGE
 		}
-	})
+		fetch(URLS.QUERY,{
+			method: "POST",
+			mode: "cors",
+			body: JSON.stringify(queryObj)
+		}).then(response => response.json())
+		.then(function (list) {
+			let listObj = {
+				name: COLLECTIONPAGE,
+				itemListElement: list,
+				"@type": list[0]["@type"] || list[0].type
+			}
+			renderList(listObj)
+			let hash = window.location.hash.substr(1)
+			if (hash) {
+				ux.setAttribute("deep-id", hash)
+			}
+		})
+	}
 }
 
 ux.addEventListener('filed-annotation', function (event) {
@@ -109,6 +135,24 @@ function renderList(list) {
 		</li>
 		`,``)}
 		</ul>`
+	let update = (function(){
+		try {
+			if(list.__rerum.history.next.length > 0){
+				let id = list["@id"].split("/").pop()
+				fetch(URLS.SINCE+"/"+id).then(response=>response.json())
+				.then(arr=>{
+					arr.sort((a,b)=>a.__rerum.createdAt-b.__rerum.createdAt)
+					let buttons = document.createElement("span")
+					buttons.innerHTML = arr.reduce((a,b)=>a+=`<button onclick="document.location.href='?collection=${b['@id']}'">
+						Load updated list @${b['@id'].split("/").pop()}
+					</button>`,``)
+					collection.append(buttons)
+				})
+			}
+		} catch(err) {
+			// silent fail
+		}
+	})()
 }
 
 /**
@@ -306,8 +350,7 @@ async function renderObject(object) {
 
 	for (let key in SCREEN.targets[ux.getAttribute("deep-id")]) {
 		// categories expected: description, commentary, classification, links, tags, transcription
-		let list = `<h3>${key}</h3>
-		<dl class="meta-${key}">`
+		let list = `<dl class="meta-${key}">`
 		object = expand(object, SCREEN.targets[ux.getAttribute("deep-id")][key])
 		// for (let id of SCREEN.targets[ux.getAttribute("deep-id")][key]) {
 		// 	let annotations = SCREEN.annotations[id].body
@@ -326,8 +369,13 @@ async function renderObject(object) {
 		for (let key in object) {
 			let label = object[key].label || object[key].type || object[key]['@type'] || object[key].name || object[key].title || key
 			let value = getValue(object[key])
-			if (value.trim().length > 0) {
-				list += `<dt>${label}</dt><dd>${value}</dd>`
+			try {
+				if ((value.image || value.trim()).length > 0) {
+					list += (label === "depiction") ? `<img title="${label}" src="${value.image || value}">` :`<dt>${label}</dt><dd>${value.image || value}</dd>`
+				}
+			} catch (err) {
+				// Some object maybe or untrimmable somesuch
+				// likely the __rerum property
 			}
 		}
 		tmplData += (list.includes("<dd>")) ? `<h3>${key}</h3>
