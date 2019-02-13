@@ -17,6 +17,7 @@ author: Patrick Cuba <cubap@slu.edu>
     <div class="container">
         <form>
             <label>JSON
+                <input id="form_item_url" oninput="fillForm(true)" type="url">
                 <textarea id="form_item" oninput="fillForm()"></textarea>
             </label>
             <p>Manually enter information from external links.</p>
@@ -33,7 +34,7 @@ author: Patrick Cuba <cubap@slu.edu>
                 <input type="url" id="form_file" data-key="url">
             </label>
 
-            <p>description details</p>
+            <h4>description details</h4>
             <label>JSON
                 <textarea id="form_description" oninput="fillDublin()"></textarea>
             </label>
@@ -79,35 +80,51 @@ author: Patrick Cuba <cubap@slu.edu>
             <label>identifier (string)
                 <input type="text" id="form_dcidentifier" data-key="dc:identifier">
             </label>
-            <label>type (HTMLy)
-                <h2>Text Item Type Metadata</h2>
+            <label>text (HTMLy)
                 <textarea type="text" id="form_dctext" data-key="dc:text"></textarea>
             </label>
 
             <script>
-function fillForm() {
-    
-}
+                async function fillForm(isUrl) {
+                    let feed = isUrl ? form_item_url.value : form_item.value
+                    if (feed.length > 0) {
+                        let items = !isUrl ? feed.items : await fetch(
+                                'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
+                            .then(js => js.items).catch(() => console.log("No feed fetched at: " + feed))
+                        // for now, loop later
+                        let item = items[0]
+                        form_url.value = item.link
+                        form_name.value = item.title
+                        form_depiction.value = item.enclosure.link
+                        if (item.enclosure.type === "application/pdf") {
+                            form_file.value = item.enclosure.link.replace(/fullsize/, "original").replace(
+                                /jpg(?!.*jpg)/, "pdf")
+                        }
+                        form_description.value = item.content
+                        let event = new Event("input")
+                        form_description.dispatchEvent(event)
+                    }
+                }
 
                 function fillDublin() {
-                    let content = `${form_description.value.replace(/\\r\\n/g,"<p>").replace(/\\n/g,"").replace(/\\/g,"")}`
+                    let content =
+                        `${form_description.value.replace(/\\r\\n/g,"<p>").replace(/\\n/g,"").replace(/\\/g,"")}`
                     let contentDiv = document.createElement("div")
                     contentDiv.innerHTML = content
                     let elementset = contentDiv.getElementsByClassName("element")
                     for (el of elementset) {
-                        let dcterm = "form_dc"+el.getElementsByTagName("h3")[0].textContent.toLowerCase()
+                        let dcterm = "form_dc" + el.getElementsByTagName("h3")[0].textContent.toLowerCase()
                         let values = el.getElementsByClassName("element-text")[0].innerHTML
-                        if(window[dcterm]) {
+                        if (window[dcterm]) {
                             window[dcterm].value = values
                         } else {
-                            console.log('el.getElementsByTagName("h3")[0].textContent'+" is not recorded.")
+                            console.log('el.getElementsByTagName("h3")[0].textContent' + " is not recorded.")
                         }
                     }
                 }
             </script>
         </form>
     </div>
-    <script src="js/shmr.js" type="module"></script>
     <script src="js/config.js"></script>
 </body>
 
