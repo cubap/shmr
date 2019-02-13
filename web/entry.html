@@ -17,8 +17,8 @@ author: Patrick Cuba <cubap@slu.edu>
     <div class="container">
         <form>
             <label>JSON
-                <input id="form_item_url" oninput="fillForm(true)" type="url">
-                <textarea id="form_item" oninput="fillForm()"></textarea>
+                <input id="form_item_url" oninput="fillForm(true)" type="url" placeholder="RSS2 URL">
+                <textarea id="form_item" oninput="fillForm()" placeholder="JSON RSS2"></textarea>
             </label>
             <p>Manually enter information from external links.</p>
             <label>url (webpage link)
@@ -36,7 +36,7 @@ author: Patrick Cuba <cubap@slu.edu>
 
             <h4>description details</h4>
             <label>JSON
-                <textarea id="form_description" oninput="fillDublin()"></textarea>
+                <textarea id="form_description" oninput="fillDublin()" placeholder="JSON content for Dublin Core"></textarea>
             </label>
             <label>title (simple title)
                 <input type="text" id="form_dctitle" data-key="dc:title">
