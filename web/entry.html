@@ -15,7 +15,7 @@ author: Patrick Cuba <cubap@slu.edu>
 
 <body>
     <div class="container">
-        <form>
+        <form onsubmit="createRecord(event)">
             <label>JSON
                 <input id="form_item_url" oninput="fillForm(true)" type="url" placeholder="RSS2 URL">
                 <textarea id="form_item" oninput="fillForm()" placeholder="JSON RSS2"></textarea>
@@ -83,16 +83,21 @@ author: Patrick Cuba <cubap@slu.edu>
             <label>text (HTMLy)
                 <textarea type="text" id="form_dctext" data-key="dc:text"></textarea>
             </label>
-
+            <label>
+                <input type="checkbox">
+                Load next on Save
+            </label>
+<input type="reset">
+<input type="submit">
             <script>
-                async function fillForm(isUrl) {
+                async function fillForm(isUrl,nextIndex=0) {
                     let feed = isUrl ? form_item_url.value : form_item.value
                     if (feed.length > 0) {
                         let items = !isUrl ? feed.items : await fetch(
                                 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
                             .then(js => js.items).catch(() => console.log("No feed fetched at: " + feed))
                         // for now, loop later
-                        let item = items[0]
+                        let item = items[nextIndex]
                         form_url.value = item.link
                         form_name.value = item.title
                         form_depiction.value = item.enclosure.link
