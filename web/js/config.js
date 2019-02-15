@@ -50,8 +50,14 @@ const CONFIG = {
         },
         "motivation":"describing",
         "type": "schema:note"
-    }]
+    }],
+    "collectionPage":"Slavery, History, Memory and Reconciliation Project"
 }
+
+/**
+ * CollectionPage: "Slavery, History, Memory and Reconciliation Project"
+ * Collections: [People, Event, Location, Object]
+ */
 
 // Dummy schema
 // let fields = [{
