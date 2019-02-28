@@ -84,20 +84,32 @@ author: Patrick Cuba <cubap@slu.edu>
                 <textarea type="text" id="form_dctext" data-key="dc:text"></textarea>
             </label>
             <label>
-                <input type="checkbox">
-                Load next on Save
+                <input type="checkbox" checked="checked" id="loadNext"> Load next on Save
             </label>
-<input type="reset">
-<input type="submit">
-            <script>
-                async function fillForm(isUrl,nextIndex=0) {
+            <input type="reset">
+            <input type="submit">
+            <script type="module">
+                import {
+                    Deer
+                } from "./js/deer.js"
+                var shmr = {
+                    nextIndex:0
+                }
+                window.fillForm = fillForm
+                window.fillDublin = fillDublin
+                window.createRecord = createRecord
+                async function fillForm(isUrl,nextIndex=shmr.nextIndex) {
                     let feed = isUrl ? form_item_url.value : form_item.value
+                    const DEER = new Deer(feed)
                     if (feed.length > 0) {
                         let items = !isUrl ? feed.items : await fetch(
                                 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
                             .then(js => js.items).catch(() => console.log("No feed fetched at: " + feed))
                         // for now, loop later
-                        let item = items[nextIndex]
+                        shmr.count = items.length
+                        shmr.nextIndex = nextIndex
+                        shmr.feed = feed
+                        let item = items[shmr.nextIndex]
                         form_url.value = item.link
                         form_name.value = item.title
                         form_depiction.value = item.enclosure.link
@@ -117,15 +129,52 @@ author: Patrick Cuba <cubap@slu.edu>
                     let contentDiv = document.createElement("div")
                     contentDiv.innerHTML = content
                     let elementset = contentDiv.getElementsByClassName("element")
-                    for (el of elementset) {
+                    for (let el of elementset) {
                         let dcterm = "form_dc" + el.getElementsByTagName("h3")[0].textContent.toLowerCase()
                         let values = el.getElementsByClassName("element-text")[0].innerHTML
                         if (window[dcterm]) {
                             window[dcterm].value = values
                         } else {
-                            console.log('el.getElementsByTagName("h3")[0].textContent' + " is not recorded.")
+                            console.log(el.getElementsByTagName("h3")[0].textContent + " is not recorded.")
                         }
                     }
+                }
+
+                function createRecord(event) {
+                    event.preventDefault()
+                    let evidence = form_file.value
+                    let record = {
+                        "@context": ["https://schema.org","http://purl.org/dc/terms/"],
+                        url: form_url.value,
+                        name: form_name.value,
+                        "http://xmlns.com/foaf/spec/#term_depiction":form_depiction.value,
+                        "dc:title": form_dctitle.value,
+                        "dc:subject": form_dcsubject.value.split(";"),
+                        "dc:description": form_description.value,
+                        "dc:creator": "testMachine",
+                        "dc:source": form_dcsource.value,
+                        "dc:publisher": form_dcpublisher.value,
+                        "dc:date": form_dcdate.value,
+                        "dc:contributor": form_dccontributor.value,
+                        "dc:relation": form_dcrelation.value,
+                        "dc:rights": form_dcrights.value,
+                        "dc:format": form_dcformat.value,
+                        "dc:language": form_dclanguage.value,
+                        "dc:type": form_dctype.value,
+                        "dc:identifier": form_dcidentifier.value,
+                        "dc:text": form_dctext.value
+                    }
+                    let nextIndex = loadNext.checked
+                    DEER.create(record, "testMachine", evidence).then(function(newObj) {
+                        if(loadNext.checked) {
+                            alert(newObj["@id"]+" loading next...")
+                            if(shmr.nextIndex++ > shmr.count) {
+                                fillForm(shmr.feed,shmr.nextIndex)
+                            }
+                        } else {
+                            alert(newObj["@id"])
+                        }
+                    })
                 }
             </script>
         </form>
