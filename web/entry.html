@@ -5,180 +5,87 @@ author: Patrick Cuba <cubap@slu.edu>
 <html>
 
 <head>
-    <title>Slavery, History, Memory and Reconciliation Project</title>
+    <title>Fiantinator</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="css/shmr.css">
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
 </head>
 
 <body>
+    <header>
+        <h2>Finan's fancy fiant finagler for making Meg more marketable</h2>
+    </header>
     <div class="container">
-        <form onsubmit="createRecord(event)">
-            <label>JSON
-                <input id="form_item_url" oninput="fillForm(true)" type="url" placeholder="RSS2 URL">
-                <textarea id="form_item" oninput="fillForm()" placeholder="JSON RSS2"></textarea>
-            </label>
-            <p>Manually enter information from external links.</p>
-            <label>url (webpage link)
-                <input type="url" id="form_url" data-key="url">
-            </label>
-            <label>name (simple title)
-                <input type="text" id="form_name" data-key="name">
-            </label>
-            <label>depiction (image link)
-                <input type="url" id="form_depiction" data-key="http://xmlns.com/foaf/spec/#term_depiction">
-            </label>
-            <label>file attachment (document link)
-                <input type="url" id="form_file" data-key="url">
-            </label>
-
-            <h4>description details</h4>
-            <label>JSON
-                <textarea id="form_description" oninput="fillDublin()" placeholder="JSON content for Dublin Core"></textarea>
-            </label>
-            <label>title (simple title)
-                <input type="text" id="form_dctitle" data-key="dc:title">
-            </label>
-            <label>subject (semicolon delimited)
-                <input type="text" id="form_dcsubject" data-key="dc:subject">
-            </label>
-            <label>description (HTMLy is fine)
-                <input type="text" id="form_dcdescription" data-key="dc:description">
-            </label>
-            <label>creator (string for now, agent later)
-                <input type="text" id="form_dccreator" data-key="dc:creator">
-            </label>
-            <label>source (link for now)
-                <input type="text" id="form_dcsource" data-key="dc:source">
-            </label>
-            <label>Publisher (string for now, agent later)
-                <input type="text" id="form_dcpublisher" data-key="dc:publisher">
-            </label>
-            <label>Date YYYY-MM-DD (Gregorian)
+        <form onsubmit="createRecord(event)" id="createfiant">
+            <div class="row">
+                <label class="col">identifier (string)
+                    <input type="text" id="form_dcidentifier" data-key="dc:identifier">
+                </label>
+                <label class="col">fiant type
+                    <select id="form_fianttype" data-key="fianttype">
+                        <option value="grant">grant</option>
+                        <option value="pardon">pardon</option>
+                        <option value="presentation">presentation</option>
+                        <option value="commission">commission</option>
+                        <option value="lease">lease</option>
+                        <option value="surrender">surrender</option>
+                        <option value="protection">protection</option>
+                        <option value="other">other</option>
+                    </select>
+                </label>
+            </div>
+            <div class="row">
+                <label class="col">Date (Elizabethan)
+                    <input type="text" id="form_datestring" data-key="dc:date">
+                    TODO:convert to Gregorian?
+                </label>
+                <label class="col">Date YYYY-MM-DD (Gregorian)
                 <input type="date" id="form_dcdate" data-key="dc:date">
             </label>
-            <label>Contributor (string for now, agent later)
-                <input type="text" id="form_dccontributor" data-key="dc:contributor">
+            </div>
+            <label>description
+                <textarea id="form_description" data-key="description"></textarea>
             </label>
-            <label>relation (link)
-                <input type="text" id="form_dcrelation" data-key="dc:relation">
-            </label>
-            <label>rights (string)
-                <input type="text" id="form_dcrights" data-key="dc:rights">
-            </label>
-            <label>format (string)
-                <input type="text" id="form_dcformat" data-key="dc:format">
-            </label>
-            <label>language (string)
-                <input type="text" id="form_dclanguage" data-key="dc:language">
-            </label>
-            <label>type (string)
-                <input type="text" id="form_dctype" data-key="dc:type">
-            </label>
-            <label>identifier (string)
-                <input type="text" id="form_dcidentifier" data-key="dc:identifier">
-            </label>
-            <label>text (HTMLy)
-                <textarea type="text" id="form_dctext" data-key="dc:text"></textarea>
-            </label>
-            <label>
-                <input type="checkbox" checked="checked" id="loadNext"> Load next on Save
-            </label>
+            <div class="row">
+                <label class="col">Agent
+                    <select id="form_agent" data-key="agent">
+                        <option selected="selected" value="EBethID">Elizabeth</option>    
+                    </select>
+                </label>
+                <label class="col">source
+                    <input type="text" id="form_dcsource" data-key="dc:source">
+                </label>
+            </div>
+            <h4>Named Folks</h4>
+             TODO:linked records
+            <div id="namedfolks">
+                <folk class="tag">none</folk>
+            </div>
             <input type="reset">
             <input type="submit">
-            <script type="module">
-                import {
-                    Deer
-                } from "./js/deer.js"
-                var shmr = {
-                    nextIndex:0
-                }
-                window.fillForm = fillForm
-                window.fillDublin = fillDublin
-                window.createRecord = createRecord
-                async function fillForm(isUrl,nextIndex=shmr.nextIndex) {
-                    let feed = isUrl ? form_item_url.value : form_item.value
-                    const DEER = new Deer(feed)
-                    if (feed.length > 0) {
-                        let items = !isUrl ? feed.items : await fetch(
-                                'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
-                            .then(js => js.items).catch(() => console.log("No feed fetched at: " + feed))
-                        // for now, loop later
-                        shmr.count = items.length
-                        shmr.nextIndex = nextIndex
-                        shmr.feed = feed
-                        let item = items[shmr.nextIndex]
-                        form_url.value = item.link
-                        form_name.value = item.title
-                        form_depiction.value = item.enclosure.link
-                        if (item.enclosure.type === "application/pdf") {
-                            form_file.value = item.enclosure.link.replace(/fullsize/, "original").replace(
-                                /jpg(?!.*jpg)/, "pdf")
-                        }
-                        form_description.value = item.content
-                        let event = new Event("input")
-                        form_description.dispatchEvent(event)
-                    }
-                }
-
-                function fillDublin() {
-                    let content =
-                        `${form_description.value.replace(/\\r\\n/g,"<p>").replace(/\\n/g,"").replace(/\\/g,"")}`
-                    let contentDiv = document.createElement("div")
-                    contentDiv.innerHTML = content
-                    let elementset = contentDiv.getElementsByClassName("element")
-                    for (let el of elementset) {
-                        let dcterm = "form_dc" + el.getElementsByTagName("h3")[0].textContent.toLowerCase()
-                        let values = el.getElementsByClassName("element-text")[0].innerHTML
-                        if (window[dcterm]) {
-                            window[dcterm].value = values
-                        } else {
-                            console.log(el.getElementsByTagName("h3")[0].textContent + " is not recorded.")
-                        }
-                    }
-                }
-
-                function createRecord(event) {
-                    event.preventDefault()
-                    let evidence = form_file.value
-                    let record = {
-                        "@context": ["https://schema.org","http://purl.org/dc/terms/"],
-                        url: form_url.value,
-                        name: form_name.value,
-                        "http://xmlns.com/foaf/spec/#term_depiction":form_depiction.value,
-                        "dc:title": form_dctitle.value,
-                        "dc:subject": form_dcsubject.value.split(";"),
-                        "dc:description": form_description.value,
-                        "dc:creator": "testMachine",
-                        "dc:source": form_dcsource.value,
-                        "dc:publisher": form_dcpublisher.value,
-                        "dc:date": form_dcdate.value,
-                        "dc:contributor": form_dccontributor.value,
-                        "dc:relation": form_dcrelation.value,
-                        "dc:rights": form_dcrights.value,
-                        "dc:format": form_dcformat.value,
-                        "dc:language": form_dclanguage.value,
-                        "dc:type": form_dctype.value,
-                        "dc:identifier": form_dcidentifier.value,
-                        "dc:text": form_dctext.value
-                    }
-                    let nextIndex = loadNext.checked
-                    DEER.create(record, "testMachine", evidence).then(function(newObj) {
-                        if(loadNext.checked) {
-                            alert(newObj["@id"]+" loading next...")
-                            if(shmr.nextIndex++ > shmr.count) {
-                                fillForm(shmr.feed,shmr.nextIndex)
-                            }
-                        } else {
-                            alert(newObj["@id"])
-                        }
-                    })
-                }
-            </script>
+        </form>
+        <form id="newPerson" onsubmit="createPerson(event)" class="card bg-light is-fixed">
+            <header>
+                <h4>Adding a new person</h4>
+            </header>
+            <label>name
+                        <input type="text" id="pform_name" data-key="name">
+                    </label>
+            <label>description
+                <textarea id="pform_description" data-key="description"></textarea>
+            </label>
+            <label>occupation
+                <input type="text" id="pform_occupation" data-key="hasOccupation">
+            </label>
+            <label>home location
+                <input type="text" id="pform_homelocation" data-key="homeLocation">
+            </label> TODO:relationships
+            <input type="reset">
+            <input type="submit" value="Add">
         </form>
     </div>
+    <script type="module" src="js/fiant.js"></script>
     <script src="js/config.js"></script>
 </body>
 

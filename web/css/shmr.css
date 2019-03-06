@@ -1,0 +1,12 @@
+#newPerson {
+    display: none;
+    top: calc(50% - 400px);
+    left: calc(50% - 200px);
+    width: 400px;
+    height: 800px;
+    z-index: 1;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3), 0 0 0 200rem #00000066;
+}
+.no-pointers {
+    pointer-events: none;
+}

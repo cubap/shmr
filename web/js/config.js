@@ -51,11 +51,11 @@ const CONFIG = {
         "motivation":"describing",
         "type": "schema:note"
     }],
-    "collectionPage":"Slavery, History, Memory and Reconciliation Project"
+    "collectionPage":"Fiantinator"
 }
 
 /**
- * CollectionPage: "Slavery, History, Memory and Reconciliation Project"
+ * CollectionPage: "Fiantinator"
  * Collections: [People, Event, Location, Object]
  */
 
