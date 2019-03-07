@@ -19,11 +19,9 @@ author: Patrick Cuba <cubap@slu.edu>
     <div class="container">
         <form onsubmit="createRecord(event)" id="createfiant">
             <div class="row">
-                <label class="col">identifier (string)
-                    <input type="text" id="form_dcidentifier" data-key="dc:identifier">
+                <label class="col">identifier (string)<input type="text" id="form_dcidentifier" data-key="dc:identifier">
                 </label>
-                <label class="col">fiant type
-                    <select id="form_fianttype" data-key="fianttype">
+                <label class="col">fiant type<select id="form_fianttype" data-key="fianttype">
                         <option value="grant">grant</option>
                         <option value="pardon">pardon</option>
                         <option value="presentation">presentation</option>
@@ -36,31 +34,25 @@ author: Patrick Cuba <cubap@slu.edu>
                 </label>
             </div>
             <div class="row">
-                <label class="col">Date (Elizabethan)
-                    <input type="text" id="form_datestring" data-key="dc:date">
+                <label class="col">Date (Elizabethan)<input type="text" id="form_datestring" data-key="datestring">
                     TODO:convert to Gregorian?
                 </label>
-                <label class="col">Date YYYY-MM-DD (Gregorian)
-                <input type="date" id="form_dcdate" data-key="dc:date">
+                <label class="col">Date YYYY-MM-DD (Gregorian)<input type="date" id="form_dcdate" data-key="dc:date">
             </label>
             </div>
-            <label>description
-                <textarea id="form_description" data-key="description"></textarea>
+            <label>description<textarea id="form_description" data-key="description"></textarea>
             </label>
             <div class="row">
-                <label class="col">Agent
-                    <select id="form_agent" data-key="agent">
+                <label class="col">Agent<select id="form_agent" data-key="agent">
                         <option selected="selected" value="EBethID">Elizabeth</option>    
                     </select>
                 </label>
-                <label class="col">source
-                    <input type="text" id="form_dcsource" data-key="dc:source">
+                <label class="col">source<input type="text" id="form_dcsource" data-key="dc:source">
                 </label>
             </div>
             <h4>Named Folks</h4>
              TODO:linked records
-            <div id="namedfolks">
-                <folk class="tag">none</folk>
+            <div id="namedfolks" class="bg-light">
             </div>
             <input type="reset">
             <input type="submit">
@@ -69,19 +61,16 @@ author: Patrick Cuba <cubap@slu.edu>
             <header>
                 <h4>Adding a new person</h4>
             </header>
-            <label>name
-                        <input type="text" id="pform_name" data-key="name">
+            <label>name<input type="text" id="pform_name" data-key="name">
                     </label>
-            <label>description
-                <textarea id="pform_description" data-key="description"></textarea>
+            <label>description<textarea id="pform_description" data-key="description"></textarea>
             </label>
-            <label>occupation
-                <input type="text" id="pform_occupation" data-key="hasOccupation">
+            <label>occupation<input type="text" id="pform_occupation" data-key="hasOccupation">
             </label>
-            <label>home location
-                <input type="text" id="pform_homelocation" data-key="homeLocation">
-            </label> TODO:relationships
-            <input type="reset">
+            <label>home location<input type="text" id="pform_homelocation" data-key="homeLocation">
+                </label> 
+                <label>transcription<input type="text" id="pform_homelocation" data-key="homeLocation">
+                    </label> TODO:relationships<input type="reset">
             <input type="submit" value="Add">
         </form>
     </div>

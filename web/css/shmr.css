@@ -10,3 +10,18 @@
 .no-pointers {
     pointer-events: none;
 }
+#namedfolks {
+    padding: .1rem;
+    margin: .5rem;
+}
+folk {
+    background: #FFF;
+}
+header {
+    text-align: center;
+}
+label {
+    font-size: .8em;
+    line-height: 1;
+    text-indent: 1rem;
+}

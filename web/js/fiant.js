@@ -742,39 +742,24 @@ function fillDublin() {
 } 
 function createRecord(event) {
 	event.preventDefault() 
-	let evidence = form_file.value 
+	let evidence = "the Fiant book" 
 	let record = { 
 		"@context": ["https://schema.org","http://purl.org/dc/terms/"], 
-		url: form_url.value, 
-		name: form_name.value, 
-		"http://xmlns.com/foaf/spec/#term_depiction":form_depiction.value,
-		"dc:title": form_dctitle.value, 
-		"dc:subject": form_dcsubject.value.split(";"), 
-		"dc:description": form_description.value, 
-		"dc:creator": "testMachine", 
-		"dc:source": form_dcsource.value, 
-		"dc:publisher": form_dcpublisher.value, 
-		"dc:date": form_dcdate.value, 
-		"dc:contributor": form_dccontributor.value, 
-		"dc:relation": form_dcrelation.value, 
-		"dc:rights": form_dcrights.value, 
-		"dc:format": form_dcformat.value, 
-		"dc:language": form_dclanguage.value, 
-		"dc:type": form_dctype.value,
 		"dc:identifier": form_dcidentifier.value, 
-		"dc:text": form_dctext.value 
+		name: form_dcidentifier.value, 
+		fianttype: form_fianttype.value, 
+		datestring: form_datestring.value, 
+		"dc:date": form_dcdate.value, 
+		"dc:description": form_description.value, 
+		agent: form_agent.value,
+		"dc:source": form_dcsource.value, 
+		people: [] 
 	}
-	let nextIndex = loadNext.checked 
-	DEER.create(record, "testMachine", evidence).then(function(newObj) { 
-		if(loadNext.checked) { 
-			alert(newObj["@id"]+" loading next...")
-			if(fiant.nextIndex++ > fiant.count) { 
-				fillForm(fiant.feed,fiant.nextIndex) 
-			} 
-		} else { 
-			alert(newObj["@id"]) 
-		} 
-	}) 
+	let people = Array.from(namedfolks.getElementsByTagName("folk")).map(elem=>elem.getAttribute("person-id"))
+	record.people = people
+	DEER.create(record, "testMachine", evidence).then(function(newObj) {
+		alert(newObj["@id"]) 
+	})
 }
 
 let addPersonButton = document.createElement("span")
