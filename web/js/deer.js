@@ -69,6 +69,7 @@ class Deer {
                 attributes: true
             })
         } catch (err) {}
+        this.create = (obj, attribution, evidence) => create(this, obj, attribution, evidence)
     }
 }
 
@@ -78,17 +79,17 @@ class Deer {
  * @param {Object} obj complete resource to process
  * @param {Object} attribution creator and generator identities
  */
-async function create(obj, attribution, evidence) {
+async function create(deer, obj, attribution, evidence) {
     let mint = {
-        "@context": obj["@context"] || this.default.context,
-        "@type": obj["@type"] || this.default.type,
-        "name": this.getValue(obj.name || obj.label) || this.default.name,
-        "creator": attribution || this.default.creator
+        "@context": obj["@context"] || deer.default.context,
+        "@type": obj["@type"] || deer.default.type,
+        "name": getValue(obj.name || obj.label) || deer.default.name,
+        "creator": attribution || deer.default.creator
     }
     if (evidence) {
         mint.evidence = evidence
     }
-    const newObj = await fetch(CREATE_URL, {
+    const newObj = await fetch(deer.CREATE_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8"
@@ -96,26 +97,7 @@ async function create(obj, attribution, evidence) {
             body: JSON.stringify(mint)
         })
         .then(response => response.json())
-    const listID = localStorage.getItem("CURRENT_LIST_ID") || this.DEFAULT_LIST_ID
-    let list = await get(listID)
-    const objID = newObj.new_obj_state["@id"]
-    list.resources.push({
-        "@id": objID,
-        "label": newObj.new_obj_state.name
-    })
-    try {
-        list = await fetch(UPDATE_URL, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                },
-                body: JSON.stringify(list)
-            })
-            .then(response => response.json().new_obj_state)
-            .catch(err => Promise.reject(err))
-    } catch (err) {}
-    localStorage.setItem(list["@id"], JSON.stringify(list))
-    localStorage.setItem("CURRENT_LIST_ID", list["@id"])
+        .then(o=>o.new_obj_state)
     let annotations = []
     for (var key of Object.keys(obj)) {
         if (["@context", "@type", "name"].indexOf(key) > -1) {
@@ -125,7 +107,7 @@ async function create(obj, attribution, evidence) {
             "@context": "",
             "@type": "Annotation",
             "motivation": "describing",
-            "target": objID,
+            "target": newObj["@id"],
             "body": {}
         }
         annotation.body[key] = obj[key]
@@ -138,8 +120,8 @@ async function create(obj, attribution, evidence) {
         annotations.push(annotation)
     }
     // just enforcing the delay
-    let temp = await Promise.all(annotations.map(upsert))
-    return newObj.new_obj_state
+    let temp = await Promise.all(annotations.map((obj)=>upsert(deer,obj)))
+    return newObj
 }
 
 /**
@@ -147,10 +129,10 @@ async function create(obj, attribution, evidence) {
  * @param {Object} obj object to write to database
  * @returns {Promise} Fetch write to database resolves in new object state
  */
-function upsert(obj) {
+function upsert(deer,obj) {
     // TODO: stub header or _id property to force the object ID in MongoDB
     let config = {
-        url: obj["@id"] ? this.UPDATE_URL : this.CREATE_URL,
+        url: obj["@id"] ? deer.UPDATE_URL : deer.CREATE_URL,
         method: obj["@id"] ? "PUT" : "POST",
         body: obj
     }
@@ -171,7 +153,7 @@ function upsert(obj) {
 function getValue(property, asType) {
     // TODO: There must be a best way to do this...
     let prop;
-    if (!Array.isArray(property)) {
+    if (Array.isArray(property)) {
         prop = property.map(getValue)
     }
     if (typeof property === "object") {
