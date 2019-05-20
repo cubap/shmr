@@ -89,9 +89,6 @@ author: Patrick Cuba <cubap@slu.edu>
             <input type="reset">
             <input type="submit">
             <script type="module">
-                import {
-                    Deer
-                } from "./js/deer.js"
                 var shmr = {
                     nextIndex:0
                 }
@@ -100,7 +97,6 @@ author: Patrick Cuba <cubap@slu.edu>
                 window.createRecord = createRecord
                 async function fillForm(isUrl,nextIndex=shmr.nextIndex) {
                     let feed = isUrl ? form_item_url.value : form_item.value
-                    const DEER = new Deer(feed)
                     if (feed.length > 0) {
                         let items = !isUrl ? feed.items : await fetch(
                                 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
@@ -144,13 +140,14 @@ author: Patrick Cuba <cubap@slu.edu>
                     event.preventDefault()
                     let evidence = form_file.value
                     let record = {
+                        targetCollection: "Slavery, History, Memory and Reconciliation Project",
                         "@context": ["https://schema.org","http://purl.org/dc/terms/"],
                         url: form_url.value,
                         name: form_name.value,
-                        "http://xmlns.com/foaf/spec/#term_depiction":form_depiction.value,
+                        "http://xmlns%2ecom/foaf/spec/#term_depiction":form_depiction.value,
                         "dc:title": form_dctitle.value,
                         "dc:subject": form_dcsubject.value.split(";"),
-                        "dc:description": form_description.value,
+                        "dc:description": form_dcdescription.value,
                         "dc:creator": "testMachine",
                         "dc:source": form_dcsource.value,
                         "dc:publisher": form_dcpublisher.value,
@@ -165,10 +162,10 @@ author: Patrick Cuba <cubap@slu.edu>
                         "dc:text": form_dctext.value
                     }
                     let nextIndex = loadNext.checked
-                    DEER.create(record, "testMachine", evidence).then(function(newObj) {
+                    create(record, "testMachine", evidence).then(function(newObj) {
                         if(loadNext.checked) {
                             alert(newObj["@id"]+" loading next...")
-                            if(shmr.nextIndex++ > shmr.count) {
+                            if(shmr.nextIndex++ < shmr.count) {
                                 fillForm(shmr.feed,shmr.nextIndex)
                             }
                         } else {
@@ -176,10 +173,66 @@ author: Patrick Cuba <cubap@slu.edu>
                         }
                     })
                 }
+
+                /**
+                 * Generate a new object URI for a resource. Abstract additional
+                 * properties to annotations.
+                 * @param {Object} obj complete resource to process
+                 * @param {Object} attribution creator and generator identities
+                 */
+                async function create(obj, attribution, evidence) {
+                    let mint = {
+                        "@context": obj["@context"],
+                        "@type": obj["@type"],
+                        "name": obj.name,
+                        "creator": attribution
+                    }
+                    if (evidence) {
+                        mint.evidence = evidence
+                    }
+                    const newObj = await fetch("http://tinydev.rerum.io/app/create", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=utf-8"
+                        },
+                        body: JSON.stringify(mint)
+                    })
+                    .then(response => response.json())
+                    const objID = newObj.new_obj_state["@id"]
+                    let annotations = []
+                    for (const key of Object.keys(obj)) {
+                        if (["@context", "@type", "name"].indexOf(key) > -1) {
+                            continue
+                        }
+                        let annotation = {
+                            "@context": "",
+                            "@type": "Annotation",
+                            "motivation": "describing",
+                            "target": objID,
+                            "body": {}
+                        }
+                        annotation.body[key] = obj[key]
+                        if (attribution) {
+                            annotation.creator = attribution
+                        }
+                        if (evidence) {
+                            annotation.evidence = evidence
+                        }
+                        annotations.push(fetch("http://tinydev.rerum.io/app/create", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json; charset=utf-8"
+                            },
+                            body: JSON.stringify(annotation)
+                        }))
+                    }
+                    // just enforcing the delay
+                    let temp = await Promise.all(annotations)
+                    return newObj.new_obj_state
+                }
             </script>
         </form>
     </div>
-    <script src="js/config.js"></script>
 </body>
 
 </html>

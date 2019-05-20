@@ -1,0 +1,14 @@
+body {
+    background: #6b241e;
+}
+
+deer-view, form {
+    background: #FFF;
+    display: block;
+    padding: 3em;
+}
+
+deer-view h1, deer-view h2, deer-view h3, deer-view dt {
+    color: #003da5;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
