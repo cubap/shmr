@@ -7,10 +7,16 @@ author: Patrick Cuba <cubap@slu.edu>
 <head>
     <title>Slavery, History, Memory and Reconciliation Project</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="css/shmr.css">
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
@@ -36,7 +42,8 @@ author: Patrick Cuba <cubap@slu.edu>
 
             <h4>description details</h4>
             <label>JSON
-                <textarea id="form_description" oninput="fillDublin()" placeholder="JSON content for Dublin Core"></textarea>
+                <textarea id="form_description" oninput="fillDublin()"
+                    placeholder="JSON content for Dublin Core"></textarea>
             </label>
             <label>title (simple title)
                 <input type="text" id="form_dctitle" data-key="dc:title">
@@ -90,16 +97,16 @@ author: Patrick Cuba <cubap@slu.edu>
             <input type="submit">
             <script type="module">
                 var shmr = {
-                    nextIndex:0
+                    nextIndex: 0
                 }
                 window.fillForm = fillForm
                 window.fillDublin = fillDublin
                 window.createRecord = createRecord
-                async function fillForm(isUrl,nextIndex=shmr.nextIndex) {
+                async function fillForm(isUrl, nextIndex = shmr.nextIndex) {
                     let feed = isUrl ? form_item_url.value : form_item.value
                     if (feed.length > 0) {
                         let items = !isUrl ? feed.items : await fetch(
-                                'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
+                            'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed)).then(response => response.json())
                             .then(js => js.items).catch(() => console.log("No feed fetched at: " + feed))
                         // for now, loop later
                         shmr.count = items.length
@@ -121,7 +128,7 @@ author: Patrick Cuba <cubap@slu.edu>
 
                 function fillDublin() {
                     let content =
-                        `${form_description.value.replace(/\\r\\n/g,"<p>").replace(/\\n/g,"").replace(/\\/g,"")}`
+                        `${form_description.value.replace(/\\r\\n/g, "<p>").replace(/\\n/g, "").replace(/\\/g, "")}`
                     let contentDiv = document.createElement("div")
                     contentDiv.innerHTML = content
                     let elementset = contentDiv.getElementsByClassName("element")
@@ -141,10 +148,10 @@ author: Patrick Cuba <cubap@slu.edu>
                     let evidence = form_file.value
                     let record = {
                         targetCollection: "Slavery, History, Memory and Reconciliation Project",
-                        "@context": ["https://schema.org","http://purl.org/dc/terms/"],
+                        "@context": ["https://schema.org", "http://purl.org/dc/terms/"],
                         url: form_url.value,
                         name: form_name.value,
-                        "http://xmlns%2ecom/foaf/spec/#term_depiction":form_depiction.value,
+                        "http://xmlns%2ecom/foaf/spec/#term_depiction": form_depiction.value,
                         "dc:title": form_dctitle.value,
                         "dc:subject": form_dcsubject.value.split(";"),
                         "dc:description": form_dcdescription.value,
@@ -162,11 +169,11 @@ author: Patrick Cuba <cubap@slu.edu>
                         "dc:text": form_dctext.value
                     }
                     let nextIndex = loadNext.checked
-                    create(record, "testMachine", evidence).then(function(newObj) {
-                        if(loadNext.checked) {
-                            alert(newObj["@id"]+" loading next...")
-                            if(shmr.nextIndex++ < shmr.count) {
-                                fillForm(shmr.feed,shmr.nextIndex)
+                    create(record, "testMachine", evidence).then(function (newObj) {
+                        if (loadNext.checked) {
+                            alert(newObj["@id"] + " loading next...")
+                            if (shmr.nextIndex++ < shmr.count) {
+                                fillForm(shmr.feed, shmr.nextIndex)
                             }
                         } else {
                             alert(newObj["@id"])
@@ -197,7 +204,7 @@ author: Patrick Cuba <cubap@slu.edu>
                         },
                         body: JSON.stringify(mint)
                     })
-                    .then(response => response.json())
+                        .then(response => response.json())
                     const objID = newObj.new_obj_state["@id"]
                     let annotations = []
                     for (const key of Object.keys(obj)) {
