@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+author: Patrick Cuba <cubap@slu.edu>
+-->
+<html>
+
+<head>
+    <title>Slavery, History, Memory and Reconciliation Project</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/shmr.css">
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div class="container row">
+        <deer-view class="col-4" id="list" deer-link="#"
+            deer-collection="Slavery, History, Memory and Reconciliation Project">
+        </deer-view>
+        <div class="col-8">
+            <form id="editForm" deer-type="Thing">
+                    <input type="hidden" value="Slavery, History, Memory and Reconciliation Project" deer-key="targetCollection">
+                    <input type="reset" value="New Entry" onclick="window.location.hash=''" class="button primary is-full-width">
+                    <label>url (webpage link)
+                    <input type="url" id="form_url" deer-key="url">
+                </label>
+                <label>name (simple title)
+                    <input type="text" id="form_name" deer-key="name">
+                </label>
+                <label>depiction (image link)
+                    <input type="url" id="form_depiction" deer-key="http://xmlns.com/foaf/spec/#term_depiction">
+                </label>
+                <label>file attachment (document link)
+                    <input type="url" id="form_file" deer-key="url">
+                </label>
+                <label>title (simple title)
+                    <input type="text" id="form_dctitle" deer-key="dc:title">
+                </label>
+                <label>subject (semicolon delimited)
+                    <input type="text" id="form_dcsubject" deer-key="dc:subject">
+                </label>
+                <label>description (HTMLy is fine)
+                    <input type="text" id="form_dcdescription" deer-key="dc:description">
+                </label>
+                <label>creator (string for now, agent later)
+                    <input type="text" id="form_dccreator" deer-key="dc:creator">
+                </label>
+                <label>source (link for now)
+                    <input type="text" id="form_dcsource" deer-key="dc:source">
+                </label>
+                <label>Publisher (string for now, agent later)
+                    <input type="text" id="form_dcpublisher" deer-key="dc:publisher">
+                </label>
+                <label>Date YYYY-MM-DD (Gregorian)
+                    <input type="date" id="form_dcdate" deer-key="dc:date">
+                </label>
+                <label>Contributor (string for now, agent later)
+                    <input type="text" id="form_dccontributor" deer-key="dc:contributor">
+                </label>
+                <label>relation (link)
+                    <input type="text" id="form_dcrelation" deer-key="dc:relation">
+                </label>
+                <label>rights (string)
+                    <input type="text" id="form_dcrights" deer-key="dc:rights">
+                </label>
+                <label>format (string)
+                    <input type="text" id="form_dcformat" deer-key="dc:format">
+                </label>
+                <label>language (string)
+                    <input type="text" id="form_dclanguage" deer-key="dc:language">
+                </label>
+                <label>type (string)
+                    <input type="text" id="form_dctype" deer-key="dc:type">
+                </label>
+                <label>identifier (string)
+                    <input type="text" id="form_dcidentifier" deer-key="dc:identifier">
+                </label>
+                <label>text (HTMLy)
+                    <textarea type="text" id="form_dctext" deer-key="dc:text"></textarea>
+                </label>
+                <input type="submit" value="Update">
+            </form>
+        </div>
+    </div>
+    <script type="module">
+        // Identify an alternate config location or only overwrite some items below.
+        import { default as DEER } from 'https://centerfordigitalhumanities.github.io/deer/js/deer-config.js'
+
+        // Render is probably needed by all items, but can be removed.
+        // CDN at https://centerfordigitalhumanities.github.io/deer/releases/
+        import { default as renderer, initializeDeerViews } from 'https://centerfordigitalhumanities.github.io/deer/js/deer-render.js'
+
+        // Record is only needed for saving or updating items.
+        // CDN at https://centerfordigitalhumanities.github.io/deer/releases/
+        import { default as record, initializeDeerForms } from 'https://centerfordigitalhumanities.github.io/deer/js/deer-record.js'
+
+        // fire up the element detection as needed
+        try {
+            initializeDeerViews(DEER)
+            initializeDeerForms(DEER)
+        } catch (err) {
+            // silently fail if render or record is not loaded
+        }
+    </script>
+    <script>
+        window.onhashchange = onload = () => editForm.setAttribute("deer-id", window.location.hash.substr(1))
+    </script>
+</body>
+
+</html>
