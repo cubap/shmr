@@ -12,3 +12,8 @@ deer-view h1, deer-view h2, deer-view h3, deer-view dt {
     color: #003da5;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+nav {
+    background: #c5d4e2;
+    margin: 1em 0;
+}
